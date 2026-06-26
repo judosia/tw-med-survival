@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>快速字卡區 | 醫院生存手冊</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:  #0D1F3C;
+      --red:   #E63946;
+      --green: #6BAA75;
+      --amber: #F4A261;
+      --blue:  #457B9D;
+      --teal:  #2A9D8F;
+      --purple:#7B5EA7;
+      --light: #F8FAFB;
+      --border:#DDE3EA;
+      --muted: #8899AA;
+      --white: #FFFFFF;
+
+      --acls:   #E63946;
+      --drugs:  #F4A261;
+      --labs:   #457B9D;
+      --peds:   #6BAA75;
+      --fluids: #2A9D8F;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans TC', 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--navy);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(13,31,60,0.97);
+      backdrop-filter: blur(10px);
+      padding: 0 5%;
+      display: flex; align-items: center; gap: 20px;
+      height: 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav-back {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: flex; align-items: center; gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: #fff; }
+    .nav-divider { color: rgba(255,255,255,0.2); font-size: 0.9rem; }
+    .nav-title { color: #fff; font-size: 0.88rem; font-weight: 700; }
+    .nav-actions { margin-left: auto; display: flex; gap: 10px; }
+    .btn-sm {
+      padding: 7px 16px; border-radius: 5px;
+      font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; border: none;
+      font-family: inherit; transition: all 0.2s;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.8);
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+    .btn-primary { background: var(--red); color: #fff; }
+    .btn-primary:hover { background: #c62834; }
+
+    /* ── HERO STRIP ── */
+    .page-hero {
+      background: var(--navy);
+      padding: 48px 6% 40px;
+    }
+    .page-hero h1 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .page-hero p {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.88rem;
+      max-width: 500px;
+    }
+    .hero-badges {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 20px;
+    }
+    .badge {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      transition: all 0.18s;
+    }
+    .badge-acls   { background: rgba(230,57,70,0.15);  border-color: rgba(230,57,70,0.4);  color: #ff7680; }
+    .badge-drugs  { background: rgba(244,162,97,0.15); border-color: rgba(244,162,97,0.4); color: #f4a261; }
+    .badge-labs   { background: rgba(69,123,157,0.15); border-color: rgba(69,123,157,0.4); color: #7bb8d4; }
+    .badge-peds   { background: rgba(107,170,117,0.15);border-color: rgba(107,170,117,0.4);color: #8fcf9a; }
+    .badge-fluids { background: rgba(42,157,143,0.15); border-color: rgba(42,157,143,0.4); color: #4ecdc4; }
+    .badge.active { opacity: 1 !important; }
+    .badge:not(.active) { opacity: 0.5; }
+
+    /* ── MAIN LAYOUT ── */
+    .main-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 5% 80px;
+    }
+
+    /* ── TOPIC TABS ── */
+    .topic-tabs {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .topic-tab {
+      display: flex; align-items: center; gap: 7px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; transition: all 0.18s;
+      font-family: inherit; color: var(--muted);
+    }
+    .topic-tab:hover { border-color: var(--navy); color: var(--navy); }
+    .topic-tab.active-acls   { background: var(--acls);   border-color: var(--acls);   color: #fff; }
+    .topic-tab.active-drugs  { background: var(--drugs);  border-color: var(--drugs);  color: #fff; }
+    .topic-tab.active-labs   { background: var(--labs);   border-color: var(--labs);   color: #fff; }
+    .topic-tab.active-peds   { background: var(--peds);   border-color: var(--peds);   color: #fff; }
+    .topic-tab.active-fluids { background: var(--fluids); border-color: var(--fluids); color: #fff; }
+
+    /* ── DECK STATUS BAR ── */
+    .deck-status {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      margin-bottom: 28px;
+      padding: 14px 20px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+    }
+    .deck-info { font-size: 0.82rem; color: var(--muted); }
+    .deck-info strong { color: var(--navy); font-size: 1rem; }
+    .progress-row { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; color: var(--muted); }
+    .progress-bar-wrap { width: 140px; height: 5px; background: var(--border); border-radius: 10px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; border-radius: 10px; transition: width 0.4s; }
+    .deck-controls { display: flex; gap: 8px; }
+    .ctrl-btn {
+      padding: 6px 14px; border-radius: 6px; border: 1.5px solid var(--border);
+      background: var(--white); font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; color: var(--navy);
+      transition: all 0.18s;
+    }
+    .ctrl-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+    /* ── FLASHCARD ── */
+    .card-stage {
+      perspective: 1200px;
+      margin-bottom: 20px;
+    }
+    .flashcard {
+      width: 100%; min-height: 280px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+      cursor: pointer;
+      border-radius: 16px;
+    }
+    .flashcard.flipped { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      border-radius: 16px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 40px 48px;
+      text-align: center;
+    }
+    .card-front {
+      background: var(--white);
+      border: 2px solid var(--border);
+      box-shadow: 0 4px 24px rgba(13,31,60,0.07);
+    }
+    .card-back {
+      transform: rotateY(180deg);
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .card-topic-tag {
+      position: absolute; top: 18px; left: 22px;
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 4px;
+    }
+    .card-num {
+      position: absolute; top: 18px; right: 22px;
+      font-size: 0.72rem; color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .card-hint {
+      position: absolute; bottom: 18px;
+      font-size: 0.7rem; opacity: 0.4;
+      letter-spacing: 0.05em;
+    }
+    .front-term {
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .front-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .back-content {
+      width: 100%;
+      text-align: left;
+    }
+    .back-content h3 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .back-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.87rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.88);
+    }
+    .back-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 6px;
+    }
+    .back-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+    .back-warning {
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: rgba(230,57,70,0.2);
+      border-left: 3px solid var(--red);
+      border-radius: 0 6px 6px 0;
+      font-size: 0.78rem;
+      color: #ffb3b8;
+      line-height: 1.5;
+    }
+    .back-tip {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: rgba(107,170,117,0.2);
+      border-left: 3px solid var(--green);
+      border-radius: 0 6px 6px 0;
+      font-size: 0.78rem;
+      color: #a8e6b0;
+      line-height: 1.5;
+    }
+
+    /* ── NAV BUTTONS ── */
+    .nav-buttons {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+    }
+    .nav-btn {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--white);
+      font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.18s; color: var(--navy);
+    }
+    .nav-btn:hover:not(:disabled) { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; }
+    .nav-center { text-align: center; }
+    .nav-fraction { font-size: 0.82rem; color: var(--muted); margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+    .flip-prompt {
+      font-size: 0.75rem; color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── KEYBOARD HINT ── */
+    .keyboard-hint {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    kbd {
+      background: var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--navy);
+      border: 1px solid #c5cdd6;
+    }
+
+    /* ── PRINT MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 36px;
+      max-width: 480px; width: 90%;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+    }
+    .modal h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+    .modal p  { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+    .modal-topics {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 24px;
+    }
+    .modal-topic-btn {
+      padding: 8px 16px; border-radius: 6px;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      color: var(--muted); transition: all 0.15s;
+    }
+    .modal-topic-btn.sel-acls   { background: var(--acls);   border-color: var(--acls);   color: #fff; }
+    .modal-topic-btn.sel-drugs  { background: var(--drugs);  border-color: var(--drugs);  color: #fff; }
+    .modal-topic-btn.sel-labs   { background: var(--labs);   border-color: var(--labs);   color: #fff; }
+    .modal-topic-btn.sel-peds   { background: var(--peds);   border-color: var(--peds);   color: #fff; }
+    .modal-topic-btn.sel-fluids { background: var(--fluids); border-color: var(--fluids); color: #fff; }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; }
+    .btn-cancel {
+      padding: 10px 20px; border-radius: 6px;
+      border: 1.5px solid var(--border); background: var(--white);
+      font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; color: var(--muted);
+    }
+    .btn-print {
+      padding: 10px 24px; border-radius: 6px;
+      background: var(--navy); color: #fff;
+      border: none; font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      transition: background 0.2s;
+    }
+    .btn-print:hover { background: #1a3557; }
+
+    /* ── PRINT STYLES ── */
+    @media print {
+      body * { visibility: hidden; }
+      #print-area, #print-area * { visibility: visible; }
+      #print-area {
+        position: fixed; inset: 0;
+        background: white;
+        padding: 0;
+      }
+    }
+
+    /* ── PRINT AREA (hidden until print) ── */
+    #print-area { display: none; }
+
+    .pocket-page {
+      width: 210mm; /* A4 */
+      padding: 10mm;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6mm;
+      page-break-after: always;
+    }
+    .pocket-card {
+      border: 1px solid #ccc;
+      border-radius: 4mm;
+      padding: 5mm 6mm;
+      font-size: 8pt;
+      line-height: 1.4;
+      font-family: 'Noto Sans TC', sans-serif;
+      break-inside: avoid;
+    }
+    .pocket-card-header {
+      display: flex; align-items: center; gap: 3mm;
+      padding-bottom: 3mm;
+      border-bottom: 0.5mm solid #eee;
+      margin-bottom: 3mm;
+    }
+    .pocket-card-dot {
+      width: 5mm; height: 5mm; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .pocket-card-title {
+      font-weight: 700; font-size: 9pt;
+    }
+    .pocket-card-body p {
+      margin-bottom: 2mm;
+      font-size: 7.5pt;
+    }
+    .pocket-card-body strong { font-weight: 700; }
+    .pocket-card-body .val {
+      font-family: monospace;
+      background: #f3f3f3;
+      padding: 0 1mm;
+      border-radius: 1mm;
+    }
+    .pocket-card-body .warn {
+      background: #fff0f0;
+      border-left: 1.5mm solid #e63946;
+      padding: 1.5mm 2mm;
+      margin-top: 2mm;
+      border-radius: 0 1.5mm 1.5mm 0;
+    }
+    .pocket-card-back-note {
+      font-size: 6.5pt;
+      color: #888;
+      text-align: center;
+      margin-top: 2mm;
+      border-top: 0.3mm dashed #ddd;
+      padding-top: 2mm;
+    }
+
+    @media (max-width: 600px) {
+      .card-face { padding: 32px 24px; }
+      .front-term { font-size: 1.3rem; }
+      .topic-tabs { gap: 6px; }
+      .topic-tab { font-size: 0.76rem; padding: 7px 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .flashcard { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-back">← 回首頁</a>
+  <span class="nav-divider">/</span>
+  <span class="nav-title">⚡ 快速字卡區</span>
+  <div class="nav-actions">
+    <button class="btn-sm btn-outline" id="shuffle-btn">🔀 隨機排序</button>
+    <button class="btn-sm btn-primary" id="open-print-btn">🖨️ 列印口袋卡</button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <h1>⚡ 快速字卡區</h1>
+  <p>點擊字卡翻面看解答。值班前快速複習，關鍵時刻不卡頓。</p>
+  <div class="hero-badges">
+    <span class="badge badge-acls active" data-topic="acls">🫀 ACLS</span>
+    <span class="badge badge-drugs active" data-topic="drugs">💊 常用藥物劑量</span>
+    <span class="badge badge-labs active" data-topic="labs">🔬 Lab Values</span>
+    <span class="badge badge-peds active" data-topic="peds">👶 兒科公式</span>
+    <span class="badge badge-fluids active" data-topic="fluids">💧 輸液選擇</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- TOPIC TABS -->
+  <div class="topic-tabs">
+    <button class="topic-tab active-acls" data-topic="acls">🫀 ACLS</button>
+    <button class="topic-tab" data-topic="drugs">💊 藥物劑量</button>
+    <button class="topic-tab" data-topic="labs">🔬 Lab Values</button>
+    <button class="topic-tab" data-topic="peds">👶 兒科公式</button>
+    <button class="topic-tab" data-topic="fluids">💧 輸液選擇</button>
+  </div>
+
+  <!-- STATUS BAR -->
+  <div class="deck-status">
+    <div class="deck-info">
+      <strong id="deck-title">ACLS 高級心肺復甦</strong>
+      <div id="deck-count" style="margin-top:2px;">共 10 張</div>
+    </div>
+    <div class="progress-row">
+      <span id="progress-label">0 / 10 已看</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progress-fill" style="width:0%; background:var(--acls);"></div>
+      </div>
+    </div>
+    <div class="deck-controls">
+      <button class="ctrl-btn" id="reset-btn">↺ 重置</button>
+    </div>
+  </div>
+
+  <!-- FLASHCARD -->
+  <div class="card-stage">
+    <div class="flashcard" id="flashcard">
+      <!-- Front -->
+      <div class="card-face card-front">
+        <span class="card-topic-tag" id="front-tag"></span>
+        <span class="card-num" id="front-num"></span>
+        <div class="front-term" id="front-term"></div>
+        <div class="front-sub" id="front-sub"></div>
+        <span class="card-hint">點擊翻面 →</span>
+      </div>
+      <!-- Back -->
+      <div class="card-face card-back">
+        <span class="card-topic-tag" id="back-tag"></span>
+        <div class="back-content" id="back-content"></div>
+        <span class="card-hint" style="color:rgba(255,255,255,0.3);">← 點擊返回</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV BUTTONS -->
+  <div class="nav-buttons">
+    <button class="nav-btn" id="prev-btn">←</button>
+    <div class="nav-center">
+      <div class="nav-fraction" id="nav-fraction">1 / 10</div>
+      <div class="flip-prompt">Space 翻面　← → 切換</div>
+    </div>
+    <button class="nav-btn" id="next-btn">→</button>
+  </div>
+
+  <div class="keyboard-hint">
+    <kbd>Space</kbd> 翻面　<kbd>←</kbd> 上一張　<kbd>→</kbd> 下一張　<kbd>S</kbd> 隨機排序
+  </div>
+</div>
+
+<!-- PRINT MODAL -->
+<div class="modal-overlay" id="print-modal">
+  <div class="modal">
+    <h2>🖨️ 列印口袋卡</h2>
+    <p>選擇要列印的主題，輸出為 A4 紙張（每頁 2 欄），摺疊後可放入口袋隨身攜帶。</p>
+    <div class="modal-topics" id="modal-topic-list">
+      <button class="modal-topic-btn sel-acls" data-topic="acls">🫀 ACLS</button>
+      <button class="modal-topic-btn sel-drugs" data-topic="drugs">💊 藥物劑量</button>
+      <button class="modal-topic-btn sel-labs" data-topic="labs">🔬 Lab Values</button>
+      <button class="modal-topic-btn sel-peds" data-topic="peds">👶 兒科公式</button>
+      <button class="modal-topic-btn sel-fluids" data-topic="fluids">💧 輸液選擇</button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="close-modal-btn">取消</button>
+      <button class="btn-print" id="do-print-btn">列印 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- HIDDEN PRINT AREA -->
+<div id="print-area"></div>
+
+<script>
+// ══════════════════════════════════════════════
+// CARD DATA
+// ══════════════════════════════════════════════
+const DECKS = {
+  acls: {
+    title: 'ACLS 高級心肺復甦',
+    color: 'var(--acls)',
+    colorHex: '#E63946',
+    label: '🫀 ACLS',
+    cards: [
+      {
+        term: 'VF / pVT\n心室顫動 / 無脈性室速',
+        sub: 'Shockable rhythms',
+        back: {
+          title: '處理流程',
+          items: [
+            '立即 CPR 2 分鐘（30:2）',
+            '盡快電擊：雙相 200J / 單相 360J',
+            'Epinephrine 1mg IV/IO，每 3-5 分鐘一次',
+            'Amiodarone 300mg IV（第一劑），150mg（第二劑）',
+          ],
+          warning: '電擊前確認所有人離開病人，不要中斷 CPR 超過 10 秒',
+          tip: 'Shock → CPR → Rhythm check，每 2 分鐘一個循環'
+        }
+      },
+      {
+        term: 'Asystole / PEA\n心停止 / 無脈性電氣活動',
+        sub: 'Non-shockable rhythms',
+        back: {
+          title: '處理流程',
+          items: [
+            'CPR 2 分鐘，不電擊',
+            'Epinephrine 1mg IV/IO，每 3-5 分鐘',
+            '找出並處理可逆原因（5H5T）',
+          ],
+          warning: 'PEA 一定要找原因：張力性氣胸？心包填塞？低血容？',
+          tip: '5H: Hypovolemia, Hypoxia, H⁺(酸中毒), Hypo/Hyperkalemia, Hypothermia\n5T: Tension PTX, Tamponade, Toxins, Thrombosis(PE), Thrombosis(MI)'
+        }
+      },
+      {
+        term: 'Epinephrine\n急救劑量',
+        sub: 'ACLS 標準用法',
+        back: {
+          title: '劑量與用法',
+          items: [
+            '成人：1mg IV/IO，每 3-5 分鐘重複',
+            '用法：1mg/10mL（1:10,000）靜脈推注',
+            'VF/pVT：第二次電擊後給予',
+            'Asystole/PEA：確認後立即給予',
+          ],
+          warning: '給藥後以 20mL NS flush，並抬高肢體促進藥物循環',
+        }
+      },
+      {
+        term: 'Amiodarone\n急救劑量',
+        sub: 'VF / pVT 使用',
+        back: {
+          title: '劑量與用法',
+          items: [
+            '第一劑：300mg IV/IO 快速推注',
+            '第二劑：150mg IV/IO',
+            '維持劑量：150mg/100mL over 10min，再 1mg/min x6h',
+          ],
+          warning: '心跳恢復後注意低血壓和 QT 延長',
+          tip: 'Amiodarone 無效可考慮 Lidocaine 1-1.5mg/kg IV'
+        }
+      },
+      {
+        term: 'Post-ROSC Care\n心跳恢復後處理',
+        sub: 'Return of Spontaneous Circulation',
+        back: {
+          title: '恢復後立即做',
+          items: [
+            '目標 SpO₂ 94-98%（避免高氧）',
+            '目標 MAP ≥ 65 mmHg（用升壓藥維持）',
+            '目標 PaCO₂ 35-45 mmHg',
+            '12-lead ECG → 排除 STEMI',
+            '體溫管理：避免發燒（>37.5°C）',
+          ],
+          tip: '昏迷的 ROSC 患者考慮 Targeted Temperature Management (TTM)'
+        }
+      },
+      {
+        term: '成人電擊能量\nDefibrillation',
+        sub: '雙相 vs 單相',
+        back: {
+          title: '電擊能量設定',
+          items: [
+            '雙相（Biphasic）：200J（依機器建議）',
+            '單相（Monophasic）：360J',
+            '同步電擊（Cardioversion）：',
+            'AFib: 120-200J（雙相）',
+            'Aflutter / SVT: 50-100J',
+            'pVT（有脈）: 100J 起',
+          ],
+          warning: '不穩定心律→先電擊，再問原因'
+        }
+      },
+      {
+        term: 'Atropine\n適應症與劑量',
+        sub: '有症狀的心搏過緩',
+        back: {
+          title: '劑量與用法',
+          items: [
+            '劑量：0.5mg IV，每 3-5 分鐘，最大 3mg',
+            '適應症：症狀性心搏過緩（HR<50，伴低血壓/昏厥）',
+            '無效時考慮：Dopamine 2-10μg/kg/min 或 Epinephrine 2-10μg/min',
+          ],
+          warning: 'High-degree AV block（二度 Type II、三度）：Atropine 通常無效，準備暫時性節律器',
+          tip: '< 0.5mg 劑量可能反而加重心搏過緩（paradoxical bradycardia）'
+        }
+      },
+      {
+        term: 'CPR 品質標準\nHigh-quality CPR',
+        sub: '2020 AHA Guidelines',
+        back: {
+          title: '關鍵指標',
+          items: [
+            '壓胸速率：100-120 次/分鐘',
+            '壓胸深度：成人 5-6cm',
+            '每次壓胸後胸廓完全回彈',
+            '中斷最小化：< 10 秒',
+            '有高級氣道後：10 次/分鐘通氣（不同步）',
+          ],
+          tip: '每 2 分鐘換人做 CPR，避免疲勞導致品質下降'
+        }
+      },
+      {
+        term: 'Adenosine\nSVT 首選用藥',
+        sub: '規則窄 QRS 心搏過速',
+        back: {
+          title: '劑量與用法',
+          items: [
+            '第一劑：6mg 快速 IV push，接 20mL NS flush',
+            '第二劑：12mg（若無效，60-90 秒後）',
+            '第三劑：12mg（再無效）',
+          ],
+          warning: '半衰期極短（< 10 秒），必須從肘前靜脈快速推注，不能慢推',
+          tip: '有哮喘或預激症候群（WPW）患者禁用，改用 Diltiazem 或電擊'
+        }
+      },
+      {
+        term: 'H 的記憶法\n可逆原因（5H）',
+        sub: 'ACLS 考點',
+        back: {
+          title: '5 個 H',
+          items: [
+            'Hypovolemia — 低血容（首選 NS bolus）',
+            'Hypoxia — 缺氧（確保氣道通暢）',
+            'H⁺（Acidosis）— 酸中毒（考慮 NaHCO₃）',
+            'Hypo/Hyperkalemia — 血鉀異常（ECG 確認）',
+            'Hypothermia — 低體溫（復溫至 ≥30°C 才能宣告死亡）',
+          ],
+          tip: '5T: Tension PTX, Tamponade, Toxins, Thrombosis-PE, Thrombosis-MI'
+        }
+      },
+    ]
+  },
+
+  drugs: {
+    title: '常用藥物劑量',
+    color: 'var(--drugs)',
+    colorHex: '#F4A261',
+    label: '💊 藥物劑量',
+    cards: [
+      {
+        term: 'Morphine\n嗎啡',
+        sub: '急性疼痛 / ACS',
+        back: {
+          title: '劑量',
+          items: [
+            '成人：2-4mg IV，每 5-15 分鐘，PRN',
+            'ACS：1-2mg IV slowly（慎用，可能增加死亡率）',
+            '最大單次：15mg',
+            '腎功能不佳者：減量 50%',
+          ],
+          warning: '備好 Naloxone 0.4mg IV（拮抗劑）',
+        }
+      },
+      {
+        term: 'Metoclopramide\n滅吐寧',
+        sub: '噁心嘔吐 / 促腸胃蠕動',
+        back: {
+          title: '劑量',
+          items: [
+            '成人：10mg IV/IM/PO，每 6-8 小時',
+            '最大：30mg/天',
+            '腎功能不佳（CrCl < 40）：減半',
+          ],
+          warning: '錐體外症狀（Extrapyramidal）：出現時給 Diphenhydramine 25-50mg IV',
+          tip: '空腹前 30 分鐘給藥效果最好'
+        }
+      },
+      {
+        term: 'Omeprazole / PPI\n氫離子幫浦抑制劑',
+        sub: '胃潰瘍 / GERD / GI Bleed',
+        back: {
+          title: '劑量',
+          items: [
+            '一般 GERD：20-40mg PO QD（早餐前）',
+            '消化性潰瘍：40mg PO QD x 4-8 週',
+            'GI Bleed 高風險：80mg IV bolus → 8mg/hr 持續滴注 x 72h',
+            '預防性用藥（NSAIDs）：20mg QD',
+          ],
+          tip: '長期使用（> 1年）注意 Mg²⁺ 和 B12 缺乏'
+        }
+      },
+      {
+        term: 'Heparin\n普通肝素（治療劑量）',
+        sub: 'DVT / PE / ACS',
+        back: {
+          title: '劑量（體重調整）',
+          items: [
+            'Bolus：80 U/kg IV（最大 10,000U）',
+            '維持：18 U/kg/hr（最大 2,500U/hr）',
+            '目標 aPTT：60-100 秒（治療範圍）',
+            '每 6 小時抽 aPTT 調整',
+          ],
+          warning: 'HIT（肝素誘發血小板減少）：血小板下降 > 50% → 立刻停 Heparin',
+        }
+      },
+      {
+        term: 'Vancomycin\n萬古黴素',
+        sub: 'MRSA / 嚴重 Gram+ 感染',
+        back: {
+          title: '劑量',
+          items: [
+            '成人：15-20mg/kg IV，每 8-12 小時',
+            '嚴重感染（菌血症）：25-30mg/kg loading',
+            '目標 AUC/MIC：400-600（新版指引）',
+            '輸注速率：≤ 10mg/min（避免 Red man syndrome）',
+          ],
+          warning: '腎毒性：監測 Cr 和 Vancomycin trough/AUC',
+          tip: 'Red man syndrome：不是過敏，是輸注太快→減慢速率，給 Diphenhydramine'
+        }
+      },
+      {
+        term: 'Ceftriaxone\n頭孢曲松',
+        sub: '肺炎 / 泌尿道感染 / 腦膜炎',
+        back: {
+          title: '劑量',
+          items: [
+            'CAP（社區肺炎）：1-2g IV QD',
+            'UTI（複雜）：1g IV QD',
+            '腦膜炎：2g IV Q12h',
+            '淋病：500mg IM 單次（< 150kg）',
+          ],
+          warning: '膽泥症（biliary sludge）：長期使用注意',
+          tip: '不要和含鈣輸液混合（包括 Ringer's Lactate）'
+        }
+      },
+      {
+        term: 'Furosemide\n呋塞米（利尿劑）',
+        sub: '肺水腫 / 心衰竭 / 水腫',
+        back: {
+          title: '劑量',
+          items: [
+            '急性肺水腫：40mg IV（若平時無使用），可每 2h 重複',
+            '慢性心衰：平時口服量的 1-2.5 倍 IV',
+            '最大單次：200mg IV',
+            '口服：20-600mg/天（分次）',
+          ],
+          warning: '監測 K⁺，低血鉀時補充 KCl',
+          tip: '效果評估：30-60 分鐘內尿量應增加'
+        }
+      },
+      {
+        term: 'Dexamethasone\n地塞米松',
+        sub: '腦水腫 / 氣道水腫 / 抗發炎',
+        back: {
+          title: '劑量',
+          items: [
+            '腦水腫（腫瘤）：10mg IV loading → 4mg Q6h',
+            '腦膜炎（細菌）：0.15mg/kg IV Q6h x 4天',
+            '氣道水腫（插管前）：8-10mg IV',
+            'COVID-19 重症：6mg PO/IV QD x 10天',
+          ],
+          tip: '等效劑量：Dexamethasone 1mg ≈ Prednisolone 7.5mg ≈ Methylprednisolone 6mg'
+        }
+      },
+      {
+        term: 'Labetalol\n拉貝洛爾',
+        sub: '高血壓急症',
+        back: {
+          title: '劑量',
+          items: [
+            'IV bolus：20mg 緩慢推注（2分鐘）',
+            '每 10 分鐘可重複：40mg → 80mg',
+            '最大累積劑量：300mg',
+            '維持滴注：0.5-2mg/min',
+          ],
+          warning: '心搏過緩、心衰竭、哮喘：禁用',
+          tip: '降壓目標：每小時降低 ≤ 25%（急症），避免降太快'
+        }
+      },
+      {
+        term: 'Acetaminophen\n普拿疼',
+        sub: '最常用的止痛退燒藥',
+        back: {
+          title: '劑量與安全上限',
+          items: [
+            '成人：500-1000mg PO/IV，每 4-6 小時',
+            '最大劑量：4g/天（正常肝功能）',
+            '肝病 / 長期飲酒：最大 2g/天',
+            'IV 版本：15 分鐘緩慢滴注',
+          ],
+          warning: '過量（> 7.5g 急性）→ 立刻給 N-Acetylcysteine，諮詢毒物科',
+        }
+      },
+    ]
+  },
+
+  labs: {
+    title: '檢驗值判讀 Lab Values',
+    color: 'var(--labs)',
+    colorHex: '#457B9D',
+    label: '🔬 Lab Values',
+    cards: [
+      {
+        term: 'Potassium (K⁺)\n血鉀',
+        sub: 'Critical values',
+        back: {
+          title: '正常值與 Critical',
+          items: [
+            '正常：3.5 – 5.0 mEq/L',
+            'Critical Low < 2.5：心律不整風險高，需補鉀',
+            'Critical High > 6.0：ECG 變化（peaked T, wide QRS）',
+            '高血鉀緊急處理：Ca gluconate → NaHCO₃ → Insulin/D50 → Kayexalate',
+          ],
+          warning: 'K⁺ 補充速率：最快 10-20 mEq/hr（周邊靜脈），需心監',
+        }
+      },
+      {
+        term: 'Sodium (Na⁺)\n血鈉',
+        sub: 'Hypo / Hypernatremia',
+        back: {
+          title: '正常值與處理',
+          items: [
+            '正常：135 – 145 mEq/L',
+            '低血鈉（< 120）：癲癇風險，3% NaCl 緩慢補充',
+            '高血鈉（> 160）：高滲透壓，自由水補充',
+          ],
+          warning: '低血鈉矯正速率：< 0.5 mEq/L/hr，< 10-12 mEq/L/24hr（避免 ODS）',
+          tip: 'ODS（滲透壓性脫髓鞘症候群）：矯正太快的嚴重後果'
+        }
+      },
+      {
+        term: 'Creatinine (Cr)\neGFR 腎功能',
+        sub: 'AKI 分期',
+        back: {
+          title: 'AKI KDIGO 分期',
+          items: [
+            'Stage 1：Cr x1.5-1.9 倍 或 ↑≥0.3 mg/dL / 48h',
+            'Stage 2：Cr x2-2.9 倍',
+            'Stage 3：Cr x3 倍 或 ≥4.0mg/dL 或 開始透析',
+            '尿量標準：< 0.5mL/kg/hr > 6h = Stage 1',
+          ],
+          tip: 'eGFR < 30：調整腎排除藥物劑量（Vancomycin, 抗生素, Metformin 等）'
+        }
+      },
+      {
+        term: 'Troponin I / T\n心肌肌鈣蛋白',
+        sub: 'ACS 最重要的 biomarker',
+        back: {
+          title: '判讀重點',
+          items: [
+            '升高定義：> 99th percentile 正常上限',
+            '動態變化：0h → 3h（或 0h → 1h）serial 測量',
+            'Rise and/or fall 才能診斷 Type 1 MI',
+            '單次升高不等於 ACS：腎衰、PE、心衰也會升',
+          ],
+          warning: 'high-sensitivity troponin（hs-cTn）讓診斷更靈敏，但特異性下降',
+          tip: 'Delta troponin（3h 變化 > 20%）= significant rise，傾向 ACS'
+        }
+      },
+      {
+        term: 'Hemoglobin (Hb)\n血色素',
+        sub: '輸血的時機',
+        back: {
+          title: '輸血閾值（指引）',
+          items: [
+            '一般住院患者：Hb < 7 g/dL 考慮輸血',
+            'ACS / 心臟病：Hb < 8 g/dL 考慮輸血',
+            '術後穩定：Hb < 8 g/dL（症狀導向）',
+            '每袋 pRBC 約提升 Hb 1 g/dL',
+          ],
+          warning: '輸血前確認 T&C（血型交叉試驗），急性出血不等 Hb 報告',
+        }
+      },
+      {
+        term: 'WBC 白血球\n感染與血液疾病',
+        sub: 'Leukocytosis / Leukopenia',
+        back: {
+          title: '正常值與判讀',
+          items: [
+            '正常：4,500 – 11,000 /μL',
+            'Leukocytosis（> 11,000）：感染、類固醇、stress、白血病',
+            'Leukopenia（< 4,000）：化療、病毒感染、藥物',
+            'Neutropenia（ANC < 500）：感染性發燒→立即抗生素',
+          ],
+          warning: 'Febrile neutropenia：體溫 > 38.3°C + ANC < 500 → 1小時內 broad-spectrum 抗生素',
+        }
+      },
+      {
+        term: 'Lactate\n乳酸',
+        sub: '組織灌流指標',
+        back: {
+          title: '判讀與意義',
+          items: [
+            '正常：< 2 mmol/L',
+            '> 2 mmol/L：代謝異常，需找原因',
+            '> 4 mmol/L + 低血壓 = Septic shock',
+            '清除率：2h 後下降 > 10% 表示治療有效',
+          ],
+          warning: 'Lactate 升高不等於 sepsis：肝衰竭、Metformin 過量、劇烈運動也會升',
+          tip: 'Sepsis 3.0 定義：SOFA score ≥ 2 分，不再用 SIRS'
+        }
+      },
+      {
+        term: 'INR / PT\n凝血時間',
+        sub: '抗凝監測 / 肝功能',
+        back: {
+          title: '臨床意義',
+          items: [
+            '正常 INR：0.8 – 1.2',
+            'Warfarin 治療目標：INR 2.0 – 3.0（一般）',
+            '機械瓣膜：INR 2.5 – 3.5',
+            'INR > 3：出血風險↑，考慮調整劑量',
+          ],
+          warning: 'INR > 5 + 出血：Vitamin K IV + FFP / 4F-PCC（緊急逆轉）',
+          tip: 'Warfarin 逆轉：Vitamin K 10mg IV（效果需 6-12h），FFP 即刻但暫時'
+        }
+      },
+      {
+        term: 'Blood Gas (ABG)\n動脈血液氣體',
+        sub: '酸鹼判讀 4 步驟',
+        back: {
+          title: '判讀流程',
+          items: [
+            '①pH：< 7.35 = 酸中毒；> 7.45 = 鹼中毒',
+            '②PaCO₂：< 35 = 過度換氣；> 45 = 低換氣',
+            '③HCO₃⁻：< 22 = 代謝酸；> 26 = 代謝鹼',
+            '④代償是否適當？（看是否單純型）',
+          ],
+          tip: 'AG（Anion Gap）= Na⁺ – (Cl⁻ + HCO₃⁻)，正常 8-12。AG > 12 = AG代謝酸中毒 → MUDPILES'
+        }
+      },
+      {
+        term: 'Glucose\n血糖 Critical Values',
+        sub: '高低血糖緊急處置',
+        back: {
+          title: 'Critical Values',
+          items: [
+            'Hypoglycemia < 50 mg/dL：',
+            '清醒：口服葡萄糖 15-20g，15分鐘後複查',
+            '昏迷：50% Glucose 20-50mL IV push',
+            'Hyperglycemia > 500：DKA / HHS 評估',
+          ],
+          warning: '低血糖處理後一定要找原因並複查血糖，避免再次下降',
+          tip: 'DKA 三要素：高血糖 + 酮酸中毒（AG↑，pH < 7.3）+ 酮尿/酮血'
+        }
+      },
+    ]
+  },
+
+  peds: {
+    title: '兒科常用公式',
+    color: 'var(--peds)',
+    colorHex: '#6BAA75',
+    label: '👶 兒科公式',
+    cards: [
+      {
+        term: 'Broselow Tape\n身長體重估算',
+        sub: '兒科急救第一步',
+        back: {
+          title: '使用方式',
+          items: [
+            '將膠帶從頭頂量到腳底',
+            '顏色區段對應體重和劑量',
+            '沒有膠帶時估算：(年齡+4) × 2 = 體重(kg)（1-10歲）',
+            '新生兒平均體重：3.5kg',
+          ],
+          tip: 'Broselow 是兒科急救的黃金標準，ER 一定要放一條'
+        }
+      },
+      {
+        term: '兒科體重估算\n公式',
+        sub: '1–10歲適用',
+        back: {
+          title: '估算公式',
+          items: [
+            '1-10 歲：體重(kg) = (年齡 + 4) × 2',
+            '或：體重(kg) = 年齡(歲) × 2 + 8',
+            '< 1 歲：出生體重 3.5kg，每月增加約 0.5-0.7kg',
+            '1 歲時約 10kg；2 歲時約 12-13kg',
+          ],
+          warning: '肥胖兒童：用理想體重（IBW）計算藥物劑量',
+        }
+      },
+      {
+        term: '兒童 Epinephrine\n急救劑量',
+        sub: 'Cardiac Arrest / Anaphylaxis',
+        back: {
+          title: '劑量',
+          items: [
+            'Cardiac Arrest：0.01mg/kg IV/IO（1:10,000）',
+            '最大單次劑量：1mg',
+            '每 3-5 分鐘重複',
+            'Anaphylaxis（肌肉注射）：0.01mg/kg IM（1:1,000），最大 0.5mg',
+          ],
+          warning: '兒科急救：用 mg/kg 計算，不要直接用成人劑量',
+        }
+      },
+      {
+        term: '兒童血壓正常值\n下限判斷',
+        sub: '低血壓定義',
+        back: {
+          title: '收縮壓下限（Hypotension）',
+          items: [
+            '新生兒（0-1月）：< 60 mmHg',
+            '1-12個月：< 70 mmHg',
+            '1-10歲：< 70 + (年齡×2) mmHg',
+            '> 10歲：< 90 mmHg',
+          ],
+          tip: '快速記憶：1歲以上 = 70 + (2 × 年齡)，這是可接受收縮壓下限'
+        }
+      },
+      {
+        term: '兒童心跳速率\n正常範圍',
+        sub: '依年齡判斷',
+        back: {
+          title: '正常心跳（次/分）',
+          items: [
+            '新生兒（0-1月）：100 – 160',
+            '嬰兒（1-12月）：100 – 150',
+            '幼兒（1-3歲）：90 – 150',
+            '學齡前（3-5歲）：80 – 140',
+            '學齡（6-12歲）：70 – 120',
+            '青少年（> 12歲）：60 – 100',
+          ],
+          warning: 'HR > 220（嬰）或 > 180（兒童）→ SVT 或其他快速心律'
+        }
+      },
+      {
+        term: '兒童輸液急救\nFluid Resuscitation',
+        sub: 'Septic Shock / Hypovolemia',
+        back: {
+          title: '急救輸液',
+          items: [
+            '標準：NS 或 LR，20mL/kg IV/IO over 5-15分鐘',
+            '可重複 2-3 次（60mL/kg 共），評估反應',
+            '若無改善→升壓藥（Dopamine / Norepinephrine）',
+            '早產兒 / 心病：10mL/kg，緩慢給',
+          ],
+          warning: '每次輸液後評估：HR、BP、毛細血管充血、尿量',
+        }
+      },
+      {
+        term: '兒童 Maintenance Fluid\n維持輸液',
+        sub: 'Holliday-Segar 公式',
+        back: {
+          title: '計算方式（每日需水量）',
+          items: [
+            '前 10kg：每 kg 需 100mL/天（4mL/kg/hr）',
+            '11-20kg：每 kg 再加 50mL/天（2mL/kg/hr）',
+            '> 20kg：每 kg 再加 20mL/天（1mL/kg/hr）',
+            '例：25kg = 1000+500+100 = 1600mL/天 = 66mL/hr',
+          ],
+          tip: '快速換算：4-2-1 法則（以 mL/kg/hr 計算）'
+        }
+      },
+      {
+        term: '兒童發燒退燒藥\n劑量',
+        sub: 'Acetaminophen / Ibuprofen',
+        back: {
+          title: '劑量',
+          items: [
+            'Acetaminophen：10-15mg/kg，每 4-6h（最大 5次/天）',
+            'Ibuprofen：5-10mg/kg，每 6-8h（> 6個月）',
+            '交替使用間隔：每種藥 6h，兩種之間 3h',
+            'Aspirin：兒童禁用（Reye syndrome）',
+          ],
+          warning: '< 3 個月嬰兒發燒：直接到急診，不要自行退燒',
+        }
+      },
+      {
+        term: '早產兒矯正年齡\nCorrected Age',
+        sub: '發展評估必用',
+        back: {
+          title: '計算方式',
+          items: [
+            '矯正年齡 = 實際年齡 – 早產週數（從 40 週算）',
+            '例：3個月大，32週出生（早產2個月）',
+            '矯正年齡 = 3 – 2 = 1 個月',
+            '使用矯正年齡評估：運動、語言、認知發展',
+          ],
+          tip: '矯正年齡使用至：運動 2歲，語言 3歲'
+        }
+      },
+      {
+        term: '新生兒 APGAR Score\n出生評估',
+        sub: '1 分鐘、5 分鐘評估',
+        back: {
+          title: '五個項目（各 0-2 分）',
+          items: [
+            'A - Appearance（膚色）：全身紅=2，四肢青=1，全身青=0',
+            'P - Pulse（心跳）：>100=2，<100=1，無=0',
+            'G - Grimace（反射）：哭=2，皺眉=1，無=0',
+            'A - Activity（張力）：主動屈曲=2，部分=1，軟=0',
+            'R - Respiration（呼吸）：哭=2，弱=1，無=0',
+          ],
+          warning: '7-10分=正常；4-6分=需監測；< 4分=需立即復甦',
+        }
+      },
+    ]
+  },
+
+  fluids: {
+    title: '輸液選擇與公式',
+    color: 'var(--fluids)',
+    colorHex: '#2A9D8F',
+    label: '💧 輸液選擇',
+    cards: [
+      {
+        term: '0.9% NaCl（NS）\n生理食鹽水',
+        sub: '最常用的輸液',
+        back: {
+          title: '成分與適應症',
+          items: [
+            'Na⁺: 154 mEq/L，Cl⁻: 154 mEq/L',
+            '滲透壓：308 mOsm/L（稍高張）',
+            '適應症：低血容、低血壓急救、Hyponatremia 校正',
+            '不適合：高氯性酸中毒、大量輸液（用 LR 替代）',
+          ],
+          warning: '大量 NS 會引起 Hyperchloremic metabolic acidosis（AG 正常型）',
+        }
+      },
+      {
+        term: 'Lactated Ringer\'s（LR）\n林格氏乳酸液',
+        sub: '最接近生理的輸液',
+        back: {
+          title: '成分與適應症',
+          items: [
+            'Na⁺:130, K⁺:4, Ca²⁺:3, Cl⁻:109, Lactate:28（mEq/L）',
+            '滲透壓：273 mOsm/L（稍低張）',
+            '適應症：手術、外傷、大量輸液首選',
+            '不適合：腦創傷（低滲會加重腦水腫）、高血鉀患者',
+          ],
+          tip: 'LR 含鉀，高血鉀時改用 NS；LR 不能與 pRBC 一起輸（含 Ca²⁺ 會凝血）'
+        }
+      },
+      {
+        term: 'D5W\n5% 葡萄糖水',
+        sub: 'Free water 補充',
+        back: {
+          title: '成分與適應症',
+          items: [
+            'Glucose: 50g/L，滲透壓：252 mOsm/L（等張）',
+            '進入體內後 glucose 代謝 → 實質上是自由水',
+            '適應症：Hypernatremia 校正、熱量補充、藥物稀釋載液',
+            '不適合：急性低血容、腦創傷',
+          ],
+          warning: '糖尿病患者注意血糖上升，急救時不用（會稀釋電解質）',
+        }
+      },
+      {
+        term: '白蛋白（Albumin）\n膠體輸液',
+        sub: 'SBP / 肝硬化 / 低白蛋白',
+        back: {
+          title: '用法與適應症',
+          items: [
+            '5% Albumin：用於容積補充（如 SBP、大量放腹水後）',
+            '20-25% Albumin：用於嚴重低白蛋白血症',
+            'SBP（自發性腹膜炎）：1.5g/kg day1 + 1g/kg day3',
+            '大量放腹水（> 5L）：每移除 1L 補 6-8g albumin',
+          ],
+          warning: '肺水腫時小心給，監測呼吸狀況',
+          tip: 'Albumin vs. NS：SBP 治療中 albumin 可降低腎損傷和死亡率'
+        }
+      },
+      {
+        term: '缺水量計算\nFree Water Deficit',
+        sub: 'Hypernatremia 矯正',
+        back: {
+          title: '公式',
+          items: [
+            '缺水量(L) = 0.6 × 體重(kg) × [Na⁺/140 – 1]',
+            '例：70kg，Na⁺ = 160：',
+            '= 0.6×70×(160/140–1) = 42×0.143 = 6L',
+            '矯正速率：每小時降 0.5 mEq/L，每日 ≤ 10 mEq/L',
+          ],
+          warning: '矯正太快 → 腦水腫風險，每 2-4 小時測 Na⁺',
+        }
+      },
+      {
+        term: '補鉀公式\nK⁺ Replacement',
+        sub: '低血鉀補充策略',
+        back: {
+          title: '補充原則',
+          items: [
+            '口服（輕中度）：K⁺ 3.0-3.5：KCl 40-60 mEq/天分次補',
+            '靜脈（嚴重或無法口服）：',
+            '周邊靜脈：最快 10 mEq/hr（濃度 ≤ 40 mEq/100mL）',
+            '中心靜脈：最快 20-40 mEq/hr（需心監）',
+          ],
+          warning: '補鉀不能推注（bolus），會引起心臟停止',
+          tip: '每補 10 mEq KCl 約升高血鉀 0.1 mEq/L（粗估）'
+        }
+      },
+      {
+        term: '輸血選擇\n血液製品種類',
+        sub: '什麼時候用哪種',
+        back: {
+          title: '血液製品選擇',
+          items: [
+            'pRBC（濃縮紅血球）：Hb 低、貧血、出血',
+            'FFP（新鮮冷凍血漿）：凝血因子不足、INR > 1.5 + 出血',
+            '血小板：Plt < 50K + 出血；< 10K 預防性輸',
+            'Cryoprecipitate：低纖維蛋白原（< 100mg/dL）',
+          ],
+          tip: '大量輸血（> 10U pRBC）：採 1:1:1 策略（pRBC:FFP:Plt），模擬全血'
+        }
+      },
+      {
+        term: 'Mannitol\n甘露醇',
+        sub: '腦壓升高急救',
+        back: {
+          title: '劑量與用法',
+          items: [
+            '急性顱內壓升高：0.25-1g/kg IV over 15-30 min',
+            '可每 4-6 小時重複（依滲透壓調整）',
+            '目標血清滲透壓：310-320 mOsm/kg',
+            '效果持續：3-8 小時',
+          ],
+          warning: '腎衰竭（無尿）相對禁忌；監測血清滲透壓和 Osmol Gap',
+          tip: '替代方案：3% NaCl（Hypertonic saline）1-2mL/kg IV，不受腎功能限制'
+        }
+      },
+      {
+        term: 'NaHCO₃\n碳酸氫鈉',
+        sub: '代謝性酸中毒矯正',
+        back: {
+          title: '適應症與劑量',
+          items: [
+            '嚴重酸中毒（pH < 7.1）：考慮給予',
+            '高血鉀緊急處理（第二步）：50mEq IV push',
+            '三環抗憂鬱劑中毒：使血液鹼化',
+            'DKA：通常不需要（治療低血容和胰島素即可）',
+          ],
+          warning: '給 NaHCO₃ 會產生 CO₂，確保通氣充足才能有效鹼化',
+          tip: 'NaHCO₃ 需要量(mEq) = (目標HCO₃ – 現有HCO₃) × 0.4 × 體重(kg)'
+        }
+      },
+      {
+        term: 'Dopamine vs Norepinephrine\n升壓藥選擇',
+        sub: 'Septic Shock 一線用藥',
+        back: {
+          title: '比較',
+          items: [
+            'Norepinephrine（首選）：0.01-3 μg/kg/min，主要α作用升壓',
+            'Dopamine：2-20 μg/kg/min，低劑量腎血管擴張（>已不建議），高劑量α作用',
+            'Vasopressin：0.03-0.04 U/min，二線，節省 Norepi 用量',
+            'Epinephrine：心因性休克或過敏休克',
+          ],
+          warning: 'Dopamine vs Norepinephrine：2010 年後 Norepinephrine 為 septic shock 首選',
+        }
+      },
+    ]
+  }
+};
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let currentTopic = 'acls';
+let currentIndex = 0;
+let isFlipped = false;
+let seen = new Set();
+let deck = [];
+
+const TOPIC_COLORS = {
+  acls: 'var(--acls)',
+  drugs: 'var(--drugs)',
+  labs: 'var(--labs)',
+  peds: 'var(--peds)',
+  fluids: 'var(--fluids)'
+};
+
+// ══════════════════════════════════════════════
+// DOM REFS
+// ══════════════════════════════════════════════
+const flashcard   = document.getElementById('flashcard');
+const frontTag    = document.getElementById('front-tag');
+const backTag     = document.getElementById('back-tag');
+const frontNum    = document.getElementById('front-num');
+const frontTerm   = document.getElementById('front-term');
+const frontSub    = document.getElementById('front-sub');
+const backContent = document.getElementById('back-content');
+const navFraction = document.getElementById('nav-fraction');
+const prevBtn     = document.getElementById('prev-btn');
+const nextBtn     = document.getElementById('next-btn');
+const deckTitle   = document.getElementById('deck-title');
+const deckCount   = document.getElementById('deck-count');
+const progressLabel = document.getElementById('progress-label');
+const progressFill  = document.getElementById('progress-fill');
+
+// ══════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════
+function loadTopic(topic) {
+  currentTopic = topic;
+  currentIndex = 0;
+  isFlipped = false;
+  seen = new Set();
+  deck = [...DECKS[topic].cards];
+
+  // tab styling
+  document.querySelectorAll('.topic-tab').forEach(t => {
+    t.className = 'topic-tab';
+    if (t.dataset.topic === topic) t.classList.add('active-' + topic);
+  });
+
+  flashcard.classList.remove('flipped');
+  updateCard();
+  updateStatus();
+}
+
+function updateCard() {
+  const d = DECKS[currentTopic];
+  const card = deck[currentIndex];
+  const color = d.color;
+
+  // front
+  frontTag.textContent = d.label;
+  frontTag.style.background = 'rgba(0,0,0,0.06)';
+  frontTag.style.color = d.colorHex;
+  frontNum.textContent = `${currentIndex + 1} / ${deck.length}`;
+  frontTerm.textContent = card.term;
+  frontSub.textContent = card.sub || '';
+
+  // back tag
+  backTag.textContent = d.label;
+  backTag.style.background = 'rgba(255,255,255,0.12)';
+  backTag.style.color = 'rgba(255,255,255,0.7)';
+
+  // back content
+  const b = card.back;
+  let html = `<h3>${b.title}</h3>`;
+  b.items.forEach(item => {
+    html += `<div class="back-item"><div class="back-dot" style="background:${d.color}"></div><span>${item}</span></div>`;
+  });
+  if (b.warning) html += `<div class="back-warning">⚠️ ${b.warning}</div>`;
+  if (b.tip)     html += `<div class="back-tip">💡 ${b.tip}</div>`;
+  backContent.innerHTML = html;
+
+  // card back bg tint
+  document.querySelector('.card-back').style.background = 'var(--navy)';
+
+  navFraction.textContent = `${currentIndex + 1} / ${deck.length}`;
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex === deck.length - 1;
+}
+
+function updateStatus() {
+  const d = DECKS[currentTopic];
+  deckTitle.textContent = d.title;
+  deckCount.textContent = `共 ${deck.length} 張`;
+  const s = seen.size;
+  const total = deck.length;
+  progressLabel.textContent = `${s} / ${total} 已看`;
+  progressFill.style.width = (s / total * 100) + '%';
+  progressFill.style.background = d.color;
+}
+
+// ══════════════════════════════════════════════
+// INTERACTIONS
+// ══════════════════════════════════════════════
+flashcard.addEventListener('click', () => {
+  isFlipped = !isFlipped;
+  flashcard.classList.toggle('flipped', isFlipped);
+  if (isFlipped) { seen.add(currentIndex); updateStatus(); }
+});
+
+function goNext() {
+  if (currentIndex < deck.length - 1) {
+    currentIndex++;
+    isFlipped = false;
+    flashcard.classList.remove('flipped');
+    updateCard();
+  }
+}
+function goPrev() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    isFlipped = false;
+    flashcard.classList.remove('flipped');
+    updateCard();
+  }
+}
+
+nextBtn.addEventListener('click', goNext);
+prevBtn.addEventListener('click', goPrev);
+
+document.getElementById('shuffle-btn').addEventListener('click', () => {
+  deck = [...deck].sort(() => Math.random() - 0.5);
+  currentIndex = 0;
+  isFlipped = false;
+  seen = new Set();
+  flashcard.classList.remove('flipped');
+  updateCard();
+  updateStatus();
+});
+
+document.getElementById('reset-btn').addEventListener('click', () => {
+  deck = [...DECKS[currentTopic].cards];
+  currentIndex = 0;
+  isFlipped = false;
+  seen = new Set();
+  flashcard.classList.remove('flipped');
+  updateCard();
+  updateStatus();
+});
+
+document.querySelectorAll('.topic-tab').forEach(btn => {
+  btn.addEventListener('click', () => loadTopic(btn.dataset.topic));
+});
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); flashcard.click(); }
+  if (e.key === 'ArrowRight') goNext();
+  if (e.key === 'ArrowLeft')  goPrev();
+  if (e.key === 's' || e.key === 'S') document.getElementById('shuffle-btn').click();
+});
+
+// ══════════════════════════════════════════════
+// PRINT MODAL
+// ══════════════════════════════════════════════
+const modal = document.getElementById('print-modal');
+const printTopics = new Set(['acls','drugs','labs','peds','fluids']);
+
+document.getElementById('open-print-btn').addEventListener('click', () => {
+  modal.classList.add('open');
+});
+document.getElementById('close-modal-btn').addEventListener('click', () => {
+  modal.classList.remove('open');
+});
+modal.addEventListener('click', e => {
+  if (e.target === modal) modal.classList.remove('open');
+});
+
+document.querySelectorAll('.modal-topic-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = btn.dataset.topic;
+    if (printTopics.has(t)) {
+      printTopics.delete(t);
+      btn.className = 'modal-topic-btn';
+    } else {
+      printTopics.add(t);
+      btn.className = 'modal-topic-btn sel-' + t;
+    }
+  });
+});
+
+document.getElementById('do-print-btn').addEventListener('click', () => {
+  buildPrintArea();
+  modal.classList.remove('open');
+  setTimeout(() => window.print(), 200);
+});
+
+function buildPrintArea() {
+  const area = document.getElementById('print-area');
+  area.innerHTML = '';
+  area.style.display = 'block';
+
+  const topics = [...printTopics];
+  // collect all cards from selected topics
+  let allCards = [];
+  topics.forEach(t => {
+    DECKS[t].cards.forEach(c => {
+      allCards.push({ topic: t, card: c, color: DECKS[t].colorHex, label: DECKS[t].label });
+    });
+  });
+
+  // group into pages of 4 cards (2x2 on A4)
+  for (let i = 0; i < allCards.length; i += 4) {
+    const page = document.createElement('div');
+    page.className = 'pocket-page';
+    for (let j = i; j < Math.min(i+4, allCards.length); j++) {
+      const { card, color, label } = allCards[j];
+      const b = card.back;
+      const el = document.createElement('div');
+      el.className = 'pocket-card';
+      let itemsHtml = b.items.map(it => `<p>• ${it}</p>`).join('');
+      let warnHtml = b.warning ? `<div class="warn">⚠️ ${b.warning}</div>` : '';
+      let tipHtml  = b.tip     ? `<p style="color:#555;font-style:italic">💡 ${b.tip}</p>` : '';
+      el.innerHTML = `
+        <div class="pocket-card-header">
+          <div class="pocket-card-dot" style="background:${color}"></div>
+          <div class="pocket-card-title">${card.term.replace('\n','・')}</div>
+        </div>
+        <div class="pocket-card-body">
+          <p style="font-weight:700;margin-bottom:3mm">${b.title}</p>
+          ${itemsHtml}${warnHtml}${tipHtml}
+        </div>
+        <div class="pocket-card-back-note">${label} — 醫院生存手冊</div>
+      `;
+      page.appendChild(el);
+    }
+    area.appendChild(page);
+  }
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+loadTopic('acls');
+</script>
+</body>
+</html>
