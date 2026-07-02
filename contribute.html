@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>貢獻知識 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:   #0D1F3C;
+      --red:    #E63946;
+      --green:  #6BAA75;
+      --amber:  #F4A261;
+      --blue:   #457B9D;
+      --light:  #F8FAFB;
+      --border: #DDE3EA;
+      --muted:  #8899AA;
+      --white:  #FFFFFF;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans TC', 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--navy);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,31,60,0.97);
+      backdrop-filter: blur(10px);
+      height: 56px; padding: 0 5%;
+      display: flex; align-items: center; gap: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav-back {
+      color: rgba(255,255,255,0.6); text-decoration: none;
+      font-size: 0.8rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: #fff; }
+    .nav-sep { color: rgba(255,255,255,0.2); }
+    .nav-title { color: #fff; font-size: 0.88rem; font-weight: 700; }
+
+    /* HERO */
+    .page-hero {
+      background: var(--navy);
+      padding: 48px 6% 44px;
+    }
+    .page-hero h1 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 900; color: #fff; margin-bottom: 10px;
+    }
+    .page-hero p {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.88rem; max-width: 520px; line-height: 1.7;
+    }
+
+    /* MAIN */
+    .main-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 5% 100px;
+    }
+
+    /* TYPE TOGGLE */
+    .type-toggle {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-bottom: 36px;
+    }
+    .type-btn {
+      padding: 18px 20px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      cursor: pointer; text-align: left;
+      transition: all 0.18s; font-family: inherit;
+    }
+    .type-btn:hover { border-color: var(--navy); }
+    .type-btn.active {
+      border-color: var(--blue);
+      background: rgba(69,123,157,0.05);
+    }
+    .type-btn-icon { font-size: 1.4rem; margin-bottom: 8px; display: block; }
+    .type-btn-title { font-size: 0.92rem; font-weight: 700; color: var(--navy); display: block; margin-bottom: 4px; }
+    .type-btn-desc  { font-size: 0.76rem; color: var(--muted); line-height: 1.5; display: block; }
+
+    /* FORM */
+    .form-section {
+      display: none;
+      flex-direction: column; gap: 20px;
+    }
+    .form-section.active { display: flex; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label {
+      font-size: 0.8rem; font-weight: 700; color: var(--navy);
+      letter-spacing: 0.02em;
+    }
+    .form-label .req { color: var(--red); margin-left: 2px; }
+    .form-input, .form-select, .form-textarea {
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit; font-size: 0.88rem;
+      color: var(--navy); background: var(--white);
+      transition: border-color 0.18s;
+      outline: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(69,123,157,0.1);
+    }
+    .form-textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+    .form-hint { font-size: 0.74rem; color: var(--muted); margin-top: 2px; }
+
+    .form-divider {
+      height: 1px; background: var(--border); margin: 4px 0;
+    }
+    .form-section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: -8px;
+    }
+
+    /* SUBMIT BUTTON */
+    .submit-btn {
+      padding: 14px 32px;
+      background: var(--navy); color: #fff;
+      border: none; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      transition: background 0.2s, transform 0.15s;
+      align-self: flex-start;
+    }
+    .submit-btn:hover:not(:disabled) { background: #1a3557; transform: translateY(-1px); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* SUCCESS / ERROR STATE */
+    .result-box {
+      display: none;
+      padding: 20px 24px;
+      border-radius: 10px;
+      margin-top: 8px;
+    }
+    .result-box.success {
+      background: #f0faf2;
+      border: 1.5px solid var(--green);
+    }
+    .result-box.error {
+      background: #fff5f5;
+      border: 1.5px solid var(--red);
+    }
+    .result-box h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .result-box p  { font-size: 0.83rem; line-height: 1.6; }
+    .result-box a  { color: var(--blue); }
+
+    /* INFO BOX */
+    .info-box {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+    .info-box h3 { font-size: 0.88rem; font-weight: 700; margin-bottom: 10px; color: var(--navy); }
+    .info-steps { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .info-steps li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 0.82rem; color: #5a6a7a; line-height: 1.55;
+    }
+    .step-circle {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--navy); color: #fff;
+      font-size: 0.65rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-title">✍️ 貢獻知識</span>
+</nav>
+
+<div class="page-hero">
+  <h1>✍️ 一起補充知識</h1>
+  <p>你在病房、手術室、急診遇到的東西，可能正是另一個人需要的。填表提交後，我們會審核再上線。</p>
+</div>
+
+<div class="main-wrap">
+
+  <!-- 流程說明 -->
+  <div class="info-box">
+    <h3>📋 提交流程</h3>
+    <ul class="info-steps">
+      <li><div class="step-circle">1</div><span>填寫下方表單，說明你想新增或修改的內容</span></li>
+      <li><div class="step-circle">2</div><span>提交後會自動進入審核佇列，通常 1-3 天內處理</span></li>
+      <li><div class="step-circle">3</div><span>審核通過後內容上線，你的名字會列在貢獻者名單</span></li>
+      <li><div class="step-circle">4</div><span>若有疑問，審核者會用你的 email 聯絡你</span></li>
+    </ul>
+  </div>
+
+  <!-- 提交類型選擇 -->
+  <div class="type-toggle">
+    <button class="type-btn active" data-type="new">
+      <span class="type-btn-icon">📝</span>
+      <span class="type-btn-title">新增知識點</span>
+      <span class="type-btn-desc">提交你覺得應該加進去的新內容，例如某個科別的重要觀念或臨床技巧</span>
+    </button>
+    <button class="type-btn" data-type="edit">
+      <span class="type-btn-icon">✏️</span>
+      <span class="type-btn-title">修改建議</span>
+      <span class="type-btn-desc">發現現有內容有錯誤、過時，或可以補充得更好？告訴我們</span>
+    </button>
+  </div>
+
+  <!-- ══ 表單：新增知識點 ══ -->
+  <form class="form-section active" id="form-new">
+
+    <div class="form-section-label">你的資料</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">姓名或暱稱 <span class="req">*</span></label>
+        <input class="form-input" type="text" name="name" placeholder="例：小陳 / 陳醫師" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email <span class="req">*</span></label>
+        <input class="form-input" type="email" name="email" placeholder="用於審核聯絡" required/>
+        <span class="form-hint">不會公開顯示</span>
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+    <div class="form-section-label">知識點位置</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">科別 <span class="req">*</span></label>
+        <select class="form-select" name="dept" required>
+          <option value="">選擇科別</option>
+          <option>內科</option>
+          <option>外科</option>
+          <option>急診</option>
+          <option>兒科</option>
+          <option>婦產科</option>
+          <option>神經科</option>
+          <option>骨科</option>
+          <option>其他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">次專科</label>
+        <input class="form-input" type="text" name="subspecialty" placeholder="例：心臟科、一般外科"/>
+        <span class="form-hint">不確定可以留空</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">主題 / 段落名稱 <span class="req">*</span></label>
+      <input class="form-input" type="text" name="topic" placeholder="例：常見主訴處理、術後照護重點"/>
+    </div>
+
+    <div class="form-divider"></div>
+    <div class="form-section-label">知識內容</div>
+
+    <div class="form-group">
+      <label class="form-label">術語 / 標題 <span class="req">*</span></label>
+      <input class="form-input" type="text" name="term" placeholder="例：DKA 的三要素、高血鉀緊急處理"/>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">說明內容 <span class="req">*</span></label>
+      <textarea class="form-textarea" name="definition" placeholder="用你自己的話說明這個知識點，像是跟同學解釋一樣。可以包含重點步驟、注意事項、記憶口訣等。" required></textarea>
+      <span class="form-hint">不需要完美，清楚就好。我們審核時可能會稍微調整格式。</span>
+    </div>
+
+    <div id="result-new" class="result-box"></div>
+
+    <button type="submit" class="submit-btn" id="btn-new">提交知識點 →</button>
+
+  </form>
+
+  <!-- ══ 表單：修改建議 ══ -->
+  <form class="form-section" id="form-edit">
+
+    <div class="form-section-label">你的資料</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">姓名或暱稱 <span class="req">*</span></label>
+        <input class="form-input" type="text" name="name" placeholder="例：小陳 / 陳醫師" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email <span class="req">*</span></label>
+        <input class="form-input" type="email" name="email" placeholder="用於審核聯絡" required/>
+        <span class="form-hint">不會公開顯示</span>
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+    <div class="form-section-label">修改位置</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">科別 <span class="req">*</span></label>
+        <select class="form-select" name="dept" required>
+          <option value="">選擇科別</option>
+          <option>內科</option>
+          <option>外科</option>
+          <option>急診</option>
+          <option>兒科</option>
+          <option>婦產科</option>
+          <option>神經科</option>
+          <option>骨科</option>
+          <option>其他（含首頁）</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">主題 / 段落 <span class="req">*</span></label>
+        <input class="form-input" type="text" name="topic" placeholder="例：常見主訴處理" required/>
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+    <div class="form-section-label">修改內容</div>
+
+    <div class="form-group">
+      <label class="form-label">你的建議 <span class="req">*</span></label>
+      <textarea class="form-textarea" name="suggestion" placeholder="說明你建議怎麼修改，或者直接貼上你覺得更好的版本" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">修改原因 <span class="req">*</span></label>
+      <textarea class="form-textarea" name="reason" placeholder="例：根據最新指引、原本的劑量有誤、臨床實務上不是這樣操作…" style="min-height:80px" required></textarea>
+    </div>
+
+    <div id="result-edit" class="result-box"></div>
+
+    <button type="submit" class="submit-btn" id="btn-edit">提交修改建議 →</button>
+
+  </form>
+
+</div>
+
+<script>
+  // ── 切換表單類型 ──
+  const typeBtns = document.querySelectorAll('.type-btn');
+  const formNew  = document.getElementById('form-new');
+  const formEdit = document.getElementById('form-edit');
+
+  typeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      typeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (btn.dataset.type === 'new') {
+        formNew.classList.add('active');
+        formEdit.classList.remove('active');
+      } else {
+        formEdit.classList.add('active');
+        formNew.classList.remove('active');
+      }
+    });
+  });
+
+  // ── 表單提交 ──
+  function showResult(id, type, message, link) {
+    const box = document.getElementById(id);
+    box.className = 'result-box ' + type;
+    box.style.display = 'block';
+    box.innerHTML = type === 'success'
+      ? `<h3>✅ 提交成功！</h3><p>${message}${link ? ` <a href="${link}" target="_blank">查看審核進度 →</a>` : ''}</p>`
+      : `<h3>❌ 提交失敗</h3><p>${message}</p>`;
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  async function submitForm(formEl, type, btnId, resultId) {
+    const btn = document.getElementById(btnId);
+    const data = Object.fromEntries(new FormData(formEl));
+    data.type = type;
+
+    btn.disabled = true;
+    btn.textContent = '提交中…';
+
+    try {
+      const res = await fetch('/.netlify/functions/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+
+      if (json.success) {
+        showResult(resultId, 'success', json.message, json.issueUrl);
+        formEl.reset();
+        btn.textContent = '已提交 ✓';
+      } else {
+        showResult(resultId, 'error', json.error || '發生未知錯誤，請稍後再試');
+        btn.disabled = false;
+        btn.textContent = type === 'new' ? '提交知識點 →' : '提交修改建議 →';
+      }
+    } catch {
+      showResult(resultId, 'error', '網路錯誤，請確認連線後再試');
+      btn.disabled = false;
+      btn.textContent = type === 'new' ? '提交知識點 →' : '提交修改建議 →';
+    }
+  }
+
+  formNew.addEventListener('submit', e => {
+    e.preventDefault();
+    submitForm(formNew, 'new', 'btn-new', 'result-new');
+  });
+
+  formEdit.addEventListener('submit', e => {
+    e.preventDefault();
+    submitForm(formEdit, 'edit', 'btn-edit', 'result-edit');
+  });
+</script>
+</body>
+</html>
