@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>胸腔科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html" class="nav-back">分科知識</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">胸腔科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">胸腔科</div>
+    <a href="#copd"        class="sidebar-link">COPD</a>
+    <a href="#asthma"      class="sidebar-link">氣喘</a>
+    <a href="#pneumonia"   class="sidebar-link">肺炎</a>
+    <a href="#pe"          class="sidebar-link">肺栓塞 PE</a>
+    <a href="#effusion"    class="sidebar-link">胸腔積液</a>
+    <a href="#resp-fail"   class="sidebar-link">呼吸衰竭</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="cardio.html"  class="sidebar-link">心臟科 →</a>
+    <a href="infect.html"  class="sidebar-link">感染科 →</a>
+    <a href="general.html" class="sidebar-link">一般內科 →</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> ›
+      <a href="../specialty.html">分科知識</a> ›
+      <span>胸腔科</span>
+    </div>
+
+    <div class="page-hero" style="background:linear-gradient(135deg,#1a2a3a,#2d4a6a);color:#fff;">
+      <div class="page-hero-text">
+        <h1>胸腔科 Pulmonology</h1>
+        <p>先顧氧合，再找原因。SpO₂ 掉下來的速度，比你想的快。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      </div>
+    </div>
+
+    <!-- COPD -->
+    <div class="topic-block" id="copd">
+      <div class="topic-block-head">
+        <span class="topic-block-title">COPD 慢性阻塞性肺病</span>
+        <div data-bm-id="copd" data-bm-dept="胸腔科" data-bm-title="COPD">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="copd-def" data-bm-dept="胸腔科" data-bm-title="COPD 定義與分級">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">定義與 GOLD 分級</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>定義：吸後 FEV₁/FVC &lt;0.70（不可逆氣流阻塞）</li>
+              <li><strong>GOLD 1</strong>：FEV₁ ≥80%（輕度）</li>
+              <li><strong>GOLD 2</strong>：FEV₁ 50-79%（中度）</li>
+              <li><strong>GOLD 3</strong>：FEV₁ 30-49%（重度）</li>
+              <li><strong>GOLD 4</strong>：FEV₁ &lt;30%（極重度）</li>
+              <li class="note">COPD 的診斷需要肺功能（spirometry），臨床症狀不夠</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="copd-stable" data-bm-dept="胸腔科" data-bm-title="COPD 穩定期治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">穩定期治療</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>LABA 或 LAMA</strong>：長效支氣管擴張劑，所有有症狀 COPD 的基礎用藥</li>
+              <li><strong>LABA + LAMA</strong>：症狀持續或反覆急性惡化者</li>
+              <li><strong>ICS + LABA</strong>：合併氣喘特徵、嗜酸性球增多、反覆惡化</li>
+              <li>戒菸：唯一能延緩肺功能下降的介入</li>
+              <li>肺復健：改善運動耐受度和生活品質</li>
+              <li class="note">ICS 單獨不建議用於 COPD，會增加肺炎風險</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="copd-ae" data-bm-dept="胸腔科" data-bm-title="COPD 急性惡化">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">COPD 急性惡化（AECOPD）處理</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>氧氣：目標 SpO₂ <strong>88-92%</strong>（不是越高越好，避免 CO₂ 滯留）</div></li>
+              <li><div class="step-num">2</div><div>短效支氣管擴張劑：Salbutamol（SABA）+ Ipratropium（SAMA）nebulizer</div></li>
+              <li><div class="step-num">3</div><div>全身性類固醇：Prednisolone 40mg PO 或 Methylprednisolone 40mg IV，5 天</div></li>
+              <li><div class="step-num">4</div><div>抗生素（有膿性痰或需插管者）：Amoxicillin-Clavulanate 或 Doxycycline，5-7 天</div></li>
+              <li><div class="step-num">5</div><div>NIPPV（NIV）：PaCO₂ &gt;45 或 pH &lt;7.35 → BiPAP 優先於插管</div></li>
+            </ul>
+            <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>COPD 給太多氧氣會抑制呼吸驅動力，SpO₂ 目標 88-92%，不要給到 100%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 氣喘 -->
+    <div class="topic-block" id="asthma">
+      <div class="topic-block-head">
+        <span class="topic-block-title">氣喘 Asthma</span>
+        <div data-bm-id="asthma" data-bm-dept="胸腔科" data-bm-title="氣喘">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="asthma-vs-copd" data-bm-dept="胸腔科" data-bm-title="氣喘 vs COPD">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">氣喘 vs COPD 鑑別</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th></th><th>氣喘</th><th>COPD</th></tr></thead>
+              <tbody>
+                <tr><td>年齡</td><td>常見年輕人</td><td>常見 &gt;40 歲</td></tr>
+                <tr><td>病程</td><td>間歇性，可完全緩解</td><td>持續性，漸進惡化</td></tr>
+                <tr><td>誘發因子</td><td>過敏原、運動、冷空氣</td><td>抽菸（主要）</td></tr>
+                <tr><td>可逆性</td><td>支氣管擴張後 FEV₁ 恢復</td><td>不完全可逆</td></tr>
+                <tr><td>痰液</td><td>清澈黏稠</td><td>可膿性</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="asthma-severity" data-bm-dept="胸腔科" data-bm-title="氣喘急性發作嚴重度">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性發作嚴重度評估</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>輕度</strong>：說話成句、SpO₂ &gt;95%、RR &lt;20</li>
+              <li><strong>中度</strong>：說話斷句、SpO₂ 91-95%、RR 20-30、使用輔助呼吸肌</li>
+              <li><strong>重度</strong>：說話單字、SpO₂ &lt;91%、RR &gt;30、無法平躺</li>
+              <li><strong>瀕危</strong>：意識改變、呼吸音消失（silent chest）、發紺</li>
+              <li class="note">Silent chest 是最危險的警訊，不是好轉，是氣流已嚴重受阻</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="asthma-tx" data-bm-dept="胸腔科" data-bm-title="氣喘急性發作處置">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性發作處置</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>Salbutamol（Ventolin）MDI 4-8 puffs 或 nebulizer 2.5-5mg，每 20 分鐘 ×3 次</div></li>
+              <li><div class="step-num">2</div><div>Ipratropium nebulizer（與 Salbutamol 合用，中重度）</div></li>
+              <li><div class="step-num">3</div><div>全身性類固醇：Prednisolone 40-60mg PO 或 Methylprednisolone 80mg IV</div></li>
+              <li><div class="step-num">4</div><div>氧氣：目標 SpO₂ &gt;94%（氣喘不像 COPD，可以給高濃度氧）</div></li>
+              <li><div class="step-num">5</div><div>重度無效 → Magnesium sulfate 2g IV over 20min、考慮插管</div></li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="asthma-controller" data-bm-dept="胸腔科" data-bm-title="氣喘長期控制用藥">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">長期控制用藥（GINA 步驟治療）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Step 1-2</strong>：低劑量 ICS + SABA PRN（或 SABA 單獨）</li>
+              <li><strong>Step 3</strong>：低劑量 ICS + LABA</li>
+              <li><strong>Step 4</strong>：中高劑量 ICS + LABA</li>
+              <li><strong>Step 5</strong>：加 LAMA、Anti-IgE（Omalizumab）、Anti-IL5</li>
+              <li class="note">ICS 是氣喘長期控制的基石，SABA 單獨使用不能長期控制發炎</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 肺炎（胸腔科角度） -->
+    <div class="topic-block" id="pneumonia">
+      <div class="topic-block-head">
+        <span class="topic-block-title">肺炎 Pneumonia（胸腔科重點）</span>
+        <div data-bm-id="pulm-pna" data-bm-dept="胸腔科" data-bm-title="肺炎（胸腔科）">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-blue">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+        <span>肺炎的抗生素選擇詳見感染科，這裡著重胸腔科角度的評估和併發症處理。</span>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="pna-complication" data-bm-dept="胸腔科" data-bm-title="肺炎併發症">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">肺炎常見併發症</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>肋膜積液（Parapneumonic effusion）</strong>：超音波確認，分單純性 vs 複雜性</li>
+              <li><strong>膿胸（Empyema）</strong>：pH &lt;7.2、LDH &gt;1000、Glucose &lt;60 → 需引流</li>
+              <li><strong>肺膿瘍（Lung abscess）</strong>：影像上出現 air-fluid level，延長抗生素療程</li>
+              <li><strong>呼吸衰竭</strong>：進展至 ARDS，考慮 ICU 和機械通氣</li>
+              <li class="note">治療 48-72h 無改善 → 重新評估：耐藥菌？非典型？膿胸？腫瘤阻塞？</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pna-xray" data-bm-dept="胸腔科" data-bm-title="肺炎影像判讀">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">CXR 和 CT 的判讀重點</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>葉性肺炎（Lobar）</strong>：整葉實質化，多為 S. pneumoniae</li>
+              <li><strong>支氣管肺炎（Bronchopneumonia）</strong>：片狀浸潤，多為 HAP 菌種</li>
+              <li><strong>間質性肺炎（Interstitial）</strong>：雙側磨玻璃影，多為非典型或病毒</li>
+              <li>Air bronchogram：實質化中看到充氣支氣管，代表氣道通暢但肺泡實化</li>
+              <li class="note">CXR 比 CT 慢 24-48h 顯示，臨床惡化不要等 CXR 確認</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PE -->
+    <div class="topic-block" id="pe">
+      <div class="topic-block-head">
+        <span class="topic-block-title">肺栓塞 Pulmonary Embolism</span>
+        <div data-bm-id="pe" data-bm-dept="胸腔科" data-bm-title="肺栓塞 PE">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-red">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>血流動力學不穩定的大型 PE → 考慮立刻溶栓治療，不要等太多檢查。</span>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="pe-pretest" data-bm-dept="胸腔科" data-bm-title="PE 預測機率">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">Wells Score 預測 PE 機率</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>DVT 臨床症狀（3分）</li>
+              <li>無其他可解釋診斷（3分）</li>
+              <li>心跳 &gt;100（1.5分）</li>
+              <li>近 4 週手術或臥床（1.5分）</li>
+              <li>既往 DVT/PE（1.5分）</li>
+              <li>咳血（1分）</li>
+              <li>惡性腫瘤（1分）</li>
+              <li class="note">&lt;2 分：低機率→D-dimer；4-6分：中機率；&gt;6分：高機率→直接 CTPA</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pe-dx" data-bm-dept="胸腔科" data-bm-title="PE 診斷流程">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">診斷流程</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>D-dimer</strong>：敏感但不特異，低機率時用來排除 PE</li>
+              <li><strong>CTPA</strong>（CT Pulmonary Angiography）：確診首選，可看到充盈缺損</li>
+              <li><strong>ECG</strong>：S1Q3T3（不常見）、竇性心搏過速（最常見）、右心負荷增加</li>
+              <li><strong>Echo</strong>：右心擴大、D-sign，血流動力學不穩定時快速評估</li>
+              <li class="note">D-dimer 在年齡調整後參考值更準：年齡×10 μg/L（&gt;50 歲）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pe-tx" data-bm-dept="胸腔科" data-bm-title="PE 治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">PE 抗凝與溶栓治療</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>血流動力學穩定</strong>：Heparin UFH IV 或 LMWH SC → 換口服抗凝（DOAC 首選）</li>
+              <li><strong>大型 PE（血流不穩）</strong>：systemic thrombolysis（tPA 100mg IV over 2h）</li>
+              <li><strong>DOAC 首選</strong>：Rivaroxaban 或 Apixaban（不需橋接 Heparin）</li>
+              <li><strong>抗凝療程</strong>：誘發性 PE 3 個月；非誘發性或癌症相關：延長或長期</li>
+              <li class="note">癌症相關 DVT/PE：LMWH 或 DOAC（Edoxaban、Rivaroxaban）優於 Warfarin</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pe-risk" data-bm-dept="胸腔科" data-bm-title="PE 危險分層">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">PE 危險分層（決定治療強度）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>大型 PE（High risk）</strong>：血壓 &lt;90 或下降 &gt;40mmHg → 溶栓或手術</li>
+              <li><strong>次大型 PE（Intermediate）</strong>：血壓穩定但 RV dysfunction 或 Troponin 升高 → 密切監測</li>
+              <li><strong>小型 PE（Low risk）</strong>：PESI score 低 → 考慮門診抗凝</li>
+              <li>RV dysfunction：Echo 見 RV 擴大、CTPA 見 RV/LV &gt;0.9</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 胸腔積液 -->
+    <div class="topic-block" id="effusion">
+      <div class="topic-block-head">
+        <span class="topic-block-title">胸腔積液 Pleural Effusion</span>
+        <div data-bm-id="effusion" data-bm-dept="胸腔科" data-bm-title="胸腔積液">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="effusion-light" data-bm-dept="胸腔科" data-bm-title="Light's Criteria">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">Light's Criteria 分類</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>符合任一條 = <strong>滲出液（Exudate）</strong>：</li>
+              <li>肋膜液蛋白 / 血清蛋白 &gt;0.5</li>
+              <li>肋膜液 LDH / 血清 LDH &gt;0.6</li>
+              <li>肋膜液 LDH &gt;2/3 血清 LDH 正常上限</li>
+              <li>三項都不符合 = <strong>漏出液（Transudate）</strong></li>
+            </ul>
+            <div class="alert alert-blue" style="margin-top:12px;margin-bottom:0">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+              <span>漏出液：心衰竭、肝硬化、低白蛋白。滲出液：感染、惡性腫瘤、PE、自體免疫</span>
+            </div>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="effusion-workup" data-bm-dept="胸腔科" data-bm-title="胸腔積液檢查">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">肋膜液分析要送哪些</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>常規</strong>：蛋白質、LDH、葡萄糖、pH、細胞計數分類</li>
+              <li><strong>感染懷疑</strong>：革蘭氏染色、培養（需氧/厭氧）</li>
+              <li><strong>惡性懷疑</strong>：細胞學（送多量，敏感性較高）</li>
+              <li><strong>TB 懷疑</strong>：ADA（Adenosine deaminase）&gt;40 高度懷疑</li>
+              <li>同時抽血送：蛋白質、LDH、白蛋白（Light's criteria 計算用）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="effusion-tx" data-bm-dept="胸腔科" data-bm-title="胸腔積液引流">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">何時需要引流</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>呼吸困難症狀明顯 → 治療性引流（symptom relief）</li>
+              <li>膿胸（pH &lt;7.2、Glucose &lt;60、膿性外觀）→ 置放 chest tube</li>
+              <li>大型積液（&gt;1/2 胸腔）→ 考慮引流</li>
+              <li>首次引流量 ≤1000-1500mL（避免 re-expansion pulmonary edema）</li>
+              <li class="note">心衰竭引起的漏出液 → 先治療心衰竭，不一定要引流</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 呼吸衰竭 -->
+    <div class="topic-block" id="resp-fail">
+      <div class="topic-block-head">
+        <span class="topic-block-title">呼吸衰竭 Respiratory Failure</span>
+        <div data-bm-id="resp-fail" data-bm-dept="胸腔科" data-bm-title="呼吸衰竭">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="resp-type" data-bm-dept="胸腔科" data-bm-title="呼吸衰竭分型">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">Type 1 vs Type 2 呼吸衰竭</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Type 1（低氧型）</strong>：PaO₂ &lt;60 mmHg，PaCO₂ 正常或低</li>
+              <li>原因：肺炎、肺水腫、PE、ARDS（氣體交換障礙）</li>
+              <li><strong>Type 2（高碳酸型）</strong>：PaO₂ &lt;60 + PaCO₂ &gt;45</li>
+              <li>原因：COPD、神經肌肉疾病、肥胖低換氣（通氣障礙）</li>
+              <li class="note">Type 2 給高濃度氧氣要小心，CO₂ 滯留會加重呼吸性酸中毒</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="resp-niv" data-bm-dept="胸腔科" data-bm-title="NIPPV / NIV 適應症">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">NIV（非侵入性通氣）適應症</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>CPAP</strong>（持續正壓）：急性心因性肺水腫首選</li>
+              <li><strong>BiPAP</strong>：AECOPD（pH &lt;7.35、PaCO₂ &gt;45）、免疫低下肺炎</li>
+              <li>禁忌：意識喪失、無法配合、大量分泌物、顏面外傷、嘔吐風險高</li>
+              <li>NIV 失敗標準：1-2h 後 pH 仍 &lt;7.25 或惡化 → 插管</li>
+              <li class="note">NIV 試了還是不行，不要拖，早插管比晚插管更安全</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="ards" data-bm-dept="胸腔科" data-bm-title="ARDS">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">ARDS 急性呼吸窘迫症候群</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Berlin 定義</strong>：症狀 1 週內急性發作、雙側浸潤、非心因性肺水腫、PaO₂/FiO₂ &lt;300</li>
+              <li>輕度：P/F 200-300；中度：P/F 100-200；重度：P/F &lt;100</li>
+              <li><strong>通氣策略</strong>：保護性通氣（Lung-protective ventilation）</li>
+              <li>潮氣量 4-6 mL/kg（理想體重）、平台壓 &lt;30 cmH₂O</li>
+              <li>俯臥通氣（Prone positioning）：P/F &lt;150 → 每天 16h，可降低死亡率</li>
+              <li>高 PEEP 策略：中重度 ARDS 改善氧合</li>
+              <li class="note">ARDS 沒有特效藥，支持性治療為主，避免呼吸器傷害是關鍵</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'copd',      dept:'胸腔科', title:'COPD',       url:'#copd',      text:'FEV1 FVC GOLD LABA LAMA ICS AECOPD BiPAP Salbutamol Ipratropium 戒菸 SpO2 88 92' },
+    { id:'asthma',    dept:'胸腔科', title:'氣喘',       url:'#asthma',    text:'Salbutamol Ventolin MDI nebulizer Ipratropium Prednisolone ICS SABA LABA GINA silent chest 支氣管擴張' },
+    { id:'pneumonia', dept:'胸腔科', title:'肺炎',       url:'#pneumonia', text:'膿胸 Empyema 肺膿瘍 ARDS 肋膜積液 CXR air bronchogram 葉性 支氣管肺炎 間質性' },
+    { id:'pe',        dept:'胸腔科', title:'肺栓塞 PE',  url:'#pe',        text:'Wells D-dimer CTPA DVT 溶栓 tPA Heparin DOAC Rivaroxaban Apixaban RV dysfunction S1Q3T3' },
+    { id:'effusion',  dept:'胸腔科', title:'胸腔積液',   url:'#effusion',  text:'Light criteria 漏出液 滲出液 LDH 蛋白質 ADA 膿胸 pH 引流 chest tube 心衰竭 惡性' },
+    { id:'resp-fail', dept:'胸腔科', title:'呼吸衰竭',   url:'#resp-fail', text:'Type 1 Type 2 PaO2 PaCO2 CPAP BiPAP NIV ARDS Berlin P/F ratio 俯臥 Prone PEEP 保護性通氣' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
