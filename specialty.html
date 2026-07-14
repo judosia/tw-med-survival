@@ -3,2089 +3,289 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>分科知識 | 醫院生存手冊</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <title>分科知識 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --navy:   #0D1F3C;
-      --red:    #E63946;
-      --green:  #6BAA75;
-      --amber:  #F4A261;
-      --blue:   #457B9D;
-      --teal:   #2A9D8F;
-      --purple: #7B5EA7;
-      --light:  #F8FAFB;
-      --border: #DDE3EA;
-      --muted:  #8899AA;
-      --white:  #FFFFFF;
-
-      --sidebar-w: 240px;
-      --nav-h: 56px;
+    /* 入口頁專屬樣式 */
+    .entry-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 5% 100px;
     }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Noto Sans TC', 'Inter', sans-serif;
-      background: var(--light);
+    .entry-hero {
+      margin-bottom: 48px;
+    }
+    .entry-hero h1 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 900; color: var(--navy); margin-bottom: 8px;
+    }
+    .entry-hero p {
+      font-size: 0.88rem; color: var(--muted); max-width: 480px; line-height: 1.7;
+    }
+
+    /* 科別區塊 */
+    .dept-block { margin-bottom: 44px; }
+    .dept-block-head {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px; padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .dept-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .dept-icon svg { width: 18px; height: 18px; }
+    .dept-name { font-size: 1.05rem; font-weight: 800; }
+    .dept-coming {
+      margin-left: auto;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      background: var(--border); padding: 3px 9px; border-radius: 20px;
+    }
+
+    /* 次專科卡片 grid */
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .sub-card {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.18s;
       color: var(--navy);
-      line-height: 1.7;
     }
+    .sub-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 4px 14px rgba(69,123,157,0.12);
+      transform: translateY(-1px);
+    }
+    .sub-card.disabled {
+      opacity: 0.4; pointer-events: none; cursor: default;
+    }
+    .sub-card-icon {
+      width: 32px; height: 32px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .sub-card-icon svg { width: 16px; height: 16px; }
+    .sub-card-text { flex: 1; }
+    .sub-card-name { font-size: 0.88rem; font-weight: 700; margin-bottom: 2px; }
+    .sub-card-count { font-size: 0.72rem; color: var(--muted); }
+    .sub-card-arrow {
+      color: var(--muted); font-size: 0.8rem;
+      transition: transform 0.15s;
+    }
+    .sub-card:hover .sub-card-arrow { transform: translateX(3px); color: var(--blue); }
 
-    /* ── TOP NAV ── */
-    nav {
+    /* 顏色 */
+    .color-im    { background: rgba(69,123,157,0.1);  color: #457B9D; }
+    .color-surg  { background: rgba(230,57,70,0.1);   color: #E63946; }
+    .color-er    { background: rgba(244,162,97,0.1);  color: #c47d2b; }
+    .color-peds  { background: rgba(107,170,117,0.1); color: #6BAA75; }
+    .color-ob    { background: rgba(123,94,167,0.1);  color: #7B5EA7; }
+    .color-neuro { background: rgba(42,157,143,0.1);  color: #2A9D8F; }
+
+    /* nav 簡化版 */
+    body { padding-top: var(--nav-h); }
+    .simple-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 300;
       background: rgba(13,31,60,0.97);
       backdrop-filter: blur(10px);
-      height: var(--nav-h);
-      padding: 0 5%;
-      display: flex; align-items: center; gap: 16px;
+      height: var(--nav-h); padding: 0 5%;
+      display: flex; align-items: center; gap: 12px;
       border-bottom: 1px solid rgba(255,255,255,0.07);
     }
-    .nav-back {
-      color: rgba(255,255,255,0.6); text-decoration: none;
-      font-size: 0.8rem; font-weight: 500;
-      display: flex; align-items: center; gap: 6px;
-      transition: color 0.2s;
-    }
-    .nav-back:hover { color: #fff; }
-    .nav-sep { color: rgba(255,255,255,0.2); }
-    .nav-title { color: #fff; font-size: 0.88rem; font-weight: 700; }
-    .nav-right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
-    .nav-pill {
-      padding: 5px 14px; border-radius: 20px;
-      font-size: 0.74rem; font-weight: 700;
-      text-decoration: none; transition: all 0.18s;
-      border: 1.5px solid rgba(255,255,255,0.18);
-      color: rgba(255,255,255,0.7);
-    }
-    .nav-pill:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
-    .nav-pill.active-im     { background: rgba(69,123,157,0.3);  border-color: #457B9D; color: #7bb8d4; }
-    .nav-pill.active-surg   { background: rgba(230,57,70,0.3);   border-color: #E63946; color: #ff8a8a; }
-    .nav-pill.active-er     { background: rgba(244,162,97,0.3);  border-color: #F4A261; color: #f4a261; }
-
-    /* ── LAYOUT ── */
-    .page-wrap {
-      display: flex;
-      padding-top: var(--nav-h);
-      min-height: 100vh;
-    }
-
-    /* ── SIDEBAR ── */
-    .sidebar {
-      width: var(--sidebar-w);
-      flex-shrink: 0;
-      position: fixed;
-      top: var(--nav-h);
-      left: 0;
-      bottom: 0;
-      overflow-y: auto;
-      background: var(--white);
-      border-right: 1.5px solid var(--border);
-      padding: 28px 0 40px;
-      z-index: 200;
-    }
-    .sidebar::-webkit-scrollbar { width: 4px; }
-    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-    /* ── SIDEBAR 三層結構 ── */
-
-    /* 第一層：科別按鈕 */
-    .sidebar-section { margin-bottom: 2px; }
-    .sidebar-dept-btn {
-      width: 100%;
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 20px;
-      background: none; border: none;
-      font-family: inherit; font-size: 0.86rem; font-weight: 700;
-      color: var(--navy); cursor: pointer;
-      text-align: left; transition: background 0.15s;
-    }
-    .sidebar-dept-btn:hover { background: var(--light); }
-    .sidebar-dept-btn.active { color: var(--blue); }
-    .sidebar-dept-btn .arrow {
-      margin-left: auto; font-size: 0.65rem;
-      color: var(--muted); transition: transform 0.25s;
-    }
-    .sidebar-dept-btn.active .arrow { transform: rotate(90deg); }
-    .dept-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-    /* 第一層收合容器 */
-    .sidebar-dept-body {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.3s ease;
-    }
-
-    /* 第二層：次專科按鈕 */
-    .sidebar-sub-btn {
-      width: 100%;
-      display: flex; align-items: center; gap: 8px;
-      padding: 8px 20px 8px 34px;
-      background: none; border: none;
-      font-family: inherit; font-size: 0.8rem; font-weight: 600;
-      color: var(--muted); cursor: pointer;
-      text-align: left; transition: all 0.15s;
-    }
-    .sidebar-sub-btn:hover { color: var(--navy); background: var(--light); }
-    .sidebar-sub-btn.active { color: var(--navy); }
-    .sidebar-sub-btn .arrow {
-      margin-left: auto; font-size: 0.6rem;
-      color: var(--muted); transition: transform 0.25s;
-    }
-    .sidebar-sub-btn.active .arrow { transform: rotate(90deg); }
-
-    /* 第二層收合容器 */
-    .sidebar-sub-body {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.28s ease;
-    }
-
-    /* 第三層：主題連結 */
-    .sidebar-topic-link {
-      display: flex; align-items: center;
-      padding: 6px 20px 6px 48px;
-      text-decoration: none;
-      font-size: 0.76rem; color: var(--muted);
-      transition: all 0.15s; border-left: 2px solid transparent;
-    }
-    .sidebar-topic-link::before {
-      content: '·'; margin-right: 7px; font-size: 1rem; line-height: 0;
-    }
-    .sidebar-topic-link:hover { color: var(--navy); background: var(--light); }
-    .sidebar-topic-link.active {
-      color: var(--navy); font-weight: 600;
-      border-left-color: var(--blue);
-      background: rgba(69,123,157,0.06);
-    }
-
-    /* 即將推出 */
-    .sidebar-coming {
-      padding: 14px 20px 4px;
-      font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--muted); margin-top: 8px;
-      border-top: 1px solid var(--border);
-    }
-    .sidebar-future {
-      display: flex; align-items: center; gap: 10px;
-      padding: 8px 20px;
-      font-size: 0.8rem; color: var(--muted);
-      opacity: 0.4;
-    }
-
-    /* ── MAIN CONTENT ── */
-    .main-content {
-      margin-left: var(--sidebar-w);
-      flex: 1;
-      padding: 48px 5% 100px;
-      max-width: calc(100% - var(--sidebar-w));
-    }
-
-    /* ── DEPT HEADER ── */
-    .dept-header {
-      display: flex; align-items: flex-start; gap: 20px;
-      padding: 32px 36px;
-      border-radius: 14px;
-      margin-bottom: 40px;
-      position: relative; overflow: hidden;
-    }
-    .dept-header-icon { font-size: 2.4rem; flex-shrink: 0; }
-    .dept-header-text h1 {
-      font-size: clamp(1.5rem, 2.5vw, 2rem);
-      font-weight: 900; margin-bottom: 6px;
-    }
-    .dept-header-text p {
-      font-size: 0.88rem; opacity: 0.8; max-width: 500px; line-height: 1.6;
-    }
-    .dept-header-bg {
-      position: absolute; right: -20px; bottom: -20px;
-      font-size: 7rem; opacity: 0.07; user-select: none;
-      line-height: 1;
-    }
-
-    .dept-header-im   { background: linear-gradient(135deg, #1a3a5c, #2d5a8e); color: #fff; }
-    .dept-header-surg { background: linear-gradient(135deg, #5c1a1a, #8e2d2d); color: #fff; }
-    .dept-header-er   { background: linear-gradient(135deg, #5c3d0a, #8e6020); color: #fff; }
-
-    /* ── TOPIC SECTION ── */
-    .topic-section {
-      margin-bottom: 56px;
-      scroll-margin-top: 80px;
-    }
-    .topic-header {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 20px;
-      padding-bottom: 14px;
-      border-bottom: 2px solid var(--border);
-    }
-    .topic-title { font-size: 1.15rem; font-weight: 800; flex: 1; }
-
-    /* 標籤顏色系統 */
-    .topic-tag {
-      display: none; /* 移除右上角標籤文字 */
-    }
-    /* 書籤按鈕現在在 topic-header 最右側 */
-
-    /* 左上角 card-label 顏色系統 */
-    .label-drug    { background: #e8f2f8; color: #1a3d5c; }  /* 用藥指引 - 藍 */
-    .label-value   { background: #eaf4ec; color: #1a5c2a; }  /* 數值判讀 - 綠 */
-    .label-steps   { background: #eef0f4; color: #3a4a5c; }  /* 處置步驟 - 灰藍 */
-    .label-urgent  { background: #fff0f0; color: #c62834; }  /* 緊急處置 - 紅 */
-    .label-patho   { background: #f2eef8; color: #5a3d7a; }  /* 機轉說明 - 紫 */
-
-    /* ── CONTENT GRID：雙欄為主 ── */
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    /* 單欄：步驟流程類 */
-    .content-grid.single-col {
-      grid-template-columns: 1fr;
-    }
-    /* 滿版卡片（跨兩欄） */
-    .content-card.full-width {
-      grid-column: 1 / -1;
-    }
-    /* 表格預設跨兩欄 */
-    .data-table.full-width {
-      grid-column: 1 / -1;
-    }
-    @media (max-width: 680px) {
-      .content-grid { grid-template-columns: 1fr; }
-    }
-
-    .content-card {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      padding: 20px 22px;
-      transition: box-shadow 0.2s, transform 0.15s;
-    }
-    .content-card:hover { box-shadow: 0 6px 20px rgba(13,31,60,0.08); transform: translateY(-1px); }
-    .content-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; }
-    .content-card p  { font-size: 0.83rem; color: #5a6a7a; line-height: 1.65; }
-    .content-card .card-label {
-      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; padding: 3px 9px; border-radius: 20px;
-      display: inline-block; margin-bottom: 10px;
-      border: 1px solid transparent;
-    }
-    /* card-label 顏色套用 label-* */
-    .content-card .card-label.label-drug   { background: #e8f2f8; color: #1a3d5c; border-color: #c5daea; }
-    .content-card .card-label.label-value  { background: #eaf4ec; color: #1a5c2a; border-color: #c0ddc5; }
-    .content-card .card-label.label-steps  { background: #eef0f4; color: #3a4a5c; border-color: #cdd2da; }
-    .content-card .card-label.label-urgent { background: #fff0f0; color: #c62834; border-color: #f5c0c3; }
-    .content-card .card-label.label-patho  { background: #f2eef8; color: #5a3d7a; border-color: #d5c8ec; }
-    /* 卡片內列點 */
-    .card-list {
-      list-style: none;
-      display: flex; flex-direction: column; gap: 6px;
-      margin-top: 4px;
-    }
-    .card-list li {
-      font-size: 0.82rem; color: #5a6a7a;
-      line-height: 1.55;
-      display: flex; gap: 8px; align-items: flex-start;
-    }
-    .card-list li::before {
-      content: '·';
-      color: var(--muted);
-      font-size: 1.1rem;
-      line-height: 1.2;
-      flex-shrink: 0;
-    }
-    .card-list li.numbered { counter-increment: card-counter; }
-    .card-list.is-numbered { counter-reset: card-counter; }
-    .card-list.is-numbered li::before {
-      content: counter(card-counter) '.';
-      font-size: 0.75rem; font-weight: 700;
-      color: var(--navy); min-width: 16px;
-      line-height: 1.55;
-    }
-    .card-list .note {
-      margin-top: 8px;
-      padding: 8px 10px;
-      background: var(--light);
-      border-radius: 6px;
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .card-list .note::before { content: none; }
-
-    /* ── ALERT BOXES ── */
-    .alert {
-      border-radius: 8px; padding: 14px 18px;
-      margin-bottom: 14px; font-size: 0.84rem; line-height: 1.6;
-      display: flex; gap: 12px; align-items: flex-start;
-    }
-    .alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-    .alert-red    { background: #fff5f5; border-left: 3px solid var(--red);    color: #7a2020; }
-    .alert-amber  { background: #fffbf0; border-left: 3px solid var(--amber);  color: #7a5010; }
-    .alert-green  { background: #f0faf2; border-left: 3px solid var(--green);  color: #1a5c2a; }
-    .alert-blue   { background: #f0f6fb; border-left: 3px solid var(--blue);   color: #1a3d5c; }
-
-    /* ── TABLE ── */
-    .data-table {
-      width: 100%; border-collapse: collapse;
-      font-size: 0.82rem; background: var(--white);
-      border: 1.5px solid var(--border); border-radius: 10px;
-      overflow: hidden; margin-bottom: 16px;
-    }
-    .data-table th {
-      background: var(--navy); color: #fff;
-      padding: 10px 14px; text-align: left;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em;
-    }
-    .data-table td {
-      padding: 10px 14px; border-bottom: 1px solid var(--border);
-      color: var(--navy); vertical-align: top;
-    }
-    .data-table tr:last-child td { border-bottom: none; }
-    .data-table tr:hover td { background: var(--light); }
-    .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
-
-    /* ── STEP LIST ── */
-    .step-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
-    .step-item {
-      display: flex; gap: 14px; align-items: flex-start;
-      background: var(--white); border: 1.5px solid var(--border);
-      border-radius: 8px; padding: 12px 16px;
-      font-size: 0.84rem; line-height: 1.55;
-    }
-    .step-num {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--navy); color: #fff;
-      font-size: 0.72rem; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; margin-top: 1px;
-    }
-
-    /* ── DEPT DIVIDER ── */
-    .dept-divider {
-      height: 1px; background: var(--border);
-      margin: 60px 0;
-    }
-
-    /* ── BREADCRUMB ── */
-    .breadcrumb {
-      font-size: 0.75rem; color: var(--muted);
-      margin-bottom: 24px;
-      display: flex; gap: 6px; align-items: center;
-    }
-    .breadcrumb a { color: var(--muted); text-decoration: none; }
-    .breadcrumb a:hover { color: var(--navy); }
-
-    /* ── RESPONSIVE ── */
-    /* ── SEARCH ── */
-    .nav-search-wrap {
-      position: relative;
-      margin-left: auto;
-    }
-    .nav-search-input {
-      background: rgba(255,255,255,0.1);
-      border: 1.5px solid rgba(255,255,255,0.15);
-      border-radius: 20px;
-      padding: 6px 16px 6px 34px;
-      color: #fff;
-      font-family: inherit;
-      font-size: 0.78rem;
-      width: 180px;
-      outline: none;
-      transition: all 0.2s;
-    }
-    .nav-search-input::placeholder { color: rgba(255,255,255,0.4); }
-    .nav-search-input:focus {
-      background: rgba(255,255,255,0.15);
-      border-color: rgba(255,255,255,0.4);
-      width: 240px;
-    }
-    .nav-search-icon {
-      position: absolute; left: 11px; top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.8rem; pointer-events: none;
-      color: rgba(255,255,255,0.4);
-    }
-
-    /* 搜尋結果下拉 */
-    .search-dropdown {
-      display: none;
-      position: absolute; top: calc(100% + 8px); right: 0;
-      width: 320px;
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      box-shadow: 0 8px 32px rgba(13,31,60,0.15);
-      z-index: 400;
-      max-height: 360px;
-      overflow-y: auto;
-    }
-    .search-dropdown.open { display: block; }
-    .search-empty {
-      padding: 20px;
-      text-align: center;
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-    .search-result-item {
-      display: block;
-      padding: 12px 16px;
-      text-decoration: none;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-      cursor: pointer;
-    }
-    .search-result-item:last-child { border-bottom: none; }
-    .search-result-item:hover { background: var(--light); }
-    .search-result-dept {
-      font-size: 0.66rem; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 3px;
-    }
-    .search-result-title {
-      font-size: 0.85rem; font-weight: 700;
-      color: var(--navy); margin-bottom: 2px;
-    }
-    .search-result-excerpt {
-      font-size: 0.75rem; color: var(--muted);
-      line-height: 1.45;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .search-result-excerpt mark {
-      background: #fff3cd;
-      color: var(--navy);
-      border-radius: 2px;
-      padding: 0 1px;
-    }
-
-    /* ── BOOKMARK ── */
-    .bookmark-btn {
-      background: none; border: none;
-      cursor: pointer;
-      color: var(--muted);
-      transition: all 0.18s;
-      padding: 4px 6px;
-      line-height: 1;
-      display: flex; align-items: center;
-      border-radius: 6px;
-      margin-left: 6px;
-      flex-shrink: 0;
-    }
-    .bookmark-btn:hover { background: var(--light); color: var(--navy); }
-    .bookmark-btn svg { width: 16px; height: 16px; transition: all 0.18s; }
-    .bookmark-btn.bookmarked { color: var(--amber); }
-    .bookmark-btn.bookmarked svg { fill: var(--amber); }
-    .topic-section { position: relative; }
-
-    /* 書籤側邊欄 */
-    .bookmark-panel {
-      display: none;
-      position: fixed; top: var(--nav-h); right: 0; bottom: 0;
-      width: 260px; z-index: 250;
-      background: var(--white);
-      border-left: 1.5px solid var(--border);
-      padding: 20px 0;
-      overflow-y: auto;
-      box-shadow: -4px 0 20px rgba(13,31,60,0.08);
-    }
-    .bookmark-panel.open { display: block; }
-    .bookmark-panel-title {
-      padding: 0 20px 14px;
-      font-size: 0.8rem; font-weight: 700;
-      color: var(--navy);
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 8px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .bookmark-close {
-      background: none; border: none;
-      color: var(--muted); cursor: pointer;
-      font-size: 1rem; padding: 2px;
-    }
-    .bookmark-empty {
-      padding: 20px;
-      font-size: 0.82rem; color: var(--muted);
-      text-align: center; line-height: 1.6;
-    }
-    .bookmark-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 20px;
-      text-decoration: none;
-      transition: background 0.15s;
-      border-bottom: 1px solid var(--border);
-    }
-    .bookmark-item:hover { background: var(--light); }
-    .bookmark-item-text { flex: 1; }
-    .bookmark-item-dept {
-      font-size: 0.66rem; color: var(--muted);
-      font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .bookmark-item-title {
-      font-size: 0.82rem; font-weight: 600;
-      color: var(--navy);
-    }
-    .bookmark-remove {
-      background: none; border: none;
-      color: var(--muted); cursor: pointer;
-      font-size: 0.8rem; padding: 2px 4px;
-      border-radius: 4px; transition: all 0.15s;
-      flex-shrink: 0;
-    }
-    .bookmark-remove:hover { background: #fff0f0; color: var(--red); }
-
-    /* 書籤按鈕在 nav */
-    .nav-bookmark-btn {
-      background: rgba(255,255,255,0.1);
-      border: 1.5px solid rgba(255,255,255,0.15);
-      border-radius: 20px;
-      padding: 6px 12px;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.78rem; font-weight: 600;
-      cursor: pointer; font-family: inherit;
-      transition: all 0.18s;
-      display: flex; align-items: center; gap: 5px;
-    }
-    .nav-bookmark-btn:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
-    .nav-bookmark-count {
-      background: var(--amber);
-      color: #fff;
-      font-size: 0.65rem; font-weight: 700;
-      border-radius: 10px;
-      padding: 1px 6px;
-      display: none;
-    }
-    .nav-bookmark-count.has-items { display: inline; }
-
-    @media (max-width: 768px) {
-      :root { --sidebar-w: 0px; }
-      .sidebar { transform: translateX(-240px); width: 240px; transition: transform 0.3s; }
-      .sidebar.open { transform: translateX(0); }
-      .main-content { margin-left: 0; max-width: 100%; padding: 32px 5% 80px; }
-      .mobile-menu-btn {
-        display: flex !important;
-        align-items: center; justify-content: center;
-        width: 36px; height: 36px;
-        background: rgba(255,255,255,0.1); border: none;
-        border-radius: 6px; color: #fff; font-size: 1.1rem;
-        cursor: pointer; margin-right: 4px;
-      }
-    }
-    .mobile-menu-btn { display: none; }
   </style>
 </head>
 <body>
 
-<!-- TOP NAV -->
-<nav>
-  <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+<nav class="simple-nav">
   <a href="index.html" class="nav-back">← 首頁</a>
   <span class="nav-sep">/</span>
-  <span class="nav-title">🏥 分科知識</span>
-  <div class="nav-right">
-    <a href="#im"   class="nav-pill" data-dept="im">內科</a>
-    <a href="#surg" class="nav-pill" data-dept="surg">外科</a>
-    <a href="#er"   class="nav-pill" data-dept="er">急診</a>
-
-    <!-- 搜尋 -->
-    <div class="nav-search-wrap">
-      <span class="nav-search-icon">🔍</span>
-      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋知識點…" autocomplete="off"/>
-      <div class="search-dropdown" id="search-dropdown"></div>
-    </div>
-
-    <!-- 書籤 -->
-    <button class="nav-bookmark-btn" id="nav-bookmark-btn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      書籤 <span class="nav-bookmark-count" id="bookmark-count">0</span>
-    </button>
-  </div>
+  <span class="nav-current">分科知識</span>
 </nav>
 
-<!-- 書籤面板 -->
-<div class="bookmark-panel" id="bookmark-panel">
-  <div class="bookmark-panel-title">
-    <span style="display:flex;align-items:center;gap:6px;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      我的書籤
-    </span>
-    <button class="bookmark-close" id="bookmark-close">✕</button>
+<div class="entry-wrap">
+  <div class="entry-hero">
+    <h1>分科知識</h1>
+    <p>選擇科別和次專科，進入對應的知識頁面。內容持續更新中，也歡迎投稿補充。</p>
   </div>
-  <div id="bookmark-list"></div>
-</div>
 
-<div class="page-wrap">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-
-    <!-- ════════════════════════════
-         🫁 內科
-         新增次專科：複製一個 sidebar-sub-section 貼在下方
-         新增主題連結：在對應 sidebar-sub-body 內加 <a> 即可
-    ════════════════════════════ -->
-    <div class="sidebar-section">
-      <button class="sidebar-dept-btn" data-dept="im">
-        <span class="dept-dot" style="background:#457B9D"></span>🫁 內科
-        <span class="arrow">›</span>
-      </button>
-      <div class="sidebar-dept-body" id="dept-im">
-
-        <!-- 次專科：一般內科 -->
-        <div class="sidebar-sub-section">
-          <button class="sidebar-sub-btn" data-sub="im-general">
-            一般內科
-            <span class="arrow">›</span>
-          </button>
-          <div class="sidebar-sub-body" id="sub-im-general">
-            <a href="#im-ward"      class="sidebar-topic-link">病房日常流程</a>
-            <a href="#im-common"    class="sidebar-topic-link">常見主訴處理</a>
-            <a href="#im-critical"  class="sidebar-topic-link">危急情況判讀</a>
-            <a href="#im-discharge" class="sidebar-topic-link">出院與轉介</a>
-          </div>
-        </div>
-
-        <!-- 次專科：心臟科 -->
-        <div class="sidebar-sub-section">
-          <button class="sidebar-sub-btn" data-sub="im-cardio">
-            心臟科
-            <span class="arrow">›</span>
-          </button>
-          <div class="sidebar-sub-body" id="sub-im-cardio">
-            <a href="#cardio-hf"        class="sidebar-topic-link">心臟衰竭</a>
-            <a href="#cardio-ami"       class="sidebar-topic-link">急性心肌梗塞 AMI</a>
-            <a href="#cardio-ad"        class="sidebar-topic-link">主動脈剝離 AD</a>
-            <a href="#cardio-arrhythmia"class="sidebar-topic-link">心律不整</a>
-            <a href="#cardio-htn"       class="sidebar-topic-link">高血壓用藥選擇</a>
-            <a href="#cardio-dm-drugs"  class="sidebar-topic-link">糖尿病用藥</a>
-          </div>
-        </div>
-
-        <!-- 次專科：胸腔科 -->
-        <div class="sidebar-sub-section">
-          <button class="sidebar-sub-btn" data-sub="im-pulm">
-            胸腔科
-            <span class="arrow">›</span>
-          </button>
-          <div class="sidebar-sub-body" id="sub-im-pulm">
-            <a href="#im-ward" class="sidebar-topic-link">COPD 急性惡化</a>
-            <a href="#im-ward" class="sidebar-topic-link">肺炎診斷與治療</a>
-            <a href="#im-ward" class="sidebar-topic-link">呼吸衰竭處置</a>
-          </div>
-        </div>
-
-        <!-- 次專科：腎臟科 -->
-        <div class="sidebar-sub-section">
-          <button class="sidebar-sub-btn" data-sub="im-nephro">
-            腎臟科
-            <span class="arrow">›</span>
-          </button>
-          <div class="sidebar-sub-body" id="sub-im-nephro">
-            <a href="#im-ward" class="sidebar-topic-link">AKI 分期與處置</a>
-            <a href="#im-ward" class="sidebar-topic-link">電解質異常</a>
-            <a href="#im-ward" class="sidebar-topic-link">透析時機判斷</a>
-          </div>
-        </div>
-
+  <!-- ══ 內科 ══ -->
+  <div class="dept-block">
+    <div class="dept-block-head">
+      <div class="dept-icon color-im">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
       </div>
+      <span class="dept-name">內科 Internal Medicine</span>
     </div>
-
-    <!-- ════════════════════════════
-         🔪 外科
-    ════════════════════════════ -->
-    <div class="sidebar-section">
-      <button class="sidebar-dept-btn" data-dept="surg">
-        <span class="dept-dot" style="background:#E63946"></span>🔪 外科
-        <span class="arrow">›</span>
-      </button>
-      <div class="sidebar-dept-body" id="dept-surg">
-
-        <!-- 次專科：一般外科 -->
-        <div class="sidebar-sub-section">
-          <button class="sidebar-sub-btn" data-sub="surg-general">
-            一般外科
-            <span class="arrow">›</span>
-          </button>
-          <div class="sidebar-sub-body" id="sub-surg-general">
-            <a href="#surg-or"      class="sidebar-topic-link">OR 手術室生存</a>
-            <a href="#surg-wound"   class="sidebar-topic-link">傷口與引流管</a>
-            <a href="#surg-post"    class="sidebar-topic-link">術後照護重點</a>
-            <a href="#surg-consent" class="sidebar-topic-link">術前準備清單</a>
-          </div>
+    <div class="sub-grid">
+      <a href="im/cardio.html" class="sub-card">
+        <div class="sub-card-icon color-im">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </div>
-
-        <!-- 次專科：心臟外科 -->
-        <div class="sidebar-sub-section">
-          <button class="sidebar-sub-btn" data-sub="surg-cardiac">
-            心臟外科
-            <span class="arrow">›</span>
-          </button>
-          <div class="sidebar-sub-body" id="sub-surg-cardiac">
-            <a href="#surg-or" class="sidebar-topic-link">心臟手術術前準備</a>
-            <a href="#surg-or" class="sidebar-topic-link">術後血流動力學監測</a>
-          </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">心臟科</div>
+          <div class="sub-card-count">6 個主題</div>
         </div>
-
-      </div>
-    </div>
-
-    <!-- ════════════════════════════
-         🚨 急診
-    ════════════════════════════ -->
-    <div class="sidebar-section">
-      <button class="sidebar-dept-btn" data-dept="er">
-        <span class="dept-dot" style="background:#F4A261"></span>🚨 急診
-        <span class="arrow">›</span>
-      </button>
-      <div class="sidebar-dept-body" id="dept-er">
-
-        <div class="sidebar-sub-section">
-          <button class="sidebar-sub-btn" data-sub="er-general">
-            急診核心
-            <span class="arrow">›</span>
-          </button>
-          <div class="sidebar-sub-body" id="sub-er-general">
-            <a href="#er-triage"   class="sidebar-topic-link">檢傷分類邏輯</a>
-            <a href="#er-approach" class="sidebar-topic-link">主訴快速評估</a>
-            <a href="#er-critical" class="sidebar-topic-link">急危重症處理</a>
-            <a href="#er-dispo"    class="sidebar-topic-link">收住院 vs 回家</a>
-          </div>
-        </div>
-
-        <div class="sidebar-sub-section">
-          <button class="sidebar-sub-btn" data-sub="er-trauma">
-            外傷
-            <span class="arrow">›</span>
-          </button>
-          <div class="sidebar-sub-body" id="sub-er-trauma">
-            <a href="#er-triage" class="sidebar-topic-link">ATLS 初級評估</a>
-            <a href="#er-triage" class="sidebar-topic-link">外傷輸液策略</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- 即將推出 -->
-    <div class="sidebar-coming">即將推出</div>
-    <div class="sidebar-future"><span class="dept-dot" style="background:#6BAA75"></span>👶 兒科</div>
-    <div class="sidebar-future"><span class="dept-dot" style="background:#7B5EA7"></span>🤱 婦產科</div>
-    <div class="sidebar-future"><span class="dept-dot" style="background:#2A9D8F"></span>🧠 神經科</div>
-    <div class="sidebar-future"><span class="dept-dot" style="background:#8899AA"></span>🦴 骨科</div>
-
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main-content">
-
-    <!-- ══════════════════════════════════ -->
-    <!-- 內科 -->
-    <!-- ══════════════════════════════════ -->
-    <section id="im">
-      <div class="breadcrumb">
-        <a href="index.html">首頁</a> › <span>內科</span>
-      </div>
-
-      <div class="dept-header dept-header-im">
-        <div class="dept-header-icon">🫁</div>
-        <div class="dept-header-text">
-          <h1>內科 Internal Medicine</h1>
-          <p>所有科別的地基，也是最需要腦子轉不停的地方。一起把系統性思考變成反射動作。</p>
-        </div>
-        <div class="dept-header-bg">🫁</div>
-      </div>
-
-      <!-- 病房日常流程 -->
-      <div class="topic-section" id="im-ward" data-dept="🫁 內科" data-title="病房日常流程">
-        <div class="topic-header">
-          <span class="topic-title">病房日常流程</span>
-          <button class="bookmark-btn" data-id="im-ward" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <ul class="step-list">
-          <li class="step-item"><div class="step-num">1</div><div>早上查房前先看昨晚的護理紀錄、新的 lab 和生命徵象，掌握每個病人的夜間狀況</div></li>
-          <li class="step-item"><div class="step-num">2</div><div>查房順序：先看最不穩定的病人，再依床號順序走</div></li>
-          <li class="step-item"><div class="step-num">3</div><div>查房後立刻完成 progress note，不要拖到下午——記憶會消退，細節會漏掉</div></li>
-          <li class="step-item"><div class="step-num">4</div><div>新 order 下完後口頭確認護理師，尤其是 stat 或高風險藥物</div></li>
-          <li class="step-item"><div class="step-num">5</div><div>交班前再掃一遍所有病人的最新 lab 和 vital signs，確認沒有漏網之魚</div></li>
-        </ul>
-
-        <div class="alert alert-blue">
-          <span class="alert-icon">💡</span>
-          <span>每天固定走一樣的查房流程，能讓你不遺漏任何項目，也讓護理師和病人知道你幾點會來。</span>
-        </div>
-      </div>
-
-      <!-- 常見主訴 -->
-      <div class="topic-section" id="im-common" data-dept="🫁 內科" data-title="常見主訴快速處理">
-        <div class="topic-header">
-          <span class="topic-title">常見主訴快速處理</span>
-          <button class="bookmark-btn" data-id="im-common" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-urgent">胸痛</span>
-            <h3>第一步：排除致命原因</h3>
-            <ul class="card-list">
-              <li>先問特徵：壓迫感？撕裂感？刺痛？</li>
-              <li>馬上做 12-lead ECG + Troponin</li>
-              <li>量兩側 BP，差 &gt;20mmHg 要想主動脈剝離</li>
-              <li>ACS、PE、主動脈剝離、張力性氣胸——先排這四個</li>
-              <li class="note">穩定了再做更多檢查，不是一開始就全套</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">呼吸困難</span>
-            <h3>氧合先顧，問診其次</h3>
-            <ul class="card-list">
-              <li>先給氧、量 SpO₂，再問其他</li>
-              <li>問：發作時間、端坐呼吸、下肢水腫、有沒有發燒</li>
-              <li>胸部 X 光先照</li>
-              <li>鑑別：心衰竭、肺炎、COPD 急性惡化、PE</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">發燒</span>
-            <h3>找感染源，不要只退燒</h3>
-            <ul class="card-list">
-              <li>肺：聽診 + CXR</li>
-              <li>泌尿：尿液分析</li>
-              <li>導管：觀察插入點</li>
-              <li>傷口：有沒有紅腫熱痛</li>
-              <li>血培養 ×2（不同部位）</li>
-              <li class="note">退燒藥給完要記錄，觀察熱型有助診斷</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">意識改變</span>
-            <h3>AEIOU TIPS 不漏診</h3>
-            <ul class="card-list">
-              <li>A — Alcohol</li>
-              <li>E — Epilepsy / Electrolyte</li>
-              <li>I — Insulin（低血糖）</li>
-              <li>O — Overdose</li>
-              <li>U — Uremia</li>
-              <li>T — Trauma　I — Infection　P — Psychiatric　S — Stroke</li>
-              <li class="note">先查血糖，最快排除，再做 CT</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">腹痛</span>
-            <h3>四象限定位＋生命徵象</h3>
-            <ul class="card-list">
-              <li>右上：膽囊 / 肝</li>
-              <li>右下：闌尾炎（McBurney's point）</li>
-              <li>左下：大腸</li>
-              <li>瀰漫性：先排除腹膜炎</li>
-              <li class="note">女性記得驗尿 hCG，子宮外孕不能漏</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">血壓異常</span>
-            <h3>高血壓急症 vs 次急症</h3>
-            <ul class="card-list">
-              <li>有器官損傷（腦/心/腎）= 急症 → 靜脈降壓</li>
-              <li>只有數值高 = 次急症 → 口服就好</li>
-              <li>降壓目標：每小時降 ≤25%，不要降太快</li>
-              <li class="note">無症狀的高血壓不是急症，不要嚇到自己也嚇到病人</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- 危急情況 -->
-      <div class="topic-section" id="im-critical" data-dept="🫁 內科" data-title="危急情況快速判讀">
-        <div class="topic-header">
-          <span class="topic-title">危急情況快速判讀</span>
-          <button class="bookmark-btn" data-id="im-critical" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <div class="alert alert-red">
-          <span class="alert-icon">🚨</span>
-          <span>以下任何一項出現：立刻通知主治，不要等到下一次查房。</span>
-        </div>
-
-        <table class="data-table full-width">
-          <thead>
-            <tr><th>情況</th><th>觸發條件</th><th>第一步</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Sepsis</strong></td>
-              <td>體溫 &gt;38.3 或 &lt;36，HR &gt;90，RR &gt;20，疑似感染</td>
-              <td>血培養×2 → 1小時內抗生素 → 輸液 30mL/kg</td>
-            </tr>
-            <tr>
-              <td><strong>AKI</strong></td>
-              <td>Cr 上升 &gt;0.3 mg/dL / 48h 或尿量 &lt;0.5mL/kg/hr &gt;6h</td>
-              <td>找原因（腎前/腎/腎後）→ 停腎毒性藥物 → 輸液補充</td>
-            </tr>
-            <tr>
-              <td><strong>DKA</strong></td>
-              <td>高血糖 + AG↑ + 酮尿 + pH &lt;7.3</td>
-              <td>NS 1L/hr × 2h → Insulin drip → 監測 K⁺</td>
-            </tr>
-            <tr>
-              <td><strong>高血鉀</strong></td>
-              <td>K⁺ &gt;6.0 或 ECG 有 peaked T wave</td>
-              <td>Ca gluconate IV → NaHCO₃ → Insulin/D50 → Kayexalate</td>
-            </tr>
-            <tr>
-              <td><strong>GI Bleed</strong></td>
-              <td>嘔血、黑便、直腸出血，BP 下降</td>
-              <td>2條大口徑靜脈通路 → 輸液 → 備血 → 通知 GI</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- 出院與轉介 -->
-      <div class="topic-section" id="im-discharge" data-dept="🫁 內科" data-title="出院與轉介">
-        <div class="topic-header">
-          <span class="topic-title">出院與轉介</span>
-          <button class="bookmark-btn" data-id="im-discharge" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-steps">出院摘要</span>
-            <h3>Discharge Summary 六個必填</h3>
-            <ul class="card-list is-numbered">
-              <li class="numbered">入院診斷</li>
-              <li class="numbered">住院過程摘要</li>
-              <li class="numbered">目前診斷</li>
-              <li class="numbered">出院用藥（含劑量頻率）</li>
-              <li class="numbered">出院後注意事項</li>
-              <li class="numbered">回診時間與科別</li>
-              <li class="note">漏任何一項都可能讓門診接手的醫師一頭霧水</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">轉介</span>
-            <h3>會診和轉介不一樣</h3>
-            <ul class="card-list">
-              <li>會診（Consult）：請其他科給意見，病人還在你這科</li>
-              <li>轉介（Refer）：病人轉到其他科或醫院</li>
-              <li>轉介前確認對方有接受，並寫好轉介信</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">病人衛教</span>
-            <h3>出院前確認病人真的懂</h3>
-            <ul class="card-list">
-              <li>為什麼住院</li>
-              <li>出院後要吃什麼藥</li>
-              <li>什麼症狀要立刻回急診</li>
-              <li class="note">老人或溝通困難的病人，請家屬一起聽</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="dept-divider"></div>
-
-    <!-- ══════════════════════════════════ -->
-    <!-- 心臟科 -->
-    <!-- ══════════════════════════════════ -->
-    <section id="cardio">
-      <div class="breadcrumb">
-        <a href="index.html">首頁</a> › <a href="#im">內科</a> › <span>心臟科</span>
-      </div>
-
-      <div class="dept-header" style="background:linear-gradient(135deg,#1a2a4a,#2d4a7a);color:#fff;">
-        <div class="dept-header-icon">🫀</div>
-        <div class="dept-header-text">
-          <h1>心臟科 Cardiology</h1>
-          <p>心臟科的東西不難，難的是在凌晨三點腦袋還能想清楚。把這些框架記熟，關鍵時刻才能動。</p>
-        </div>
-        <div class="dept-header-bg">🫀</div>
-      </div>
-
-      <!-- 心臟衰竭 -->
-      <div class="topic-section" id="cardio-hf" data-dept="🫀 心臟科" data-title="心臟衰竭">
-        <button class="bookmark-btn" data-id="cardio-hf" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        <div class="topic-header">
-          <span class="topic-title">心臟衰竭 Heart Failure</span>
-          
-        </div>
-
-        <div class="alert alert-blue">
-          <span class="alert-icon">💡</span>
-          <span>HFrEF（EF &lt;40%）和 HFpEF（EF ≥50%）治療策略不同，先確認 echo 結果再選藥。</span>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-patho">分類</span>
-            <h3>HF 的兩大類型</h3>
-            <ul class="card-list">
-              <li><strong>HFrEF（收縮性心衰）</strong>：EF &lt;40%，心肌收縮力下降，心輸出量不足</li>
-              <li><strong>HFpEF（舒張性心衰）</strong>：EF ≥50%，心肌僵硬、充填障礙，常見於老人、高血壓、糖尿病</li>
-              <li><strong>鬱血性心衰（CHF）</strong>：左心衰 → 肺水腫；右心衰 → 周邊水腫、頸靜脈怒張</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-value">分級</span>
-            <h3>NYHA 功能分級</h3>
-            <ul class="card-list is-numbered">
-              <li class="numbered">無症狀，一般活動不受限</li>
-              <li class="numbered">輕度活動即喘（爬樓梯、快走）</li>
-              <li class="numbered">輕微活動就喘（日常生活受限）</li>
-              <li class="numbered">休息時也喘，無法從事任何活動</li>
-              <li class="note">NYHA III-IV 死亡率高，積極治療、評估是否需心臟移植</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-urgent">急性肺水腫</span>
-            <h3>急性發作的處理順序</h3>
-            <ul class="card-list">
-              <li>坐起來、給氧（目標 SpO₂ &gt;94%）</li>
-              <li>Furosemide 40-80mg IV（平時無使用）</li>
-              <li>Nitroglycerin（NTG）舌下或靜脈滴注</li>
-              <li>血壓夠才能給 NTG（收縮壓 &gt;90）</li>
-              <li>嚴重者考慮 BiPAP、插管</li>
-              <li class="note">「坐起 + 利尿 + 擴血管」是核心三步驟</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-drug">HFrEF 長期用藥</span>
-            <h3>四大支柱藥物（GDMT）</h3>
-            <ul class="card-list">
-              <li><strong>ACEI/ARB 或 ARNI</strong>（Sacubitril/Valsartan）：降後負荷、逆轉心肌重塑</li>
-              <li><strong>Beta-blocker</strong>（Carvedilol、Bisoprolol、Metoprolol）：降心率、改善 EF</li>
-              <li><strong>MRA</strong>（Spironolactone）：抗醛固酮、降死亡率</li>
-              <li><strong>SGLT2i</strong>（Empagliflozin、Dapagliflozin）：降住院率和死亡率</li>
-              <li class="note">四個都用才是完整治療，不能只選一個</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-drug">Diuretics</span>
-            <h3>利尿劑的使用策略</h3>
-            <ul class="card-list">
-              <li><strong>Furosemide（Loop）</strong>：急性去水首選，IV 效果比口服快</li>
-              <li>目標：每天尿量 &gt;1-2L，體重每天下降 0.5-1kg</li>
-              <li>監測：K⁺（容易低血鉀）、Cr（過度利尿傷腎）</li>
-              <li><strong>Spironolactone</strong>：保鉀利尿，HFrEF 長期用</li>
-              <li><strong>Thiazide（HCTZ）</strong>：輕度水腫，常加在 Loop 利尿效果不好時</li>
-              <li class="note">利尿抵抗時：增加劑量、改 IV、加 Thiazide、或換 Tolvaptan</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-value">監測指標</span>
-            <h3>住院期間每天看這些</h3>
-            <ul class="card-list">
-              <li>體重（每天同時間量）</li>
-              <li>尿量 / 24h 出入量</li>
-              <li>電解質：K⁺、Na⁺、Cr（利尿劑影響）</li>
-              <li>BNP 或 NT-proBNP（治療反應指標）</li>
-              <li>生命徵象：血壓、心率、SpO₂</li>
-              <li class="note">BNP 下降代表充血改善，是出院的重要參考</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- AMI -->
-      <div class="topic-section" id="cardio-ami" data-dept="🫀 心臟科" data-title="急性心肌梗塞 AMI">
-        <button class="bookmark-btn" data-id="cardio-ami" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        <div class="topic-header">
-          <span class="topic-title">急性心肌梗塞 AMI</span>
-          
-        </div>
-
-        <div class="alert alert-red">
-          <span class="alert-icon">🚨</span>
-          <span>STEMI → Door-to-balloon &lt;90 分鐘。任何懷疑 ACS 的病人，先做 12-lead ECG，不要等。</span>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-urgent">ACS 分類</span>
-            <h3>三種 ACS 的差別</h3>
-            <ul class="card-list">
-              <li><strong>STEMI</strong>：ST 上升 + Troponin 升高，完全阻塞 → 立刻 PCI</li>
-              <li><strong>NSTEMI</strong>：ST 下降或 T 倒置 + Troponin 升高，部分阻塞 → 早期介入</li>
-              <li><strong>UA（不穩定心絞痛）</strong>：症狀但 Troponin 正常，高風險 → 住院觀察</li>
-              <li class="note">STEMI 和 NSTEMI 最大差別：有沒有 Troponin 升高</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-urgent">STEMI 處置</span>
-            <h3>到院後立刻做</h3>
-            <ul class="card-list">
-              <li>Aspirin 300mg 嚼碎 + Ticagrelor 180mg（或 Clopidogrel 600mg）</li>
-              <li>Heparin UFH 60-70 U/kg IV bolus</li>
-              <li>啟動心導管室（Cath lab activation）</li>
-              <li>持續心電監測，備電擊器</li>
-              <li>Oxygen 只在 SpO₂ &lt;90% 時給</li>
-              <li class="note">NTG 禁用於：低血壓、右心梗塞、24h 內用過 PDE-5 抑制劑</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-value">ECG 判讀</span>
-            <h3>AMI 的 ECG 變化</h3>
-            <ul class="card-list">
-              <li><strong>超急性期</strong>：Hyperacute T wave（高尖）</li>
-              <li><strong>急性期</strong>：ST 上升（&gt;1mm 兩個相鄰導程）</li>
-              <li><strong>數小時後</strong>：T wave 倒置</li>
-              <li><strong>數天後</strong>：Q wave 出現（壞死標誌）</li>
-              <li>LAD → V1-V4；RCA → II、III、aVF；LCx → V5-V6</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-urgent">AMI 後長期用藥</span>
-            <h3>出院前要開好這些</h3>
-            <ul class="card-list">
-              <li><strong>雙抗血小板</strong>（DAPT）：Aspirin + Ticagrelor/Clopidogrel，至少 12 個月</li>
-              <li><strong>Beta-blocker</strong>：降心率、減少心肌耗氧</li>
-              <li><strong>ACEI/ARB</strong>：尤其 EF 下降或糖尿病患者</li>
-              <li><strong>Statin 高強度</strong>：Atorvastatin 40-80mg，目標 LDL &lt;70 mg/dL</li>
-              <li class="note">四個都要，缺一個都要有理由</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-urgent">AMI 併發症</span>
-            <h3>要主動監測的</h3>
-            <ul class="card-list">
-              <li><strong>心律不整</strong>：VF、VT 最危險，前 24-48h 持續心監</li>
-              <li><strong>心因性休克</strong>：Killip IV，死亡率高，考慮 IABP/ECMO</li>
-              <li><strong>機械性併發症</strong>：乳突肌斷裂（急性 MR）、室中隔破裂、心室游離壁破裂</li>
-              <li><strong>右心梗塞</strong>：合併下壁 STEMI，禁 NTG，補液為主</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- 主動脈剝離 -->
-      <div class="topic-section" id="cardio-ad" data-dept="🫀 心臟科" data-title="主動脈剝離 AD">
-        <button class="bookmark-btn" data-id="cardio-ad" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        <div class="topic-header">
-          <span class="topic-title">主動脈剝離 Aortic Dissection</span>
-          
-        </div>
-
-        <div class="alert alert-red">
-          <span class="alert-icon">🚨</span>
-          <span>「撕裂感」胸痛 + 兩側血壓不對稱 → 先想 AD，不要等影像才處理血壓。</span>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-urgent">Stanford 分類</span>
-            <h3>Type A vs Type B</h3>
-            <ul class="card-list">
-              <li><strong>Type A</strong>：累及升主動脈（Ascending aorta）→ 外科急診手術</li>
-              <li><strong>Type B</strong>：只累及降主動脈（Descending aorta）→ 藥物控制為主</li>
-              <li>Type A 死亡率每小時增加 1-2%，診斷後立刻通知心臟外科</li>
-              <li class="note">記法：A = Ascending = 手術；B = Below = 藥物</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-urgent">臨床表現</span>
-            <h3>怎麼懷疑 AD</h3>
-            <ul class="card-list">
-              <li>突發劇烈撕裂感或刀割感胸痛（撕到背部）</li>
-              <li>兩側上肢血壓差 &gt;20 mmHg</li>
-              <li>脈搏不對稱</li>
-              <li>可能有神經症狀（中風、脊髓缺血）</li>
-              <li>CXR：縱膈腔變寬</li>
-              <li class="note">AD 的胸痛一開始就是最痛，AMI 是逐漸加劇</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-urgent">緊急處置</span>
-            <h3>確診前就要開始控制</h3>
-            <ul class="card-list">
-              <li>目標：收縮壓 100-120 mmHg，HR &lt;60</li>
-              <li><strong>Beta-blocker 優先</strong>：Esmolol IV drip 或 Labetalol IV</li>
-              <li>血壓控制好才能給血管擴張劑（否則反射性心跳加速更危險）</li>
-              <li>確診：CT angiography（首選）</li>
-              <li>備血、備 OR，通知心臟外科</li>
-              <li class="note">禁止抗凝血劑（除非確定 Type B 合併血栓）</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- 心律不整 -->
-      <div class="topic-section" id="cardio-arrhythmia" data-dept="🫀 心臟科" data-title="心律不整">
-        <button class="bookmark-btn" data-id="cardio-arrhythmia" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        <div class="topic-header">
-          <span class="topic-title">心律不整 Arrhythmia</span>
-          
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-steps">第一步</span>
-            <h3>看到心律不整先問這個</h3>
-            <ul class="card-list">
-              <li>病人穩定嗎？（血壓、意識、有無胸痛）</li>
-              <li>不穩定 → 電擊優先，問診在後</li>
-              <li>穩定 → QRS 寬還是窄？規則還是不規則？</li>
-              <li class="note">「穩不穩定」決定你是給藥還是電擊，比診斷更重要</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-drug">AFib / AFlutter</span>
-            <h3>最常見的心律不整</h3>
-            <ul class="card-list">
-              <li>AFib：不規則、無 P wave、顫動基線</li>
-              <li>AFlutter：鋸齒狀 F wave（300 bpm），通常 2:1 傳導（心跳 150）</li>
-              <li><strong>心率控制</strong>：Beta-blocker 或 CCB（Diltiazem）</li>
-              <li><strong>節律控制</strong>：Amiodarone 或電擊（症狀明顯、血流不穩）</li>
-              <li><strong>抗凝</strong>：CHA₂DS₂-VASc ≥2（男）或 ≥3（女）開始抗凝</li>
-              <li class="note">發作 &gt;48h 或不確定時長 → 抗凝 3 週後再電擊，或 TEE 排除血栓</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-urgent">VT / VF</span>
-            <h3>致命心律，分秒必爭</h3>
-            <ul class="card-list">
-              <li><strong>無脈性 VT / VF</strong>：立刻 CPR + 電擊（200J 雙相）</li>
-              <li><strong>有脈性 VT（穩定）</strong>：Amiodarone 150mg IV over 10min</li>
-              <li><strong>有脈性 VT（不穩定）</strong>：同步電擊 100J 起</li>
-              <li>找可逆原因：低血鉀、低鎂、缺氧、藥物</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-value">心搏過緩</span>
-            <h3>有症狀才需要處理</h3>
-            <ul class="card-list">
-              <li>症狀：頭暈、昏厥、低血壓、胸痛</li>
-              <li>Atropine 0.5mg IV，可重複至 3mg</li>
-              <li>無效 → Dopamine drip 或 Transcutaneous pacing</li>
-              <li>高度 AV block（II度 Type II、III度）→ 準備暫時性節律器</li>
-              <li class="note">Atropine 對 High-degree AV block 通常無效</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-urgent">SVT</span>
-            <h3>窄 QRS 規則快速心律</h3>
-            <ul class="card-list">
-              <li>先試 Valsalva maneuver 或 Carotid massage</li>
-              <li>Adenosine 6mg 快速 IV push + 20mL NS flush</li>
-              <li>無效 → 12mg，再無效 → 12mg</li>
-              <li>WPW（預激症候群）→ 禁 Adenosine、Digoxin，用 Procainamide</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- 高血壓用藥 -->
-      <div class="topic-section" id="cardio-htn" data-dept="🫀 心臟科" data-title="高血壓用藥選擇">
-        <button class="bookmark-btn" data-id="cardio-htn" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        <div class="topic-header">
-          <span class="topic-title">高血壓用藥選擇</span>
-          
-        </div>
-
-        <table class="data-table full-width">
-          <thead>
-            <tr><th>藥物類別</th><th>代表藥</th><th>優先考慮</th><th>注意事項</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>ACEI</strong></td>
-              <td>Enalapril, Ramipril, Perindopril</td>
-              <td>心衰竭、AMI 後、糖尿病腎病、蛋白尿</td>
-              <td>乾咳（改 ARB）、禁用於懷孕、高血鉀、雙側腎動脈狹窄</td>
-            </tr>
-            <tr>
-              <td><strong>ARB</strong></td>
-              <td>Losartan, Valsartan, Telmisartan</td>
-              <td>同 ACEI，無法耐受 ACEI 的乾咳</td>
-              <td>禁用於懷孕；不與 ACEI 合用（高血鉀、腎毒性）</td>
-            </tr>
-            <tr>
-              <td><strong>CCB（二氫吡啶）</strong></td>
-              <td>Amlodipine, Nifedipine</td>
-              <td>老人、單純高血壓、心絞痛、黑人患者</td>
-              <td>腳踝水腫（常見副作用）、心跳影響小</td>
-            </tr>
-            <tr>
-              <td><strong>CCB（非二氫吡啶）</strong></td>
-              <td>Diltiazem, Verapamil</td>
-              <td>AFib 心率控制、心絞痛</td>
-              <td>禁用於 HFrEF、心搏過緩、WPW；不與 Beta-blocker 合用</td>
-            </tr>
-            <tr>
-              <td><strong>Thiazide 利尿劑</strong></td>
-              <td>HCTZ, Indapamide, Chlorthalidone</td>
-              <td>輕中度高血壓、老人、心衰竭（與 Loop 合用）</td>
-              <td>低血鉀、低血鈉、高尿酸（痛風患者慎用）</td>
-            </tr>
-            <tr>
-              <td><strong>Beta-blocker</strong></td>
-              <td>Metoprolol, Bisoprolol, Carvedilol</td>
-              <td>HFrEF、AMI 後、心絞痛、AFib 心率控制</td>
-              <td>禁用於哮喘、High-degree AV block；糖尿病患者遮蓋低血糖症狀</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="alert alert-blue">
-          <span class="alert-icon">💡</span>
-          <span>台灣高血壓指引一線：ACEI/ARB + CCB + Thiazide 三選二，再加 Beta-blocker 或 MRA。有特殊共病優先選對應藥物。</span>
-        </div>
-      </div>
-
-      <!-- 糖尿病用藥 -->
-      <div class="topic-section" id="cardio-dm-drugs" data-dept="🫀 心臟科" data-title="糖尿病用藥">
-        <button class="bookmark-btn" data-id="cardio-dm-drugs" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        <div class="topic-header">
-          <span class="topic-title">糖尿病用藥選擇</span>
-          
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-drug">口服藥物選擇</span>
-            <h3>怎麼選第一線？</h3>
-            <ul class="card-list">
-              <li><strong>Metformin</strong>：第一線首選，便宜、不低血糖、輕微降體重；eGFR &lt;30 停用</li>
-              <li><strong>SGLT2i</strong>（Empagliflozin、Dapagliflozin）：有心衰竭、慢性腎病 → 優先加</li>
-              <li><strong>GLP-1 RA</strong>（Semaglutide、Liraglutide）：有 ASCVD 或肥胖 → 優先考慮</li>
-              <li><strong>DPP-4i</strong>（Sitagliptin）：腎功能差、老人，副作用少但降糖效果中等</li>
-              <li><strong>SU（Glibenclamide）</strong>：便宜但容易低血糖，老人慎用</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-drug">胰島素選擇</span>
-            <h3>種類和怎麼起始</h3>
-            <ul class="card-list">
-              <li><strong>基礎胰島素（Basal）</strong>：Glargine、Detemir，每天一次，控制空腹血糖</li>
-              <li><strong>速效（Bolus）</strong>：Aspart、Lispro，餐前注射，控制飯後血糖</li>
-              <li><strong>Basal-Bolus</strong>：三餐前速效 + 睡前長效，最精準但需要病人配合度高</li>
-              <li><strong>住院起始</strong>：0.3-0.5 U/kg/day，一半 Basal，一半 Bolus 分三餐</li>
-              <li class="note">目標血糖：住院一般病房 140-180 mg/dL；ICU 140-180 mg/dL</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">住院血糖管理</span>
-            <h3>不要用 sliding scale 了</h3>
-            <ul class="card-list">
-              <li>Sliding scale（看血糖才補胰島素）= 被動處理，效果差</li>
-              <li>應該用 Basal-Bolus-Correction 模式</li>
-              <li>NPO（禁食）時：停 Bolus，Basal 繼續給（減 20-50%）</li>
-              <li>類固醇治療時：血糖容易飆高，增加監測頻率</li>
-              <li class="note">低血糖（&lt;70）比高血糖更危險，設定血糖低於 80 要通知</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">注射技巧</span>
-            <h3>打胰島素的注意事項</h3>
-            <ul class="card-list">
-              <li>部位：腹部（最快）、大腿（最慢）、上臂</li>
-              <li>輪替注射部位，避免脂肪增生（lipohypertrophy）</li>
-              <li>室溫保存（開封後 28 天）；未開封冷藏（2-8°C）</li>
-              <li>混濁的長效胰島素（Glargine、Detemir）不能和其他胰島素混合</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <div class="dept-divider"></div>
-
-    <!-- ══════════════════════════════════ -->
-    <!-- 外科 -->
-    <!-- ══════════════════════════════════ -->
-    <section id="surg">
-      <div class="breadcrumb">
-        <a href="index.html">首頁</a> › <span>外科</span>
-      </div>
-
-      <div class="dept-header dept-header-surg">
-        <div class="dept-header-icon">🔪</div>
-        <div class="dept-header-text">
-          <h1>外科 Surgery</h1>
-          <p>一起擺脫當路障！搞懂節奏、搞懂位置，手術室其實沒那麼可怕。</p>
-        </div>
-        <div class="dept-header-bg">🔪</div>
-      </div>
-
-      <!-- OR 生存 -->
-      <div class="topic-section" id="surg-or" data-dept="🔪 外科" data-title="OR 手術室生存守則">
-        <div class="topic-header">
-          <span class="topic-title">OR 手術室生存守則</span>
-          <button class="bookmark-btn" data-id="surg-or" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <div class="alert alert-amber">
-          <span class="alert-icon">⏰</span>
-          <span>外科輪科第一件事：問清楚幾點要到 OR、從哪個門進去、換衣服的地方在哪。第一天遲到的 impression 很難修復。</span>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-steps">無菌原則</span>
-            <h3>無菌觀念不能妥協</h3>
-            <ul class="card-list">
-              <li>手術區域（藍色單）是無菌場域</li>
-              <li>背對無菌區時要說「我背對」</li>
-              <li>任何不確定是否污染的情況，一律當作污染處理</li>
-              <li class="note">沉默等於你默默放棄了病人的安全</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">站位</span>
-            <h3>不要擋到主刀的視線</h3>
-            <ul class="card-list">
-              <li>進 OR 先觀察主刀和助手的位置</li>
-              <li>站在不阻礙動線的地方</li>
-              <li>沒被叫到不要伸手</li>
-              <li>要做任何動作前先問：「我可以幫忙 ___ 嗎？」</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">術前準備</span>
-            <h3>進 OR 前要知道的三件事</h3>
-            <ul class="card-list is-numbered">
-              <li class="numbered">這個手術的適應症是什麼</li>
-              <li class="numbered">手術步驟大致如何</li>
-              <li class="numbered">可能的風險和併發症</li>
-              <li class="note">不知道就說不知道，但空手進 OR 不太好看</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">Time Out</span>
-            <h3>Time Out 是強制的，不是走流程</h3>
-            <ul class="card-list">
-              <li>確認病人姓名</li>
-              <li>確認手術部位（含左右）</li>
-              <li>確認手術名稱</li>
-              <li>確認同意書</li>
-              <li class="note">任何人都有權利叫停，這是最後一道防線</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- 傷口與引流管 -->
-      <div class="topic-section" id="surg-wound" data-dept="🔪 外科" data-title="傷口與引流管照護">
-        <div class="topic-header">
-          <span class="topic-title">傷口與引流管照護</span>
-          <button class="bookmark-btn" data-id="surg-wound" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <table class="data-table full-width">
-          <thead>
-            <tr><th>項目</th><th>正常狀況</th><th>需要通報的情況</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>手術傷口</strong></td>
-              <td>術後 24-48h 輕微紅腫、少量滲液</td>
-              <td>紅腫熱痛加劇、脂肪液化、傷口裂開、膿性分泌物</td>
-            </tr>
-            <tr>
-              <td><strong>JP drain（Jackson-Pratt）</strong></td>
-              <td>淡紅色或漿液性引流液，逐漸減少</td>
-              <td>突然大量增加、鮮紅色出血、乳白色（淋巴漏）、超過 100mL/8h</td>
-            </tr>
-            <tr>
-              <td><strong>NG tube</strong></td>
-              <td>胃液呈淡黃或淡綠色</td>
-              <td>咖啡色或鮮紅色（上消化道出血）、超過 500mL/8h</td>
-            </tr>
-            <tr>
-              <td><strong>Foley</strong></td>
-              <td>淡黃色尿液，尿量 &gt;0.5mL/kg/hr</td>
-              <td>血尿、尿量驟減、引流不暢（考慮沖洗或更換）</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="alert alert-red">
-          <span class="alert-icon">⚠️</span>
-          <span>引流管絕對不能自己拔除或調整位置，除非有主治明確指示。不確定就問。</span>
-        </div>
-      </div>
-
-      <!-- 術後照護 -->
-      <div class="topic-section" id="surg-post" data-dept="🔪 外科" data-title="術後照護重點">
-        <div class="topic-header">
-          <span class="topic-title">術後照護重點</span>
-          <button class="bookmark-btn" data-id="surg-post" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-urgent">術後第一天</span>
-            <h3>術後 24h 最危險</h3>
-            <ul class="card-list">
-              <li>每 4 小時量 vital signs</li>
-              <li>監控出血：血壓下降 + 心跳上升</li>
-              <li>呼吸功能：SpO₂、呼吸音</li>
-              <li>尿量、疼痛評分</li>
-              <li class="note">麻醉退了才是真正術後評估的開始</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">早期活動</span>
-            <h3>ERAS：越早動越好</h3>
-            <ul class="card-list">
-              <li>術後 24h 鼓勵病人下床</li>
-              <li>早期進食（清流質開始）</li>
-              <li>減少 opioid 使用</li>
-              <li>早拔 foley</li>
-              <li class="note">這些都能縮短住院天數，不是在逼病人</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-drug">疼痛控制</span>
-            <h3>術後疼痛要主動管理</h3>
-            <ul class="card-list">
-              <li>不要等病人痛到哭才給藥</li>
-              <li>定時評估 NRS 疼痛分數（0-10）</li>
-              <li>&gt;4 分就要處理</li>
-              <li>多模式止痛：Acetaminophen + NSAIDs + Opioid PRN</li>
-              <li class="note">多種藥合用效果好且副作用少，比單靠嗎啡聰明</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">術後發燒</span>
-            <h3>5W 記憶法</h3>
-            <ul class="card-list">
-              <li>術後 24h 內：Wind（肺不張，最常見）</li>
-              <li>1-3 天：Water（泌尿道感染）</li>
-              <li>3-5 天：Wound（傷口感染）</li>
-              <li>5-7 天：Walking（靜脈炎）</li>
-              <li>任何時間：Wonder Drug（藥物熱）</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- 術前準備 -->
-      <div class="topic-section" id="surg-consent" data-dept="🔪 外科" data-title="術前準備清單">
-        <div class="topic-header">
-          <span class="topic-title">術前準備清單</span>
-          <button class="bookmark-btn" data-id="surg-consent" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <ul class="step-list">
-          <li class="step-item"><div class="step-num">1</div><div><strong>同意書：</strong>解釋手術目的、步驟、風險、替代方案，確認病人理解後簽名（主治需在場或已解釋）</div></li>
-          <li class="step-item"><div class="step-num">2</div><div><strong>NPO：</strong>固體食物術前 8 小時、清流質術前 2 小時禁食（依麻醉科指示）</div></li>
-          <li class="step-item"><div class="step-num">3</div><div><strong>術前檢查：</strong>CBC、Chem、凝血功能、血型、心電圖（依年齡/手術大小調整）</div></li>
-          <li class="step-item"><div class="step-num">4</div><div><strong>備血：</strong>大手術前確認 T&C 完成，備好所需血品</div></li>
-          <li class="step-item"><div class="step-num">5</div><div><strong>用藥調整：</strong>Warfarin 停 5 天、抗血小板藥 7 天、Metformin 術前 24-48h 停（依手術決定）</div></li>
-          <li class="step-item"><div class="step-num">6</div><div><strong>備皮和腸道準備：</strong>依手術部位和外科醫師習慣決定</div></li>
-        </ul>
-
-        <div class="alert alert-green">
-          <span class="alert-icon">✅</span>
-          <span>術前一天下午確認清單，當天早上手術前再確認一次。漏掉任何一項都可能造成手術延誤。</span>
-        </div>
-      </div>
-    </section>
-
-    <div class="dept-divider"></div>
-
-    <!-- ══════════════════════════════════ -->
-    <!-- 急診 -->
-    <!-- ══════════════════════════════════ -->
-    <section id="er">
-      <div class="breadcrumb">
-        <a href="index.html">首頁</a> › <span>急診</span>
-      </div>
-
-      <div class="dept-header dept-header-er">
-        <div class="dept-header-icon">🚨</div>
-        <div class="dept-header-text">
-          <h1>急診 Emergency Medicine</h1>
-          <p>別讓病人在你面前變壞——其實有框架可以套，沒你想的那麼靠感覺。</p>
-        </div>
-        <div class="dept-header-bg">🚨</div>
-      </div>
-
-      <!-- 檢傷 -->
-      <div class="topic-section" id="er-triage" data-dept="🚨 急診" data-title="檢傷分類邏輯（TTAS）">
-        <div class="topic-header">
-          <span class="topic-title">檢傷分類邏輯（TTAS）</span>
-          <button class="bookmark-btn" data-id="er-triage" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <table class="data-table full-width">
-          <thead>
-            <tr><th>級別</th><th>名稱</th><th>等待時間</th><th>常見例子</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong style="color:#7a2020;">第一級</strong></td>
-              <td>復甦急救</td>
-              <td class="mono">立即</td>
-              <td>心跳停止、呼吸衰竭、GCS ≤8</td>
-            </tr>
-            <tr>
-              <td><strong style="color:#c62834;">第二級</strong></td>
-              <td>危急</td>
-              <td class="mono">10 分鐘內</td>
-              <td>STEMI、中風、嚴重外傷、敗血症</td>
-            </tr>
-            <tr>
-              <td><strong style="color:#c47d2b;">第三級</strong></td>
-              <td>緊急</td>
-              <td class="mono">30 分鐘內</td>
-              <td>中度疼痛、骨折、中度呼吸困難</td>
-            </tr>
-            <tr>
-              <td><strong style="color:#3d8a4a;">第四級</strong></td>
-              <td>次緊急</td>
-              <td class="mono">60 分鐘內</td>
-              <td>輕度外傷、輕微感染、慢性症狀急性惡化</td>
-            </tr>
-            <tr>
-              <td><strong style="color:#8899AA;">第五級</strong></td>
-              <td>非緊急</td>
-              <td class="mono">120 分鐘內</td>
-              <td>慢性病回診、輕微不適</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="alert alert-amber">
-          <span class="alert-icon">⚡</span>
-          <span>檢傷可以升級，不容易降級。看到讓你「不對勁」的病人，寧可先升一級，再觀察。</span>
-        </div>
-      </div>
-
-      <!-- 主訴評估 -->
-      <div class="topic-section" id="er-approach" data-dept="🚨 急診" data-title="急診主訴快速評估框架">
-        <div class="topic-header">
-          <span class="topic-title">急診主訴快速評估框架</span>
-          <button class="bookmark-btn" data-id="er-approach" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <ul class="step-list">
-          <li class="step-item"><div class="step-num">A</div><div><strong>Airway：</strong>氣道通暢嗎？說話聲音正常嗎？有無喘鳴音（stridor）？</div></li>
-          <li class="step-item"><div class="step-num">B</div><div><strong>Breathing：</strong>呼吸速率、深度、SpO₂、呼吸音（對稱？囉音？消失？）</div></li>
-          <li class="step-item"><div class="step-num">C</div><div><strong>Circulation：</strong>血壓、心跳、末梢灌流（毛細血管充血時間 &lt;2秒）、皮膚濕冷？</div></li>
-          <li class="step-item"><div class="step-num">D</div><div><strong>Disability：</strong>意識狀態（GCS 或 AVPU）、血糖（馬上測）、瞳孔</div></li>
-          <li class="step-item"><div class="step-num">E</div><div><strong>Exposure：</strong>脫衣暴露全身，看有沒有漏掉的外傷、皮疹、腹部表現</div></li>
-        </ul>
-
-        <div class="alert alert-blue">
-          <span class="alert-icon">💡</span>
-          <span>ABCDE 不是問診的順序，是「每個步驟發現問題就當場處理」——看到低血壓先給輸液，再繼續評估。</span>
-        </div>
-      </div>
-
-      <!-- 急危重症 -->
-      <div class="topic-section" id="er-critical" data-dept="🚨 急診" data-title="急危重症快速處理">
-        <div class="topic-header">
-          <span class="topic-title">急危重症快速處理</span>
-          <button class="bookmark-btn" data-id="er-critical" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-steps">中風 Stroke</span>
-            <h3>Time is Brain，每分鐘都算</h3>
-            <ul class="card-list">
-              <li>FAST：Face、Arm、Speech、Time</li>
-              <li>症狀發生 4.5h 內考慮 tPA（先排禁忌症）</li>
-              <li>立刻通知神經科</li>
-              <li>頭部 CT、開兩條靜脈通路</li>
-              <li class="note">血壓不要降太低，腦灌流要維持</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-urgent">過敏性休克</span>
-            <h3>Epinephrine 是第一步，不是最後手段</h3>
-            <ul class="card-list">
-              <li>Epinephrine 0.3-0.5mg IM 大腿外側，立刻給</li>
-              <li>平躺抬腿、給氧、靜脈輸液</li>
-              <li>準備第二劑</li>
-              <li class="note">Antihistamine 和類固醇是輔助，不能取代 Epi</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">氣喘急性發作</span>
-            <h3>Salbutamol 先給，再評嚴重度</h3>
-            <ul class="card-list">
-              <li>Salbutamol MDI 4-8 puffs 或 nebulizer 2.5-5mg</li>
-              <li>每 20 分鐘一次 × 3 次</li>
-              <li>加 Ipratropium + 口服/IV 類固醇</li>
-              <li>SpO₂ &lt;92% 或說話斷句 = 重度，考慮 ICU</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">低血糖</span>
-            <h3>血糖 &lt;50：先給糖，問原因在後</h3>
-            <ul class="card-list">
-              <li>清醒：口服 glucose 15-20g</li>
-              <li>昏迷：50% Glucose 20-50mL IV push</li>
-              <li>給完 15 分鐘後複查血糖</li>
-              <li>找原因：胰島素過量？口服降血糖藥？肝衰竭？</li>
-              <li class="note">這些情況需要持續監測和住院，不能就這樣放人</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">PE 肺栓塞</span>
-            <h3>Wells score 決定下一步</h3>
-            <ul class="card-list">
-              <li>Wells &lt;2（低風險）→ D-dimer</li>
-              <li>陽性或 Wells &gt;4 → CT pulmonary angiogram</li>
-              <li>血流動力學不穩定 → 考慮 systemic thrombolysis</li>
-              <li>抗凝：先開 Heparin UFH bolus</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-urgent">STEMI</span>
-            <h3>Door-to-balloon &lt;90 分鐘</h3>
-            <ul class="card-list">
-              <li>12-lead ECG 確認後立刻啟動心導管室</li>
-              <li>Aspirin 300mg + Ticagrelor 180mg 嚼碎吃</li>
-              <li>Heparin IV</li>
-              <li>告知家屬、取得同意書</li>
-              <li class="note">等待期間持續心監、備好電擊器</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- 收住院 vs 回家 -->
-      <div class="topic-section" id="er-dispo" data-dept="🚨 急診" data-title="收住院 vs 讓病人回家">
-        <div class="topic-header">
-          <span class="topic-title">收住院 vs 讓病人回家</span>
-          <button class="bookmark-btn" data-id="er-dispo" title="加入書籤"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <span class="card-label label-steps">收住院指標</span>
-            <h3>這些情況要收</h3>
-            <ul class="card-list">
-              <li>生命徵象不穩定</li>
-              <li>診斷不確定，需要進一步檢查</li>
-              <li>需要靜脈藥物或持續監測</li>
-              <li>社會因素：獨居、照顧能力不足</li>
-              <li>上次回家後病情惡化再來</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">讓病人回家</span>
-            <h3>回家前的必做清單</h3>
-            <ul class="card-list">
-              <li>生命徵象穩定</li>
-              <li>診斷清楚或已排除危險情況</li>
-              <li>病人理解衛教</li>
-              <li>有安全的居家環境</li>
-              <li>知道什麼時候要回急診</li>
-              <li>有確定的後續回診安排</li>
-            </ul>
-          </div>
-          <div class="content-card">
-            <span class="card-label label-steps">返診指示</span>
-            <h3>告訴病人什麼時候要回來</h3>
-            <ul class="card-list">
-              <li>呼吸困難加劇</li>
-              <li>胸痛</li>
-              <li>意識混亂</li>
-              <li>症狀在 48 小時內沒有改善</li>
-              <li class="note">要說出來，不能只寫在出院單上</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="alert alert-red">
-          <span class="alert-icon">⚠️</span>
-          <span>如果你對讓病人回家有任何猶豫——相信你的直覺，問主治。猶豫本身就是一個警訊。</span>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- BOTTOM NOTE -->
-    <div style="margin-top:60px; padding:24px; background:var(--white); border:1.5px solid var(--border); border-radius:12px; text-align:center;">
-      <p style="font-size:0.82rem; color:var(--muted); margin-bottom:10px;">更多科別陸續加入中 · 想貢獻你的科別知識？</p>
-      <a href="https://github.com" target="_blank" style="display:inline-block; padding:9px 22px; background:var(--navy); color:#fff; border-radius:6px; font-size:0.82rem; font-weight:700; text-decoration:none;">在 GitHub 貢獻內容 →</a>
-    </div>
-
-  </main>
-</div>
-
-<script>
-  // ══════════════════════════════════
-  // 三層 SIDEBAR 邏輯
-  // 層1：科別  層2：次專科  層3：主題連結
-  // ══════════════════════════════════
-
-  function openDeptBody(deptId) {
-    const body = document.getElementById('dept-' + deptId);
-    if (!body) return;
-    body.style.maxHeight = body.scrollHeight + 2000 + 'px'; // 留空間給次專科展開
-  }
-  function closeDeptBody(deptId) {
-    const body = document.getElementById('dept-' + deptId);
-    if (body) body.style.maxHeight = '0px';
-  }
-  function openSubBody(subId) {
-    const body = document.getElementById('sub-' + subId);
-    if (!body) return;
-    body.style.maxHeight = body.scrollHeight + 'px';
-    // 重新計算父層高度
-    const parentDept = body.closest('.sidebar-dept-body');
-    if (parentDept) parentDept.style.maxHeight = parentDept.scrollHeight + body.scrollHeight + 'px';
-  }
-  function closeSubBody(subId) {
-    const body = document.getElementById('sub-' + subId);
-    if (body) body.style.maxHeight = '0px';
-  }
-
-  // 層1：科別按鈕
-  document.querySelectorAll('.sidebar-dept-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const dept = btn.dataset.dept;
-      const isOpen = btn.classList.contains('active');
-      // 收合所有科別
-      document.querySelectorAll('.sidebar-dept-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.sidebar-dept-body').forEach(b => b.style.maxHeight = '0px');
-      // 如果原本是關閉的，打開它
-      if (!isOpen) {
-        btn.classList.add('active');
-        openDeptBody(dept);
-      }
-    });
-  });
-
-  // 層2：次專科按鈕
-  document.querySelectorAll('.sidebar-sub-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const sub = btn.dataset.sub;
-      const isOpen = btn.classList.contains('active');
-      // 收合同科別內的所有次專科
-      const parentDept = btn.closest('.sidebar-dept-body');
-      if (parentDept) {
-        parentDept.querySelectorAll('.sidebar-sub-btn').forEach(b => b.classList.remove('active'));
-        parentDept.querySelectorAll('.sidebar-sub-body').forEach(b => b.style.maxHeight = '0px');
-      }
-      // 如果原本是關閉的，打開它
-      if (!isOpen) {
-        btn.classList.add('active');
-        openSubBody(sub);
-      }
-    });
-  });
-
-  // 初始展開第一個科別和第一個次專科
-  const firstDeptBtn = document.querySelector('.sidebar-dept-btn');
-  if (firstDeptBtn) {
-    firstDeptBtn.classList.add('active');
-    openDeptBody(firstDeptBtn.dataset.dept);
-    setTimeout(() => {
-      const firstSubBtn = document.querySelector('.sidebar-sub-btn');
-      if (firstSubBtn) {
-        firstSubBtn.classList.add('active');
-        openSubBody(firstSubBtn.dataset.sub);
-      }
-    }, 50);
-  }
-
-  // ── SIDEBAR: active link on scroll ──
-  const allTopicSections = document.querySelectorAll('.topic-section');
-  const sidebarLinks = document.querySelectorAll('.sidebar-topic-link');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        sidebarLinks.forEach(l => l.classList.remove('active'));
-        const active = document.querySelector(`.sidebar-topic-link[href="#${id}"]`);
-        if (active) {
-          active.classList.add('active');
-        }
-      }
-    });
-  }, { rootMargin: '-60px 0px -60% 0px' });
-
-  allTopicSections.forEach(s => observer.observe(s));
-
-  // ── NAV PILLS: highlight on scroll ──
-  const deptSections = document.querySelectorAll('section[id]');
-  const navPills = document.querySelectorAll('.nav-pill');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    deptSections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
-    navPills.forEach(p => {
-      p.className = 'nav-pill';
-      if (p.dataset.dept === current) p.classList.add('active-' + current);
-    });
-  });
-
-  // ── MOBILE MENU ──
-  const mobileBtn = document.getElementById('mobile-menu-btn');
-  const sidebar   = document.getElementById('sidebar');
-  if (mobileBtn) {
-    mobileBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
-    document.addEventListener('click', e => {
-      if (!sidebar.contains(e.target) && e.target !== mobileBtn) {
-        sidebar.classList.remove('open');
-      }
-    });
-  }
-
-  // ══════════════════════════════════
-  // 搜尋功能
-  // ══════════════════════════════════
-
-  // 建立搜尋索引：從所有 topic-section 抓取文字內容
-  function buildSearchIndex() {
-    const index = [];
-    document.querySelectorAll('.topic-section').forEach(section => {
-      const id    = section.id;
-      const dept  = section.dataset.dept  || '';
-      const title = section.dataset.title || section.querySelector('.topic-title')?.textContent || '';
-      const text  = section.innerText || '';
-      index.push({ id, dept, title, text });
-    });
-    return index;
-  }
-
-  const searchIndex = buildSearchIndex();
-  const searchInput    = document.getElementById('search-input');
-  const searchDropdown = document.getElementById('search-dropdown');
-
-  function highlight(text, query) {
-    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-    return text.replace(regex, '<mark>$1</mark>');
-  }
-
-  function getExcerpt(text, query, len = 80) {
-    const idx = text.toLowerCase().indexOf(query.toLowerCase());
-    if (idx === -1) return text.slice(0, len) + '…';
-    const start = Math.max(0, idx - 20);
-    const end   = Math.min(text.length, idx + len);
-    return (start > 0 ? '…' : '') + text.slice(start, end) + (end < text.length ? '…' : '');
-  }
-
-  function runSearch(query) {
-    if (!query || query.length < 1) {
-      searchDropdown.classList.remove('open');
-      return;
-    }
-    const q = query.trim().toLowerCase();
-    const results = searchIndex.filter(item =>
-      item.title.toLowerCase().includes(q) || item.text.toLowerCase().includes(q)
-    ).slice(0, 8);
-
-    if (results.length === 0) {
-      searchDropdown.innerHTML = `<div class="search-empty">找不到「${query}」的相關內容</div>`;
-    } else {
-      searchDropdown.innerHTML = results.map(r => {
-        const excerpt = highlight(getExcerpt(r.text, q), q);
-        const title   = highlight(r.title, q);
-        return `<a class="search-result-item" href="#${r.id}" onclick="searchDropdown.classList.remove('open'); searchInput.value='';">
-          <div class="search-result-dept">${r.dept}</div>
-          <div class="search-result-title">${title}</div>
-          <div class="search-result-excerpt">${excerpt}</div>
-        </a>`;
-      }).join('');
-    }
-    searchDropdown.classList.add('open');
-  }
-
-  searchInput.addEventListener('input', e => runSearch(e.target.value));
-  searchInput.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { searchDropdown.classList.remove('open'); searchInput.blur(); }
-  });
-  document.addEventListener('click', e => {
-    if (!searchInput.contains(e.target) && !searchDropdown.contains(e.target)) {
-      searchDropdown.classList.remove('open');
-    }
-  });
-
-  // ══════════════════════════════════
-  // 書籤功能（localStorage）
-  // ══════════════════════════════════
-  const BOOKMARK_KEY = 'med-note-bookmarks';
-
-  function getBookmarks() {
-    try { return JSON.parse(localStorage.getItem(BOOKMARK_KEY)) || []; }
-    catch { return []; }
-  }
-  function saveBookmarks(bms) {
-    localStorage.setItem(BOOKMARK_KEY, JSON.stringify(bms));
-  }
-  function isBookmarked(id) {
-    return getBookmarks().some(b => b.id === id);
-  }
-  function toggleBookmark(id) {
-    const section = document.getElementById(id);
-    if (!section) return;
-    let bms = getBookmarks();
-    if (isBookmarked(id)) {
-      bms = bms.filter(b => b.id !== id);
-    } else {
-      bms.push({
-        id,
-        dept:  section.dataset.dept  || '',
-        title: section.dataset.title || '',
-      });
-    }
-    saveBookmarks(bms);
-    renderBookmarks();
-    updateBookmarkBtns();
-  }
-
-  function updateBookmarkBtns() {
-    document.querySelectorAll('.bookmark-btn').forEach(btn => {
-      const id = btn.dataset.id;
-      btn.classList.toggle('bookmarked', isBookmarked(id));
-      btn.title = isBookmarked(id) ? '移除書籤' : '加入書籤';
-    });
-    const count = getBookmarks().length;
-    const countEl = document.getElementById('bookmark-count');
-    countEl.textContent = count;
-    countEl.classList.toggle('has-items', count > 0);
-  }
-
-  function renderBookmarks() {
-    const list = document.getElementById('bookmark-list');
-    const bms  = getBookmarks();
-    if (bms.length === 0) {
-      list.innerHTML = '<div class="bookmark-empty">還沒有書籤<br/>點每個主題右上角的 🔖 加入</div>';
-      return;
-    }
-    list.innerHTML = bms.map(b => `
-      <a class="bookmark-item" href="#${b.id}" onclick="document.getElementById('bookmark-panel').classList.remove('open')">
-        <div class="bookmark-item-text">
-          <div class="bookmark-item-dept">${b.dept}</div>
-          <div class="bookmark-item-title">${b.title}</div>
-        </div>
-        <button class="bookmark-remove" onclick="event.preventDefault(); event.stopPropagation(); toggleBookmark('${b.id}')" title="移除">✕</button>
+        <span class="sub-card-arrow">›</span>
       </a>
-    `).join('');
-  }
+      <a href="im/general.html" class="sub-card disabled">
+        <div class="sub-card-icon color-im">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">一般內科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+      <a href="im/pulm.html" class="sub-card disabled">
+        <div class="sub-card-icon color-im">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">胸腔科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+      <a href="im/nephro.html" class="sub-card disabled">
+        <div class="sub-card-icon color-im">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="4" ry="8"/><path d="M12 4C8 4 4 7 4 12s4 8 8 8"/><path d="M12 4c4 0 8 3 8 8s-4 8-8 8"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">腎臟科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+    </div>
+  </div>
 
-  // 書籤按鈕點擊
-  document.querySelectorAll('.bookmark-btn').forEach(btn => {
-    btn.addEventListener('click', () => toggleBookmark(btn.dataset.id));
-  });
+  <!-- ══ 外科 ══ -->
+  <div class="dept-block">
+    <div class="dept-block-head">
+      <div class="dept-icon color-surg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.5 2.5c0 1.5-1.5 7-1.5 7h-2C10 9.5 8.5 4 8.5 2.5a3 3 0 0 1 6 0z"/><path d="M12 9.5V21"/><path d="M9 15h6"/>
+        </svg>
+      </div>
+      <span class="dept-name">外科 Surgery</span>
+    </div>
+    <div class="sub-grid">
+      <a href="surg/general.html" class="sub-card disabled">
+        <div class="sub-card-icon color-surg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">一般外科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+      <a href="surg/cardiac.html" class="sub-card disabled">
+        <div class="sub-card-icon color-surg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">心臟外科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+    </div>
+  </div>
 
-  // 書籤面板開關
-  document.getElementById('nav-bookmark-btn').addEventListener('click', () => {
-    document.getElementById('bookmark-panel').classList.toggle('open');
-  });
-  document.getElementById('bookmark-close').addEventListener('click', () => {
-    document.getElementById('bookmark-panel').classList.remove('open');
-  });
+  <!-- ══ 急診 ══ -->
+  <div class="dept-block">
+    <div class="dept-block-head">
+      <div class="dept-icon color-er">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </div>
+      <span class="dept-name">急診 Emergency Medicine</span>
+    </div>
+    <div class="sub-grid">
+      <a href="er/general.html" class="sub-card disabled">
+        <div class="sub-card-icon color-er">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">急診核心</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+      <a href="er/trauma.html" class="sub-card disabled">
+        <div class="sub-card-icon color-er">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">外傷</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+    </div>
+  </div>
 
-  // 初始化
-  updateBookmarkBtns();
-  renderBookmarks();
-</script>
+  <!-- ══ 即將推出 ══ -->
+  <div class="dept-block">
+    <div class="dept-block-head">
+      <span class="dept-name" style="color:var(--muted);font-size:0.9rem;">即將推出</span>
+    </div>
+    <div class="sub-grid">
+      <div class="sub-card disabled">
+        <div class="sub-card-icon color-peds">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">兒科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+      </div>
+      <div class="sub-card disabled">
+        <div class="sub-card-icon color-ob">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">婦產科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+      </div>
+      <div class="sub-card disabled">
+        <div class="sub-card-icon color-neuro">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">神經科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+      </div>
+      <div class="sub-card disabled">
+        <div class="sub-card-icon" style="background:rgba(136,153,170,0.1);color:var(--muted);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">骨科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
 </body>
 </html>
