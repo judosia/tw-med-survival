@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>腎臟科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html" class="nav-back">分科知識</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">腎臟科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">腎臟科</div>
+    <a href="#aki"       class="sidebar-link">急性腎損傷 AKI</a>
+    <a href="#ckd"       class="sidebar-link">慢性腎臟病 CKD</a>
+    <a href="#potassium" class="sidebar-link">血鉀異常</a>
+    <a href="#sodium"    class="sidebar-link">血鈉異常</a>
+    <a href="#calcium"   class="sidebar-link">血鈣 / 血鎂異常</a>
+    <a href="#abg"       class="sidebar-link">酸鹼判讀</a>
+    <a href="#dialysis"  class="sidebar-link">透析時機</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="cardio.html"  class="sidebar-link">心臟科 →</a>
+    <a href="infect.html"  class="sidebar-link">感染科 →</a>
+    <a href="general.html" class="sidebar-link">一般內科 →</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> ›
+      <a href="../specialty.html">分科知識</a> ›
+      <span>腎臟科</span>
+    </div>
+
+    <div class="page-hero" style="background:linear-gradient(135deg,#1a2840,#2d4060);color:#fff;">
+      <div class="page-hero-text">
+        <h1>腎臟科 Nephrology</h1>
+        <p>電解質和酸鹼是整個內科的基礎。搞懂腎臟，其他系統的異常才看得清楚。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><ellipse cx="12" cy="12" rx="4" ry="8"/><path d="M12 4C8 4 4 7 4 12s4 8 8 8"/><path d="M12 4c4 0 8 3 8 8s-4 8-8 8"/></svg>
+      </div>
+    </div>
+
+    <!-- AKI -->
+    <div class="topic-block" id="aki">
+      <div class="topic-block-head">
+        <span class="topic-block-title">急性腎損傷 AKI</span>
+        <div data-bm-id="aki" data-bm-dept="腎臟科" data-bm-title="急性腎損傷 AKI">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="aki-def" data-bm-dept="腎臟科" data-bm-title="AKI 定義與分期">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">KDIGO 定義與分期</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>定義</strong>：48h 內 Cr 上升 ≥0.3 mg/dL，或 7天內上升 ≥1.5 倍，或尿量 &lt;0.5mL/kg/hr &gt;6h</li>
+              <li><strong>Stage 1</strong>：Cr ×1.5-1.9 或 ↑≥0.3 mg/dL；尿量 &lt;0.5mL/kg/hr &gt;6h</li>
+              <li><strong>Stage 2</strong>：Cr ×2-2.9；尿量 &lt;0.5mL/kg/hr &gt;12h</li>
+              <li><strong>Stage 3</strong>：Cr ×3 或 ≥4.0 或開始透析；尿量 &lt;0.3mL/kg/hr &gt;24h 或無尿 &gt;12h</li>
+              <li class="note">尿量標準同樣重要，不要只看 Cr，尿量減少更早反映 AKI</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="aki-cause" data-bm-dept="腎臟科" data-bm-title="AKI 三大原因">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">腎前性 / 腎性 / 腎後性</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>腎前性（最常見）</strong>：低血容、低血壓、心衰竭 → BUN/Cr &gt;20、FENa &lt;1%</li>
+              <li><strong>腎性</strong>：ATN（缺血或腎毒性）、腎絲球腎炎、間質性腎炎 → FENa &gt;2%</li>
+              <li><strong>腎後性</strong>：尿路阻塞（攝護腺、結石、腫瘤）→ 超音波看腎盂擴張</li>
+              <li class="note">腎後性是最容易可逆的，一定要超音波排除阻塞</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="aki-tx" data-bm-dept="腎臟科" data-bm-title="AKI 處置">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">AKI 的處置原則</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>超音波排除腎後性阻塞（最快且最可逆）</div></li>
+              <li><div class="step-num">2</div><div>評估容積狀態：低血容給輸液；過多給利尿劑</div></li>
+              <li><div class="step-num">3</div><div>停止腎毒性藥物：NSAIDs、Aminoglycosides、造影劑（高風險前預防性輸液）</div></li>
+              <li><div class="step-num">4</div><div>調整腎排除藥物劑量（依 eGFR）</div></li>
+              <li><div class="step-num">5</div><div>監測並處理：K⁺（高血鉀）、酸鹼（代謝性酸中毒）、體液平衡</div></li>
+              <li><div class="step-num">6</div><div>若符合透析指征 → 腎臟科會診</div></li>
+            </ul>
+            <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>造影劑腎病預防：術前術後各 1L NS，停 Metformin 術前 24-48h</span>
+            </div>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="aki-ua" data-bm-dept="腎臟科" data-bm-title="尿液分析判讀">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">AKI 時尿液分析的意義</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>棕色顆粒圓柱</strong>（Muddy brown cast）：ATN</li>
+              <li><strong>紅血球圓柱</strong>（RBC cast）：腎絲球腎炎（緊急腎臟科會診）</li>
+              <li><strong>白血球圓柱</strong>（WBC cast）：間質性腎炎、腎盂腎炎</li>
+              <li><strong>玻璃樣圓柱</strong>（Hyaline cast）：腎前性、正常人也可見</li>
+              <li><strong>嗜酸性球尿</strong>（Eosinophiluria）：過敏性間質性腎炎（藥物引起）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CKD -->
+    <div class="topic-block" id="ckd">
+      <div class="topic-block-head">
+        <span class="topic-block-title">慢性腎臟病 CKD</span>
+        <div data-bm-id="ckd" data-bm-dept="腎臟科" data-bm-title="慢性腎臟病 CKD">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="ckd-stage" data-bm-dept="腎臟科" data-bm-title="CKD 分期">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">CKD 分期（依 eGFR）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>G1</strong>：eGFR ≥90（腎損傷但功能正常）</li>
+              <li><strong>G2</strong>：eGFR 60-89（輕度下降）</li>
+              <li><strong>G3a</strong>：eGFR 45-59（輕中度下降）</li>
+              <li><strong>G3b</strong>：eGFR 30-44（中重度下降）</li>
+              <li><strong>G4</strong>：eGFR 15-29（重度下降，開始透析準備）</li>
+              <li><strong>G5</strong>：eGFR &lt;15（腎衰竭，透析或移植）</li>
+              <li class="note">診斷需持續 &gt;3 個月，單次異常不等於 CKD</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="ckd-complication" data-bm-dept="腎臟科" data-bm-title="CKD 併發症">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">CKD 常見併發症監測</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>高血壓</strong>：目標 &lt;130/80，首選 ACEI/ARB（減少蛋白尿）</li>
+              <li><strong>貧血</strong>：EPO 缺乏，Hb &lt;10 考慮 ESA 或鐵劑</li>
+              <li><strong>腎性骨病</strong>：高磷 + 低鈣 + PTH 升高 → 磷結合劑、活性維生素 D</li>
+              <li><strong>代謝性酸中毒</strong>：HCO₃⁻ &lt;22 → 補 NaHCO₃</li>
+              <li><strong>高血鉀</strong>：eGFR &lt;30 風險高，限鉀飲食、停 ACEI/ARB 若嚴重</li>
+              <li class="note">eGFR &lt;30 轉介腎臟科準備透析，不要等到 eGFR &lt;10 才轉</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="ckd-drugs" data-bm-dept="腎臟科" data-bm-title="CKD 藥物調整">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">CKD 時需要調整或停用的藥物</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>停用</strong>：NSAIDs（腎毒性）、Metformin（eGFR &lt;30）</li>
+              <li><strong>減量</strong>：Vancomycin、Piperacillin/Tazo、Meropenem、Gabapentin</li>
+              <li><strong>避免</strong>：含鉀補充劑、保鉀利尿劑（eGFR &lt;30）</li>
+              <li><strong>ACEI/ARB</strong>：保護腎功能，但 eGFR 急速下降 &gt;30% 或 K⁺ &gt;5.5 時暫停</li>
+              <li><strong>造影劑</strong>：高風險患者（eGFR &lt;30）術前水化</li>
+              <li class="note">開藥前先查 eGFR，這是住院最常見的用藥錯誤來源之一</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 血鉀 -->
+    <div class="topic-block" id="potassium">
+      <div class="topic-block-head">
+        <span class="topic-block-title">血鉀異常</span>
+        <div data-bm-id="potassium" data-bm-dept="腎臟科" data-bm-title="血鉀異常">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="hypo-k" data-bm-dept="腎臟科" data-bm-title="低血鉀">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">低血鉀 Hypokalemia（&lt;3.5 mEq/L）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>原因</strong>：利尿劑（最常見）、嘔吐腹瀉、低鎂血症、鹼中毒、胰島素</li>
+              <li><strong>症狀</strong>：肌肉無力、抽筋、ECG 出現 U wave、心律不整</li>
+              <li><strong>補充原則</strong>：</li>
+              <li>口服（K⁺ 3.0-3.5）：KCl 40-80 mEq/天分次</li>
+              <li>靜脈（K⁺ &lt;3.0 或無法口服）：周邊最快 10 mEq/hr；中心最快 20-40 mEq/hr</li>
+              <li class="note">補鉀不能 IV push！同時補 Mg²⁺，低鎂會讓低血鉀難以矯正</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="hyper-k" data-bm-dept="腎臟科" data-bm-title="高血鉀">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">高血鉀 Hyperkalemia（&gt;5.5 mEq/L）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>ECG 變化順序</strong>：Peaked T → PR 延長 → QRS 變寬 → Sine wave → VF</li>
+              <li><strong>緊急處理（K⁺ &gt;6.5 或 ECG 異常）</strong>：</li>
+              <li>① Ca gluconate 1g IV over 2-3min（穩定心肌膜，最快）</li>
+              <li>② NaHCO₃ 50mEq IV（鹼化，轉移 K⁺ 進細胞）</li>
+              <li>③ Insulin 10U + 50% Glucose 50mL IV（轉移 K⁺ 進細胞）</li>
+              <li>④ Kayexalate 或 Patiromer（排除體內 K⁺，效果慢）</li>
+              <li>⑤ 透析（最確實，腎衰竭患者首選）</li>
+              <li class="note">前三步是暫時轉移 K⁺，不能減少體內總量，一定要接著排除</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 血鈉 -->
+    <div class="topic-block" id="sodium">
+      <div class="topic-block-head">
+        <span class="topic-block-title">血鈉異常</span>
+        <div data-bm-id="sodium" data-bm-dept="腎臟科" data-bm-title="血鈉異常">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="hypo-na" data-bm-dept="腎臟科" data-bm-title="低血鈉">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">低血鈉 Hyponatremia（&lt;135 mEq/L）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>先看滲透壓</strong>：高滲（高血糖）/ 等滲（假性低鈉）/ 低滲（真正低鈉）</li>
+              <li><strong>低滲低鈉 → 看容積狀態</strong>：</li>
+              <li>低血容：嘔吐、利尿劑、腎上腺不足 → 補 NS</li>
+              <li>正常血容：SIADH、甲狀腺低下 → 限水</li>
+              <li>高血容：心衰竭、肝硬化、腎病症候群 → 治療原發病、限水限鹽</li>
+              <li><strong>症狀性低鈉（癲癇、昏迷）</strong>：3% NaCl 緩慢補充</li>
+              <li class="note">矯正速率：每小時 ≤0.5 mEq/L，每日 ≤10-12 mEq/L，否則 ODS（橋腦中央髓鞘溶解）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="hyper-na" data-bm-dept="腎臟科" data-bm-title="高血鈉">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">高血鈉 Hypernatremia（&gt;145 mEq/L）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>原因</strong>：自由水丟失（腹瀉、發燒、尿崩症）或鈉攝入過多</li>
+              <li><strong>缺水量計算</strong>：0.6 × 體重(kg) × [Na/140 – 1]</li>
+              <li>例：70kg，Na=160 → 0.6×70×(160/140-1) = 6L</li>
+              <li><strong>矯正方式</strong>：D5W 或 0.45% NS（自由水補充）</li>
+              <li><strong>矯正速率</strong>：每小時降 ≤0.5 mEq/L，每日 ≤10 mEq/L</li>
+              <li class="note">矯正太快 → 腦水腫。每 2-4 小時測 Na⁺，動態調整</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="siadh" data-bm-dept="腎臟科" data-bm-title="SIADH">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">SIADH 診斷與治療</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>診斷標準</strong>：低血鈉 + 尿液滲透壓 &gt;100 + 尿鈉 &gt;40 + 正常血容 + 腎上腺/甲狀腺功能正常</li>
+              <li><strong>常見原因</strong>：肺癌（小細胞）、CNS 疾病、藥物（SSRIs、Carbamazepine）、肺炎</li>
+              <li><strong>治療</strong>：限水（500-1000mL/天）為主</li>
+              <li>嚴重或限水無效 → Tolvaptan（V2 receptor antagonist）</li>
+              <li class="note">Tolvaptan 起效快，使用前 24h 要住院監測 Na⁺，避免矯正太快</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 血鈣/血鎂 -->
+    <div class="topic-block" id="calcium">
+      <div class="topic-block-head">
+        <span class="topic-block-title">血鈣 / 血鎂異常</span>
+        <div data-bm-id="calcium" data-bm-dept="腎臟科" data-bm-title="血鈣血鎂異常">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="hypo-ca" data-bm-dept="腎臟科" data-bm-title="低血鈣">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">低血鈣 Hypocalcemia（&lt;8.5 mg/dL）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>症狀</strong>：Chvostek sign（輕叩面神經）、Trousseau sign（血壓計充氣後手痙攣）、QT 延長</li>
+              <li><strong>原因</strong>：副甲狀腺低下、維生素 D 缺乏、CKD、低鎂血症、輸血大量（citrate）</li>
+              <li><strong>症狀性低鈣</strong>：Ca gluconate 1-2g IV over 10-20min</li>
+              <li><strong>輕度</strong>：口服 Calcium carbonate + 活性維生素 D</li>
+              <li class="note">先補鎂！低鎂血症是低鈣難以矯正的常見原因</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="hyper-ca" data-bm-dept="腎臟科" data-bm-title="高血鈣">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">高血鈣 Hypercalcemia（&gt;10.5 mg/dL）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>原因</strong>：副甲狀腺亢進（門診最常）、惡性腫瘤（住院最常）、維生素 D 中毒、結節病</li>
+              <li><strong>症狀記憶</strong>：Bones（骨痛）、Stones（腎結石）、Groans（腹痛噁心）、Moans（精神症狀）</li>
+              <li><strong>處置</strong>：</li>
+              <li>① NS 大量補液（稀釋 + 促進鈣排泄）</li>
+              <li>② Furosemide（補液後給，促腎臟排鈣）</li>
+              <li>③ Bisphosphonate（Zoledronic acid）：惡性腫瘤相關，效果在 2-4 天</li>
+              <li>④ Calcitonin：效果快（4-6h）但短暫</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="mg-abnormal" data-bm-dept="腎臟科" data-bm-title="血鎂異常">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">血鎂異常</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>低血鎂（&lt;1.7 mg/dL）</strong>：利尿劑、PPI 長期使用、腹瀉、酗酒</li>
+              <li>症狀：肌肉震顫、心律不整（VT）、低血鉀難以矯正</li>
+              <li>補充：MgSO₄ 2g IV over 15-30min（症狀性）；口服 Mg oxide（輕度）</li>
+              <li><strong>高血鎂（&gt;2.5 mg/dL）</strong>：腎衰竭、過多 Mg 補充（緩瀉劑）</li>
+              <li>症狀：&gt;4 mg/dL 反射消失；&gt;6 mg/dL 呼吸抑制；&gt;9 mg/dL 心跳停止</li>
+              <li>處置：Ca gluconate（拮抗）+ 透析（嚴重）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 酸鹼判讀 -->
+    <div class="topic-block" id="abg">
+      <div class="topic-block-head">
+        <span class="topic-block-title">酸鹼判讀 ABG Interpretation</span>
+        <div data-bm-id="abg" data-bm-dept="腎臟科" data-bm-title="酸鹼判讀">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-1">
+        <div class="k-card" data-bm-id="abg-steps" data-bm-dept="腎臟科" data-bm-title="ABG 四步驟判讀法">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">ABG 四步驟判讀法</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><strong>pH</strong>：&lt;7.35 = 酸中毒；&gt;7.45 = 鹼中毒；7.35-7.45 = 正常</div></li>
+              <li><div class="step-num">2</div><div><strong>PaCO₂</strong>：&lt;35 = 呼吸性鹼（過度換氣）；&gt;45 = 呼吸性酸（低換氣）</div></li>
+              <li><div class="step-num">3</div><div><strong>HCO₃⁻</strong>：&lt;22 = 代謝性酸；&gt;26 = 代謝性鹼；正常 22-26 mEq/L</div></li>
+              <li><div class="step-num">4</div><div><strong>代償是否適當？</strong> 不適當 = 混合型酸鹼異常</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-grid col-2" style="margin-top:14px">
+        <div class="k-card" data-bm-id="abg-compensation" data-bm-dept="腎臟科" data-bm-title="代償公式">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">代償公式（判斷是否混合型）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>代謝性酸中毒</strong>：預期 PaCO₂ = 1.5×HCO₃⁻ + 8 ± 2（Winter's formula）</li>
+              <li><strong>代謝性鹼中毒</strong>：預期 PaCO₂ = 0.7×HCO₃⁻ + 21 ± 2</li>
+              <li><strong>呼吸性酸中毒（急性）</strong>：HCO₃⁻ 每上升 1 mEq，PaCO₂ 上升 10</li>
+              <li><strong>呼吸性酸中毒（慢性）</strong>：HCO₃⁻ 每上升 3.5 mEq，PaCO₂ 上升 10</li>
+              <li><strong>呼吸性鹼中毒（急性）</strong>：HCO₃⁻ 每下降 2 mEq，PaCO₂ 下降 10</li>
+              <li class="note">實際值偏離預期值 → 混合型酸鹼異常，要找第二個原因</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="abg-ag" data-bm-dept="腎臟科" data-bm-title="Anion Gap 計算">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">Anion Gap 計算與鑑別</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>AG = Na⁺ – (Cl⁻ + HCO₃⁻)</strong>，正常值 8-12 mEq/L</li>
+              <li><strong>AG 升高代謝性酸中毒（MUDPILES）</strong>：</li>
+              <li>M — Methanol；U — Uremia；D — DKA</li>
+              <li>P — Paraldehyde；I — Isoniazid/Iron；L — Lactic acidosis；E — Ethylene glycol；S — Salicylates</li>
+              <li><strong>正常 AG 代謝性酸中毒</strong>：腹瀉、RTA（腎小管性酸中毒）、NS 大量輸液</li>
+              <li class="note">白蛋白每下降 1 g/dL，AG 正常值降低 2.5，低白蛋白患者要校正 AG</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="abg-common" data-bm-dept="腎臟科" data-bm-title="常見臨床酸鹼情境">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">常見臨床酸鹼情境</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Sepsis</strong>：代謝性酸（Lactic acidosis）+ 呼吸性鹼（過度換氣）</li>
+              <li><strong>COPD 急性惡化</strong>：呼吸性酸中毒（CO₂ 滯留）</li>
+              <li><strong>嚴重嘔吐</strong>：代謝性鹼中毒（失去 HCl）</li>
+              <li><strong>DKA</strong>：AG 升高代謝性酸（酮酸）</li>
+              <li><strong>腎衰竭</strong>：正常或 AG 升高代謝性酸</li>
+              <li><strong>過度換氣（焦慮）</strong>：呼吸性鹼中毒（PaCO₂ 降低）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 透析時機 -->
+    <div class="topic-block" id="dialysis">
+      <div class="topic-block-head">
+        <span class="topic-block-title">透析時機 Dialysis Indications</span>
+        <div data-bm-id="dialysis" data-bm-dept="腎臟科" data-bm-title="透析時機">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="dialysis-aeiou" data-bm-dept="腎臟科" data-bm-title="透析緊急指征 AEIOU">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">緊急透析指征：AEIOU</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>A — Acidosis</strong>：pH &lt;7.1，藥物無法矯正的嚴重代謝性酸中毒</li>
+              <li><strong>E — Electrolytes</strong>：K⁺ &gt;6.5 或難以控制的高血鉀（ECG 異常）</li>
+              <li><strong>I — Intoxication</strong>：某些毒物/藥物（Lithium、Methanol、Ethylene glycol、Salicylate）</li>
+              <li><strong>O — Overload</strong>：難以控制的體液過多（利尿劑無效的肺水腫）</li>
+              <li><strong>U — Uremia</strong>：尿毒性心包炎、腦病變、出血傾向（Cr 並非絕對指標）</li>
+              <li class="note">這五個任一出現 → 立刻腎臟科會診，不要等到 Cr 更高才討論</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="dialysis-hd-pd" data-bm-dept="腎臟科" data-bm-title="血液透析 vs 腹膜透析">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">血液透析 vs 腹膜透析</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>血液透析（HD）</strong>：每週 3 次、每次 4h，清除效率高，需血管通路（瘻管/導管）</li>
+              <li><strong>腹膜透析（PD）</strong>：每天在家自行操作，生活品質較好，保留殘餘腎功能較久</li>
+              <li><strong>CRRT</strong>（連續性腎臟替代治療）：ICU 血流動力學不穩定患者，緩慢持續透析</li>
+              <li class="note">慢性 CKD 選 HD 或 PD 各有優缺點，應在 eGFR &lt;20 就開始討論，讓病人有時間選擇和準備</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="dialysis-prep" data-bm-dept="腎臟科" data-bm-title="透析準備">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">透析前要準備的事</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>B 型肝炎、C 型肝炎、HIV 篩查</li>
+              <li>血管通路評估（偏好前臂 AVF，需提前幾個月手術）</li>
+              <li>心臟評估（透析患者心血管風險高）</li>
+              <li>停用腎毒性藥物、調整其他藥物劑量</li>
+              <li>飲食衛教：限鉀、限磷、限水、限鹽</li>
+              <li class="note">AVF（動靜脈瘻管）成熟需 2-3 個月，eGFR &lt;20 就要轉外科評估</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'aki',       dept:'腎臟科', title:'急性腎損傷 AKI',   url:'#aki',       text:'KDIGO Creatinine 尿量 腎前性 腎後性 ATN FENa 超音波 RBC cast 造影劑 水化 腎毒性' },
+    { id:'ckd',       dept:'腎臟科', title:'慢性腎臟病 CKD',   url:'#ckd',       text:'eGFR 分期 ACEI ARB 貧血 EPO 腎性骨病 磷 PTH 代謝性酸中毒 Metformin NSAIDs' },
+    { id:'potassium', dept:'腎臟科', title:'血鉀異常',          url:'#potassium', text:'低血鉀 高血鉀 Hypokalemia Hyperkalemia ECG peaked T Ca gluconate Insulin Kayexalate 補鉀 KCl' },
+    { id:'sodium',    dept:'腎臟科', title:'血鈉異常',          url:'#sodium',    text:'低血鈉 高血鈉 SIADH ODS 矯正速率 3% NaCl 限水 Tolvaptan 容積狀態 低滲 缺水量' },
+    { id:'calcium',   dept:'腎臟科', title:'血鈣血鎂異常',      url:'#calcium',   text:'低血鈣 高血鈣 Chvostek Trousseau Ca gluconate Bisphosphonate 低血鎂 MgSO4 QT 延長' },
+    { id:'abg',       dept:'腎臟科', title:'酸鹼判讀',          url:'#abg',       text:'pH PaCO2 HCO3 Anion Gap MUDPILES Winter DKA Lactic acidosis 代謝性 呼吸性 代償 混合型' },
+    { id:'dialysis',  dept:'腎臟科', title:'透析時機',          url:'#dialysis',  text:'AEIOU 高血鉀 酸中毒 體液過多 尿毒 心包炎 HD PD CRRT AVF 血管通路 eGFR' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
