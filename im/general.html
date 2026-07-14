@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>一般內科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html" class="nav-back">分科知識</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">一般內科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">一般內科</div>
+    <div class="sidebar-section-title">常見主訴</div>
+    <a href="#chest-pain"  class="sidebar-link">胸痛</a>
+    <a href="#dyspnea"     class="sidebar-link">呼吸困難</a>
+    <a href="#fever"       class="sidebar-link">發燒</a>
+    <a href="#altered-ms"  class="sidebar-link">意識改變</a>
+    <a href="#abdo-pain"   class="sidebar-link">腹痛</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="cardio.html"  class="sidebar-link">心臟科 →</a>
+    <a href="pulm.html"    class="sidebar-link">胸腔科 →</a>
+    <a href="infect.html"  class="sidebar-link">感染科 →</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> ›
+      <a href="../specialty.html">分科知識</a> ›
+      <span>一般內科</span>
+    </div>
+
+    <div class="page-hero" style="background:linear-gradient(135deg,#1a2a40,#2d4060);color:#fff;">
+      <div class="page-hero-text">
+        <h1>一般內科 General Medicine</h1>
+        <p>病人來的時候說「不舒服」，你要把它轉化成診斷。系統性鑑別，不靠感覺靠框架。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+    </div>
+
+    <!-- 胸痛 -->
+    <div class="topic-block" id="chest-pain">
+      <div class="topic-block-head">
+        <span class="topic-block-title">胸痛 Chest Pain</span>
+        <div data-bm-id="chest-pain" data-bm-dept="一般內科" data-bm-title="胸痛鑑別診斷">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-red">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>胸痛先排除五個致命原因：ACS、主動脈剝離、PE、張力性氣胸、心包填塞。穩定了再慢慢找其他原因。</span>
+      </div>
+      <div class="card-grid col-1">
+        <div class="k-card" data-bm-id="cp-ddx" data-bm-dept="一般內科" data-bm-title="胸痛鑑別診斷框架">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">胸痛鑑別：先問這五件事</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><strong>痛的性質</strong>：壓迫感（ACS）、撕裂感（AD）、刺痛（肌肉骨骼、肋膜）、燒灼感（食道）</div></li>
+              <li><div class="step-num">2</div><div><strong>發作方式</strong>：突然最痛（AD、PE）、逐漸加劇（ACS）、隨呼吸加重（肋膜炎、PE）</div></li>
+              <li><div class="step-num">3</div><div><strong>放射</strong>：左肩/頸（ACS）、背部（AD、胰臟炎）、右肩（膽囊）</div></li>
+              <li><div class="step-num">4</div><div><strong>兩側血壓差</strong>：&gt;20 mmHg → 主動脈剝離</div></li>
+              <li><div class="step-num">5</div><div><strong>立刻做</strong>：12-lead ECG + Troponin + CXR（三件一起）</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-grid col-2" style="margin-top:14px">
+        <div class="k-card" data-bm-id="cp-cardiac" data-bm-dept="一般內科" data-bm-title="心臟性胸痛">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">心臟性胸痛特徵</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>典型 ACS</strong>：胸部壓迫感，放射至左臂或下頷，冷汗、噁心</li>
+              <li><strong>非典型表現</strong>（女性、糖尿病、老人）：背痛、上腹痛、喘、疲倦</li>
+              <li><strong>心包炎</strong>：銳痛、坐前傾減輕、臥下加重、摩擦音</li>
+              <li><strong>主動脈剝離</strong>：突發撕裂感、背部放射、兩側脈搏不對稱</li>
+              <li class="note">糖尿病和老人常以「非典型」表現，高度警覺，不要因為「不像」就排除</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="cp-noncardiac" data-bm-dept="一般內科" data-bm-title="非心臟性胸痛">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">非心臟性胸痛常見原因</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>肺臟</strong>：PE（突發喘+胸痛）、氣胸（單側呼吸音消失）、肋膜炎（隨呼吸加重）</li>
+              <li><strong>食道</strong>：GERD（飯後燒灼感）、食道痙攣（硝酸鹽有效）</li>
+              <li><strong>肌肉骨骼</strong>：壓痛點明確、隨動作加重、Tietze syndrome</li>
+              <li><strong>心理</strong>：過度換氣、恐慌發作（合併心悸、手麻、頭暈）</li>
+              <li class="note">排除致命原因後，肌肉骨骼和 GERD 才是最常見的胸痛原因</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 呼吸困難 -->
+    <div class="topic-block" id="dyspnea">
+      <div class="topic-block-head">
+        <span class="topic-block-title">呼吸困難 Dyspnea</span>
+        <div data-bm-id="dyspnea" data-bm-dept="一般內科" data-bm-title="呼吸困難鑑別診斷">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="dysp-first" data-bm-dept="一般內科" data-bm-title="呼吸困難第一步">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">看到喘的病人，第一步</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>先給氧、量 SpO₂，不要先問病史</div></li>
+              <li><div class="step-num">2</div><div>生命徵象：RR、HR、BP、體溫</div></li>
+              <li><div class="step-num">3</div><div>聽診：兩側對稱？囉音？喘鳴音？呼吸音消失？</div></li>
+              <li><div class="step-num">4</div><div>立刻：CXR、ECG、SpO₂、ABG（嚴重時）</div></li>
+              <li><div class="step-num">5</div><div>再問：急性還是慢性？有無發燒、胸痛、下肢水腫？</div></li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="dysp-ddx" data-bm-dept="一般內科" data-bm-title="呼吸困難鑑別">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">呼吸困難的鑑別方向</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>急性發作</strong>：氣胸、PE、心因性肺水腫、過敏、AECOPD、氣喘發作</li>
+              <li><strong>端坐呼吸</strong>：心衰竭、COPD 急性惡化</li>
+              <li><strong>吸氣喘鳴（Stridor）</strong>：上呼吸道阻塞 → 緊急</li>
+              <li><strong>呼氣喘鳴（Wheeze）</strong>：氣喘、COPD、心因性哮喘</li>
+              <li><strong>雙側囉音</strong>：肺炎、肺水腫</li>
+              <li><strong>單側呼吸音消失</strong>：氣胸、大量肋膜積液、主支氣管阻塞</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="dysp-hf-vs-copd" data-bm-dept="一般內科" data-bm-title="心衰竭 vs COPD 鑑別">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">心衰竭 vs COPD 急性惡化</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th></th><th>心衰竭</th><th>COPD 惡化</th></tr></thead>
+              <tbody>
+                <tr><td>端坐呼吸</td><td>明顯</td><td>較少</td></tr>
+                <tr><td>下肢水腫</td><td>常見</td><td>少見</td></tr>
+                <tr><td>CXR</td><td>肺水腫、心臟擴大</td><td>過度充氣、橫膈平坦</td></tr>
+                <tr><td>BNP</td><td>明顯升高</td><td>輕度升高或正常</td></tr>
+                <tr><td>呼吸音</td><td>雙側濕囉音</td><td>呼氣延長、喘鳴</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 發燒 -->
+    <div class="topic-block" id="fever">
+      <div class="topic-block-head">
+        <span class="topic-block-title">發燒 Fever</span>
+        <div data-bm-id="fever" data-bm-dept="一般內科" data-bm-title="發燒鑑別診斷">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="fever-workup" data-bm-dept="一般內科" data-bm-title="發燒評估步驟">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">系統性找感染源</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>肺</strong>：聽診、CXR，有沒有咳嗽痰液</li>
+              <li><strong>泌尿道</strong>：尿液分析（膿尿、菌尿）、有無解尿症狀</li>
+              <li><strong>血流</strong>：血培養 ×2（留置管路患者優先懷疑）</li>
+              <li><strong>導管</strong>：CVC、Foley 插入點有無紅腫滲液</li>
+              <li><strong>腹部</strong>：有無腹痛、腹膜刺激徵象（腹腔感染）</li>
+              <li><strong>皮膚</strong>：有無蜂窩性組織炎、褥瘡、傷口</li>
+              <li><strong>CNS</strong>：有無頸部僵硬（腦膜炎）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="fever-pattern" data-bm-dept="一般內科" data-bm-title="熱型與診斷">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">熱型有助診斷</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>間歇熱</strong>（每天退燒）：瘧疾、淋巴瘤、膿瘍</li>
+              <li><strong>持續熱</strong>（不退）：傷寒、細菌性心內膜炎、肺炎</li>
+              <li><strong>雙峰熱</strong>：登革熱（台灣常見！）</li>
+              <li><strong>週期熱</strong>：週期性中性球低下、成人 Still's disease</li>
+              <li>住院病人新發燒：先想到「5W」— Wind、Water、Wound、Walking、Wonder drug</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="fever-nonnfx" data-bm-dept="一般內科" data-bm-title="非感染性發燒">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">非感染性發燒的原因</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>藥物熱</strong>：抗生素（尤其 β-lactam）、Phenytoin，停藥後退燒</li>
+              <li><strong>腫瘤性</strong>：淋巴瘤、白血病、實體腫瘤（副腫瘤症候群）</li>
+              <li><strong>自體免疫</strong>：SLE、RA、血管炎</li>
+              <li><strong>血栓栓塞</strong>：DVT/PE 可引起低度發燒</li>
+              <li><strong>輸血反應</strong>：輸血後 1-6h 出現</li>
+              <li class="note">發燒找不到感染源，培養持續陰性，要想到非感染性原因</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="fever-special" data-bm-dept="一般內科" data-bm-title="特殊情況發燒">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">這幾種發燒要立刻處理</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>發燒性嗜中性球低下</strong>（Febrile neutropenia）：體溫 &gt;38.3 + ANC &lt;500 → 1h 內廣效抗生素</li>
+              <li><strong>腦膜炎</strong>：發燒 + 頸部僵硬 + 意識改變 → 抗生素不等腰椎穿刺</li>
+              <li><strong>Septic shock</strong>：發燒 + 低血壓 → Hour-1 bundle</li>
+              <li><strong>NMS（惡性症候群）</strong>：抗精神病藥物、高燒 + 肌肉僵硬 + 意識改變 → 停藥 + 降溫</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 意識改變 -->
+    <div class="topic-block" id="altered-ms">
+      <div class="topic-block-head">
+        <span class="topic-block-title">意識改變 Altered Mental Status</span>
+        <div data-bm-id="altered-ms" data-bm-dept="一般內科" data-bm-title="意識改變鑑別診斷">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="ams-first" data-bm-dept="一般內科" data-bm-title="意識改變第一步">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">意識改變的緊急處置</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><strong>血糖</strong>：立刻量，&lt;50 mg/dL 給 50% Glucose，最快能排除的原因</div></li>
+              <li><div class="step-num">2</div><div><strong>氧氣</strong>：給氧，量 SpO₂</div></li>
+              <li><div class="step-num">3</div><div><strong>GCS</strong>：評估意識程度（E+V+M，最高 15 分）</div></li>
+              <li><div class="step-num">4</div><div><strong>瞳孔</strong>：大小、對稱、對光反應（腦幹功能）</div></li>
+              <li><div class="step-num">5</div><div>抽血：電解質、BUN/Cr、血氨、肝功能、CBC、血培養</div></li>
+              <li><div class="step-num">6</div><div>頭部 CT：排除出血、梗塞、腫瘤</div></li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="ams-aeiou" data-bm-dept="一般內科" data-bm-title="AEIOU TIPS">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">AEIOU TIPS 鑑別記憶法</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>A</strong> — Alcohol（酒精中毒/戒斷）</li>
+              <li><strong>E</strong> — Epilepsy / Electrolyte（癲癇、電解質異常）</li>
+              <li><strong>I</strong> — Insulin（低血糖）</li>
+              <li><strong>O</strong> — Overdose / Oxygen（藥物過量、缺氧）</li>
+              <li><strong>U</strong> — Uremia（尿毒症）</li>
+              <li><strong>T</strong> — Trauma / Temperature（外傷、體溫異常）</li>
+              <li><strong>I</strong> — Infection（腦膜炎、腦炎、敗血症）</li>
+              <li><strong>P</strong> — Psychiatric（精神科急症）</li>
+              <li><strong>S</strong> — Stroke / Shock（中風、休克）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="ams-delirium" data-bm-dept="一般內科" data-bm-title="譫妄 Delirium">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">譫妄（Delirium）的辨認</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>急性發作、注意力下降、症狀波動（白天清楚晚上亂）</li>
+              <li><strong>CAM 診斷標準</strong>：急性發作 + 注意力下降 +（思緒混亂 或 意識程度改變）</li>
+              <li>常見誘因：感染、藥物（鎮靜劑、抗膽鹼）、電解質、手術後、尿瀦留、便秘</li>
+              <li>處置：找並處理誘因；避免約束；日間活動；減少鎮靜劑</li>
+              <li class="note">老人譫妄不要直接給 Haloperidol，先找誘因，用藥是最後手段</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 腹痛 -->
+    <div class="topic-block" id="abdo-pain">
+      <div class="topic-block-head">
+        <span class="topic-block-title">腹痛 Abdominal Pain</span>
+        <div data-bm-id="abdo-pain" data-bm-dept="一般內科" data-bm-title="腹痛鑑別診斷">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="abd-location" data-bm-dept="一般內科" data-bm-title="腹痛位置鑑別">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">位置導向的鑑別診斷</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>右上腹</strong>：膽囊炎（Murphy's sign）、膽管炎、肝膿瘍、右下肺炎</li>
+              <li><strong>左上腹</strong>：胰臟炎（放射至背部）、脾臟病變、胃潰瘍</li>
+              <li><strong>右下腹</strong>：闌尾炎（McBurney's point）、卵巢囊腫/扭轉、Crohn's disease</li>
+              <li><strong>左下腹</strong>：憩室炎、大腸炎、乙狀結腸病變</li>
+              <li><strong>臍周</strong>：小腸病變、早期闌尾炎（後來移至右下腹）</li>
+              <li><strong>瀰漫性</strong>：腸阻塞、腸穿孔、腹膜炎、缺血性腸炎</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="abd-urgent" data-bm-dept="一般內科" data-bm-title="腹痛緊急警示">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">這些腹痛要立刻外科會診</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>腹膜炎</strong>：板狀腹、彈跳痛（Rebound tenderness）</li>
+              <li><strong>腸穿孔</strong>：突發劇痛、CXR 看到橫膈下游離氣體</li>
+              <li><strong>腸阻塞</strong>：停止排便排氣、腹部膨脹、X-ray 多個液氣平面</li>
+              <li><strong>缺血性腸炎</strong>：腹痛與症狀嚴重度不成比例（痛得很厲害但看起來腹部柔軟）</li>
+              <li><strong>主動脈瘤破裂</strong>：突發劇烈腰腹痛、休克 → 立刻外科</li>
+              <li class="note">女性腹痛一定要問月經史、驗尿 hCG — 子宮外孕破裂可致命</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="abd-workup" data-bm-dept="一般內科" data-bm-title="腹痛基本檢查">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">腹痛的基本評估</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>問診重點</strong>：發作方式（突發 vs 漸進）、位置、性質、放射、加重/緩解因子、最後進食</li>
+              <li><strong>身體檢查</strong>：壓痛位置、肌肉防禦、彈跳痛、腸音</li>
+              <li><strong>基本抽血</strong>：CBC、CMP、Lipase（胰臟炎）、LFT（肝膽）、Lactate（缺血）</li>
+              <li><strong>女性</strong>：尿液 hCG</li>
+              <li><strong>影像</strong>：腹部 X-ray（腸阻塞、穿孔）；腹部超音波（膽道、腎臟）；CT 腹部（精確定位）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'chest-pain', dept:'一般內科', title:'胸痛鑑別診斷',   url:'#chest-pain', text:'ACS 主動脈剝離 PE 氣胸 心包填塞 Troponin ECG CXR 撕裂感 壓迫感 放射 血壓差 心包炎 GERD' },
+    { id:'dyspnea',    dept:'一般內科', title:'呼吸困難鑑別',   url:'#dyspnea',    text:'SpO2 氧氣 聽診 囉音 喘鳴 Stridor Wheeze 氣胸 PE 心衰竭 COPD 肺水腫 BNP CXR 端坐呼吸' },
+    { id:'fever',      dept:'一般內科', title:'發燒鑑別診斷',   url:'#fever',      text:'感染源 血培養 尿液分析 導管 熱型 登革熱 藥物熱 淋巴瘤 Febrile neutropenia NMS 腦膜炎 5W' },
+    { id:'altered-ms', dept:'一般內科', title:'意識改變鑑別',   url:'#altered-ms', text:'血糖 GCS 瞳孔 AEIOU TIPS 低血糖 電解質 癲癇 尿毒症 中風 譫妄 Delirium CAM 老人' },
+    { id:'abdo-pain',  dept:'一般內科', title:'腹痛鑑別診斷',   url:'#abdo-pain',  text:'膽囊炎 闌尾炎 胰臟炎 腹膜炎 腸阻塞 穿孔 缺血性腸炎 McBurney Murphy hCG 彈跳痛 Lactate' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
