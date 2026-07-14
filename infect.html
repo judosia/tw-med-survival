@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>感染科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html" class="nav-back">分科知識</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">感染科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">感染科</div>
+    <div class="sidebar-section-title">核心概念</div>
+    <a href="#sepsis"     class="sidebar-link">敗血症 Sepsis</a>
+    <a href="#abx-choice" class="sidebar-link">抗生素選擇原則</a>
+    <a href="#abx-common" class="sidebar-link">常用抗生素整理</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">常見感染</div>
+    <a href="#pneumonia"  class="sidebar-link">肺炎</a>
+    <a href="#uti"        class="sidebar-link">泌尿道感染</a>
+    <a href="#ssti"       class="sidebar-link">皮膚軟組織感染</a>
+    <a href="#meningitis" class="sidebar-link">腦膜炎</a>
+    <a href="#ie"         class="sidebar-link">感染性心內膜炎</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="cardio.html" class="sidebar-link">心臟科 →</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> ›
+      <a href="../specialty.html">分科知識</a> ›
+      <span>感染科</span>
+    </div>
+
+    <div class="page-hero" style="background:linear-gradient(135deg,#1a3a2a,#2d6a4a);color:#fff;">
+      <div class="page-hero-text">
+        <h1>感染科 Infectious Disease</h1>
+        <p>先培養，再覆蓋，再降階。抗生素選對了才有用，選錯了反而培養出抗藥菌。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+      </div>
+    </div>
+
+    <!-- 敗血症 -->
+    <div class="topic-block" id="sepsis">
+      <div class="topic-block-head">
+        <span class="topic-block-title">敗血症 Sepsis</span>
+        <div data-bm-id="sepsis" data-bm-dept="感染科" data-bm-title="敗血症 Sepsis">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-red">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>Sepsis 3.0：疑似感染 + SOFA ≥2。Hour-1 bundle 要在 1 小時內完成。</span>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="sepsis-def" data-bm-dept="感染科" data-bm-title="Sepsis 定義">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">Sepsis 3.0 定義</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Sepsis</strong>：疑似感染 + SOFA ≥2（代表器官功能障礙）</li>
+              <li><strong>Septic shock</strong>：Sepsis + 低血壓需升壓藥 + Lactate &gt;2 mmol/L</li>
+              <li>舊版 SIRS 定義已不再使用</li>
+              <li><strong>qSOFA</strong>（快速篩查）：意識改變、RR ≥22、收縮壓 ≤100，符合 2 項 = 高風險</li>
+              <li class="note">qSOFA 是篩查工具不是診斷標準，陽性要進一步算完整 SOFA</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="sepsis-bundle" data-bm-dept="感染科" data-bm-title="Hour-1 Bundle">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">Hour-1 Bundle（1小時內完成）</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>血培養 ×2（不同部位，先抽再給抗生素）</div></li>
+              <li><div class="step-num">2</div><div>Lactate 檢測（&gt;2 mmol/L 代表組織缺氧）</div></li>
+              <li><div class="step-num">3</div><div>Broad-spectrum 抗生素（1小時內給）</div></li>
+              <li><div class="step-num">4</div><div>NS 或 LR 30mL/kg IV（低血壓或 Lactate &gt;4）</div></li>
+              <li><div class="step-num">5</div><div>輸液後仍低血壓 → Norepinephrine（首選升壓藥）</div></li>
+            </ul>
+            <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>血培養一定要在抗生素前抽，不然陽性率大幅下降</span>
+            </div>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="sepsis-source" data-bm-dept="感染科" data-bm-title="感染源控制">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">感染源控制（Source Control）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>找到感染源並處理是根本，光靠抗生素不夠</li>
+              <li>膿瘍 → 引流（不引流抗生素效果差）</li>
+              <li>感染導管（CVC、Foley）→ 移除或更換</li>
+              <li>膽道感染、腹腔感染 → 會診外科評估手術</li>
+              <li>壞死性筋膜炎 → 外科急診清創</li>
+              <li class="note">Source control 要在診斷後 6-12 小時內完成</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="sepsis-vaso" data-bm-dept="感染科" data-bm-title="升壓藥選擇">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">升壓藥選擇與目標</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Norepinephrine</strong>：Septic shock 首選，0.01-3 μg/kg/min</li>
+              <li><strong>Vasopressin</strong>：0.03-0.04 U/min，節省 Norepinephrine 用量</li>
+              <li><strong>Epinephrine</strong>：心輸出量不足時加用</li>
+              <li>目標 MAP ≥65 mmHg</li>
+              <li>2h 後 Lactate 仍 &gt;2 → 再補液評估</li>
+              <li class="note">Dopamine 已不建議作為 Septic shock 首選（心律不整風險高）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 抗生素選擇原則 -->
+    <div class="topic-block" id="abx-choice">
+      <div class="topic-block-head">
+        <span class="topic-block-title">抗生素選擇原則</span>
+        <div data-bm-id="abx-choice" data-bm-dept="感染科" data-bm-title="抗生素選擇原則">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-1">
+        <div class="k-card" data-bm-id="abx-principle" data-bm-dept="感染科" data-bm-title="抗生素三原則">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">使用抗生素的三個關鍵步驟</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><strong>先培養再給藥</strong>：血培養、尿培養先送，不要因為要等培養就延誤抗生素</div></li>
+              <li><div class="step-num">2</div><div><strong>廣覆蓋（Empiric）</strong>：根據感染部位和可能菌種選擇，覆蓋最可能的病原體</div></li>
+              <li><div class="step-num">3</div><div><strong>降階（De-escalation）</strong>：培養報告出來後，根據藥敏結果換成窄效抗生素</div></li>
+            </ul>
+            <div class="alert alert-blue" style="margin-top:12px;margin-bottom:0">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+              <span>降階是減少抗藥性的關鍵，培養結果出來就要重新評估，不要繼續用廣效抗生素</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-grid col-2" style="margin-top:14px">
+        <div class="k-card" data-bm-id="abx-gram" data-bm-dept="感染科" data-bm-title="革蘭氏染色判讀">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">革蘭氏染色快速判讀</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Gram+ 球菌（成串）</strong>：Streptococcus → Penicillin/Amoxicillin</li>
+              <li><strong>Gram+ 球菌（成堆）</strong>：Staphylococcus → MSSA 用 Oxacillin；MRSA 用 Vancomycin</li>
+              <li><strong>Gram- 桿菌</strong>：腸道菌（E. coli、Klebsiella）→ 3rd gen Ceph 或 Carbapenem</li>
+              <li><strong>Gram- 雙球菌</strong>：Neisseria → Ceftriaxone</li>
+              <li class="note">革蘭氏染色 30 分鐘出結果，比培養快，可縮窄抗生素選擇</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="abx-resistance" data-bm-dept="感染科" data-bm-title="常見抗藥性菌種">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">常見抗藥性菌種的選藥</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>MRSA</strong>：Vancomycin 或 Daptomycin（菌血症）；Linezolid（肺炎）</li>
+              <li><strong>ESBL</strong>：Carbapenem 首選</li>
+              <li><strong>CRE</strong>：Ceftazidime-avibactam 或 Colistin</li>
+              <li><strong>VRE</strong>：Linezolid 或 Daptomycin</li>
+              <li><strong>CRAB</strong>：Colistin + Tigecycline</li>
+              <li class="note">台灣 ESBL 盛行率高，UTI 治療失敗時要想到</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="abx-renal" data-bm-dept="感染科" data-bm-title="腎功能與抗生素調整">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">腎功能不好時要調整的抗生素</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Vancomycin</strong>：依 AUC/MIC 調整，腎衰竭延長間隔</li>
+              <li><strong>Piperacillin/Tazobactam</strong>：eGFR &lt;40 需減量</li>
+              <li><strong>Meropenem</strong>：eGFR &lt;50 需調整</li>
+              <li><strong>Aminoglycosides</strong>：腎毒性高，能避免就避免</li>
+              <li><strong>Azithromycin、Doxycycline</strong>：腎功能不影響</li>
+              <li class="note">開抗生素前先看 eGFR，很多失誤來自劑量沒調整</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="abx-duration" data-bm-dept="感染科" data-bm-title="抗生素療程長度">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">常見感染的療程長度</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>社區肺炎（CAP）：5-7 天</li>
+              <li>醫院肺炎（HAP/VAP）：7-8 天</li>
+              <li>單純 UTI：女性 3-5 天；男性 7 天</li>
+              <li>複雜 UTI / Pyelonephritis：10-14 天</li>
+              <li>菌血症：至少 14 天（S. aureus 更長）</li>
+              <li>感染性心內膜炎：4-6 週</li>
+              <li>細菌性腦膜炎：7-21 天（依菌種）</li>
+              <li class="note">Procalcitonin 下降可以幫助判斷停藥時機</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 常用抗生素 -->
+    <div class="topic-block" id="abx-common">
+      <div class="topic-block-head">
+        <span class="topic-block-title">常用抗生素整理</span>
+        <div data-bm-id="abx-common" data-bm-dept="感染科" data-bm-title="常用抗生素整理">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>抗生素</th><th>主要覆蓋</th><th>常見適應症</th><th>注意事項</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Amoxicillin-Clavulanate</strong></td><td>Gram+、部分 Gram-、厭氧菌</td><td>社區肺炎、UTI、皮膚感染、咬傷</td><td>青黴素過敏禁用；腹瀉常見</td></tr>
+          <tr><td><strong>Ceftriaxone</strong></td><td>Gram+、Gram-（不含 Pseudomonas）</td><td>CAP、UTI、腦膜炎、淋病、膽道感染</td><td>不和含鈣輸液混合；膽泥症</td></tr>
+          <tr><td><strong>Piperacillin/Tazobactam</strong></td><td>廣效含 Pseudomonas、厭氧菌</td><td>HAP、腹腔感染、發燒性嗜中性球低下</td><td>腎功能調整；與 Vancomycin 合用注意 AKI</td></tr>
+          <tr><td><strong>Meropenem</strong></td><td>幾乎全覆蓋含 ESBL</td><td>ESBL 感染、嚴重腹腔感染、HAP</td><td>保留作為最後防線；腎功能調整</td></tr>
+          <tr><td><strong>Vancomycin</strong></td><td>Gram+（MRSA）</td><td>MRSA 感染、CLABSI、腦膜炎</td><td>腎毒性；監測 AUC/MIC；Red man syndrome</td></tr>
+          <tr><td><strong>Azithromycin</strong></td><td>非典型病原體（Mycoplasma、Legionella）</td><td>CAP（與 β-lactam 合用）、性傳播感染</td><td>QT 延長；藥物交互作用多</td></tr>
+          <tr><td><strong>Metronidazole</strong></td><td>厭氧菌、C. difficile、原蟲</td><td>腹腔感染、C. diff（輕中度）、阿米巴</td><td>飲酒禁忌（Disulfiram 反應）</td></tr>
+          <tr><td><strong>Fluconazole</strong></td><td>Candida（非 Krusei/Glabrata）</td><td>念珠菌菌血症、食道念珠菌炎</td><td>肝毒性；CYP450 交互作用；部分 Candida 抗藥</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 肺炎 -->
+    <div class="topic-block" id="pneumonia">
+      <div class="topic-block-head">
+        <span class="topic-block-title">肺炎 Pneumonia</span>
+        <div data-bm-id="pneumonia" data-bm-dept="感染科" data-bm-title="肺炎">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="pna-type" data-bm-dept="感染科" data-bm-title="肺炎分類">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">CAP vs HAP vs VAP</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>CAP</strong>（社區肺炎）：住院前或住院 &lt;48h 發生</li>
+              <li><strong>HAP</strong>（醫院肺炎）：住院 ≥48h 後發生，未插管</li>
+              <li><strong>VAP</strong>（呼吸器相關）：插管 ≥48h 後發生</li>
+              <li>HAP/VAP 菌種更多樣且抗藥性高，需廣效覆蓋</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pna-severity" data-bm-dept="感染科" data-bm-title="CURB-65">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">CURB-65 嚴重度評分</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>C</strong>onfusion — 意識混亂</li>
+              <li><strong>U</strong>rea &gt;7 mmol/L（BUN &gt;19 mg/dL）</li>
+              <li><strong>R</strong>R ≥30 次/分</li>
+              <li><strong>B</strong>P 收縮壓 &lt;90 或舒張壓 ≤60</li>
+              <li><strong>65</strong> 歲以上</li>
+              <li>0-1 分：門診；2 分：住院；≥3 分：考慮 ICU</li>
+              <li class="note">CURB-65 是輔助工具，臨床判斷仍最重要</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pna-tx" data-bm-dept="感染科" data-bm-title="CAP 治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">CAP 抗生素選擇</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>門診輕度</strong>：Amoxicillin 或 Doxycycline 或 Azithromycin</li>
+              <li><strong>住院非重症</strong>：Ceftriaxone + Azithromycin</li>
+              <li><strong>住院重症 / ICU</strong>：β-lactam + Azithromycin 或 Fluoroquinolone</li>
+              <li><strong>HAP（無 Pseudomonas 風險）</strong>：Ceftriaxone 或 Pip/Tazo</li>
+              <li><strong>HAP（有 Pseudomonas 風險）</strong>：Pip/Tazo 或 Cefepime 或 Meropenem</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pna-monitor" data-bm-dept="感染科" data-bm-title="肺炎監測">
+          <div class="k-card-tags"><span class="tag tag-value">監測指標</span></div>
+          <div class="k-card-head"><span class="k-card-title">住院肺炎的監測重點</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>SpO₂ 目標：≥94%（COPD 患者 88-92%）</li>
+              <li>48-72h 後評估治療反應（體溫、WBC、症狀）</li>
+              <li>治療無效 → 擴大培養、考慮非典型病原體、評估膿胸</li>
+              <li>出院條件：體溫正常 &gt;24h、SpO₂ 穩定、可口服</li>
+              <li class="note">CXR 改善落後臨床症狀 4-6 週，不要靠 CXR 決定出院</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UTI -->
+    <div class="topic-block" id="uti">
+      <div class="topic-block-head">
+        <span class="topic-block-title">泌尿道感染 UTI</span>
+        <div data-bm-id="uti" data-bm-dept="感染科" data-bm-title="泌尿道感染 UTI">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="uti-type" data-bm-dept="感染科" data-bm-title="UTI 分類">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">UTI 的分類</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>單純性</strong>：健康非懷孕女性，下泌尿道症狀</li>
+              <li><strong>複雜性</strong>：男性、懷孕、結構異常、免疫低下、留置導尿管</li>
+              <li><strong>Pyelonephritis</strong>：發燒、腰痛、叩擊痛</li>
+              <li><strong>無症狀菌尿</strong>：培養陽性但無症狀，大多不需治療</li>
+              <li class="note">例外：懷孕婦女、泌尿道手術前需治療無症狀菌尿</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="uti-tx" data-bm-dept="感染科" data-bm-title="UTI 治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">UTI 抗生素選擇</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>單純性（女）</strong>：Nitrofurantoin 5天 或 TMP-SMX 3天</li>
+              <li><strong>複雜性</strong>：Ceftriaxone IV 或 Ciprofloxacin PO，7-14 天</li>
+              <li><strong>Pyelonephritis（輕中）</strong>：Ciprofloxacin PO 7天</li>
+              <li><strong>Pyelonephritis（重）</strong>：住院，Ceftriaxone IV</li>
+              <li><strong>CAUTI</strong>：先移除或更換導尿管</li>
+              <li class="note">台灣 E. coli 對 Fluoroquinolone 抗藥率高，用前先送培養</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SSTI -->
+    <div class="topic-block" id="ssti">
+      <div class="topic-block-head">
+        <span class="topic-block-title">皮膚軟組織感染 SSTI</span>
+        <div data-bm-id="ssti" data-bm-dept="感染科" data-bm-title="皮膚軟組織感染">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="ssti-type" data-bm-dept="感染科" data-bm-title="SSTI 鑑別">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">常見 SSTI 鑑別</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Cellulitis</strong>：瀰漫性紅腫熱痛，無明確邊界，主要 Strep</li>
+              <li><strong>Erysipelas</strong>：紅斑邊界清楚隆起，主要 GAS</li>
+              <li><strong>Abscess</strong>：有波動感的局部膿腫，主要 S. aureus</li>
+              <li><strong>壞死性筋膜炎</strong>：皮膚變色、捻髮音、劇痛後突然不痛 → 外科急診</li>
+              <li class="note">壞死性筋膜炎靠臨床診斷，等影像會延誤，懷疑就叫外科</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="ssti-tx" data-bm-dept="感染科" data-bm-title="SSTI 治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">SSTI 抗生素選擇</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Cellulitis（輕）</strong>：Amoxicillin-Clavulanate PO 或 Cephalexin</li>
+              <li><strong>Cellulitis（重）</strong>：Cefazolin IV 或 Ampicillin-Sulbactam IV</li>
+              <li><strong>MRSA 懷疑</strong>：Vancomycin IV（住院）或 TMP-SMX PO（門診）</li>
+              <li><strong>Abscess</strong>：引流是主要治療，再評估是否需抗生素</li>
+              <li><strong>壞死性筋膜炎</strong>：Pip/Tazo + Vancomycin + Clindamycin</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 腦膜炎 -->
+    <div class="topic-block" id="meningitis">
+      <div class="topic-block-head">
+        <span class="topic-block-title">細菌性腦膜炎 Bacterial Meningitis</span>
+        <div data-bm-id="meningitis" data-bm-dept="感染科" data-bm-title="細菌性腦膜炎">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-red">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>懷疑細菌性腦膜炎 → 抗生素不要等腰椎穿刺結果，先給抗生素再做 LP。</span>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="mening-dx" data-bm-dept="感染科" data-bm-title="腦膜炎診斷">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">診斷與 CSF 判讀</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>臨床三聯症</strong>：發燒 + 頸部僵硬 + 意識改變（只有 44% 同時出現）</li>
+              <li>其他：畏光、頭痛、Kernig sign、Brudzinski sign</li>
+              <li><strong>CSF 細菌性</strong>：WBC &gt;1000（多形核）、Glucose &lt;45、Protein &gt;200</li>
+              <li><strong>CSF 病毒性</strong>：WBC 10-1000（淋巴球）、Glucose 正常、Protein 輕度升高</li>
+              <li class="note">LP 前先做 CT 排除 mass effect，但不要因此延誤抗生素</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="mening-tx" data-bm-dept="感染科" data-bm-title="腦膜炎治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">抗生素與輔助治療</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>成人（社區）</strong>：Ceftriaxone 2g IV Q12h + Vancomycin</li>
+              <li><strong>&gt;50 歲或免疫低下</strong>：加 Ampicillin（覆蓋 Listeria）</li>
+              <li><strong>Dexamethasone</strong>：0.15mg/kg IV Q6h × 4 天，第一劑在抗生素前或同時</li>
+              <li>療程：S. pneumoniae 14 天；N. meningitidis 7 天；Listeria 21 天</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IE -->
+    <div class="topic-block" id="ie">
+      <div class="topic-block-head">
+        <span class="topic-block-title">感染性心內膜炎 Infective Endocarditis</span>
+        <div data-bm-id="ie" data-bm-dept="感染科" data-bm-title="感染性心內膜炎">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="ie-dx" data-bm-dept="感染科" data-bm-title="IE 診斷">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">Duke Criteria 診斷</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>主要標準</strong>：血培養陽性（典型菌種 ×2）、Echo 異常（vegetation、膿瘍、新發瓣膜逆流）</li>
+              <li><strong>次要標準</strong>：易感體質、發燒 &gt;38°C、血管現象、免疫現象</li>
+              <li>確診：2 主要 或 1主要+3次要 或 5次要</li>
+              <li class="note">懷疑 IE：先送 3 套血培養（不同部位間隔 30 分鐘），再做 Echo</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="ie-tx" data-bm-dept="感染科" data-bm-title="IE 治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">IE 抗生素選擇</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Streptococcus（敏感）</strong>：Penicillin G 或 Ceftriaxone，4 週</li>
+              <li><strong>MSSA</strong>：Oxacillin 或 Nafcillin，6 週</li>
+              <li><strong>MRSA</strong>：Vancomycin 6 週 或 Daptomycin</li>
+              <li><strong>Enterococcus</strong>：Ampicillin + Gentamicin，4-6 週</li>
+              <li>人工瓣膜 IE：療程更長，通常需外科評估</li>
+              <li class="note">S. aureus 菌血症 → 一定要做 Echo 排除 IE</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'sepsis',     dept:'感染科', title:'敗血症 Sepsis',    url:'#sepsis',     text:'SOFA qSOFA Septic shock Hour-1 bundle 血培養 Lactate Norepinephrine 升壓藥 Source control 引流' },
+    { id:'abx-choice', dept:'感染科', title:'抗生素選擇原則',   url:'#abx-choice', text:'培養 De-escalation 降階 革蘭氏染色 MRSA ESBL CRE VRE 腎功能 療程 Procalcitonin Vancomycin' },
+    { id:'abx-common', dept:'感染科', title:'常用抗生素整理',   url:'#abx-common', text:'Ceftriaxone Vancomycin Meropenem Pip/Tazo Azithromycin Metronidazole Fluconazole' },
+    { id:'pneumonia',  dept:'感染科', title:'肺炎',             url:'#pneumonia',  text:'CAP HAP VAP CURB-65 Ceftriaxone Azithromycin Legionella Mycoplasma SpO2' },
+    { id:'uti',        dept:'感染科', title:'泌尿道感染 UTI',   url:'#uti',        text:'單純性 複雜性 Pyelonephritis 無症狀菌尿 CAUTI Nitrofurantoin Ciprofloxacin E. coli' },
+    { id:'ssti',       dept:'感染科', title:'皮膚軟組織感染',   url:'#ssti',       text:'Cellulitis Abscess 壞死性筋膜炎 MRSA Vancomycin 引流 捻髮音 Erysipelas' },
+    { id:'meningitis', dept:'感染科', title:'細菌性腦膜炎',     url:'#meningitis', text:'頸部僵硬 CSF 腰椎穿刺 Ceftriaxone Dexamethasone Listeria Kernig Brudzinski' },
+    { id:'ie',         dept:'感染科', title:'感染性心內膜炎',   url:'#ie',         text:'Duke criteria vegetation Echo 血培養 Streptococcus MRSA Enterococcus 人工瓣膜' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
