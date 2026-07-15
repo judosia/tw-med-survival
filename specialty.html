@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>分科知識 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    /* 入口頁專屬樣式 */
+    .entry-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 5% 100px;
+    }
+    .entry-hero {
+      margin-bottom: 48px;
+    }
+    .entry-hero h1 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 900; color: var(--navy); margin-bottom: 8px;
+    }
+    .entry-hero p {
+      font-size: 0.88rem; color: var(--muted); max-width: 480px; line-height: 1.7;
+    }
+
+    /* 科別區塊 */
+    .dept-block { margin-bottom: 44px; }
+    .dept-block-head {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px; padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .dept-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .dept-icon svg { width: 18px; height: 18px; }
+    .dept-name { font-size: 1.05rem; font-weight: 800; }
+    .dept-coming {
+      margin-left: auto;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      background: var(--border); padding: 3px 9px; border-radius: 20px;
+    }
+
+    /* 次專科卡片 grid */
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .sub-card {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.18s;
+      color: var(--navy);
+    }
+    .sub-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 4px 14px rgba(69,123,157,0.12);
+      transform: translateY(-1px);
+    }
+    .sub-card.disabled {
+      opacity: 0.4; pointer-events: none; cursor: default;
+    }
+    .sub-card-icon {
+      width: 32px; height: 32px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .sub-card-icon svg { width: 16px; height: 16px; }
+    .sub-card-text { flex: 1; }
+    .sub-card-name { font-size: 0.88rem; font-weight: 700; margin-bottom: 2px; }
+    .sub-card-count { font-size: 0.72rem; color: var(--muted); }
+    .sub-card-arrow {
+      color: var(--muted); font-size: 0.8rem;
+      transition: transform 0.15s;
+    }
+    .sub-card:hover .sub-card-arrow { transform: translateX(3px); color: var(--blue); }
+
+    /* 顏色 */
+    .color-im    { background: rgba(69,123,157,0.1);  color: #457B9D; }
+    .color-surg  { background: rgba(230,57,70,0.1);   color: #E63946; }
+    .color-er    { background: rgba(244,162,97,0.1);  color: #c47d2b; }
+    .color-peds  { background: rgba(107,170,117,0.1); color: #6BAA75; }
+    .color-ob    { background: rgba(123,94,167,0.1);  color: #7B5EA7; }
+    .color-neuro { background: rgba(42,157,143,0.1);  color: #2A9D8F; }
+
+    /* nav 簡化版 */
+    body { padding-top: var(--nav-h); }
+    .simple-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      background: rgba(13,31,60,0.97);
+      backdrop-filter: blur(10px);
+      height: var(--nav-h); padding: 0 5%;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+  </style>
+</head>
+<body>
+
+<nav class="simple-nav">
+  <a href="index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">分科知識</span>
+</nav>
+
+<div class="entry-wrap">
+  <div class="entry-hero">
+    <h1>分科知識</h1>
+    <p>選擇科別和次專科，進入對應的知識頁面。內容持續更新中，也歡迎投稿補充。</p>
+  </div>
+
+  <!-- ══ 內科 ══ -->
+  <div class="dept-block">
+    <div class="dept-block-head">
+      <div class="dept-icon color-im">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+      </div>
+      <span class="dept-name">內科 Internal Medicine</span>
+    </div>
+    <div class="sub-grid">
+      <a href="im/cardio.html" class="sub-card">
+        <div class="sub-card-icon color-im">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">心臟科</div>
+          <div class="sub-card-count">6 個主題</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+      <a href="im/infect.html" class="sub-card">
+        <div class="sub-card-icon color-im">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">感染科</div>
+          <div class="sub-card-count">8 個主題</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+      <a href="im/pulm.html" class="sub-card">
+        <div class="sub-card-icon color-im">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">胸腔科</div>
+          <div class="sub-card-count">6 個主題</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+      <a href="im/general.html" class="sub-card">
+        <div class="sub-card-icon color-im">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">一般內科</div>
+          <div class="sub-card-count">5 個主訴</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+      <a href="im/nephro.html" class="sub-card">
+        <div class="sub-card-icon color-im">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="4" ry="8"/><path d="M12 4C8 4 4 7 4 12s4 8 8 8"/><path d="M12 4c4 0 8 3 8 8s-4 8-8 8"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">腎臟科</div>
+          <div class="sub-card-count">7 個主題</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══ 外科 ══ -->
+  <div class="dept-block">
+    <div class="dept-block-head">
+      <div class="dept-icon color-surg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.5 2.5c0 1.5-1.5 7-1.5 7h-2C10 9.5 8.5 4 8.5 2.5a3 3 0 0 1 6 0z"/><path d="M12 9.5V21"/><path d="M9 15h6"/>
+        </svg>
+      </div>
+      <span class="dept-name">外科 Surgery</span>
+    </div>
+    <div class="sub-grid">
+      <a href="surg/general.html" class="sub-card disabled">
+        <div class="sub-card-icon color-surg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">一般外科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+      <a href="surg/cardiac.html" class="sub-card disabled">
+        <div class="sub-card-icon color-surg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">心臟外科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══ 急診 ══ -->
+  <div class="dept-block">
+    <div class="dept-block-head">
+      <div class="dept-icon color-er">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </div>
+      <span class="dept-name">急診 Emergency Medicine</span>
+    </div>
+    <div class="sub-grid">
+      <a href="er/general.html" class="sub-card">
+        <div class="sub-card-icon color-er">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">急診核心</div>
+          <div class="sub-card-count">10 個主題</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+      <a href="er/trauma.html" class="sub-card">
+        <div class="sub-card-icon color-er">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">外傷</div>
+          <div class="sub-card-count">7 個主題</div>
+        </div>
+        <span class="sub-card-arrow">›</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══ 即將推出 ══ -->
+  <div class="dept-block">
+    <div class="dept-block-head">
+      <span class="dept-name" style="color:var(--muted);font-size:0.9rem;">即將推出</span>
+    </div>
+    <div class="sub-grid">
+      <div class="sub-card disabled">
+        <div class="sub-card-icon color-peds">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">兒科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+      </div>
+      <div class="sub-card disabled">
+        <div class="sub-card-icon color-ob">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">婦產科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+      </div>
+      <div class="sub-card disabled">
+        <div class="sub-card-icon color-neuro">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">神經科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+      </div>
+      <div class="sub-card disabled">
+        <div class="sub-card-icon" style="background:rgba(136,153,170,0.1);color:var(--muted);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        </div>
+        <div class="sub-card-text">
+          <div class="sub-card-name">骨科</div>
+          <div class="sub-card-count">即將推出</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
