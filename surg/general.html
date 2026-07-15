@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>一般外科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    /* 評分工具連結 */
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit; transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .score-link svg { width: 11px; height: 11px; }
+
+    /* 評分 Modal */
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 560px; max-height: 85vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+    .score-modal-body .data-table { margin-bottom: 16px; }
+    .score-result {
+      background: var(--light); border-radius: 8px;
+      padding: 14px 16px; margin-top: 8px;
+      font-size: 0.82rem; line-height: 1.65;
+    }
+    .score-result strong { color: var(--navy); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html" class="nav-back">分科知識</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">一般外科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">一般外科</div>
+    <div class="sidebar-section-title">OR 手術室</div>
+    <a href="#or-survival"  class="sidebar-link">OR 生存守則</a>
+    <a href="#preop"        class="sidebar-link">術前準備</a>
+    <a href="#postop"       class="sidebar-link">術後照護</a>
+    <a href="#wound"        class="sidebar-link">傷口與引流管</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">常見外科疾病</div>
+    <a href="#appendicitis" class="sidebar-link">闌尾炎</a>
+    <a href="#cholecystitis" class="sidebar-link">膽囊炎</a>
+    <a href="#bowel-obs"    class="sidebar-link">腸阻塞</a>
+    <a href="#hernia"       class="sidebar-link">疝氣</a>
+    <a href="#gi-bleed"     class="sidebar-link">GI Bleed</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">傷口處理</div>
+    <a href="#wound-care"   class="sidebar-link">傷口處置原則</a>
+    <a href="#drain"        class="sidebar-link">引流管管理</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> ›
+      <a href="../specialty.html">分科知識</a> ›
+      <span>一般外科</span>
+    </div>
+
+    <div class="page-hero" style="background:linear-gradient(135deg,#2a0a0a,#5a1a1a);color:#fff;">
+      <div class="page-hero-text">
+        <h1>一般外科 General Surgery</h1>
+        <p>外科的節奏快，容錯率低。把術前術後流程記熟，知道自己站在哪裡，才能成為有用的人。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M14.5 2.5c0 1.5-1.5 7-1.5 7h-2C10 9.5 8.5 4 8.5 2.5a3 3 0 0 1 6 0z"/><path d="M12 9.5V21"/><path d="M9 15h6"/></svg>
+      </div>
+    </div>
+
+    <!-- OR 生存守則 -->
+    <div class="topic-block" id="or-survival">
+      <div class="topic-block-head">
+        <span class="topic-block-title">OR 手術室生存守則</span>
+        <div data-bm-id="or-survival" data-bm-dept="一般外科" data-bm-title="OR 生存守則">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-amber">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>第一天進 OR 前先問清楚：幾點要到、從哪個門進、換衣服在哪。第一天遲到的印象很難修復。</span>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="or-sterile" data-bm-dept="一般外科" data-bm-title="無菌原則">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">無菌觀念不能妥協</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>手術區域（藍色單）是無菌場域，腰部以上才算無菌</li>
+              <li>背對無菌區時要說「我背對」</li>
+              <li>不確定是否污染 → 一律當作污染處理</li>
+              <li>手套破掉、碰到非無菌物品 → 立刻更換</li>
+              <li class="note">沉默等於你默默放棄了病人安全，說出來才是對的</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="or-position" data-bm-dept="一般外科" data-bm-title="站位與行為">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">站位與行為準則</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>進 OR 先觀察主刀和助手位置，站在不阻礙動線的地方</li>
+              <li>沒被叫到不要伸手，任何動作先問「我可以幫忙＿＿嗎？」</li>
+              <li>牽拉（retract）時保持穩定，不要中途放手</li>
+              <li>主刀問問題：不知道就說不知道，不要亂答</li>
+              <li class="note">空手進 OR 不好看，術前至少把手術適應症和步驟讀過一遍</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="or-timeout" data-bm-dept="一般外科" data-bm-title="Time Out">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">Time Out — 不是走形式</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>手術開始前強制暫停，確認：</li>
+              <li>病人姓名和辨識碼</li>
+              <li>手術名稱和部位（含左右側）</li>
+              <li>同意書已簽</li>
+              <li>所有人員就定位</li>
+              <li class="note">任何人都有權利叫停 Time Out。這是病人安全的最後防線，不要因為主刀急就跳過</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="or-scrub" data-bm-dept="一般外科" data-bm-title="刷手與穿戴">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">刷手、穿手術衣、戴手套</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>刷手：指甲到手肘，每個面各刷 30 秒，共 3-5 分鐘</div></li>
+              <li><div class="step-num">2</div><div>雙手向上舉，不碰觸任何非無菌物品進入 OR</div></li>
+              <li><div class="step-num">3</div><div>護理師協助穿手術衣（背後繫帶）</div></li>
+              <li><div class="step-num">4</div><div>戴手套：closed technique（手不露出袖口）</div></li>
+              <li><div class="step-num">5</div><div>穿戴後雙手保持在腰部以上、視線範圍內</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 術前準備 -->
+    <div class="topic-block" id="preop">
+      <div class="topic-block-head">
+        <span class="topic-block-title">術前準備 Preoperative Care</span>
+        <div data-bm-id="preop" data-bm-dept="一般外科" data-bm-title="術前準備">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-1">
+        <div class="k-card" data-bm-id="preop-checklist" data-bm-dept="一般外科" data-bm-title="術前清單">
+          <div class="k-card-tags"><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">術前一天確認清單</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><strong>同意書</strong>：主治已向病人說明手術目的、步驟、風險、替代方案，病人能複述並簽名</div></li>
+              <li><div class="step-num">2</div><div><strong>NPO</strong>：固體食物術前 8h、清流質術前 2h（依麻醉科指示，急刀另計）</div></li>
+              <li><div class="step-num">3</div><div><strong>術前檢查</strong>：CBC、CMP、凝血功能、血型（依手術大小和病人狀況調整）</div></li>
+              <li><div class="step-num">4</div><div><strong>備血</strong>：大手術先做 T&C，預估出血量大者備 pRBC</div></li>
+              <li><div class="step-num">5</div><div><strong>藥物調整</strong>：Warfarin 停 5 天、抗血小板藥 7 天、Metformin 術前 24-48h 停</div></li>
+              <li><div class="step-num">6</div><div><strong>預防性抗生素</strong>：切皮前 60 分鐘內給（Cefazolin 為多數手術首選）</div></li>
+              <li><div class="step-num">7</div><div><strong>VTE 預防</strong>：彈性襪、氣壓式裝置；高風險手術術前給 LMWH</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-grid col-2" style="margin-top:14px">
+        <div class="k-card" data-bm-id="preop-risk" data-bm-dept="一般外科" data-bm-title="手術風險評估">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">手術風險評估</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>ASA 分級</strong>（麻醉風險）：<button class="score-link" onclick="openModal('modal-asa')">查看分級表 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button></li>
+              <li><strong>心臟風險</strong>：<button class="score-link" onclick="openModal('modal-rcri')">RCRI（修訂版心臟風險指數）<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button></li>
+              <li>高風險手術（心臟、大血管）術前需心臟科評估</li>
+              <li>緊急手術：評估來不及 → 記錄風險知情並進行</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="preop-consent" data-bm-dept="一般外科" data-bm-title="同意書注意事項">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">同意書的法律眉角</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>必須由<strong>主治醫師或有資格的醫師</strong>親自說明後取得</li>
+              <li>病人必須有<strong>決定能力</strong>（意識清楚、能理解）</li>
+              <li>代理人簽署：病人無決定能力時，優先順序為配偶 → 成年子女 → 父母</li>
+              <li>緊急手術病人無法同意 → 記錄緊急情況，家屬事後補簽</li>
+              <li class="note">同意書不是免責聲明，而是說明過程的記錄。說明越清楚，醫病關係越好</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 術後照護 -->
+    <div class="topic-block" id="postop">
+      <div class="topic-block-head">
+        <span class="topic-block-title">術後照護 Postoperative Care</span>
+        <div data-bm-id="postop" data-bm-dept="一般外科" data-bm-title="術後照護">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="postop-first24" data-bm-dept="一般外科" data-bm-title="術後第一天">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">術後 24h 最需要監測的</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>出血</strong>：血壓下降 + 心跳上升 = 出血直到排除為止</li>
+              <li><strong>呼吸</strong>：SpO₂、呼吸音、肺不張（術後最早的發燒原因）</li>
+              <li><strong>尿量</strong>：&gt;0.5 mL/kg/hr；少尿先補液再評估</li>
+              <li><strong>疼痛</strong>：NRS 評分，&gt;4 分積極處理</li>
+              <li><strong>噁心嘔吐</strong>：麻醉後常見，Ondansetron 或 Metoclopramide</li>
+              <li class="note">麻醉退了才是真正術後評估的開始，不要以為進恢復室就沒事了</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="postop-fever" data-bm-dept="一般外科" data-bm-title="術後發燒 5W">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">術後發燒：5W 記憶法</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>24h 內 — Wind</strong>：肺不張（最常見），鼓勵深呼吸、使用呼吸訓練器</li>
+              <li><strong>1-3 天 — Water</strong>：泌尿道感染（Foley 相關）</li>
+              <li><strong>3-5 天 — Wound</strong>：傷口感染，觀察紅腫熱痛膿</li>
+              <li><strong>5-7 天 — Walking</strong>：DVT / 靜脈炎（留置針）</li>
+              <li><strong>任何時間 — Wonder Drug</strong>：藥物熱（抗生素常見）</li>
+              <li class="note">CXR 改善落後臨床 4-6 週，不要靠 CXR 決定肺不張好沒好</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="postop-eras" data-bm-dept="一般外科" data-bm-title="ERAS 原則">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">ERAS — 加速康復外科</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>術後 24h 內鼓勵下床活動（降低 DVT、肺不張風險）</li>
+              <li>早期經口進食（清流質開始）</li>
+              <li>多模式止痛：Acetaminophen + NSAIDs + 局部麻醉，減少 Opioid</li>
+              <li>早期拔除 Foley（留置越久 UTI 風險越高）</li>
+              <li>避免過多靜脈輸液（造成腸道水腫延緩恢復）</li>
+              <li class="note">ERAS 不是在逼病人，是有證據的做法，能縮短住院天數</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="postop-pain" data-bm-dept="一般外科" data-bm-title="術後疼痛控制">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">術後疼痛控制策略</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>定時給藥</strong>優於 PRN：不要等病人痛了才給</li>
+              <li><strong>Step 1</strong>：Acetaminophen 1g Q6-8h（基礎）</li>
+              <li><strong>Step 2</strong>：NSAIDs（Ketorolac 30mg IV）加入</li>
+              <li><strong>Step 3</strong>：弱 Opioid（Tramadol）或強 Opioid（Morphine PRN）</li>
+              <li>硬膜外止痛（Epidural）：大手術術後效果佳</li>
+              <li class="note">Opioid 副作用：便秘（幾乎必發）、噁心、呼吸抑制。多模式可減少使用量</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 傷口與引流管 -->
+    <div class="topic-block" id="wound">
+      <div class="topic-block-head">
+        <span class="topic-block-title">傷口與引流管</span>
+        <div data-bm-id="wound" data-bm-dept="一般外科" data-bm-title="傷口與引流管">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>項目</th><th>正常狀況</th><th>需要通報的情況</th></tr></thead>
+        <tbody>
+          <tr><td><strong>手術傷口</strong></td><td>術後 24-48h 輕微紅腫、少量滲液</td><td>紅腫熱痛加劇、脂肪液化、傷口裂開、膿性分泌物、臭味</td></tr>
+          <tr><td><strong>JP drain</strong></td><td>淡紅色或漿液性，量逐漸減少</td><td>鮮紅色出血、乳白色（淋巴漏）、突然大量增加、&gt;100mL/8h</td></tr>
+          <tr><td><strong>NG tube</strong></td><td>淡黃或淡綠色胃液</td><td>咖啡色或鮮紅色（上消化道出血）、&gt;500mL/8h</td></tr>
+          <tr><td><strong>Foley</strong></td><td>淡黃色尿液，&gt;0.5mL/kg/hr</td><td>血尿、尿量驟減、引流不暢</td></tr>
+          <tr><td><strong>胸管</strong></td><td>少量淡紅色引流液，氣泡逐漸消失</td><td>大量鮮血（&gt;200mL/hr）、持續漏氣、引流液乳白色（乳糜胸）</td></tr>
+          <tr><td><strong>T-tube（膽管）</strong></td><td>黃金色膽汁，每天 300-500mL</td><td>引流量突然減少、顏色變深、病人黃疸加重</td></tr>
+        </tbody>
+      </table>
+      <div class="alert alert-red">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>引流管絕對不能自己移位或拔除，除非主治明確指示。不確定就問。</span>
+      </div>
+    </div>
+
+    <!-- 闌尾炎 -->
+    <div class="topic-block" id="appendicitis">
+      <div class="topic-block-head">
+        <span class="topic-block-title">闌尾炎 Appendicitis</span>
+        <div data-bm-id="appendicitis" data-bm-dept="一般外科" data-bm-title="闌尾炎">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="appy-dx" data-bm-dept="一般外科" data-bm-title="闌尾炎診斷">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">診斷與評分</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>典型表現</strong>：臍周疼痛 → 轉移至右下腹（McBurney's point）、發燒、噁心嘔吐</li>
+              <li><strong>Alvarado score</strong>：<button class="score-link" onclick="openModal('modal-alvarado')">查看評分表 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button></li>
+              <li><strong>影像</strong>：腹部超音波（敏感性 86%）或 CT（敏感性 94%）</li>
+              <li>女性：一定排除子宮外孕、卵巢扭轉</li>
+              <li class="note">WBC 正常不能排除闌尾炎，臨床判斷比 Lab 重要</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="appy-tx" data-bm-dept="一般外科" data-bm-title="闌尾炎治療">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">治療選擇</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>非穿孔性闌尾炎</strong>：腹腔鏡闌尾切除術（首選）</li>
+              <li><strong>穿孔性闌尾炎 + 腹膜炎</strong>：緊急手術、廣效抗生素</li>
+              <li><strong>穿孔 + 局部膿瘍</strong>：先抗生素 + 引流，6-8 週後選擇性切除</li>
+              <li><strong>術前抗生素</strong>：Cefoxitin 或 Ceftriaxone + Metronidazole</li>
+              <li>非手術治療（抗生素）：部分研究顯示有效，但復發率 20-30%</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 膽囊炎 -->
+    <div class="topic-block" id="cholecystitis">
+      <div class="topic-block-head">
+        <span class="topic-block-title">膽囊炎 Cholecystitis</span>
+        <div data-bm-id="cholecystitis" data-bm-dept="一般外科" data-bm-title="膽囊炎">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="chole-dx" data-bm-dept="一般外科" data-bm-title="膽囊炎診斷">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">診斷重點</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>急性膽囊炎</strong>：右上腹痛 &gt;6h、發燒、Murphy's sign（+）</li>
+              <li><strong>Murphy's sign</strong>：深吸氣時右上腹按壓引發疼痛加劇並停止吸氣</li>
+              <li><strong>膽管炎（Charcot's triad）</strong>：發燒 + 黃疸 + 右上腹痛 → 緊急</li>
+              <li><strong>Reynold's pentad</strong>（重症膽管炎）：Charcot's triad + 休克 + 意識改變</li>
+              <li>超音波：膽結石、膽囊壁增厚 &gt;4mm、周圍積液</li>
+              <li>抽血：WBC 升高、LFT 異常（膽管炎時 ALP、GGT、Bilirubin 升高）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="chole-tx" data-bm-dept="一般外科" data-bm-title="膽囊炎治療">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">治療策略</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>急性膽囊炎</strong>：住院、禁食、IV 輸液、抗生素（Ceftriaxone + Metronidazole）</li>
+              <li>早期腹腔鏡膽囊切除（72h 內）優於延遲手術</li>
+              <li><strong>重症膽管炎（Reynold's pentad）</strong>：緊急 ERCP 膽道引流</li>
+              <li><strong>膽源性胰臟炎</strong>：先保守治療，炎症緩解後膽囊切除</li>
+              <li class="note">膽管炎不引流會死，比膽囊炎緊急得多</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 腸阻塞 -->
+    <div class="topic-block" id="bowel-obs">
+      <div class="topic-block-head">
+        <span class="topic-block-title">腸阻塞 Bowel Obstruction</span>
+        <div data-bm-id="bowel-obs" data-bm-dept="一般外科" data-bm-title="腸阻塞">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="sbo-dx" data-bm-dept="一般外科" data-bm-title="小腸阻塞">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">小腸阻塞（SBO）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>最常見原因</strong>：沾黏（腹部手術後，佔 60-70%）、疝氣嵌頓、腫瘤</li>
+              <li><strong>症狀</strong>：腹痛（陣發性絞痛）、嘔吐（越高位越早）、腹脹、停止排氣排便</li>
+              <li><strong>X-ray</strong>：擴張小腸、多個液氣平面、魚骨刺狀（Valvulae conniventes）</li>
+              <li><strong>CT</strong>：確認阻塞位置和是否缺血（緊急手術指征）</li>
+              <li class="note">有沾黏病史 + 典型症狀 → 高度懷疑 SBO，不要等到完全阻塞</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="sbo-tx" data-bm-dept="一般外科" data-bm-title="腸阻塞治療">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">治療策略</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>部分阻塞（沾黏）</strong>：NPO + NG tube 減壓 + 輸液，觀察 24-48h</li>
+              <li><strong>完全阻塞</strong>：手術探查</li>
+              <li><strong>緊急手術指征</strong>：腸缺血（Lactate 升高、CT 腸壁強化消失）、腹膜炎、嵌頓疝氣</li>
+              <li><strong>大腸阻塞</strong>：最常見原因是大腸癌；Sigmoid volvulus → 乙狀結腸鏡減壓</li>
+              <li class="note">腸缺血是時間決定生死的，CT 看到腸壁氣泡（pneumatosis）立刻外科</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 疝氣 -->
+    <div class="topic-block" id="hernia">
+      <div class="topic-block-head">
+        <span class="topic-block-title">疝氣 Hernia</span>
+        <div data-bm-id="hernia" data-bm-dept="一般外科" data-bm-title="疝氣">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="hernia-type" data-bm-dept="一般外科" data-bm-title="疝氣分類">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">常見疝氣分類</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>腹股溝疝氣（Inguinal）</strong>：最常見，男性多；直接型（Hesselbach 三角）vs 間接型</li>
+              <li><strong>股疝氣（Femoral）</strong>：女性多，嵌頓風險高</li>
+              <li><strong>臍疝氣</strong>：肥胖、多次妊娠、腹水</li>
+              <li><strong>切口疝氣</strong>：腹部手術後，肥胖和傷口感染是危險因子</li>
+              <li><strong>嵌頓（Incarceration）</strong>：疝氣內容物無法還納</li>
+              <li><strong>絞窄（Strangulation）</strong>：血液供應中斷 → 緊急手術</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="hernia-emergency" data-bm-dept="一般外科" data-bm-title="疝氣緊急情況">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">嵌頓或絞窄疝氣</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>症狀</strong>：疝氣突然無法還納、劇烈疼痛、局部紅腫熱</li>
+              <li><strong>絞窄警示</strong>：疝氣顏色變深（缺血）、發燒、WBC 升高</li>
+              <li>手法還納（Reduction）：嵌頓早期可嘗試，絞窄禁止</li>
+              <li>手法還納失敗或懷疑絞窄 → 緊急手術</li>
+              <li class="note">股疝氣嵌頓率高（20-40%），女性鼠蹊部包塊要高度警覺</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GI Bleed -->
+    <div class="topic-block" id="gi-bleed">
+      <div class="topic-block-head">
+        <span class="topic-block-title">消化道出血 GI Bleed</span>
+        <div data-bm-id="gi-bleed" data-bm-dept="一般外科" data-bm-title="消化道出血">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-red">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>大量 GI Bleed — 先穩定血流動力學，建立兩條大口徑靜脈通路，備血，再做內視鏡。</span>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="ugib" data-bm-dept="一般外科" data-bm-title="上消化道出血">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">上消化道出血（UGIB）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>表現</strong>：嘔血（Hematemesis）、黑便（Melena）</li>
+              <li><strong>原因</strong>：消化性潰瘍（最常）、食道靜脈曲張、Mallory-Weiss tear</li>
+              <li><strong>Rockall score</strong>：<button class="score-link" onclick="openModal('modal-rockall')">查看評分表 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>（預測再出血和死亡率）</li>
+              <li>緊急處置：PPI 80mg IV bolus → 8mg/hr 持續滴注；24h 內上消化道內視鏡</li>
+              <li>食道靜脈曲張出血：Octreotide + 內視鏡結紮或硬化治療</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="lgib" data-bm-dept="一般外科" data-bm-title="下消化道出血">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">下消化道出血（LGIB）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>表現</strong>：血便（Hematochezia）— 鮮紅或暗紅色</li>
+              <li><strong>原因</strong>：憩室（最常）、血管異生（Angiodysplasia）、痔瘡、大腸癌</li>
+              <li>80% 會自行停止，先穩定再做大腸鏡</li>
+              <li>大量持續出血：CT 血管攝影定位出血點 → 血管栓塞或手術</li>
+              <li class="note">鮮紅色血便不一定是 LGIB，大量 UGIB 也會有血便（腸道快速通過）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 傷口處置 -->
+    <div class="topic-block" id="wound-care">
+      <div class="topic-block-head">
+        <span class="topic-block-title">傷口處置原則</span>
+        <div data-bm-id="wound-care" data-bm-dept="一般外科" data-bm-title="傷口處置原則">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="wound-class" data-bm-dept="一般外科" data-bm-title="傷口分類">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">手術傷口分類</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Class I（清潔）</strong>：無感染，不進入呼吸消化泌尿道。SSI 風險 &lt;2%</li>
+              <li><strong>Class II（清潔污染）</strong>：進入呼吸消化泌尿道但無感染。SSI 風險 5-10%</li>
+              <li><strong>Class III（污染）</strong>：急性炎症或消化道溢漏。SSI 風險 15-20%</li>
+              <li><strong>Class IV（骯髒）</strong>：已有感染或穿孔。SSI 風險 &gt;40%</li>
+              <li class="note">Class III-IV 傷口考慮二期癒合（不立刻縫合，讓傷口先清潔）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="wound-infection" data-bm-dept="一般外科" data-bm-title="傷口感染處理">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">傷口感染（SSI）處理</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>症狀</strong>：紅腫熱痛、傷口有膿性分泌物、發燒</li>
+              <li><strong>處理</strong>：打開傷口引流（不能只靠抗生素）</li>
+              <li>傷口培養後依藥敏選抗生素</li>
+              <li>濕敷換藥：促進二期癒合</li>
+              <li><strong>壞死性筋膜炎</strong>：皮膚壞死、捻髮音、劇烈疼痛 → 外科急診清創（不能只引流）</li>
+              <li class="note">傷口感染打開引流後就好了很多，不要害怕打開</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="wound-closure" data-bm-dept="一般外科" data-bm-title="縫線與拆線">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">縫線選擇與拆線時機</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>可吸收縫線</strong>：Vicryl、PDS — 用於深層組織、不需拆線</li>
+              <li><strong>不可吸收縫線</strong>：Nylon、Prolene — 用於皮膚，需要拆線</li>
+              <li><strong>拆線時機</strong>：臉部 3-5 天；頭皮 7-10 天；軀幹 10-14 天；下肢 14 天</li>
+              <li>糖尿病、免疫低下、類固醇使用者 → 延後拆線</li>
+              <li class="note">拆太早會裂開，拆太晚留縫線痕。糖尿病患者癒合慢，至少 14 天</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 引流管管理 -->
+    <div class="topic-block" id="drain">
+      <div class="topic-block-head">
+        <span class="topic-block-title">引流管管理</span>
+        <div data-bm-id="drain" data-bm-dept="一般外科" data-bm-title="引流管管理">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="drain-remove" data-bm-dept="一般外科" data-bm-title="引流管拔除時機">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">JP Drain 拔除時機</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>引流量 &lt;30-50mL/天（連續 2 天）</li>
+              <li>引流液清澈（非膿性、非血性）</li>
+              <li>無感染跡象</li>
+              <li>拔除前確認主治同意</li>
+              <li class="note">拔管太早可能造成積液（seroma/hematoma），太晚增加感染風險</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="drain-chest" data-bm-dept="一般外科" data-bm-title="胸管管理">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">胸管管理與拔管</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>確認水封瓶連接正確（水柱隨呼吸波動代表通暢）</li>
+              <li>氣泡持續出現 = 持續漏氣（air leak）</li>
+              <li><strong>拔管條件</strong>：無漏氣、引流量 &lt;200mL/天、CXR 肺擴張良好</li>
+              <li>夾管測試：夾管 4-6h 後複查 CXR 無惡化即可拔管</li>
+              <li class="note">胸管不能捲曲或受壓，否則引流不暢會造成張力性血胸</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ══ ASA 分級 Modal ══ -->
+<div class="score-modal-overlay" id="modal-asa">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>ASA 身體狀態分類</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-asa')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>分級</th><th>定義</th><th>例子</th></tr></thead>
+        <tbody>
+          <tr><td><strong>ASA I</strong></td><td>正常健康患者</td><td>健康、不抽菸、不飲酒或少量</td></tr>
+          <tr><td><strong>ASA II</strong></td><td>輕度全身性疾病</td><td>控制良好的高血壓/糖尿病、BMI &lt;40、懷孕、抽菸</td></tr>
+          <tr><td><strong>ASA III</strong></td><td>重度全身性疾病</td><td>控制不佳的高血壓/糖尿病、COPD、病態肥胖（BMI ≥40）、EF &lt;40%</td></tr>
+          <tr><td><strong>ASA IV</strong></td><td>持續威脅生命的全身性疾病</td><td>近期心肌梗塞（&lt;3個月）、ESRD、肝硬化 Child C</td></tr>
+          <tr><td><strong>ASA V</strong></td><td>不手術預期無法存活 24h</td><td>腹主動脈瘤破裂、顱內出血伴腦疝</td></tr>
+          <tr><td><strong>ASA VI</strong></td><td>腦死，器官捐贈</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        加「E」表示緊急手術（Emergency），如 ASA III-E<br/>
+        <span style="color:var(--muted)">ASA III 以上建議術前麻醉科評估；ASA IV-V 手術需充分討論風險</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RCRI Modal ══ -->
+<div class="score-modal-overlay" id="modal-rcri">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>RCRI 修訂版心臟風險指數</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-rcri')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>項目</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td>高風險手術（腹腔內、胸腔內、腹股溝上血管手術）</td><td><strong>+1</strong></td></tr>
+          <tr><td>缺血性心臟病（心絞痛、心肌梗塞病史、使用硝酸鹽）</td><td><strong>+1</strong></td></tr>
+          <tr><td>充血性心臟衰竭病史</td><td><strong>+1</strong></td></tr>
+          <tr><td>腦血管疾病（中風、TIA 病史）</td><td><strong>+1</strong></td></tr>
+          <tr><td>術前使用胰島素治療的糖尿病</td><td><strong>+1</strong></td></tr>
+          <tr><td>術前血清肌酸酐 &gt;2.0 mg/dL</td><td><strong>+1</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>0 分</strong>：主要心臟不良事件（MACE）風險 &lt;1%<br/>
+        <strong>1 分</strong>：MACE 風險 ~1%<br/>
+        <strong>2 分</strong>：MACE 風險 ~2.4%<br/>
+        <strong>≥3 分</strong>：MACE 風險 &gt;5.4%，考慮術前心臟評估或延後手術
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Alvarado Score Modal ══ -->
+<div class="score-modal-overlay" id="modal-alvarado">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>Alvarado Score — 闌尾炎預測</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-alvarado')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>項目</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td>轉移性右下腹痛（臍周→右下腹）</td><td><strong>+1</strong></td></tr>
+          <tr><td>噁心或嘔吐</td><td><strong>+1</strong></td></tr>
+          <tr><td>右下腹壓痛</td><td><strong>+2</strong></td></tr>
+          <tr><td>彈跳痛（Rebound tenderness）</td><td><strong>+1</strong></td></tr>
+          <tr><td>發燒（&gt;37.3°C）</td><td><strong>+1</strong></td></tr>
+          <tr><td>WBC 升高（&gt;10,000）</td><td><strong>+2</strong></td></tr>
+          <tr><td>嗜中性球左移（Shift to left）</td><td><strong>+1</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>1-4 分</strong>：低機率，可觀察或出院<br/>
+        <strong>5-6 分</strong>：中機率，需進一步影像評估（超音波或 CT）<br/>
+        <strong>7-9 分</strong>：高機率，考慮手術<br/>
+        <span style="color:var(--muted)">女性患者需排除婦科原因（卵巢囊腫、子宮外孕），CT 更可靠</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Rockall Score Modal ══ -->
+<div class="score-modal-overlay" id="modal-rockall">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>Rockall Score — 上消化道出血風險</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-rockall')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>變項</th><th>0分</th><th>1分</th><th>2分</th><th>3分</th></tr></thead>
+        <tbody>
+          <tr><td><strong>年齡</strong></td><td>&lt;60</td><td>60-79</td><td>≥80</td><td>—</td></tr>
+          <tr><td><strong>休克</strong></td><td>無（BP≥100, HR&lt;100）</td><td>心跳過速（HR≥100, BP≥100）</td><td>低血壓（BP&lt;100）</td><td>—</td></tr>
+          <tr><td><strong>共病症</strong></td><td>無</td><td>—</td><td>心衰竭、IHD 或重大共病</td><td>腎衰竭、肝衰竭、轉移性癌</td></tr>
+          <tr><td><strong>內視鏡診斷</strong></td><td>無病變、Mallory-Weiss</td><td>其他診斷</td><td>上消化道惡性腫瘤</td><td>—</td></tr>
+          <tr><td><strong>出血徵象</strong></td><td>無或深色血跡</td><td>—</td><td>血液、血塊、噴射出血</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>0-2 分</strong>：低風險，再出血率 &lt;5%，可考慮早期出院<br/>
+        <strong>3-4 分</strong>：中風險，需住院觀察<br/>
+        <strong>≥5 分</strong>：高風險，再出血率高，需密切監測和介入
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'or-survival',    dept:'一般外科', title:'OR 生存守則',    url:'#or-survival',    text:'無菌 Time Out 刷手 站位 手術衣 手套 頸圈 閉合技術 牽拉 主刀' },
+    { id:'preop',          dept:'一般外科', title:'術前準備',        url:'#preop',          text:'同意書 NPO 禁食 備血 T&C ASA RCRI 抗血小板 Warfarin Metformin 預防性抗生素 VTE 彈性襪' },
+    { id:'postop',         dept:'一般外科', title:'術後照護',        url:'#postop',         text:'5W 術後發燒 肺不張 UTI 傷口感染 DVT 藥物熱 ERAS 疼痛控制 Acetaminophen Ketorolac Opioid' },
+    { id:'wound',          dept:'一般外科', title:'傷口與引流管',    url:'#wound',          text:'JP drain NG tube Foley 胸管 T-tube 引流液 感染 出血 淋巴漏 乳糜胸' },
+    { id:'appendicitis',   dept:'一般外科', title:'闌尾炎',          url:'#appendicitis',   text:'McBurney Alvarado 轉移性腹痛 嘔吐 發燒 WBC CT 超音波 腹腔鏡 穿孔 Ceftriaxone Metronidazole' },
+    { id:'cholecystitis',  dept:'一般外科', title:'膽囊炎',          url:'#cholecystitis',  text:'Murphy 膽結石 膽管炎 Charcot Reynolds 黃疸 ERCP LFT ALP 腹腔鏡膽囊切除 胰臟炎' },
+    { id:'bowel-obs',      dept:'一般外科', title:'腸阻塞',          url:'#bowel-obs',      text:'SBO 小腸阻塞 沾黏 液氣平面 NG tube 減壓 腸缺血 Lactate pneumatosis 大腸阻塞 volvulus' },
+    { id:'hernia',         dept:'一般外科', title:'疝氣',            url:'#hernia',         text:'腹股溝 Inguinal Femoral 臍疝氣 切口疝氣 嵌頓 Incarceration 絞窄 Strangulation 還納' },
+    { id:'gi-bleed',       dept:'一般外科', title:'消化道出血',      url:'#gi-bleed',       text:'UGIB LGIB 嘔血 黑便 血便 消化性潰瘍 靜脈曲張 憩室 Rockall PPI Octreotide 內視鏡' },
+    { id:'wound-care',     dept:'一般外科', title:'傷口處置原則',    url:'#wound-care',     text:'Class I II III IV 清潔 污染 SSI 感染 引流 壞死性筋膜炎 清創 縫線 Vicryl Nylon 拆線' },
+    { id:'drain',          dept:'一般外科', title:'引流管管理',      url:'#drain',          text:'JP drain 拔管 胸管 水封瓶 漏氣 air leak 夾管 CXR 30mL 50mL seroma hematoma' },
+  ];
+
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
