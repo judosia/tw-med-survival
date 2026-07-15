@@ -816,6 +816,8 @@
     { id:'anaphylax', dept:'急診', title:'過敏性休克',       url:'#anaphylax', text:'Epinephrine IM 大腿 Diphenhydramine Methylprednisolone 雙相反應 喉頭水腫 蕁麻疹 支氣管痙攣' },
     { id:'dispo',     dept:'急診', title:'收住院 vs 回家',   url:'#dispo',     text:'住院 出院 生命徵象 診斷 靜脈藥物 社會因素 衛教 返診 後續追蹤' },
   ];
+
+  // Modal 開關（全域函數，供 onclick 使用）
   function openModal(id) {
     document.getElementById(id).classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -824,18 +826,18 @@
     document.getElementById(id).classList.remove('open');
     document.body.style.overflow = '';
   }
-  // 點遮罩關閉
   document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
     overlay.addEventListener('click', e => {
       if (e.target === overlay) closeModal(overlay.id);
     });
   });
-  // ESC 關閉
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
     }
   });
+
+  if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
   } else {
     initSearch(SEARCH_INDEX);
