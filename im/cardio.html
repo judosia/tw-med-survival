@@ -45,17 +45,22 @@
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-head">心臟科</div>
-
+    
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">症狀s/s</div>
+    <a href="#chest-pain"         class="sidebar-link">胸痛</a>
+    <a href="#dyspnea"          class="sidebar-link">呼吸困難 Dyspnea</a>
+    
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">緊急</div>
+    <a href="#ami"         class="sidebar-link">急性心肌梗塞 AMI</a>
+    <a href="#ad"          class="sidebar-link">主動脈剝離 AD</a>
+    
     <div class="sidebar-section-title">基礎</div>
     <a href="#hf"          class="sidebar-link">心臟衰竭</a>
     <a href="#arrhythmia"  class="sidebar-link">心律不整</a>
     <a href="#htn-drugs"   class="sidebar-link">高血壓用藥</a>
     <a href="#dm-drugs"    class="sidebar-link">糖尿病用藥</a>
-
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-section-title">緊急</div>
-    <a href="#ami"         class="sidebar-link">急性心肌梗塞 AMI</a>
-    <a href="#ad"          class="sidebar-link">主動脈剝離 AD</a>
 
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">其他科別</div>
@@ -81,152 +86,100 @@
     </div>
 
     <!-- ══════════════════════════════════
-         心臟衰竭
+         chest pain
     ══════════════════════════════════ -->
-    <div class="topic-block" id="hf">
+    <div class="topic-block" id="chest-pain">
       <div class="topic-block-head">
-        <span class="topic-block-title">心臟衰竭 Heart Failure</span>
-        <div data-bm-id="hf" data-bm-dept="心臟科" data-bm-title="心臟衰竭">
+        <span class="topic-block-title">胸痛 Chest pain</span>
+        <div data-bm-id="chest-pain" data-bm-dept="心臟科" data-bm-title="胸痛">
           <button class="bm-btn" title="加入書籤">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
           </button>
         </div>
       </div>
+      
+    <div class="card-grid col-2">
 
-      <div class="alert alert-blue">
-        <span class="alert-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
-        <span>HFrEF（EF &lt;40%）和 HFpEF（EF ≥50%）治療策略不同，先確認 echo 結果再選藥。</span>
-      </div>
-
-      <div class="card-grid col-2">
-
-        <!-- 分類 -->
-        <div class="k-card" data-bm-id="hf-type" data-bm-dept="心臟科" data-bm-title="HF 分類">
-          <div class="k-card-tags">
-            <span class="tag tag-patho">機轉說明</span>
-          </div>
+    <div class="k-card" data-bm-id="ami-types" data-bm-dept="心臟科" data-bm-title="胸痛">
+          <div class="k-card-tags"><span class="tag tag-ddx">鑑別診斷</span></div>
           <div class="k-card-head">
-            <span class="k-card-title">HF 的兩大類型</span>
+            <span class="k-card-title">胸痛原因</span>
             <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
           </div>
           <div class="k-card-body">
+            <p style="font-size:0.72rem; font-weight:700; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;">肺因性</p>
             <ul class="k-list">
-              <li><strong>HFrEF（收縮性）</strong>：EF &lt;40%，心肌收縮力下降，心輸出量不足</li>
-              <li><strong>HFpEF（舒張性）</strong>：EF ≥50%，心肌僵硬充填障礙，常見於老人、高血壓、糖尿病</li>
-              <li><strong>鬱血性（CHF）</strong>：左心衰 → 肺水腫；右心衰 → 周邊水腫、頸靜脈怒張</li>
+              <li><strong>ACS 急性冠心症</strong>: 胸骨下的壓迫感→ 輻射至頸部、下巴、手臂</li>
+              <li><strong>心包膜炎及心肌心包膜炎</strong>:尖銳痛→ 輻射至斜方肌 </li>
+              <li><strong>AD 主動脈剝離</strong>: 突然撕裂痛</li>
+              <li class="note">還沒想好要寫什麼...</li>
             </ul>
-          </div>
-        </div>
+          <hr style="border:none; border-top:1px solid var(--border); margin:12px 0;">
 
-        <!-- NYHA -->
-        <div class="k-card" data-bm-id="hf-nyha" data-bm-dept="心臟科" data-bm-title="NYHA 功能分級">
-          <div class="k-card-tags">
-            <span class="tag tag-value">數值判讀</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">NYHA 功能分級</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list numbered">
-              <li>無症狀，一般活動不受限</li>
-              <li>輕度活動即喘（爬樓梯、快走）</li>
-              <li>輕微活動就喘（日常生活受限）</li>
-              <li>休息時也喘，無法從事任何活動</li>
-              <li class="note">NYHA III-IV 死亡率高，積極治療，評估是否需心臟移植</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- 急性肺水腫 -->
-        <div class="k-card" data-bm-id="hf-acute" data-bm-dept="心臟科" data-bm-title="急性肺水腫處置">
-          <div class="k-card-tags">
-            <span class="tag tag-urgent">緊急處置</span>
-            <span class="tag tag-steps">步驟</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">急性肺水腫的處理順序</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="step-list">
-              <li class="step-item"><div class="step-num">1</div><div>坐起來、給氧（目標 SpO₂ &gt;94%）</div></li>
-              <li class="step-item"><div class="step-num">2</div><div>Furosemide 40-80mg IV</div></li>
-              <li class="step-item"><div class="step-num">3</div><div>Nitroglycerin（NTG）舌下或靜脈滴注（收縮壓 &gt;90 才給）</div></li>
-              <li class="step-item"><div class="step-num">4</div><div>嚴重者考慮 BiPAP，插管為最後手段</div></li>
-            </ul>
-            <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">
-              <span class="alert-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-              <span>「坐起 + 利尿 + 擴血管」是核心三步驟，順序不要亂</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- GDMT -->
-        <div class="k-card" data-bm-id="hf-gdmt" data-bm-dept="心臟科" data-bm-title="HFrEF 四大支柱藥物">
-          <div class="k-card-tags">
-            <span class="tag tag-drug">用藥指引</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">HFrEF 四大支柱藥物（GDMT）</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
+            <p style="font-size:0.72rem; font-weight:700; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;">肺因性</p>
             <ul class="k-list">
-              <li><strong>ACEI/ARB 或 ARNI</strong>（Sacubitril/Valsartan）：降後負荷、逆轉心肌重塑</li>
-              <li><strong>Beta-blocker</strong>（Carvedilol、Bisoprolol、Metoprolol）：降心率、改善 EF</li>
-              <li><strong>MRA</strong>（Spironolactone）：抗醛固酮、降死亡率</li>
-              <li><strong>SGLT2i</strong>（Empagliflozin、Dapagliflozin）：降住院率和死亡率</li>
-              <li class="note">四個都用才是完整治療，缺一個都要有理由</li>
+              <li><strong>肺炎</strong>- 肋膜痛：呼吸困難、發燒、咳嗽、痰、呼吸速率↑、爆裂音crackles、XR胸部浸潤</li>
+              <li><strong>PE 肺栓塞</strong>：突發胸痛合併呼吸困難、RR↑ & HR↑、SaO2↓、EKG變化、血管攝影或V/Q scan:(+)、±Troponin↑</li>
+              <li><strong>氣胸</strong>：突然發生，單側尖銳痛，隨呼吸加重、叩診痛名增加、呼吸音↓; XR氣胸</li>
+              <li><strong>肋膜炎</strong>：吸氣時加重的側胸痛±肋膜摩擦音</li>
             </ul>
-          </div>
-        </div>
 
-        <!-- Diuretics -->
-        <div class="k-card" data-bm-id="hf-diuretics" data-bm-dept="心臟科" data-bm-title="利尿劑使用策略">
-          <div class="k-card-tags">
-            <span class="tag tag-drug">用藥指引</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">利尿劑的使用策略</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
+          <hr style="border:none; border-top:1px solid var(--border); margin:12px 0;">
+
+            <p style="font-size:0.72rem; font-weight:700; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;">腸胃道</p>
             <ul class="k-list">
-              <li><strong>Furosemide（Loop）</strong>：急性去水首選，IV 效果比口服快</li>
-              <li>目標：每天尿量 &gt;1-2L，體重每天下降 0.5-1kg</li>
-              <li>監測：K⁺（容易低血鉀）、Cr（過度利尿傷腎）</li>
-              <li><strong>Spironolactone</strong>：保鉀利尿，HFrEF 長期用</li>
-              <li><strong>Thiazide（HCTZ）</strong>：輕度水腫或加強 Loop 效果</li>
-              <li class="note">利尿抵抗：增加劑量、改 IV、加 Thiazide、或換 Tolvaptan</li>
+              <li><strong>GERD 胃食道逆流</strong>：飯後燒灼感，平躺↑、使用製酸劑症狀緩解↓; EGD、食道壓力檢查、食道酸鹼值檢測</li>
+              <li><strong>食道痙攣</strong>：和心絞痛很像，NTG/CCB後症狀緩解↓; 食道壓力測試</li>
+              <li><strong>Mallory-Weiss</strong>：因嘔吐而誘發食道破裂、±吐血:EGD</li>
+              <li><strong>Boerhaave syndrome</strong>：食道破裂、嚴重疼痛、吞嚥時超痛; 觸摸& CT可見縱隔腔有氣體</li>
+              <li><strong>PUD</strong>：上腹痛、製酸劑可解、±GIB:EGD、±幽門桿菌檢測</li>
+              <li><strong>膽道疾病</strong>：右上腹痛、噁心嘔吐、油脂類食物後症狀↑、肝功能檢查↑; echo</li>
+              <li><strong>胰臟炎</strong>：上腹部/背部不適;amylase↑ & lipase↑; abd CT</li>
             </ul>
           </div>
-        </div>
+    </div>
+    </div>
+    
 
-        <!-- 監測 -->
-        <div class="k-card" data-bm-id="hf-monitor" data-bm-dept="心臟科" data-bm-title="住院期間監測指標">
-          <div class="k-card-tags">
-            <span class="tag tag-value">數值判讀</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">住院期間每天看這些</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li>體重（每天同時間量）</li>
-              <li>尿量 / 24h 出入量</li>
-              <li>電解質：K⁺、Na⁺、Cr</li>
-              <li>BNP 或 NT-proBNP（治療反應指標）</li>
-              <li>生命徵象：血壓、心率、SpO₂</li>
-              <li class="note">BNP 下降代表充血改善，是出院的重要參考指標</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
     </div>
 
+    <!-- ══════════════════════════════════
+         呼吸困難 Dyspnea
+    ══════════════════════════════════ -->
+    <div class="topic-block" id="chest-pain">
+      <div class="topic-block-head">
+        <span class="topic-block-title">呼吸困難 Dyspnea</span>
+        <div data-bm-id="chest-pain" data-bm-dept="心臟科" data-bm-title="呼吸困難 Dyspnea">
+          <button class="bm-btn" title="加入書籤">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+      </div>
+      
+    <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="ami-types" data-bm-dept="心臟科" data-bm-title="呼吸困難 Dyspnea">
+          <div class="k-card-tags"><span class="tag tag-ddx">鑑別診斷</span></div>
+          <div class="k-card-head">
+            <span class="k-card-title">胸痛原因</span>
+            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
+          </div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>ACS 急性冠心症</strong>: 胸骨下的壓迫感→ 輻射至頸部、下巴、手臂</li>
+              <li><strong>心包膜炎及心肌心包膜炎</strong>: 尖銳痛→ 輻射至斜方肌 </li>
+              <li><strong>AD 主動脈剝離</strong>: 突然撕裂痛</li>
+              <li class="note">還沒想好要寫什麼...</li>
+            </ul>
+          </div>
+        </div>
+    </div>
+
+      
+
+    </div>
+    
+    
     <!-- ══════════════════════════════════
          AMI
     ══════════════════════════════════ -->
@@ -239,7 +192,7 @@
           </button>
         </div>
       </div>
-
+      
       <div class="alert alert-red">
         <span class="alert-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
         <span>STEMI → Door-to-balloon &lt;90 分鐘。任何懷疑 ACS 的病人，先做 12-lead ECG，不要等。</span>
@@ -421,7 +374,154 @@
 
       </div>
     </div>
+    
+    <!-- ══════════════════════════════════
+         心臟衰竭
+    ══════════════════════════════════ -->
+    <div class="topic-block" id="hf">
+      <div class="topic-block-head">
+        <span class="topic-block-title">心臟衰竭 Heart Failure</span>
+        <div data-bm-id="hf" data-bm-dept="心臟科" data-bm-title="心臟衰竭">
+          <button class="bm-btn" title="加入書籤">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
+        </div>
+      </div>
 
+      <div class="alert alert-blue">
+        <span class="alert-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+        <span>HFrEF（EF &lt;40%）和 HFpEF（EF ≥50%）治療策略不同，先確認 echo 結果再選藥。</span>
+      </div>
+
+      <div class="card-grid col-2">
+
+        <!-- 分類 -->
+        <div class="k-card" data-bm-id="hf-type" data-bm-dept="心臟科" data-bm-title="HF 分類">
+          <div class="k-card-tags">
+            <span class="tag tag-patho">機轉說明</span>
+          </div>
+          <div class="k-card-head">
+            <span class="k-card-title">HF 的兩大類型</span>
+            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
+          </div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>HFrEF（收縮性）</strong>：EF &lt;40%，心肌收縮力下降，心輸出量不足</li>
+              <li><strong>HFpEF（舒張性）</strong>：EF ≥50%，心肌僵硬充填障礙，常見於老人、高血壓、糖尿病</li>
+              <li><strong>鬱血性（CHF）</strong>：左心衰 → 肺水腫；右心衰 → 周邊水腫、頸靜脈怒張</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- NYHA -->
+        <div class="k-card" data-bm-id="hf-nyha" data-bm-dept="心臟科" data-bm-title="NYHA 功能分級">
+          <div class="k-card-tags">
+            <span class="tag tag-value">數值判讀</span>
+          </div>
+          <div class="k-card-head">
+            <span class="k-card-title">NYHA 功能分級</span>
+            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
+          </div>
+          <div class="k-card-body">
+            <ul class="k-list numbered">
+              <li>無症狀，一般活動不受限</li>
+              <li>輕度活動即喘（爬樓梯、快走）</li>
+              <li>輕微活動就喘（日常生活受限）</li>
+              <li>休息時也喘，無法從事任何活動</li>
+              <li class="note">NYHA III-IV 死亡率高，積極治療，評估是否需心臟移植</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 急性肺水腫 -->
+        <div class="k-card" data-bm-id="hf-acute" data-bm-dept="心臟科" data-bm-title="急性肺水腫處置">
+          <div class="k-card-tags">
+            <span class="tag tag-urgent">緊急處置</span>
+            <span class="tag tag-steps">步驟</span>
+          </div>
+          <div class="k-card-head">
+            <span class="k-card-title">急性肺水腫的處理順序</span>
+            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
+          </div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li class="step-item"><div class="step-num">1</div><div>坐起來、給氧（目標 SpO₂ &gt;94%）</div></li>
+              <li class="step-item"><div class="step-num">2</div><div>Furosemide 40-80mg IV</div></li>
+              <li class="step-item"><div class="step-num">3</div><div>Nitroglycerin（NTG）舌下或靜脈滴注（收縮壓 &gt;90 才給）</div></li>
+              <li class="step-item"><div class="step-num">4</div><div>嚴重者考慮 BiPAP，插管為最後手段</div></li>
+            </ul>
+            <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">
+              <span class="alert-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>「坐起 + 利尿 + 擴血管」是核心三步驟，順序不要亂</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- GDMT -->
+        <div class="k-card" data-bm-id="hf-gdmt" data-bm-dept="心臟科" data-bm-title="HFrEF 四大支柱藥物">
+          <div class="k-card-tags">
+            <span class="tag tag-drug">用藥指引</span>
+          </div>
+          <div class="k-card-head">
+            <span class="k-card-title">HFrEF 四大支柱藥物（GDMT）</span>
+            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
+          </div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>ACEI/ARB 或 ARNI</strong>（Sacubitril/Valsartan）：降後負荷、逆轉心肌重塑</li>
+              <li><strong>Beta-blocker</strong>（Carvedilol、Bisoprolol、Metoprolol）：降心率、改善 EF</li>
+              <li><strong>MRA</strong>（Spironolactone）：抗醛固酮、降死亡率</li>
+              <li><strong>SGLT2i</strong>（Empagliflozin、Dapagliflozin）：降住院率和死亡率</li>
+              <li class="note">四個都用才是完整治療，缺一個都要有理由</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Diuretics -->
+        <div class="k-card" data-bm-id="hf-diuretics" data-bm-dept="心臟科" data-bm-title="利尿劑使用策略">
+          <div class="k-card-tags">
+            <span class="tag tag-drug">用藥指引</span>
+          </div>
+          <div class="k-card-head">
+            <span class="k-card-title">利尿劑的使用策略</span>
+            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
+          </div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Furosemide（Loop）</strong>：急性去水首選，IV 效果比口服快</li>
+              <li>目標：每天尿量 &gt;1-2L，體重每天下降 0.5-1kg</li>
+              <li>監測：K⁺（容易低血鉀）、Cr（過度利尿傷腎）</li>
+              <li><strong>Spironolactone</strong>：保鉀利尿，HFrEF 長期用</li>
+              <li><strong>Thiazide（HCTZ）</strong>：輕度水腫或加強 Loop 效果</li>
+              <li class="note">利尿抵抗：增加劑量、改 IV、加 Thiazide、或換 Tolvaptan</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 監測 -->
+        <div class="k-card" data-bm-id="hf-monitor" data-bm-dept="心臟科" data-bm-title="住院期間監測指標">
+          <div class="k-card-tags">
+            <span class="tag tag-value">數值判讀</span>
+          </div>
+          <div class="k-card-head">
+            <span class="k-card-title">住院期間每天看這些</span>
+            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
+          </div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>體重（每天同時間量）</li>
+              <li>尿量 / 24h 出入量</li>
+              <li>電解質：K⁺、Na⁺、Cr</li>
+              <li>BNP 或 NT-proBNP（治療反應指標）</li>
+              <li>生命徵象：血壓、心率、SpO₂</li>
+              <li class="note">BNP 下降代表充血改善，是出院的重要參考指標</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
     <!-- ══════════════════════════════════
          心律不整
     ══════════════════════════════════ -->
