@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>外傷 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html" class="nav-back">分科知識</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">外傷</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">外傷</div>
+    <a href="#atls-primary"   class="sidebar-link">初級評估 ABCDE</a>
+    <a href="#atls-secondary" class="sidebar-link">次級評估</a>
+    <a href="#hemorrhage"     class="sidebar-link">出血控制</a>
+    <a href="#head-trauma"    class="sidebar-link">頭部外傷</a>
+    <a href="#chest-trauma"   class="sidebar-link">胸部外傷</a>
+    <a href="#abdo-trauma"    class="sidebar-link">腹部外傷</a>
+    <a href="#spine"          class="sidebar-link">脊椎外傷</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急診核心</div>
+    <a href="general.html" class="sidebar-link">急診核心 →</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> ›
+      <a href="../specialty.html">分科知識</a> ›
+      <span>外傷</span>
+    </div>
+
+    <div class="page-hero" style="background:linear-gradient(135deg,#3a0a0a,#7a1a1a);color:#fff;">
+      <div class="page-hero-text">
+        <h1>外傷 Trauma</h1>
+        <p>ATLS 框架：先救命再救肢體，先初級評估再次級評估。不要在第一個問題上卡住。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+    </div>
+
+    <!-- ATLS 初級評估 -->
+    <div class="topic-block" id="atls-primary">
+      <div class="topic-block-head">
+        <span class="topic-block-title">ATLS 初級評估 Primary Survey</span>
+        <div data-bm-id="atls-primary" data-bm-dept="外傷" data-bm-title="ATLS 初級評估">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-red">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>外傷的優先順序：出血控制 &gt; 氣道 &gt; 其他。大量出血的病人撐不到你評估完氣道。</span>
+      </div>
+      <div class="card-grid col-1">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">ABCDE 初級評估（外傷版）</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">A</div><div><strong>Airway + 頸椎保護</strong>：外傷直到排除前都要固定頸椎（頸圈 + 脊椎板）；清除口腔異物；插管前假設有頸椎損傷</div></li>
+              <li><div class="step-num">B</div><div><strong>Breathing</strong>：聽診兩側、看胸廓起伏、排除張力性氣胸、血胸、開放性氣胸；SpO₂ 監測</div></li>
+              <li><div class="step-num">C</div><div><strong>Circulation + 止血</strong>：大量出血直接加壓止血；建立兩條大口徑 IV（14-16G）；輸血優先於晶體液（1:1:1 策略）</div></li>
+              <li><div class="step-num">D</div><div><strong>Disability</strong>：GCS、瞳孔、肢體活動；血糖</div></li>
+              <li><div class="step-num">E</div><div><strong>Exposure</strong>：脫光衣物全身檢查（前後都要）；注意保溫（低體溫會加重凝血障礙）</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-grid col-2" style="margin-top:14px">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
+          <div class="k-card-head"><span class="k-card-title">張力性氣胸 — 不等 CXR</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>臨床診斷：氣管偏移（偏向健側）+ 頸靜脈怒張 + 單側無呼吸音 + 低血壓</li>
+              <li>立刻針刺減壓：第 2 肋間鎖骨中線，或第 4-5 肋間腋前線（較安全）</li>
+              <li>針刺後立刻置放胸管</li>
+              <li class="note">不要等 CXR 確認！臨床診斷就立刻處理</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
+          <div class="k-card-head"><span class="k-card-title">開放性氣胸 — 三邊封閉</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>胸壁傷口 &gt;2/3 氣管直徑 → 空氣優先走傷口不走氣管</li>
+              <li>立刻：三邊封閉敷料（Asherman seal 或自製）</li>
+              <li>三邊封住，留一邊讓氣排出（避免張力性氣胸）</li>
+              <li>之後置放胸管、手術評估</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 次級評估 -->
+    <div class="topic-block" id="atls-secondary">
+      <div class="topic-block-head">
+        <span class="topic-block-title">ATLS 次級評估 Secondary Survey</span>
+        <div data-bm-id="atls-secondary" data-bm-dept="外傷" data-bm-title="ATLS 次級評估">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">AMPLE 病史</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>A</strong> — Allergies（過敏史）</li>
+              <li><strong>M</strong> — Medications（目前用藥，特別是抗凝）</li>
+              <li><strong>P</strong> — Past medical history（病史）</li>
+              <li><strong>L</strong> — Last meal（最後進食時間，影響手術安排）</li>
+              <li><strong>E</strong> — Events leading to injury（受傷經過）</li>
+              <li class="note">受傷機制很重要：車速、安全帶、方向盤撞擊 → 預測可能傷害</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">頭頸胸腹骨盆四肢完整評估</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>頭</strong>：頭皮撕裂、顱骨凹陷、眼耳鼻出血</li>
+              <li><strong>頸</strong>：頸椎壓痛（固定中不要移除頸圈）</li>
+              <li><strong>胸</strong>：肋骨骨折（連枷胸）、皮下氣腫</li>
+              <li><strong>腹</strong>：壓痛、腹膜刺激徵（FAST 超音波）</li>
+              <li><strong>骨盆</strong>：骨盆環穩定性（一次測，不要重複）</li>
+              <li><strong>四肢</strong>：骨折、神經血管完整性</li>
+              <li><strong>背部</strong>：翻身檢查（Log-roll）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">外傷 FAST 超音波</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>F — Focused Assessment with Sonography in Trauma</li>
+              <li><strong>四個窗口</strong>：</li>
+              <li>心包（心包填塞）</li>
+              <li>Morrison's pouch（右上腹，肝腎之間）</li>
+              <li>Splenorenal space（左上腹，脾腎之間）</li>
+              <li>骨盆（Douglas pouch，游離液體）</li>
+              <li>eFAST 加：兩側胸膜（氣胸）</li>
+              <li class="note">FAST 陽性（游離液體）+ 血流不穩 → 立刻手術，不等 CT</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">外傷致死三角</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>低體溫（Hypothermia）</strong>：&lt;35°C 凝血因子功能下降</li>
+              <li><strong>酸中毒（Acidosis）</strong>：pH &lt;7.2 凝血酶活性下降</li>
+              <li><strong>凝血障礙（Coagulopathy）</strong>：三者互相惡化形成惡性循環</li>
+              <li>處置：Damage Control Surgery（先止血，不做完整手術）</li>
+              <li>保溫（毯子、加溫輸液）、早期輸血（1:1:1）、補 Ca²⁺</li>
+              <li class="note">大量輸液（晶體液）會稀釋凝血因子，加重凝血障礙</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 出血控制 -->
+    <div class="topic-block" id="hemorrhage">
+      <div class="topic-block-head">
+        <span class="topic-block-title">出血控制 Hemorrhage Control</span>
+        <div data-bm-id="hemorrhage" data-bm-dept="外傷" data-bm-title="出血控制">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">外部出血控制</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>直接加壓</strong>：持續加壓至少 5-10 分鐘，不要中途查看</li>
+              <li><strong>止血帶（Tourniquet）</strong>：四肢大量出血首選，記錄使用時間</li>
+              <li>止血帶位置：傷口近端 5-8 cm，緊到脈搏消失</li>
+              <li><strong>填塞（Packing）</strong>：無法用止血帶的部位（鼠蹊部、腋下）</li>
+              <li><strong>止血粉/紗布</strong>：Combat Gauze（含 Kaolin 或 TXA）</li>
+              <li class="note">止血帶使用 &gt;2h 有神經血管損傷風險，記錄時間很重要</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">大量輸血策略</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>1:1:1 策略</strong>：pRBC : FFP : Platelet = 1:1:1（模擬全血）</li>
+              <li><strong>Tranexamic acid（TXA）</strong>：1g IV over 10min，傷後 3h 內給（降低死亡率）</li>
+              <li><strong>目標</strong>：收縮壓 80-90 mmHg（Permissive hypotension，在止血前）</li>
+              <li><strong>Calcium</strong>：大量輸血後補 Ca²⁺（citrate 結合 Ca²⁺）</li>
+              <li class="note">避免大量晶體液（NS/LR），會稀釋凝血因子、加重酸中毒</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 頭部外傷 -->
+    <div class="topic-block" id="head-trauma">
+      <div class="topic-block-head">
+        <span class="topic-block-title">頭部外傷 Head Trauma</span>
+        <div data-bm-id="head-trauma" data-bm-dept="外傷" data-bm-title="頭部外傷">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">頭部外傷嚴重度分類</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>輕度 TBI</strong>：GCS 13-15，可能有短暫意識喪失 &lt;30 分鐘</li>
+              <li><strong>中度 TBI</strong>：GCS 9-12，意識喪失 30 分鐘至 6 小時</li>
+              <li><strong>重度 TBI</strong>：GCS ≤8，意識喪失 &gt;6 小時</li>
+              <li>CT 指征（輕度）：GCS &lt;15、嘔吐 &gt;2 次、年齡 &gt;65、抗凝藥物、頭皮血腫、骨折</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">顱內壓升高的處置</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>床頭抬高 30°</li>
+              <li>維持 MAP ≥70（保持腦灌流壓 CPP ≥60）</li>
+              <li><strong>Mannitol</strong> 0.25-1g/kg IV（滲透壓治療）</li>
+              <li><strong>3% NaCl</strong>：20-40mL bolus（替代 Mannitol）</li>
+              <li>避免低血壓（收縮壓 &lt;90 會加重腦損傷）</li>
+              <li>避免低氧（SpO₂ 維持 &gt;95%）</li>
+              <li class="note">重度 TBI 禁止過度換氣（PaCO₂ 維持 35-45），除非腦疝緊急時短暫用</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">顱內出血分類</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>硬膜外血腫（EDH）</strong>：顳骨骨折傷中腦膜動脈，CT 雙凸透鏡形；Lucid interval（清醒後再昏迷）</li>
+              <li><strong>硬膜下血腫（SDH）</strong>：橋靜脈撕裂，CT 月牙形；老人跌倒常見</li>
+              <li><strong>蜘蛛膜下腔出血（SAH）</strong>：外傷或動脈瘤破裂，CT 腦溝高密度</li>
+              <li><strong>腦挫傷</strong>：直接撞擊或對衝傷，CT 出血點</li>
+              <li class="note">EDH 有 Lucid interval 是典型表現，但不是所有 EDH 都有</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 胸部外傷 -->
+    <div class="topic-block" id="chest-trauma">
+      <div class="topic-block-head">
+        <span class="topic-block-title">胸部外傷 Chest Trauma</span>
+        <div data-bm-id="chest-trauma" data-bm-dept="外傷" data-bm-title="胸部外傷">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
+          <div class="k-card-head"><span class="k-card-title">血胸 Hemothorax</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>大量血胸：&gt;1500mL 或持續出血 &gt;200mL/hr</li>
+              <li>臨床：呼吸音消失、叩診濁音、低血壓</li>
+              <li>處置：大口徑胸管（32-36 Fr）引流</li>
+              <li>大量血胸 → 手術止血（Video-assisted or 開胸）</li>
+              <li class="note">胸管出來鮮紅血 &gt;1500mL 或持續流 → 立刻通知外科</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">連枷胸 Flail Chest</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>定義：≥3 根連續肋骨各有 ≥2 處骨折 → 矛盾呼吸</li>
+              <li>吸氣時胸壁內陷，呼氣時外突</li>
+              <li>伴隨肺挫傷（真正危險所在）</li>
+              <li>處置：充足給氧、止痛（肋間神經阻斷）</li>
+              <li>嚴重低氧 → 插管正壓通氣（矯正矛盾呼吸）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">心臟鈍傷 Blunt Cardiac Injury</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>方向盤撞擊、高速事故後</li>
+              <li>ECG 變化：竇性心跳過速、束枝傳導阻滯、新發心律不整</li>
+              <li>Troponin 升高</li>
+              <li>ECG 正常且 Troponin 正常 → 低風險，不需心監</li>
+              <li>ECG 異常 → 持續心電監測 24-48h</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">主動脈損傷 Aortic Injury</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>高速減速傷（車禍、高處墜落）</li>
+              <li>CXR：縱膈腔增寬 &gt;8cm、主動脈弓模糊、氣管右偏</li>
+              <li>確診：CT angiography</li>
+              <li>處置：血壓控制（目標收縮壓 &lt;120）+ 手術或血管內修復</li>
+              <li class="note">縱膈腔增寬是 CXR 最重要的警示，必須 CT 進一步評估</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 腹部外傷 -->
+    <div class="topic-block" id="abdo-trauma">
+      <div class="topic-block-head">
+        <span class="topic-block-title">腹部外傷 Abdominal Trauma</span>
+        <div data-bm-id="abdo-trauma" data-bm-dept="外傷" data-bm-title="腹部外傷">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">鈍傷 vs 穿刺傷處置方向不同</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>鈍傷（Blunt）</strong>：FAST 超音波 → CT → 選擇性手術（穩定患者）</li>
+              <li>脾臟（最常受傷）、肝臟、腸道</li>
+              <li><strong>穿刺傷（Penetrating）</strong>：腹腔進入 → 通常需要剖腹探查</li>
+              <li>槍傷：幾乎都需要手術</li>
+              <li>刀傷：穩定患者可嘗試保守治療，但腹腔有傷就要手術</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
+          <div class="k-card-head"><span class="k-card-title">FAST 陽性 + 血流不穩 → 手術</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>FAST 陽性（游離液體）+ 血流動力學不穩定 → 直接手術，不等 CT</li>
+              <li>FAST 陽性 + 血流穩定 → CT 評估損傷程度</li>
+              <li>FAST 陰性不能排除損傷（敏感性約 80%）</li>
+              <li>腸道損傷：FAST 可能陰性，CT 是標準</li>
+              <li class="note">時間就是生命，血流不穩定的腹部外傷不要浪費時間做 CT</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 脊椎外傷 -->
+    <div class="topic-block" id="spine">
+      <div class="topic-block-head">
+        <span class="topic-block-title">脊椎外傷 Spinal Trauma</span>
+        <div data-bm-id="spine" data-bm-dept="外傷" data-bm-title="脊椎外傷">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">脊椎固定原則</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>所有重大外傷 → 假設有頸椎損傷，固定直到排除</li>
+              <li>頸圈 + 脊椎板（Spinal board）</li>
+              <li>影像確認：頸椎 CT（比 X-ray 敏感）</li>
+              <li>清醒且配合的低風險患者可用 NEXUS 或 Canadian C-spine Rule 臨床排除</li>
+              <li class="note">搬移病人時要 Log-roll（三人以上），保持脊椎中立位</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">神經性休克 Neurogenic Shock</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>高位脊髓損傷（T6 以上）→ 交感神經阻斷</li>
+              <li>臨床：低血壓 + <strong>心跳過慢</strong>（和其他休克的心跳過速不同！）</li>
+              <li>皮膚溫暖乾燥（血管擴張但無汗腺）</li>
+              <li>處置：輸液 + Norepinephrine（恢復血管張力）</li>
+              <li class="note">外傷病人低血壓 + 心跳慢 = 先想神經性休克，排除出血後</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'atls-primary',   dept:'外傷', title:'ATLS 初級評估',   url:'#atls-primary',   text:'ABCDE 頸椎 氣道 止血 輸血 GCS 張力性氣胸 針刺減壓 開放性氣胸 三邊封閉 大口徑IV' },
+    { id:'atls-secondary', dept:'外傷', title:'ATLS 次級評估',   url:'#atls-secondary', text:'AMPLE FAST 超音波 Morrison 骨盆 Log-roll 外傷三角 低體溫 酸中毒 凝血障礙 Damage control' },
+    { id:'hemorrhage',     dept:'外傷', title:'出血控制',         url:'#hemorrhage',     text:'止血帶 Tourniquet 加壓 填塞 TXA Tranexamic acid 大量輸血 1:1:1 Permissive hypotension' },
+    { id:'head-trauma',    dept:'外傷', title:'頭部外傷',         url:'#head-trauma',    text:'TBI GCS CT Mannitol 顱內壓 EDH SDH SAH 硬膜外 硬膜下 Lucid interval 腦挫傷' },
+    { id:'chest-trauma',   dept:'外傷', title:'胸部外傷',         url:'#chest-trauma',   text:'血胸 Hemothorax 連枷胸 Flail chest 肋骨骨折 心臟鈍傷 Troponin 主動脈損傷 縱膈腔' },
+    { id:'abdo-trauma',    dept:'外傷', title:'腹部外傷',         url:'#abdo-trauma',    text:'FAST 脾臟 肝臟 腸道 鈍傷 穿刺傷 槍傷 刀傷 剖腹探查 血流不穩 CT' },
+    { id:'spine',          dept:'外傷', title:'脊椎外傷',         url:'#spine',          text:'頸椎 頸圈 脊椎板 Log-roll NEXUS Canadian C-spine 神經性休克 心跳過慢 Norepinephrine' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
