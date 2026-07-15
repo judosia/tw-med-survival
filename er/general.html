@@ -26,6 +26,52 @@
     .flow-dot {
       width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
     }
+
+    /* 評分工具連結 */
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit;
+      transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .score-link svg { width: 11px; height: 11px; }
+
+    /* 評分 Modal */
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 580px; max-height: 85vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+    .score-modal-body .data-table { margin-bottom: 16px; }
+    .score-result {
+      background: var(--light); border-radius: 8px;
+      padding: 14px 16px; margin-top: 8px;
+      font-size: 0.82rem; line-height: 1.65;
+    }
+    .score-result strong { color: var(--navy); }
   </style>
 </head>
 <body>
@@ -161,7 +207,7 @@
         <div class="flow-block info">
           <div class="flow-title"><div class="flow-dot" style="background:var(--blue)"></div>D — Disability 意識</div>
           <ul class="k-list">
-            <li>GCS（E+V+M）或 AVPU（Alert/Voice/Pain/Unresponsive）</li>
+            <li><button class="score-link" onclick="openModal('modal-gcs')">GCS <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>（E+V+M）或 AVPU（Alert/Voice/Pain/Unresponsive）</li>
             <li>血糖：立刻量，&lt;50 mg/dL 立刻給糖</li>
             <li>瞳孔：大小、對稱、對光反應</li>
             <li class="note">血糖是最快能排除的意識改變原因，永遠先量</li>
@@ -235,7 +281,7 @@
             <ul class="k-list">
               <li><strong>高風險</strong>：Troponin 升高、ECG 動態變化、血流動力學不穩 → 24h 內 PCI</li>
               <li><strong>中風險</strong>：Troponin 正常但症狀典型 → Serial troponin × 3h、住院觀察</li>
-              <li><strong>低風險</strong>：TIMI score 0-1、兩次 Troponin 陰性 → 考慮門診追蹤</li>
+              <li><strong>低風險</strong>：<button class="score-link" onclick="openModal('modal-timi')">TIMI score <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button> 0-1、兩次 Troponin 陰性 → 考慮門診追蹤</li>
               <li class="note">0h/3h high-sensitivity troponin 策略可加速排除或確診</li>
             </ul>
           </div>
@@ -245,7 +291,7 @@
           <div class="k-card-head"><span class="k-card-title">PE 的診斷流程</span></div>
           <div class="k-card-body">
             <ul class="k-list">
-              <li>Wells score &lt;2 → D-dimer（陰性可排除）</li>
+              <li><button class="score-link" onclick="openModal('modal-wells')">Wells score <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button> &lt;2 → D-dimer（陰性可排除）</li>
               <li>Wells score ≥2 或 D-dimer 陽性 → CTPA</li>
               <li>血流動力學不穩定 → 先 Echo 快速評估 RV，不等 CTPA</li>
               <li>大型 PE + 休克 → 考慮 systemic thrombolysis</li>
@@ -333,7 +379,7 @@
           <div class="k-card-body">
             <ul class="step-list">
               <li><div class="step-num">1</div><div><strong>血糖</strong>：立刻量，&lt;50 mg/dL → 50% Glucose 20-50mL IV push</div></li>
-              <li><div class="step-num">2</div><div><strong>氣道保護</strong>：GCS ≤8 → 考慮插管（無法保護氣道）</div></li>
+              <li><div class="step-num">2</div><div><strong>氣道保護</strong>：<button class="score-link" onclick="openModal('modal-gcs')">GCS <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button> ≤8 → 考慮插管（無法保護氣道）</div></li>
               <li><div class="step-num">3</div><div><strong>Thiamine 100mg IV</strong>：懷疑酒精相關或營養不良，在給 Glucose 前（避免 Wernicke）</div></li>
               <li><div class="step-num">4</div><div><strong>Naloxone</strong>：懷疑鴉片類藥物過量（呼吸慢、瞳孔縮小）→ 0.4mg IV</div></li>
               <li><div class="step-num">5</div><div>頭部 CT：排除出血、梗塞（血糖正常後做）</div></li>
@@ -498,7 +544,7 @@
           <div class="k-card-body">
             <ul class="step-list">
               <li><div class="step-num">1</div><div>確認症狀發作時間（Last known well time）— 這是最重要的一個問題</div></li>
-              <li><div class="step-num">2</div><div>神經學檢查 + NIHSS 評分</div></li>
+              <li><div class="step-num">2</div><div>神經學檢查 + <button class="score-link" onclick="openModal('modal-nihss')">NIHSS 評分 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button></div></li>
               <li><div class="step-num">3</div><div>頭部 CT（平掃）：排除出血性中風（有出血不能溶栓）</div></li>
               <li><div class="step-num">4</div><div>抽血：血糖、CBC、Coag（PT/INR）、電解質</div></li>
               <li><div class="step-num">5</div><div>符合條件 → tPA 溶栓（症狀發作 4.5h 內）</div></li>
@@ -626,6 +672,136 @@
   </main>
 </div>
 
+<!-- ══ NIHSS Modal ══ -->
+<div class="score-modal-overlay" id="modal-nihss">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>NIHSS 中風嚴重度評分</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-nihss')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>項目</th><th>評估內容</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1a. 意識程度</strong></td><td>清醒=0；嗜睡可喚醒=1；昏迷僅痛覺=2；無反應=3</td><td>0-3</td></tr>
+          <tr><td><strong>1b. 定向力問題</strong></td><td>問年齡和月份，兩題均對=0；一題=1；均錯=2</td><td>0-2</td></tr>
+          <tr><td><strong>1c. 遵從指令</strong></td><td>張眼閉眼、握拳放手，均對=0；一題=1；均錯=2</td><td>0-2</td></tr>
+          <tr><td><strong>2. 視野</strong></td><td>正常=0；偏盲=1；完全偏盲=2；雙側盲=3</td><td>0-3</td></tr>
+          <tr><td><strong>3. 顏面神經</strong></td><td>正常=0；輕微下垂=1；部分麻痺=2；完全麻痺=3</td><td>0-3</td></tr>
+          <tr><td><strong>4. 上肢肌力（左/右各評）</strong></td><td>正常=0；10秒內墜落=1；有對抗重力=2；無對抗重力=3；完全無力=4</td><td>0-4 ×2</td></tr>
+          <tr><td><strong>5. 下肢肌力（左/右各評）</strong></td><td>正常=0；5秒內墜落=1；有對抗重力=2；無對抗重力=3；完全無力=4</td><td>0-4 ×2</td></tr>
+          <tr><td><strong>6. 肢體共濟失調</strong></td><td>無=0；一側=1；兩側=2</td><td>0-2</td></tr>
+          <tr><td><strong>7. 感覺</strong></td><td>正常=0；輕度缺失=1；重度缺失=2</td><td>0-2</td></tr>
+          <tr><td><strong>8. 語言</strong></td><td>正常=0；輕度失語=1；重度失語=2；完全喑啞=3</td><td>0-3</td></tr>
+          <tr><td><strong>9. 構音障礙</strong></td><td>正常=0；輕度=1；重度無法理解=2</td><td>0-2</td></tr>
+          <tr><td><strong>10. 忽略症</strong></td><td>無=0；一種感覺忽略=1；多種感覺忽略=2</td><td>0-2</td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>滿分 42 分</strong><br/>
+        0-4：輕度；5-15：中度；16-20：重度；21-42：極重度<br/>
+        <span style="color:var(--muted)">NIHSS &gt;25 通常預後較差；溶栓治療一般適用於 NIHSS 4-25</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GCS Modal ══ -->
+<div class="score-modal-overlay" id="modal-gcs">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>GCS 格拉斯哥昏迷指數</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-gcs')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>類別</th><th>反應</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="4"><strong>E — 睜眼</strong></td><td>自然睜眼</td><td>4</td></tr>
+          <tr><td>呼喚睜眼</td><td>3</td></tr>
+          <tr><td>疼痛刺激睜眼</td><td>2</td></tr>
+          <tr><td>無反應</td><td>1</td></tr>
+          <tr><td rowspan="5"><strong>V — 語言</strong></td><td>說話定向正確</td><td>5</td></tr>
+          <tr><td>說話但混亂</td><td>4</td></tr>
+          <tr><td>說出不適當的字</td><td>3</td></tr>
+          <tr><td>僅發出聲音</td><td>2</td></tr>
+          <tr><td>無聲音</td><td>1</td></tr>
+          <tr><td rowspan="6"><strong>M — 動作</strong></td><td>遵從指令</td><td>6</td></tr>
+          <tr><td>疼痛定位（手往痛處移動）</td><td>5</td></tr>
+          <tr><td>疼痛退縮（正常屈曲）</td><td>4</td></tr>
+          <tr><td>異常屈曲（去皮質）</td><td>3</td></tr>
+          <tr><td>伸展（去腦）</td><td>2</td></tr>
+          <tr><td>無反應</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>滿分 15 分，最低 3 分</strong><br/>
+        13-15：輕度腦傷；9-12：中度腦傷；≤8：重度腦傷<br/>
+        <strong style="color:var(--red)">GCS ≤8 → 考慮插管保護氣道</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Wells PE Modal ══ -->
+<div class="score-modal-overlay" id="modal-wells">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>Wells Score — PE 預測機率</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-wells')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>項目</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td>DVT 臨床症狀（下肢腫脹疼痛）</td><td><strong>+3</strong></td></tr>
+          <tr><td>無其他可解釋的診斷</td><td><strong>+3</strong></td></tr>
+          <tr><td>心跳 &gt;100 bpm</td><td><strong>+1.5</strong></td></tr>
+          <tr><td>近 4 週手術或臥床</td><td><strong>+1.5</strong></td></tr>
+          <tr><td>既往 DVT 或 PE 病史</td><td><strong>+1.5</strong></td></tr>
+          <tr><td>咳血</td><td><strong>+1</strong></td></tr>
+          <tr><td>惡性腫瘤（治療中或過去 6 個月）</td><td><strong>+1</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>&lt;2 分</strong>：低機率 → D-dimer 排除<br/>
+        <strong>2-6 分</strong>：中機率 → CTPA<br/>
+        <strong>&gt;6 分</strong>：高機率 → 直接 CTPA（不用等 D-dimer）<br/>
+        <span style="color:var(--muted)">年齡調整 D-dimer 截點：年齡 × 10 μg/L（&gt;50 歲適用）</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TIMI Score Modal ══ -->
+<div class="score-modal-overlay" id="modal-timi">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>TIMI Score — UA/NSTEMI 風險評估</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-timi')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>項目</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td>年齡 ≥65 歲</td><td><strong>+1</strong></td></tr>
+          <tr><td>≥3 個冠心病危險因子（家族史、高血壓、高血脂、糖尿病、抽菸）</td><td><strong>+1</strong></td></tr>
+          <tr><td>既知冠狀動脈狹窄 ≥50%</td><td><strong>+1</strong></td></tr>
+          <tr><td>ECG 有 ST 偏移</td><td><strong>+1</strong></td></tr>
+          <tr><td>24h 內 ≥2 次心絞痛症狀</td><td><strong>+1</strong></td></tr>
+          <tr><td>7天內使用過 Aspirin</td><td><strong>+1</strong></td></tr>
+          <tr><td>心肌酶升高（Troponin 或 CK-MB）</td><td><strong>+1</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>0-1 分</strong>：低風險（14 天事件率約 5%）→ 可考慮門診追蹤<br/>
+        <strong>2-4 分</strong>：中風險（14 天事件率 8-20%）→ 住院觀察<br/>
+        <strong>5-7 分</strong>：高風險（14 天事件率 26-41%）→ 積極介入
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="../shared.js"></script>
 <script>
   const SEARCH_INDEX = [
@@ -640,7 +816,26 @@
     { id:'anaphylax', dept:'急診', title:'過敏性休克',       url:'#anaphylax', text:'Epinephrine IM 大腿 Diphenhydramine Methylprednisolone 雙相反應 喉頭水腫 蕁麻疹 支氣管痙攣' },
     { id:'dispo',     dept:'急診', title:'收住院 vs 回家',   url:'#dispo',     text:'住院 出院 生命徵象 診斷 靜脈藥物 社會因素 衛教 返診 後續追蹤' },
   ];
-  if (document.readyState === 'loading') {
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // 點遮罩關閉
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  // ESC 關閉
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
     document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
   } else {
     initSearch(SEARCH_INDEX);
