@@ -23,8 +23,8 @@
   --label-value-bg:  #eaf4ec; --label-value-text:  #1a5c2a; --label-value-border:  #c0ddc5;
   --label-urgent-bg: #fff0f0; --label-urgent-text: #c62834; --label-urgent-border: #f5c0c3;
   --label-patho-bg:  #f2eef8; --label-patho-text:  #5a3d7a; --label-patho-border:  #d5c8ec;
-  --label-ddx-bg:  #F4E3D7; --label-ddx-text:  #9D582A; --label-ddx-border:  #604634;
-  --label-tx-bg:  #E1F4F3; --label-tx-text:  #057A94; --label-tx-border:  #376E77;
+  --label-ddx-bg:  #F4E3D7; --label-ddx-text:  #9D582A; --label-ddx-border:  #E6AD84;
+  --label-tx-bg:  #E1F4F3; --label-tx-text:  #057A94; --label-tx-border:  #BFEDEB;
   --label-steps-bg:  #eef0f4; --label-steps-text:  #3a4a5c; --label-steps-border:  #cdd2da;
 }
 
