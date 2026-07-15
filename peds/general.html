@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>一般兒科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit; transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .score-link svg { width: 11px; height: 11px; }
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 580px; max-height: 85vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+    .score-modal-body .data-table { margin-bottom: 16px; }
+    .score-result {
+      background: var(--light); border-radius: 8px;
+      padding: 14px 16px; margin-top: 8px;
+      font-size: 0.82rem; line-height: 1.65;
+    }
+    .score-result strong { color: var(--navy); }
+    .k-list li strong { white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html" class="nav-back">分科知識</a>
+  <span class="nav-sep">/</span>
+  <a href="index.html" class="nav-back">兒科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">一般兒科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">一般兒科</div>
+    <div class="sidebar-section-title">基礎</div>
+    <a href="#vitals"     class="sidebar-link">生命徵象正常值</a>
+    <a href="#formulas"   class="sidebar-link">常用公式</a>
+    <a href="#drugs"      class="sidebar-link">用藥原則</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">常見疾病</div>
+    <a href="#fever-peds" class="sidebar-link">兒科發燒</a>
+    <a href="#pneumonia"  class="sidebar-link">肺炎</a>
+    <a href="#croup"      class="sidebar-link">哮吼</a>
+    <a href="#bronchiol"  class="sidebar-link">細支氣管炎</a>
+    <a href="#gastro"     class="sidebar-link">腸胃炎與脫水</a>
+    <a href="#uti-peds"   class="sidebar-link">泌尿道感染</a>
+    <a href="#seizure"    class="sidebar-link">熱性痙攣</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">緊急處置</div>
+    <a href="#peds-cpr"   class="sidebar-link">兒科 CPR</a>
+    <a href="#peds-shock" class="sidebar-link">兒科休克</a>
+    <a href="#asthma-peds" class="sidebar-link">氣喘急性發作</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> ›
+      <a href="../specialty.html">分科知識</a> ›
+      <a href="index.html">兒科</a> ›
+      <span>一般兒科</span>
+    </div>
+
+    <div class="page-hero" style="background:linear-gradient(135deg,#1a3a1a,#2d6a3a);color:#fff;">
+      <div class="page-hero-text">
+        <h1>一般兒科 General Pediatrics</h1>
+        <p>兒科不是縮小版的成人科。劑量要算體重、正常值要看年齡、家長的焦慮也是你要處理的一部分。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+      </div>
+    </div>
+
+    <!-- 生命徵象 -->
+    <div class="topic-block" id="vitals">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科生命徵象正常值</span>
+        <div data-bm-id="vitals" data-bm-dept="兒科" data-bm-title="兒科生命徵象正常值">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-blue">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+        <span>兒科的「正常」隨年齡而異，不能用成人標準套。收到兒科病人，先查對應年齡的正常值。</span>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>年齡</th><th>心跳（次/分）</th><th>呼吸（次/分）</th><th>收縮壓下限</th><th>體重估算</th></tr></thead>
+        <tbody>
+          <tr><td>新生兒（0-1月）</td><td>100-160</td><td>30-60</td><td>≥60 mmHg</td><td>~3.5 kg</td></tr>
+          <tr><td>嬰兒（1-12月）</td><td>100-150</td><td>25-40</td><td>≥70 mmHg</td><td>~10 kg（1歲）</td></tr>
+          <tr><td>幼兒（1-3歲）</td><td>90-150</td><td>20-30</td><td>≥70+(2×年齡)</td><td>(年齡+4)×2</td></tr>
+          <tr><td>學齡前（3-5歲）</td><td>80-140</td><td>20-25</td><td>≥70+(2×年齡)</td><td>(年齡+4)×2</td></tr>
+          <tr><td>學齡（6-12歲）</td><td>70-120</td><td>15-20</td><td>≥90 mmHg</td><td>年齡×2+8</td></tr>
+          <tr><td>青少年（≥12歲）</td><td>60-100</td><td>12-18</td><td>≥90 mmHg</td><td>成人標準</td></tr>
+        </tbody>
+      </table>
+      <div class="card-grid col-2" style="margin-top:16px">
+        <div class="k-card" data-bm-id="vitals-bp" data-bm-dept="兒科" data-bm-title="兒科低血壓定義">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科低血壓定義</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>新生兒：收縮壓 &lt;60 mmHg</li>
+              <li>1-12 個月：收縮壓 &lt;70 mmHg</li>
+              <li>1-10 歲：收縮壓 &lt;70 + (2 × 年齡) mmHg</li>
+              <li>&gt;10 歲：收縮壓 &lt;90 mmHg</li>
+              <li class="note">兒科低血壓是休克晚期表現，出現前心跳先快、末梢先差</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="vitals-weight" data-bm-dept="兒科" data-bm-title="體重估算公式">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">體重估算公式（急救用）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>1-10 歲：</strong>(年齡 + 4) × 2 = 體重（kg）</li>
+              <li><strong>例：</strong>5 歲 → (5+4)×2 = 18 kg</li>
+              <li><strong>Broselow Tape：</strong>依身長對應體重和藥物劑量，急救首選</li>
+              <li>&lt;1 歲：出生體重 3.5kg，每月增加約 0.5-0.7 kg</li>
+              <li>1 歲約 10 kg；2 歲約 12-13 kg</li>
+              <li class="note">Broselow tape 在兒科急救室一定要有，身長比年齡更準確</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 常用公式 -->
+    <div class="topic-block" id="formulas">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科常用公式</span>
+        <div data-bm-id="formulas" data-bm-dept="兒科" data-bm-title="兒科常用公式">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="formula-fluid" data-bm-dept="兒科" data-bm-title="維持輸液 Holliday-Segar">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">維持輸液 — Holliday-Segar（4-2-1 法則）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>前 10 kg：</strong>4 mL/kg/hr</li>
+              <li><strong>11-20 kg：</strong>再加 2 mL/kg/hr</li>
+              <li><strong>＞20 kg：</strong>再加 1 mL/kg/hr</li>
+              <li><strong>例（25 kg）：</strong>(10×4) + (10×2) + (5×1) = 65 mL/hr</li>
+              <li class="note">每日需水量：前 10kg×100 mL + 11-20kg×50 mL + &gt;20kg×20 mL</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="formula-et" data-bm-dept="兒科" data-bm-title="插管管徑公式">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">插管管徑與深度</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>氣管內管管徑（無氣囊）：</strong>(年齡/4) + 4</li>
+              <li><strong>有氣囊管徑：</strong>(年齡/4) + 3.5</li>
+              <li><strong>插管深度（嘴角）：</strong>管徑 × 3 = 深度（cm）</li>
+              <li><strong>例（4歲）：</strong>管徑 = (4/4)+4 = 5.0；深度 = 5×3 = 15 cm</li>
+              <li>&lt;1 歲：新生兒使用 3.0-3.5 無氣囊管</li>
+              <li class="note">備妥上下各一號的管子；插管後聽診確認，看 CO₂ 波形</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="formula-defib" data-bm-dept="兒科" data-bm-title="兒科電擊能量">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科電擊能量</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>去顫（Defibrillation）：</strong>2 J/kg → 4 J/kg → 4 J/kg</li>
+              <li><strong>同步電擊（Cardioversion）：</strong>0.5-1 J/kg，無效加至 2 J/kg</li>
+              <li>&lt;10 kg：使用兒童電極片（Pediatric pads）</li>
+              <li>電極片位置：右鎖骨下 + 左腋下；或前後位（嬰兒）</li>
+              <li class="note">電擊能量依體重計算，不能用成人固定劑量</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="formula-corrected" data-bm-dept="兒科" data-bm-title="矯正年齡">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">早產兒矯正年齡</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>矯正年齡 = 實際年齡 − 早產週數（從 40 週算）</strong></li>
+              <li><strong>例：</strong>3 個月大，32 週出生（早了 8 週 = 2 個月）</li>
+              <li>矯正年齡 = 3 − 2 = 1 個月</li>
+              <li>用矯正年齡評估：運動（到 2 歲）、語言（到 3 歲）</li>
+              <li class="note">家長常問「孩子發展有沒有落後」，早產兒要用矯正年齡評估</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 用藥原則 -->
+    <div class="topic-block" id="drugs">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科用藥原則</span>
+        <div data-bm-id="drugs" data-bm-dept="兒科" data-bm-title="兒科用藥原則">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="drug-antipyretic" data-bm-dept="兒科" data-bm-title="兒科退燒藥">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">退燒藥劑量</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Acetaminophen（撲熱息痛）：</strong><br/>10-15 mg/kg，每 4-6h，最多 5 次/天</li>
+              <li><strong>Ibuprofen：</strong><br/>5-10 mg/kg，每 6-8h（&gt;6 個月）</li>
+              <li><strong>交替使用：</strong>兩種各間隔 6h，兩種之間至少 3h</li>
+              <li><strong>禁忌：</strong>Aspirin 兒童禁用（Reye syndrome）</li>
+              <li class="note">&lt;3 個月嬰兒發燒 → 直接急診，不要先退燒</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="drug-abx" data-bm-dept="兒科" data-bm-title="兒科常用抗生素">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科常用抗生素劑量</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Amoxicillin：</strong>40-90 mg/kg/天，分 2-3 次（中耳炎、肺炎）</li>
+              <li><strong>Amoxicillin-Clavulanate：</strong>45-90 mg/kg/天，分 2 次</li>
+              <li><strong>Ceftriaxone：</strong>50-100 mg/kg/天 IV（腦膜炎 100 mg/kg）</li>
+              <li><strong>Azithromycin：</strong>10 mg/kg 第一天，5 mg/kg 第 2-5 天</li>
+              <li><strong>Trimethoprim-SMX：</strong>6-12 mg/kg/天 TMP，分 2 次（UTI）</li>
+              <li class="note">劑量都是 mg/kg，開藥前確認體重，最大劑量不超過成人劑量</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="drug-epi" data-bm-dept="兒科" data-bm-title="兒科 Epinephrine">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">Epinephrine 急救劑量</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>心跳停止（IV/IO）：</strong><br/>0.01 mg/kg（1:10,000），每 3-5 分鐘</li>
+              <li><strong>最大單次劑量：</strong>1 mg</li>
+              <li><strong>過敏性休克（IM）：</strong><br/>0.01 mg/kg（1:1,000），大腿外側，最大 0.5 mg</li>
+              <li><strong>哮吼（Nebulizer）：</strong><br/>0.5 mL/kg（最大 5 mL）racemic epinephrine</li>
+              <li class="note">兒科急救所有劑量都要算 mg/kg，不能直接用成人劑量</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="drug-glucose" data-bm-dept="兒科" data-bm-title="兒科低血糖處理">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">低血糖處理</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>新生兒：</strong>血糖 &lt;47 mg/dL 需處理</li>
+              <li><strong>兒童：</strong>血糖 &lt;60 mg/dL 需處理</li>
+              <li><strong>清醒可口服：</strong>葡萄糖水或果汁 15-20g</li>
+              <li><strong>無法口服（IV）：</strong><br/>10% Glucose 2 mL/kg IV push（新生兒）<br/>10% Glucose 5 mL/kg 或 50% Glucose 1 mL/kg（兒童）</li>
+              <li class="note">新生兒禁用高濃度 Glucose（50%）→ 高滲透壓腦出血風險</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 兒科發燒 -->
+    <div class="topic-block" id="fever-peds">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科發燒</span>
+        <div data-bm-id="fever-peds" data-bm-dept="兒科" data-bm-title="兒科發燒">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="fever-age" data-bm-dept="兒科" data-bm-title="發燒依年齡分層">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">發燒依年齡分層處理</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>&lt;1 個月：</strong>任何發燒（≥38°C）→ 全套敗血症檢查 + 住院</li>
+              <li><strong>1-3 個月：</strong>發燒需謹慎，評估外觀 + Rochester criteria</li>
+              <li><strong>3-36 個月：</strong>評估外觀，找感染源；&gt;39°C 考慮進一步檢查</li>
+              <li><strong>&gt;3 歲：</strong>外觀好、可找到感染源 → 門診追蹤</li>
+              <li class="note">兒科發燒的重點是「小孩看起來怎樣」，外觀不好比體溫更重要</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="fever-workup" data-bm-dept="兒科" data-bm-title="發燒評估">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">發燒的系統性評估</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>外觀：</strong>活動力、眼神接觸、哭聲、皮膚顏色（最重要）</li>
+              <li><strong>感染源：</strong>耳（中耳炎）、喉嚨（扁桃腺炎）、肺（肺炎）、尿（UTI）、皮膚</li>
+              <li><strong>危險警示：</strong>精神差、皮膚出血點（Petechiae）、頸部僵硬、囪門突出</li>
+              <li><button class="score-link" onclick="openModal('modal-yale')">Yale Observation Scale <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>（評估病況嚴重度）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="fever-danger" data-bm-dept="兒科" data-bm-title="兒科發燒危險警示">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
+          <div class="k-card-head"><span class="k-card-title">這些發燒要立刻處理</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>皮膚出血點（Petechiae / Purpura）：</strong>腦膜炎球菌敗血症 → 立刻抗生素</li>
+              <li><strong>頸部僵硬：</strong>細菌性腦膜炎</li>
+              <li><strong>囪門突出（&lt;18個月）：</strong>顱內壓升高</li>
+              <li><strong>精神極差、無法安撫：</strong>不論體溫多少都要積極評估</li>
+              <li><strong>川崎病警示：</strong>發燒 ≥5 天 + 以下四項 → <button class="score-link" onclick="openModal('modal-kawasaki')">川崎病診斷標準 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 肺炎 -->
+    <div class="topic-block" id="pneumonia">
+      <div class="topic-block-head">
+        <span class="topic-block-title">肺炎 Pneumonia（兒科）</span>
+        <div data-bm-id="peds-pna" data-bm-dept="兒科" data-bm-title="兒科肺炎">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="pna-pathogen" data-bm-dept="兒科" data-bm-title="兒科肺炎病原體">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">依年齡推測病原體</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>&lt;3 個月：</strong>GBS、E. coli、RSV（病毒）</li>
+              <li><strong>3 個月-5 歲：</strong>病毒為主（RSV、流感、腺病毒）；S. pneumoniae</li>
+              <li><strong>5-15 歲：</strong>Mycoplasma（非典型，最常見）、S. pneumoniae</li>
+              <li>學齡兒童的「遊走性肺炎」高度懷疑 Mycoplasma</li>
+              <li class="note">兒科肺炎不一定發燒，呼吸急促是更敏感的指標</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pna-tx-peds" data-bm-dept="兒科" data-bm-title="兒科肺炎治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科肺炎抗生素選擇</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>&lt;3 個月：</strong>住院，Ampicillin + Gentamicin IV</li>
+              <li><strong>3 個月-5 歲（輕中度）：</strong>Amoxicillin PO（高劑量 90 mg/kg/天）</li>
+              <li><strong>5-15 歲（Mycoplasma 懷疑）：</strong>Azithromycin PO 5 天</li>
+              <li><strong>住院重症：</strong>Ampicillin 或 Ceftriaxone IV</li>
+              <li><strong>住院指征：</strong>SpO₂ &lt;90%、呼吸費力、無法口服、&lt;3 個月</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 哮吼 -->
+    <div class="topic-block" id="croup">
+      <div class="topic-block-head">
+        <span class="topic-block-title">哮吼 Croup（Laryngotracheobronchitis）</span>
+        <div data-bm-id="croup" data-bm-dept="兒科" data-bm-title="哮吼 Croup">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="croup-dx" data-bm-dept="兒科" data-bm-title="哮吼診斷">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">臨床特徵與評估</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>常見 6 個月-3 歲，秋冬多見</li>
+              <li>病毒性（多為 Parainfluenza virus）</li>
+              <li><strong>三聯症：</strong>狗吠聲咳嗽、吸氣性喘鳴（Inspiratory stridor）、聲音沙啞</li>
+              <li>夜間加重、症狀突發</li>
+              <li><button class="score-link" onclick="openModal('modal-westley')">Westley Croup Score <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>（評估嚴重度）</li>
+              <li class="note">CXR 可見「Steeple sign」（尖塔徵），但不需常規做</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="croup-tx" data-bm-dept="兒科" data-bm-title="哮吼治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">治療依嚴重度</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>輕度（Westley ≤2）：</strong>Dexamethasone 0.15-0.6 mg/kg PO 單次，回家觀察</li>
+              <li><strong>中度（Westley 3-5）：</strong>Dexamethasone + Racemic epinephrine nebulizer</li>
+              <li><strong>重度（Westley &gt;5）：</strong>住院、吸氧、持續 Epinephrine nebulizer</li>
+              <li>Epinephrine 效果 2h 後消退（Rebound），需觀察至少 2-4h</li>
+              <li class="note">哮吼不適合給 LTRA 或抗生素（病毒性）；潮濕空氣療效未被證實</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 細支氣管炎 -->
+    <div class="topic-block" id="bronchiol">
+      <div class="topic-block-head">
+        <span class="topic-block-title">細支氣管炎 Bronchiolitis</span>
+        <div data-bm-id="bronchiol" data-bm-dept="兒科" data-bm-title="細支氣管炎">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="bronchiol-dx" data-bm-dept="兒科" data-bm-title="細支氣管炎診斷">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">臨床特徵</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>常見 &lt;2 歲，冬春流行</li>
+              <li>病原：RSV 最常（60-80%）、Rhinovirus、hMPV</li>
+              <li>上呼吸道症狀（流鼻水）→ 2-3 天後下呼吸道（喘、細囉音）</li>
+              <li>聽診：Fine crackles + Wheeze</li>
+              <li>住院指征：SpO₂ &lt;90%、呼吸費力、餵食困難、&lt;3 個月、早產兒</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="bronchiol-tx" data-bm-dept="兒科" data-bm-title="細支氣管炎治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">治療原則</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>支持性治療為主：給氧、補水（口服或 NG 或 IV）</li>
+              <li>清除鼻腔分泌物（吸鼻）</li>
+              <li>目標 SpO₂ ≥90-92%</li>
+              <li><strong>不建議常規使用：</strong>支氣管擴張劑、類固醇、抗生素、Ribavirin</li>
+              <li>高流量鼻導管（HFNC）：中重度低氧的選擇</li>
+              <li class="note">細支氣管炎治療是「支持」而非「治療」，告知家長病程需 7-10 天</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 腸胃炎與脫水 -->
+    <div class="topic-block" id="gastro">
+      <div class="topic-block-head">
+        <span class="topic-block-title">腸胃炎與脫水</span>
+        <div data-bm-id="gastro" data-bm-dept="兒科" data-bm-title="腸胃炎與脫水">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="dehydration" data-bm-dept="兒科" data-bm-title="脫水評估">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">脫水嚴重度評估</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>指標</th><th>輕度（&lt;5%）</th><th>中度（5-10%）</th><th>重度（&gt;10%）</th></tr></thead>
+              <tbody>
+                <tr><td>外觀</td><td>正常</td><td>焦躁或嗜睡</td><td>昏沉、極差</td></tr>
+                <tr><td>眼眶</td><td>正常</td><td>輕度凹陷</td><td>明顯凹陷</td></tr>
+                <tr><td>黏膜</td><td>濕潤</td><td>乾燥</td><td>極乾</td></tr>
+                <tr><td>皮膚彈性</td><td>正常</td><td>稍差（&lt;2s）</td><td>差（&gt;2s）</td></tr>
+                <tr><td>尿量</td><td>正常</td><td>減少</td><td>極少或無</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="rehydration" data-bm-dept="兒科" data-bm-title="補水策略">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">補水策略</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>輕中度：</strong>口服補液（ORS）優先，每 5 分鐘 5 mL 開始</li>
+              <li><strong>ORS 補充量：</strong>輕度 50 mL/kg、中度 100 mL/kg，在 4h 內補完</li>
+              <li><strong>無法口服 / 重度：</strong>NS 20 mL/kg IV bolus，可重複</li>
+              <li>繼續正常餵食（包括母乳），不要禁食</li>
+              <li>止吐：Ondansetron 0.15 mg/kg PO（可幫助口服補液成功）</li>
+              <li class="note">運動飲料（果汁、汽水）不適合補水，糖太高電解質不對</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UTI 兒科 -->
+    <div class="topic-block" id="uti-peds">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科泌尿道感染 UTI</span>
+        <div data-bm-id="uti-peds" data-bm-dept="兒科" data-bm-title="兒科 UTI">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="uti-peds-dx" data-bm-dept="兒科" data-bm-title="兒科 UTI 診斷">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">診斷要點</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>嬰兒 UTI 常以發燒、餵食差、嘔吐表現（無典型排尿症狀）</li>
+              <li><strong>尿液收集方式：</strong>中段尿（大兒童）、導尿（嬰幼兒）、恥骨上穿刺（最準確）</li>
+              <li>尿液分析：WBC &gt;5/HPF、亞硝酸鹽陽性、白血球酯酶陽性</li>
+              <li>確診：尿液培養菌落數 ≥10⁵（中段尿）或 ≥10⁴（導尿）</li>
+              <li class="note">尿布收集的尿液不能培養，污染率太高</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="uti-peds-tx" data-bm-dept="兒科" data-bm-title="兒科 UTI 治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">治療與追蹤</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>&lt;2 個月：</strong>住院 IV 抗生素（Ampicillin + Gentamicin）</li>
+              <li><strong>2 個月-2 歲：</strong>視狀況口服或住院；Amoxicillin-Clavulanate 或 TMP-SMX</li>
+              <li><strong>&gt;2 歲（無全身症狀）：</strong>口服抗生素 7-14 天</li>
+              <li>療程後 VCUG 評估：&lt;2 歲第一次 UTI、反覆感染、男嬰</li>
+              <li class="note">兒童 UTI 要追蹤泌尿道異常（膀胱輸尿管逆流），反覆感染傷腎</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 熱性痙攣 -->
+    <div class="topic-block" id="seizure">
+      <div class="topic-block-head">
+        <span class="topic-block-title">熱性痙攣 Febrile Seizure</span>
+        <div data-bm-id="seizure" data-bm-dept="兒科" data-bm-title="熱性痙攣">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="febrile-sz-type" data-bm-dept="兒科" data-bm-title="熱性痙攣分類">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">單純型 vs 複雜型</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>單純型（80%）：</strong><br/>全身性、&lt;15 分鐘、24h 內只發作一次</li>
+              <li><strong>複雜型（20%）：</strong><br/>局部性、&gt;15 分鐘、或 24h 內多次</li>
+              <li>好發年齡：6 個月-5 歲</li>
+              <li>複雜型需進一步評估（腦膜炎？結構性病變？）</li>
+              <li class="note">熱性痙攣本身預後好，但家長嚇壞了，花時間安撫說明很重要</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="febrile-sz-tx" data-bm-dept="兒科" data-bm-title="熱性痙攣處置">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">處置原則</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>側躺防吸入、保持呼吸道通暢</li>
+              <li>不要壓制肢體、不要把東西放進嘴裡</li>
+              <li>&gt;5 分鐘未停：Diazepam 肛門栓（0.5 mg/kg）或 Midazolam 鼻腔（0.2 mg/kg）</li>
+              <li>單純型熱性痙攣：不需腰椎穿刺、不需腦波、不需長期抗癲癇藥</li>
+              <li>退燒不能預防熱性痙攣復發（但要治療發燒原因）</li>
+              <li class="note">家屬衛教重點：說明不是癲癇、不傷腦、復發機率 30%、再發作時的處理</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 兒科 CPR -->
+    <div class="topic-block" id="peds-cpr">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科 CPR</span>
+        <div data-bm-id="peds-cpr" data-bm-dept="兒科" data-bm-title="兒科 CPR">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-red">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>兒科心跳停止最常見原因是<strong>呼吸衰竭</strong>，不是心律問題。給氧和通氣比電擊更優先。</span>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="peds-cpr-ratio" data-bm-dept="兒科" data-bm-title="兒科 CPR 比例">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">CPR 比例與技術</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>單人施救：</strong>30:2（壓胸:通氣）</li>
+              <li><strong>雙人施救：</strong>15:2</li>
+              <li><strong>嬰兒（&lt;1歲）壓胸：</strong>兩指法（胸骨下半段），深度胸厚 1/3</li>
+              <li><strong>兒童壓胸：</strong>單手或雙手掌根，深度 5 cm</li>
+              <li>速率：100-120 次/分</li>
+              <li>有高級氣道後：不同步，10 次/分通氣</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="peds-cpr-drugs" data-bm-dept="兒科" data-bm-title="兒科急救藥物">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">急救藥物劑量</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Epinephrine：</strong>0.01 mg/kg IV/IO，每 3-5 分鐘，最大 1 mg</li>
+              <li><strong>Amiodarone（VF/pVT）：</strong>5 mg/kg IV/IO bolus，最大 300 mg</li>
+              <li><strong>Atropine（心搏過緩）：</strong>0.02 mg/kg IV，最小 0.1 mg，最大 0.5 mg</li>
+              <li><strong>Adenosine（SVT）：</strong>0.1 mg/kg IV 快速推注，最大 6 mg；無效加倍</li>
+              <li class="note">IO（骨髓內注射）在無靜脈通路時首選，效果等同靜脈</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 兒科休克 -->
+    <div class="topic-block" id="peds-shock">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科休克</span>
+        <div data-bm-id="peds-shock" data-bm-dept="兒科" data-bm-title="兒科休克">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="peds-shock-sign" data-bm-dept="兒科" data-bm-title="兒科休克早期徵象">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科休克早期徵象（低血壓是晚期！）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>心跳過速</strong>（最早出現）</li>
+              <li>毛細血管充血時間 &gt;2 秒</li>
+              <li>末梢冰冷、皮膚花斑（Mottling）</li>
+              <li>尿量減少（&lt;1 mL/kg/hr）</li>
+              <li>意識改變（煩躁或嗜睡）</li>
+              <li class="note">兒童血壓代償能力強，低血壓出現代表已失代償，情況很危急</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="peds-shock-tx" data-bm-dept="兒科" data-bm-title="兒科休克處置">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科敗血性休克處置</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>給氧、建立靜脈通路（無法建立 → IO）</div></li>
+              <li><div class="step-num">2</div><div>NS 或 LR 20 mL/kg IV bolus over 5-10 分鐘，可重複 2-3 次（最多 60 mL/kg）</div></li>
+              <li><div class="step-num">3</div><div>血培養後 1h 內廣效抗生素</div></li>
+              <li><div class="step-num">4</div><div>輸液無反應 → Norepinephrine 或 Dopamine drip</div></li>
+              <li><div class="step-num">5</div><div>監測：HR、BP、尿量、血糖（兒科休克容易低血糖）</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 氣喘急性發作 -->
+    <div class="topic-block" id="asthma-peds">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科氣喘急性發作</span>
+        <div data-bm-id="asthma-peds" data-bm-dept="兒科" data-bm-title="兒科氣喘急性發作">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="asthma-peds-sev" data-bm-dept="兒科" data-bm-title="兒科氣喘嚴重度">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">嚴重度評估</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>輕度：</strong>說話成句、SpO₂ &gt;95%、可行走</li>
+              <li><strong>中度：</strong>說話斷句、SpO₂ 90-95%、使用輔助呼吸肌</li>
+              <li><strong>重度：</strong>說話單字、SpO₂ &lt;90%、明顯三凹徵</li>
+              <li><strong>危急：</strong>意識改變、Silent chest（呼吸音消失）</li>
+              <li class="note">Silent chest 不是好轉，是氣流已嚴重受阻，準備插管</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="asthma-peds-tx" data-bm-dept="兒科" data-bm-title="兒科氣喘治療">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性發作處置</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>Salbutamol nebulizer：0.15 mg/kg（最少 2.5 mg），每 20 分鐘 ×3</div></li>
+              <li><div class="step-num">2</div><div>Ipratropium nebulizer 加入（中重度）：0.25-0.5 mg</div></li>
+              <li><div class="step-num">3</div><div>口服 Prednisolone 1-2 mg/kg（最大 40-60 mg）</div></li>
+              <li><div class="step-num">4</div><div>給氧：目標 SpO₂ &gt;94%</div></li>
+              <li><div class="step-num">5</div><div>無改善 → MgSO₄ 50 mg/kg IV（最大 2g），over 20 分鐘</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Yale Observation Scale Modal -->
+<div class="score-modal-overlay" id="modal-yale">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>Yale Observation Scale</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-yale')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>觀察項目</th><th>正常（1分）</th><th>中度（3分）</th><th>重度（5分）</th></tr></thead>
+        <tbody>
+          <tr><td>哭聲</td><td>哭聲強、或不哭</td><td>哭泣、但可安撫</td><td>哭聲弱、無法安撫</td></tr>
+          <tr><td>家長安撫反應</td><td>可被安撫、或不需安撫</td><td>短暫安撫後又哭</td><td>無法被安撫</td></tr>
+          <tr><td>清醒狀態</td><td>醒著或輕易喚醒</td><td>閉眼但可喚醒</td><td>難以喚醒</td></tr>
+          <tr><td>膚色</td><td>粉紅</td><td>末梢蒼白或泛紅</td><td>蒼白、發紺、花斑</td></tr>
+          <tr><td>含水狀況（眼淚、黏膜）</td><td>正常</td><td>眼睛略乾</td><td>眼睛很乾、無淚</td></tr>
+          <tr><td>對外反應</td><td>對刺激有反應、微笑</td><td>對刺激反應遲鈍</td><td>對刺激無反應</td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>總分 6-10 分</strong>：嚴重疾病風險低（&lt;3%）<br/>
+        <strong>總分 11-15 分</strong>：嚴重疾病風險中等（約 26%）<br/>
+        <strong>總分 16-30 分</strong>：嚴重疾病風險高（約 92%）
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 川崎病 Modal -->
+<div class="score-modal-overlay" id="modal-kawasaki">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>川崎病診斷標準</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-kawasaki')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <div class="alert alert-red" style="margin-bottom:16px">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>發燒 ≥5 天 + 以下 5 項中符合 4 項 = 完整型川崎病</span>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>診斷標準</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td><strong>結膜充血</strong></td><td>雙側、非化膿性、球結膜充血（不含角膜緣）</td></tr>
+          <tr><td><strong>口腔黏膜變化</strong></td><td>嘴唇乾裂潮紅、草莓舌、口腔黏膜潮紅</td></tr>
+          <tr><td><strong>皮疹</strong></td><td>多形性紅疹（軀幹為主），不是水泡</td></tr>
+          <tr><td><strong>肢端變化</strong></td><td>急性期：手腳腫脹泛紅；恢復期：指尖脫皮（第 10-14 天）</td></tr>
+          <tr><td><strong>頸部淋巴結腫大</strong></td><td>單側或雙側，&gt;1.5 cm</td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>治療：</strong>IVIG（靜脈免疫球蛋白）2 g/kg + 高劑量 Aspirin（80 mg/kg/天）<br/>
+        <strong>目的：</strong>預防冠狀動脈瘤（未治療時發生率 25%）<br/>
+        <span style="color:var(--red);font-weight:700">必須在發燒第 10 天前給 IVIG，越早越好</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Westley Croup Score Modal -->
+<div class="score-modal-overlay" id="modal-westley">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>Westley Croup Score</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-westley')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>項目</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td><strong>吸氣性喘鳴（Stridor）</strong><br/>無=0；安靜時可聽到=1；聽診器聽到=2</td><td>0-2</td></tr>
+          <tr><td><strong>胸壁凹陷（Retractions）</strong><br/>無=0；輕度=1；中度=2；重度=3</td><td>0-3</td></tr>
+          <tr><td><strong>進氣量（Air Entry）</strong><br/>正常=0；減少=1；明顯減少=2</td><td>0-2</td></tr>
+          <tr><td><strong>發紺（Cyanosis）</strong><br/>無=0；激動時=4；休息時=5</td><td>0-5</td></tr>
+          <tr><td><strong>意識程度</strong><br/>正常=0；異常（激動或嗜睡）=5</td><td>0-5</td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>≤2 分</strong>：輕度 → 口服 Dexamethasone，可回家<br/>
+        <strong>3-5 分</strong>：中度 → Dexamethasone + Epinephrine nebulizer，觀察 2-4h<br/>
+        <strong>&gt;5 分</strong>：重度 → 住院、吸氧、持續 Epinephrine nebulizer<br/>
+        <strong>≥12 分或意識異常</strong>：考慮插管
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'vitals',      dept:'兒科', title:'生命徵象正常值',     url:'#vitals',      text:'心跳 呼吸 血壓 體重估算 Broselow 低血壓 年齡 正常值' },
+    { id:'formulas',    dept:'兒科', title:'兒科常用公式',       url:'#formulas',    text:'Holliday Segar 4-2-1 維持輸液 插管管徑 電擊 2J/kg 矯正年齡 早產兒' },
+    { id:'drugs',       dept:'兒科', title:'兒科用藥原則',       url:'#drugs',       text:'Acetaminophen Ibuprofen 退燒 Aspirin Reye Amoxicillin Ceftriaxone Azithromycin Epinephrine 低血糖 Glucose' },
+    { id:'fever-peds',  dept:'兒科', title:'兒科發燒',           url:'#fever-peds',  text:'3個月 Rochester Yale 外觀 Petechiae 出血點 川崎病 腦膜炎 囪門 頸部僵硬 IVIG' },
+    { id:'pneumonia',   dept:'兒科', title:'兒科肺炎',           url:'#pneumonia',   text:'RSV Mycoplasma 遊走性肺炎 Amoxicillin Azithromycin SpO2 Ceftriaxone 呼吸急促' },
+    { id:'croup',       dept:'兒科', title:'哮吼 Croup',         url:'#croup',       text:'狗吠聲咳嗽 Stridor 沙啞 Parainfluenza Dexamethasone Epinephrine Westley Steeple sign' },
+    { id:'bronchiol',   dept:'兒科', title:'細支氣管炎',         url:'#bronchiol',   text:'RSV 嬰兒 Fine crackles Wheeze 支持治療 HFNC SpO2 吸鼻 不建議支氣管擴張劑' },
+    { id:'gastro',      dept:'兒科', title:'腸胃炎與脫水',       url:'#gastro',      text:'脫水 輕中重度 ORS 口服補液 眼眶凹陷 皮膚彈性 Ondansetron NS bolus 運動飲料' },
+    { id:'uti-peds',    dept:'兒科', title:'兒科 UTI',           url:'#uti-peds',    text:'導尿 中段尿 菌落數 培養 Amoxicillin TMP-SMX VCUG 膀胱輸尿管逆流 嬰兒發燒' },
+    { id:'seizure',     dept:'兒科', title:'熱性痙攣',           url:'#seizure',     text:'單純型 複雜型 Diazepam Midazolam 側躺 5分鐘 癲癇 腦膜炎 復發 抗癲癇藥' },
+    { id:'peds-cpr',    dept:'兒科', title:'兒科 CPR',           url:'#peds-cpr',    text:'15:2 30:2 兩指法 呼吸衰竭 Epinephrine Amiodarone Atropine Adenosine IO 骨髓' },
+    { id:'peds-shock',  dept:'兒科', title:'兒科休克',           url:'#peds-shock',  text:'心跳過速 毛細血管 末梢 低血壓 20mL/kg bolus Norepinephrine Dopamine 血糖 失代償' },
+    { id:'asthma-peds', dept:'兒科', title:'兒科氣喘急性發作',   url:'#asthma-peds', text:'Salbutamol Ipratropium Prednisolone MgSO4 Silent chest SpO2 三凹徵 插管' },
+  ];
+
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
