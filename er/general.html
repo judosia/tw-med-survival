@@ -113,6 +113,7 @@
     <a href="#cp-er"     class="sidebar-link">胸痛</a>
     <a href="#dysp-er"   class="sidebar-link">呼吸困難</a>
     <a href="#ams-er"    class="sidebar-link">意識改變</a>
+    <a href="#htn-emergency" class="sidebar-link">高血壓急症</a>
     <a href="#abd-er"    class="sidebar-link">腹痛</a>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">急危重症</div>
@@ -129,6 +130,7 @@
     <div class="breadcrumb">
       <a href="../index.html">首頁</a> ›
       <a href="../specialty.html">分科知識</a> ›
+      <a href="../specialty.html#er">急診</a> ›
       <span>急診核心</span>
     </div>
 
@@ -392,29 +394,69 @@
       </div>
       <div class="card-grid col-2" style="margin-top:14px">
         <div class="k-card">
-          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
-          <div class="k-card-head"><span class="k-card-title">癲癇持續狀態 Status Epilepticus</span></div>
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">鑑別方向：<button class="score-link" onclick="openModal('modal-aeiou')">AEIOU TIPS <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button></span></div>
           <div class="k-card-body">
             <ul class="k-list">
-              <li>定義：發作持續 &gt;5 分鐘，或兩次發作間無恢復意識</li>
-              <li><strong>第一線(0-5 分鐘) </strong>：Lorazepam 4mg IV 或 Diazepam 10mg IV</li>
-              <li><strong>第二線(5-20 分鐘) </strong>：Fosphenytoin 20mg/kg IV 或 Levetiracetam 60mg/kg IV</li>
-              <li><strong>第三線(20 分鐘後) </strong>：Propofol 或 Midazolam drip → ICU</li>
-              <li class="note">保護氣道、側躺防吸入，不要壓制抽搐</li>
+              <li><strong>A</strong> — Alcohol（酒精中毒 / 戒斷）</li>
+              <li><strong>E</strong> — Epilepsy / Electrolytes（癲癇、電解質異常）</li>
+              <li><strong>I</strong> — Insulin（低血糖）</li>
+              <li><strong>O</strong> — Overdose / Oxygen（藥物過量、缺氧）</li>
+              <li><strong>U</strong> — Uremia（尿毒症）</li>
+              <li><strong>T</strong> — Trauma / Temperature（外傷、體溫異常）</li>
+              <li><strong>I</strong> — Infection（腦膜炎、腦炎、敗血症）</li>
+              <li><strong>P</strong> — Psychiatric（精神科急症）</li>
+              <li><strong>S</strong> — Stroke / Shock（中風、休克）</li>
             </ul>
           </div>
         </div>
         <div class="k-card">
           <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
-          <div class="k-card-head"><span class="k-card-title">高血壓急症 Hypertensive Emergency</span></div>
+          <div class="k-card-head"><span class="k-card-title">癲癇持續狀態 Status Epilepticus</span></div>
           <div class="k-card-body">
             <ul class="k-list">
-              <li>定義：BP &gt;180/120 + 器官損傷（腦/心/腎）</li>
+              <li>定義：發作持續 &gt;5 分鐘，或兩次發作間無恢復意識</li>
+              <li><strong>第一線（0-5 分鐘）</strong>：Lorazepam 4mg IV 或 Diazepam 10mg IV</li>
+              <li><strong>第二線（5-20 分鐘）</strong>：Fosphenytoin 20mg/kg IV 或 Levetiracetam 60mg/kg IV</li>
+              <li><strong>第三線（20 分鐘後）</strong>：Propofol 或 Midazolam drip → ICU</li>
+              <li class="note">保護氣道、側躺防吸入，不要壓制抽搐</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 高血壓急症 -->
+    <div class="topic-block" id="htn-emergency">
+      <div class="topic-block-head">
+        <span class="topic-block-title">高血壓急症 Hypertensive Emergency</span>
+        <div data-bm-id="htn-emergency" data-bm-dept="急診" data-bm-title="高血壓急症">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">定義與處置原則</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>定義：BP &gt;180/120 + 急性器官損傷（腦/心/腎/眼）</li>
               <li>目標：第一小時降低 ≤25%，不要降太快</li>
-              <li><strong>高血壓腦病變</strong>：Nicardipine IV 或 Labetalol IV</li>
-              <li><strong>主動脈剝離</strong>：Beta-blocker 優先（見胸痛）</li>
+              <li>次急症（無器官損傷）：不需靜脈給藥，口服慢慢調</li>
+              <li class="note">數字高不一定是急症，有沒有器官損傷才是關鍵</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">依情境選藥</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>高血壓腦病變 / 腦出血</strong>：Nicardipine IV 或 Labetalol IV</li>
+              <li><strong>主動脈剝離</strong>：Beta-blocker 優先（Esmolol → Nicardipine）</li>
+              <li><strong>急性心肌梗塞</strong>：NTG IV + Beta-blocker</li>
               <li><strong>子癲前症</strong>：MgSO₄ + Labetalol 或 Hydralazine</li>
-              <li class="note">無症狀高血壓（次急症）不需靜脈給藥，口服慢慢調</li>
+              <li><strong>急性心衰竭</strong>：NTG IV + Furosemide</li>
             </ul>
           </div>
         </div>
@@ -804,6 +846,36 @@
   </div>
 </div>
 
+<!-- ══ AEIOU TIPS Modal ══ -->
+<div class="score-modal-overlay" id="modal-aeiou">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>AEIOU TIPS — 意識改變鑑別</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-aeiou')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>字母</th><th>原因</th><th>臨床線索</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A</strong></td><td>Alcohol（酒精中毒 / 戒斷）</td><td>酒味、瞳孔正常、酒精戒斷有癲癇風險</td></tr>
+          <tr><td><strong>E</strong></td><td>Epilepsy / Electrolytes（癲癇、電解質）</td><td>發作後意識模糊、低血鈉、低血鈣</td></tr>
+          <tr><td><strong>I</strong></td><td>Insulin（低血糖）</td><td>冒汗、心跳快、血糖 &lt;50 mg/dL → 最先排除</td></tr>
+          <tr><td><strong>O</strong></td><td>Overdose / Oxygen（藥物過量、缺氧）</td><td>瞳孔縮小（鴉片類）、SpO₂ 下降</td></tr>
+          <tr><td><strong>U</strong></td><td>Uremia（尿毒症）</td><td>慢性腎病史、BUN/Cr 升高、尿毒霜</td></tr>
+          <tr><td><strong>T</strong></td><td>Trauma / Temperature（外傷、體溫異常）</td><td>頭部外傷、低體溫（肛溫）、熱中暑</td></tr>
+          <tr><td><strong>I</strong></td><td>Infection（感染）</td><td>發燒、頸部僵硬（腦膜炎）、Sepsis</td></tr>
+          <tr><td><strong>P</strong></td><td>Psychiatric（精神科急症）</td><td>排除其他原因後考慮，不能先假設</td></tr>
+          <tr><td><strong>S</strong></td><td>Stroke / Shock（中風、休克）</td><td>局部神經症狀、低血壓、Lactate 升高</td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        永遠先量<strong>血糖</strong>，最快排除且最可逆。<br/>
+        「P」是排除診斷，不能一開始就貼標籤。
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="../shared.js"></script>
 <script>
   const SEARCH_INDEX = [
@@ -811,7 +883,8 @@
     { id:'abcde',     dept:'急診', title:'ABCDE 評估',       url:'#abcde',     text:'Airway Breathing Circulation Disability Exposure 氣道 呼吸 循環 意識 血糖 瞳孔 GCS Stridor SpO2' },
     { id:'cp-er',     dept:'急診', title:'急診胸痛',         url:'#cp-er',     text:'STEMI ECG Troponin Cath lab 主動脈剝離 Labetalol Esmolol Wells PE CTPA D-dimer Aspirin Ticagrelor' },
     { id:'dysp-er',   dept:'急診', title:'急診呼吸困難',     url:'#dysp-er',   text:'張力性氣胸 針刺減壓 胸管 肺水腫 CPAP BiPAP Furosemide 氣喘 Salbutamol MgSO4 AECOPD 88 92' },
-    { id:'ams-er',    dept:'急診', title:'急診意識改變',     url:'#ams-er',    text:'血糖 Thiamine Naloxone GCS 插管 癲癇 Status epilepticus Lorazepam 高血壓急症 Nicardipine' },
+    { id:'ams-er',    dept:'急診', title:'急診意識改變',     url:'#ams-er',    text:'血糖 Thiamine Naloxone GCS 插管 AEIOU TIPS 癲癇 Status epilepticus Lorazepam 低血糖 尿毒 中風 感染' },
+    { id:'htn-emergency', dept:'急診', title:'高血壓急症',   url:'#htn-emergency', text:'BP 180 120 器官損傷 Nicardipine Labetalol 腦病變 主動脈剝離 子癲前症 MgSO4 次急症 25%' },
     { id:'abd-er',    dept:'急診', title:'急診腹痛',         url:'#abd-er',    text:'腹膜炎 腸穿孔 腸阻塞 腸缺血 AAA hCG Lactate 超音波 CT Lipase 外科會診' },
     { id:'shock',     dept:'急診', title:'休克',             url:'#shock',     text:'低血容 分布性 心因性 阻塞性 Septic Norepinephrine Dobutamine 心包填塞 Beck Tamponade POCUS Lactate' },
     { id:'stroke-er', dept:'急診', title:'急診中風',         url:'#stroke-er', text:'tPA 溶栓 NIHSS CT 取栓 LVO 4.5h 血壓 185 110 禁忌症 INR DOAC Permissive hypertension' },
