@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>急診核心 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    /* 急診專用：流程圖感的 step card */
+    .flow-block {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-bottom: 14px;
+    }
+    .flow-block.urgent { border-left: 4px solid var(--red); }
+    .flow-block.warn   { border-left: 4px solid var(--amber); }
+    .flow-block.info   { border-left: 4px solid var(--blue); }
+    .flow-title {
+      font-size: 0.88rem; font-weight: 700;
+      margin-bottom: 12px; color: var(--navy);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .flow-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html" class="nav-back">分科知識</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">急診核心</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">急診核心</div>
+    <div class="sidebar-section-title">評估框架</div>
+    <a href="#triage"    class="sidebar-link">檢傷分類 TTAS</a>
+    <a href="#abcde"     class="sidebar-link">ABCDE 評估</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">常見主訴</div>
+    <a href="#cp-er"     class="sidebar-link">胸痛</a>
+    <a href="#dysp-er"   class="sidebar-link">呼吸困難</a>
+    <a href="#ams-er"    class="sidebar-link">意識改變</a>
+    <a href="#abd-er"    class="sidebar-link">腹痛</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急危重症</div>
+    <a href="#shock"     class="sidebar-link">休克</a>
+    <a href="#stroke-er" class="sidebar-link">中風</a>
+    <a href="#anaphylax" class="sidebar-link">過敏性休克</a>
+    <a href="#dispo"     class="sidebar-link">收住院 vs 回家</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">外傷</div>
+    <a href="trauma.html" class="sidebar-link">外傷頁面 →</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> ›
+      <a href="../specialty.html">分科知識</a> ›
+      <span>急診核心</span>
+    </div>
+
+    <div class="page-hero" style="background:linear-gradient(135deg,#3a1a0a,#7a3010);color:#fff;">
+      <div class="page-hero-text">
+        <h1>急診核心 Emergency Medicine</h1>
+        <p>快速評估、找出最壞的可能、穩定再說。急診不是要找到所有答案，是先確保病人不會在你面前變壞。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+    </div>
+
+    <!-- 檢傷 -->
+    <div class="topic-block" id="triage">
+      <div class="topic-block-head">
+        <span class="topic-block-title">檢傷分類 TTAS</span>
+        <div data-bm-id="triage" data-bm-dept="急診" data-bm-title="檢傷分類 TTAS">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>級別</th><th>名稱</th><th>等待時間</th><th>常見情境</th></tr></thead>
+        <tbody>
+          <tr><td><strong style="color:#c62834;">第一級</strong></td><td>復甦急救</td><td>立即</td><td>心跳停止、呼吸衰竭、GCS ≤8、血壓測不到</td></tr>
+          <tr><td><strong style="color:#c62834;">第二級</strong></td><td>危急</td><td>10 分鐘內</td><td>STEMI、中風、嚴重外傷、敗血症、血壓 &lt;90</td></tr>
+          <tr><td><strong style="color:#c47d2b;">第三級</strong></td><td>緊急</td><td>30 分鐘內</td><td>中度疼痛、骨折、中度呼吸困難、血糖異常</td></tr>
+          <tr><td><strong style="color:#3d8a4a;">第四級</strong></td><td>次緊急</td><td>60 分鐘內</td><td>輕度外傷、輕微感染、慢性症狀急性惡化</td></tr>
+          <tr><td><strong style="color:var(--muted);">第五級</strong></td><td>非緊急</td><td>120 分鐘內</td><td>慢性病問題、輕微不適、一般門診可處理</td></tr>
+        </tbody>
+      </table>
+      <div class="alert alert-amber">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>檢傷可以升級，很少降級。覺得病人「哪裡不對」，先升一級再說。你的直覺可能救了人。</span>
+      </div>
+    </div>
+
+    <!-- ABCDE -->
+    <div class="topic-block" id="abcde">
+      <div class="topic-block-head">
+        <span class="topic-block-title">ABCDE 初步評估框架</span>
+        <div data-bm-id="abcde" data-bm-dept="急診" data-bm-title="ABCDE 評估">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-blue">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+        <span>ABCDE 不是依序問診，是每個步驟發現問題就立刻處理，再繼續往下。</span>
+      </div>
+      <div class="card-grid col-1">
+        <div class="flow-block info">
+          <div class="flow-title"><div class="flow-dot" style="background:var(--blue)"></div>A — Airway 氣道</div>
+          <ul class="k-list">
+            <li>氣道通暢嗎？病人能說話嗎？</li>
+            <li>有無喘鳴音（Stridor）→ 上呼吸道阻塞，緊急</li>
+            <li>異物、分泌物、外傷 → 清除或建立人工氣道</li>
+            <li class="note">說話清楚 = 氣道暫時通暢，但要持續監測</li>
+          </ul>
+        </div>
+        <div class="flow-block info">
+          <div class="flow-title"><div class="flow-dot" style="background:var(--blue)"></div>B — Breathing 呼吸</div>
+          <ul class="k-list">
+            <li>呼吸速率、深度、費力程度</li>
+            <li>SpO₂、聽診（對稱？囉音？喘鳴？消失？）</li>
+            <li>單側呼吸音消失 → 氣胸、大量積液、插管過深</li>
+            <li>處理：給氧、NIPPV、必要時插管</li>
+          </ul>
+        </div>
+        <div class="flow-block info">
+          <div class="flow-title"><div class="flow-dot" style="background:var(--blue)"></div>C — Circulation 循環</div>
+          <ul class="k-list">
+            <li>血壓、心跳、皮膚灌流（毛細血管充血 &lt;2 秒？）</li>
+            <li>外傷：止血優先（直接加壓、止血帶）</li>
+            <li>低血壓 → 建立靜脈通路、輸液、找原因</li>
+            <li>心電監測、12-lead ECG</li>
+          </ul>
+        </div>
+        <div class="flow-block info">
+          <div class="flow-title"><div class="flow-dot" style="background:var(--blue)"></div>D — Disability 意識</div>
+          <ul class="k-list">
+            <li>GCS（E+V+M）或 AVPU（Alert/Voice/Pain/Unresponsive）</li>
+            <li>血糖：立刻量，&lt;50 mg/dL 立刻給糖</li>
+            <li>瞳孔：大小、對稱、對光反應</li>
+            <li class="note">血糖是最快能排除的意識改變原因，永遠先量</li>
+          </ul>
+        </div>
+        <div class="flow-block info">
+          <div class="flow-title"><div class="flow-dot" style="background:var(--blue)"></div>E — Exposure 暴露</div>
+          <ul class="k-list">
+            <li>脫衣暴露全身，尋找被遮蓋的傷口、皮疹、腫脹</li>
+            <li>外傷：前後全身檢查（不要漏掉背部）</li>
+            <li>注意保溫，避免低體溫</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 胸痛急診 -->
+    <div class="topic-block" id="cp-er">
+      <div class="topic-block-head">
+        <span class="topic-block-title">胸痛 — 急診處理流程</span>
+        <div data-bm-id="cp-er" data-bm-dept="急診" data-bm-title="急診胸痛">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-1">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">到診 10 分鐘內要完成的事</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>12-lead ECG（10 分鐘內）→ 看有沒有 STEMI、LBBB</div></li>
+              <li><div class="step-num">2</div><div>靜脈通路 × 2、抽血：Troponin、CBC、BMP、Coag</div></li>
+              <li><div class="step-num">3</div><div>CXR：排除氣胸、主動脈增寬、肺水腫</div></li>
+              <li><div class="step-num">4</div><div>生命徵象：兩側血壓（排除主動脈剝離）</div></li>
+              <li><div class="step-num">5</div><div>根據 ECG 決定下一步：STEMI → 啟動 Cath lab；Non-STEMI → Serial troponin</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-grid col-2" style="margin-top:14px">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
+          <div class="k-card-head"><span class="k-card-title">STEMI — Door-to-Balloon &lt;90 分鐘</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>Aspirin 300mg 嚼碎 + Ticagrelor 180mg</li>
+              <li>Heparin UFH bolus</li>
+              <li>立刻通知心導管室</li>
+              <li>持續心監、備電擊器</li>
+              <li class="note">NTG 禁忌：收縮壓 &lt;90、右心梗塞、24h 內 PDE-5 抑制劑</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
+          <div class="k-card-head"><span class="k-card-title">主動脈剝離 — 先控制血壓</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>目標：HR &lt;60、收縮壓 100-120 mmHg</li>
+              <li>Beta-blocker 優先：Esmolol IV 或 Labetalol IV</li>
+              <li>確診：CT angiography</li>
+              <li>Type A → 立刻心臟外科；Type B → 藥物為主</li>
+              <li class="note">禁止先給血管擴張劑！反射性心跳加速讓剝離更惡化</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">Non-STEMI / UA 的風險分層</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>高風險</strong>：Troponin 升高、ECG 動態變化、血流動力學不穩 → 24h 內 PCI</li>
+              <li><strong>中風險</strong>：Troponin 正常但症狀典型 → Serial troponin × 3h、住院觀察</li>
+              <li><strong>低風險</strong>：TIMI score 0-1、兩次 Troponin 陰性 → 考慮門診追蹤</li>
+              <li class="note">0h/3h high-sensitivity troponin 策略可加速排除或確診</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">PE 的診斷流程</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>Wells score &lt;2 → D-dimer（陰性可排除）</li>
+              <li>Wells score ≥2 或 D-dimer 陽性 → CTPA</li>
+              <li>血流動力學不穩定 → 先 Echo 快速評估 RV，不等 CTPA</li>
+              <li>大型 PE + 休克 → 考慮 systemic thrombolysis</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 呼吸困難急診 -->
+    <div class="topic-block" id="dysp-er">
+      <div class="topic-block-head">
+        <span class="topic-block-title">呼吸困難 — 急診處理流程</span>
+        <div data-bm-id="dysp-er" data-bm-dept="急診" data-bm-title="急診呼吸困難">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">氣胸 Pneumothorax</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>張力性氣胸</strong>：氣管偏移、頸靜脈怒張、單側無呼吸音、低血壓 → 立刻針刺減壓（不等 CXR）</li>
+              <li>針刺：第 2 肋間鎖骨中線，或第 4-5 肋間腋前線</li>
+              <li>確認後置放胸管</li>
+              <li><strong>單純氣胸</strong>：小（&lt;2cm）+ 穩定 → 觀察；大 or 症狀明顯 → 胸管</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性心因性肺水腫</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>坐起來、給氧（目標 SpO₂ &gt;94%）</li>
+              <li>Furosemide 40-80mg IV</li>
+              <li>NTG 舌下或靜脈（收縮壓 &gt;90 才給）</li>
+              <li>若低氧改善不足 → CPAP 優先，BiPAP 次之</li>
+              <li class="note">CPAP 對急性肺水腫效果很好，不要拖太久才用</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">氣喘急性重度發作</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>Salbutamol nebulizer 5mg + Ipratropium，每 20 分鐘 ×3</li>
+              <li>Methylprednisolone 80mg IV</li>
+              <li>氧氣：目標 SpO₂ &gt;94%</li>
+              <li>無改善 → MgSO₄ 2g IV over 20min</li>
+              <li>Silent chest / 意識改變 → 準備插管</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">AECOPD 急性惡化</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>氧氣：目標 SpO₂ <strong>88-92%</strong>（不能給太多）</li>
+              <li>Salbutamol + Ipratropium nebulizer</li>
+              <li>Prednisolone 40mg PO 或 Methylprednisolone 40mg IV</li>
+              <li>PaCO₂ &gt;45 或 pH &lt;7.35 → BiPAP</li>
+              <li class="note">COPD 給過多氧氣會抑制呼吸驅動，記住 88-92% 的目標</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 意識改變急診 -->
+    <div class="topic-block" id="ams-er">
+      <div class="topic-block-head">
+        <span class="topic-block-title">意識改變 — 急診處理流程</span>
+        <div data-bm-id="ams-er" data-bm-dept="急診" data-bm-title="急診意識改變">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-1">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">急診意識改變的黃金流程</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><strong>血糖</strong>：立刻量，&lt;50 mg/dL → 50% Glucose 20-50mL IV push</div></li>
+              <li><div class="step-num">2</div><div><strong>氣道保護</strong>：GCS ≤8 → 考慮插管（無法保護氣道）</div></li>
+              <li><div class="step-num">3</div><div><strong>Thiamine 100mg IV</strong>：懷疑酒精相關或營養不良，在給 Glucose 前（避免 Wernicke）</div></li>
+              <li><div class="step-num">4</div><div><strong>Naloxone</strong>：懷疑鴉片類藥物過量（呼吸慢、瞳孔縮小）→ 0.4mg IV</div></li>
+              <li><div class="step-num">5</div><div>頭部 CT：排除出血、梗塞（血糖正常後做）</div></li>
+              <li><div class="step-num">6</div><div>抽血：電解質、BUN/Cr、血氨、肝功能、CBC、毒物篩查</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-grid col-2" style="margin-top:14px">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
+          <div class="k-card-head"><span class="k-card-title">癲癇持續狀態 Status Epilepticus</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>定義：發作持續 &gt;5 分鐘，或兩次發作間無恢復意識</li>
+              <li><strong>第一線（0-5 分鐘）</strong>：Lorazepam 4mg IV 或 Diazepam 10mg IV</li>
+              <li><strong>第二線（5-20 分鐘）</strong>：Fosphenytoin 20mg/kg IV 或 Levetiracetam 60mg/kg IV</li>
+              <li><strong>第三線（20 分鐘後）</strong>：Propofol 或 Midazolam drip → ICU</li>
+              <li class="note">保護氣道、側躺防吸入，不要壓制抽搐</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急</span></div>
+          <div class="k-card-head"><span class="k-card-title">高血壓急症 Hypertensive Emergency</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>定義：BP &gt;180/120 + 器官損傷（腦/心/腎）</li>
+              <li>目標：第一小時降低 ≤25%，不要降太快</li>
+              <li><strong>高血壓腦病變</strong>：Nicardipine IV 或 Labetalol IV</li>
+              <li><strong>主動脈剝離</strong>：Beta-blocker 優先（見胸痛）</li>
+              <li><strong>子癲前症</strong>：MgSO₄ + Labetalol 或 Hydralazine</li>
+              <li class="note">無症狀高血壓（次急症）不需靜脈給藥，口服慢慢調</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 腹痛急診 -->
+    <div class="topic-block" id="abd-er">
+      <div class="topic-block-head">
+        <span class="topic-block-title">腹痛 — 急診不能漏掉的</span>
+        <div data-bm-id="abd-er" data-bm-dept="急診" data-bm-title="急診腹痛">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">這些腹痛要立刻外科會診</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>腹膜炎</strong>：板狀腹、彈跳痛 → 急診手術評估</li>
+              <li><strong>腸穿孔</strong>：CXR 橫膈下游離氣體</li>
+              <li><strong>腸阻塞</strong>：停止排便排氣、X-ray 多個液氣平面</li>
+              <li><strong>腸缺血</strong>：痛與症狀嚴重度不成比例（Lactate 升高）</li>
+              <li><strong>AAA 破裂</strong>：突發腰腹痛 + 休克 → 立刻外科</li>
+              <li class="note">女性一定要驗 hCG！子宮外孕破裂可在幾分鐘內致死</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">急診腹痛基本工作</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>抽血：CBC、CMP、Lipase、LFT、Lactate</li>
+              <li>女性：尿液 hCG（一定要！）</li>
+              <li>尿液分析：排除 UTI、腎結石</li>
+              <li>腹部 X-ray：腸阻塞、穿孔（游離氣體）</li>
+              <li>超音波：膽道（首選）、婦科、腎臟</li>
+              <li>CT 腹部：定位更精確，懷疑 AAA / 腸缺血必做</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 休克 -->
+    <div class="topic-block" id="shock">
+      <div class="topic-block-head">
+        <span class="topic-block-title">休克 Shock</span>
+        <div data-bm-id="shock" data-bm-dept="急診" data-bm-title="休克">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-red">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span>休克的定義是組織灌流不足，不是只看血壓數字。MAP &lt;65 或末梢冰冷 + 尿量減少 = 休克。</span>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>類型</th><th>機轉</th><th>臨床特徵</th><th>處置</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>低血容性</strong></td>
+            <td>出血、脫水</td>
+            <td>心跳快、皮膚冰冷、頸靜脈塌陷</td>
+            <td>止血 + 大量輸液（NS/LR）或輸血</td>
+          </tr>
+          <tr>
+            <td><strong>分布性</strong><br/><small>（Septic 最常）</small></td>
+            <td>血管擴張、相對低血容</td>
+            <td>早期：皮膚溫熱紅潤；晚期：冰冷</td>
+            <td>輸液 30mL/kg + Norepinephrine</td>
+          </tr>
+          <tr>
+            <td><strong>心因性</strong></td>
+            <td>心輸出量下降</td>
+            <td>頸靜脈怒張、肺水腫、無心跳過快</td>
+            <td>強心劑（Dobutamine）；避免大量輸液</td>
+          </tr>
+          <tr>
+            <td><strong>阻塞性</strong></td>
+            <td>心臟被壓迫</td>
+            <td>張力性氣胸、心包填塞、大型 PE</td>
+            <td>立刻解除阻塞（針刺減壓、心包穿刺）</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="card-grid col-2" style="margin-top:16px">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">休克的快速評估工具</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>POCUS</strong>（床旁超音波）：看心臟收縮力、下腔靜脈、有無積液</li>
+              <li><strong>Lactate</strong>：&gt;2 mmol/L = 組織灌流不足；&gt;4 = 高死亡率</li>
+              <li><strong>ScvO₂</strong>：&lt;70% = 氧氣供需不平衡</li>
+              <li><strong>被動抬腿測試（PLR）</strong>：抬腿後 BP 上升 &gt;10% = 對輸液有反應</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">心包填塞 Cardiac Tamponade</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Beck's Triad</strong>：低血壓 + 頸靜脈怒張 + 心音遙遠</li>
+              <li>ECG：電交替（Electrical alternans）</li>
+              <li>Echo：心包積液 + RV 塌陷（diastolic collapse）</li>
+              <li>處置：心包穿刺（Pericardiocentesis）→ 劍突下進針</li>
+              <li class="note">輸液可暫時維持血壓，但根本治療是引流</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中風 -->
+    <div class="topic-block" id="stroke-er">
+      <div class="topic-block-head">
+        <span class="topic-block-title">中風 Stroke — 時間就是腦</span>
+        <div data-bm-id="stroke-er" data-bm-dept="急診" data-bm-title="急診中風">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-1">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">到院後的急性中風流程</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div>確認症狀發作時間（Last known well time）— 這是最重要的一個問題</div></li>
+              <li><div class="step-num">2</div><div>神經學檢查 + NIHSS 評分</div></li>
+              <li><div class="step-num">3</div><div>頭部 CT（平掃）：排除出血性中風（有出血不能溶栓）</div></li>
+              <li><div class="step-num">4</div><div>抽血：血糖、CBC、Coag（PT/INR）、電解質</div></li>
+              <li><div class="step-num">5</div><div>符合條件 → tPA 溶栓（症狀發作 4.5h 內）</div></li>
+              <li><div class="step-num">6</div><div>大血管阻塞（LVO）→ 機械取栓（24h 內）</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-grid col-2" style="margin-top:14px">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">tPA 溶栓的禁忌症</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>症狀發作 &gt;4.5h（或 Last known well &gt;4.5h）</li>
+              <li>CT 顯示出血</li>
+              <li>血壓 &gt;185/110（溶栓前需先控制）</li>
+              <li>近期手術（14 天內）或頭部外傷（3 個月內）</li>
+              <li>目前使用抗凝藥物（INR &gt;1.7 或 DOAC）</li>
+              <li>血糖 &lt;50 或 &gt;400 mg/dL</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">中風的血壓管理</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>溶栓前</strong>：需降至 &lt;185/110 才能給 tPA</li>
+              <li><strong>溶栓後</strong>：維持 &lt;180/105，持續 24h 監測</li>
+              <li><strong>不溶栓的缺血性中風</strong>：允許 BP 至 220/120（Permissive hypertension）</li>
+              <li><strong>出血性中風</strong>：積極降壓至 &lt;140（收縮壓）</li>
+              <li class="note">缺血性中風不要過度降壓，腦灌流壓依賴血壓維持</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 過敏性休克 -->
+    <div class="topic-block" id="anaphylax">
+      <div class="topic-block-head">
+        <span class="topic-block-title">過敏性休克 Anaphylaxis</span>
+        <div data-bm-id="anaphylax" data-bm-dept="急診" data-bm-title="過敏性休克">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">過敏性休克的處置順序</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li><div class="step-num">1</div><div><strong>Epinephrine 0.3-0.5mg IM（大腿外側）— 第一步，不要猶豫</strong></div></li>
+              <li><div class="step-num">2</div><div>平躺抬腿（維持靜脈回流）</div></li>
+              <li><div class="step-num">3</div><div>給氧、建立靜脈通路、大量輸液</div></li>
+              <li><div class="step-num">4</div><div>Diphenhydramine 50mg IV（抗組織胺，輔助）</div></li>
+              <li><div class="step-num">5</div><div>Methylprednisolone 125mg IV（預防雙相反應）</div></li>
+              <li><div class="step-num">6</div><div>無改善 → Epinephrine drip 或重複 IM</div></li>
+            </ul>
+            <div class="alert alert-red" style="margin-top:12px;margin-bottom:0">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>Antihistamine 和類固醇是輔助，不能取代 Epinephrine。Epinephrine 永遠是第一步。</span>
+            </div>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">過敏性休克的診斷</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>接觸過敏原後幾分鐘至 2h 內快速發作</li>
+              <li><strong>皮膚</strong>：蕁麻疹、潮紅、血管性水腫（80%）</li>
+              <li><strong>呼吸</strong>：支氣管痙攣、喘鳴、喉頭水腫</li>
+              <li><strong>循環</strong>：低血壓、心跳過速</li>
+              <li><strong>消化</strong>：噁心、嘔吐、腹痛</li>
+              <li>雙相反應：症狀緩解後 1-72h 再次發作（觀察至少 4-6h）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 收住院 vs 回家 -->
+    <div class="topic-block" id="dispo">
+      <div class="topic-block-head">
+        <span class="topic-block-title">收住院 vs 讓病人回家</span>
+        <div data-bm-id="dispo" data-bm-dept="急診" data-bm-title="急診 Disposition">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">需要收住院的情況</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>生命徵象不穩定</li>
+              <li>需要靜脈藥物或持續監測</li>
+              <li>診斷不確定，需進一步檢查</li>
+              <li>社會因素：獨居、照顧能力不足</li>
+              <li>上次回家後很快惡化再來</li>
+              <li>病人或家屬有明確的安全顧慮</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">讓病人回家前的確認清單</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>生命徵象穩定、疼痛控制</li>
+              <li>診斷清楚或已排除危險情況</li>
+              <li>病人能口服藥物和飲食</li>
+              <li>有安全的居家環境和照顧者</li>
+              <li>病人理解：什麼症狀要立刻回來</li>
+              <li>有確定的後續回診安排</li>
+              <li class="note">如果你對讓病人回家有任何猶豫，相信直覺，問主治</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'triage',    dept:'急診', title:'檢傷分類 TTAS',    url:'#triage',    text:'第一級 第二級 第三級 第四級 第五級 復甦 危急 緊急 次緊急 STEMI 敗血症 GCS' },
+    { id:'abcde',     dept:'急診', title:'ABCDE 評估',       url:'#abcde',     text:'Airway Breathing Circulation Disability Exposure 氣道 呼吸 循環 意識 血糖 瞳孔 GCS Stridor SpO2' },
+    { id:'cp-er',     dept:'急診', title:'急診胸痛',         url:'#cp-er',     text:'STEMI ECG Troponin Cath lab 主動脈剝離 Labetalol Esmolol Wells PE CTPA D-dimer Aspirin Ticagrelor' },
+    { id:'dysp-er',   dept:'急診', title:'急診呼吸困難',     url:'#dysp-er',   text:'張力性氣胸 針刺減壓 胸管 肺水腫 CPAP BiPAP Furosemide 氣喘 Salbutamol MgSO4 AECOPD 88 92' },
+    { id:'ams-er',    dept:'急診', title:'急診意識改變',     url:'#ams-er',    text:'血糖 Thiamine Naloxone GCS 插管 癲癇 Status epilepticus Lorazepam 高血壓急症 Nicardipine' },
+    { id:'abd-er',    dept:'急診', title:'急診腹痛',         url:'#abd-er',    text:'腹膜炎 腸穿孔 腸阻塞 腸缺血 AAA hCG Lactate 超音波 CT Lipase 外科會診' },
+    { id:'shock',     dept:'急診', title:'休克',             url:'#shock',     text:'低血容 分布性 心因性 阻塞性 Septic Norepinephrine Dobutamine 心包填塞 Beck Tamponade POCUS Lactate' },
+    { id:'stroke-er', dept:'急診', title:'急診中風',         url:'#stroke-er', text:'tPA 溶栓 NIHSS CT 取栓 LVO 4.5h 血壓 185 110 禁忌症 INR DOAC Permissive hypertension' },
+    { id:'anaphylax', dept:'急診', title:'過敏性休克',       url:'#anaphylax', text:'Epinephrine IM 大腿 Diphenhydramine Methylprednisolone 雙相反應 喉頭水腫 蕁麻疹 支氣管痙攣' },
+    { id:'dispo',     dept:'急診', title:'收住院 vs 回家',   url:'#dispo',     text:'住院 出院 生命徵象 診斷 靜脈藥物 社會因素 衛教 返診 後續追蹤' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
