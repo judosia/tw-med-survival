@@ -238,11 +238,11 @@
           <div class="k-card-head"><span class="k-card-title">到診 10 分鐘內要完成的事</span></div>
           <div class="k-card-body">
             <ul class="step-list">
-              <li><div class="step-num">1</div><div>12-lead ECG（10 分鐘內）→ 看有沒有 STEMI、LBBB</div></li>
-              <li><div class="step-num">2</div><div>靜脈通路 × 2、抽血：Troponin、CBC、BMP、Coag</div></li>
-              <li><div class="step-num">3</div><div>CXR：排除氣胸、主動脈增寬、肺水腫</div></li>
-              <li><div class="step-num">4</div><div>生命徵象：兩側血壓（排除主動脈剝離）</div></li>
-              <li><div class="step-num">5</div><div>根據 ECG 決定下一步：STEMI → 啟動 Cath lab；Non-STEMI → Serial troponin</div></li>
+              <li class="step-item"><div class="step-num">1</div><div>12-lead ECG（10 分鐘內）→ 看有沒有 STEMI、LBBB</div></li>
+              <li class="step-item"><div class="step-num">2</div><div>靜脈通路 × 2、抽血：Troponin、CBC、BMP、Coag</div></li>
+              <li class="step-item"><div class="step-num">3</div><div>CXR：排除氣胸、主動脈增寬、肺水腫</div></li>
+              <li class="step-item"><div class="step-num">4</div><div>生命徵象：兩側血壓（排除主動脈剝離）</div></li>
+              <li class="step-item"><div class="step-num">5</div><div>根據 ECG 決定下一步：STEMI → 啟動 Cath lab；Non-STEMI → Serial troponin</div></li>
             </ul>
           </div>
         </div>
@@ -378,12 +378,12 @@
           <div class="k-card-head"><span class="k-card-title">急診意識改變的黃金流程</span></div>
           <div class="k-card-body">
             <ul class="step-list">
-              <li><div class="step-num">1</div><div><strong>血糖</strong>：立刻量，&lt;50 mg/dL → 50% Glucose 20-50mL IV push</div></li>
-              <li><div class="step-num">2</div><div><strong>氣道保護</strong>：<button class="score-link" onclick="openModal('modal-gcs')">GCS <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button> ≤8 → 考慮插管（無法保護氣道）</div></li>
-              <li><div class="step-num">3</div><div><strong>Thiamine 100mg IV</strong>：懷疑酒精相關或營養不良，在給 Glucose 前（避免 Wernicke）</div></li>
-              <li><div class="step-num">4</div><div><strong>Naloxone</strong>：懷疑鴉片類藥物過量（呼吸慢、瞳孔縮小）→ 0.4mg IV</div></li>
-              <li><div class="step-num">5</div><div>頭部 CT：排除出血、梗塞（血糖正常後做）</div></li>
-              <li><div class="step-num">6</div><div>抽血：電解質、BUN/Cr、血氨、肝功能、CBC、毒物篩查</div></li>
+              <li class="step-item"><div class="step-num">1</div><div><strong>血糖</strong>：立刻量，&lt;50 mg/dL → 50% Glucose 20-50mL IV push</div></li>
+              <li class="step-item"><div class="step-num">2</div><div><strong>氣道保護</strong>：<button class="score-link" onclick="openModal('modal-gcs')">GCS <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button> ≤8 → 考慮插管（無法保護氣道）</div></li>
+              <li class="step-item"><div class="step-num">3</div><div><strong>Thiamine 100mg IV</strong>：懷疑酒精相關或營養不良，在給 Glucose 前（避免 Wernicke）</div></li>
+              <li class="step-item"><div class="step-num">4</div><div><strong>Naloxone</strong>：懷疑鴉片類藥物過量（呼吸慢、瞳孔縮小）→ 0.4mg IV</div></li>
+              <li class="step-item"><div class="step-num">5</div><div>頭部 CT：排除出血、梗塞（血糖正常後做）</div></li>
+              <li class="step-item"><div class="step-num">6</div><div>抽血：電解質、BUN/Cr、血氨、肝功能、CBC、毒物篩查</div></li>
             </ul>
           </div>
         </div>
@@ -395,9 +395,9 @@
           <div class="k-card-body">
             <ul class="k-list">
               <li>定義：發作持續 &gt;5 分鐘，或兩次發作間無恢復意識</li>
-              <li><strong>第一線（0-5 分鐘）</strong>：Lorazepam 4mg IV 或 Diazepam 10mg IV</li>
-              <li><strong>第二線（5-20 分鐘）</strong>：Fosphenytoin 20mg/kg IV 或 Levetiracetam 60mg/kg IV</li>
-              <li><strong>第三線（20 分鐘後）</strong>：Propofol 或 Midazolam drip → ICU</li>
+              <li><strong>第一線(0-5 分鐘) </strong>：Lorazepam 4mg IV 或 Diazepam 10mg IV</li>
+              <li><strong>第二線(5-20 分鐘) </strong>：Fosphenytoin 20mg/kg IV 或 Levetiracetam 60mg/kg IV</li>
+              <li><strong>第三線(20 分鐘後) </strong>：Propofol 或 Midazolam drip → ICU</li>
               <li class="note">保護氣道、側躺防吸入，不要壓制抽搐</li>
             </ul>
           </div>
@@ -543,12 +543,12 @@
           <div class="k-card-head"><span class="k-card-title">到院後的急性中風流程</span></div>
           <div class="k-card-body">
             <ul class="step-list">
-              <li><div class="step-num">1</div><div>確認症狀發作時間（Last known well time）— 這是最重要的一個問題</div></li>
-              <li><div class="step-num">2</div><div>神經學檢查 + <button class="score-link" onclick="openModal('modal-nihss')">NIHSS 評分 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button></div></li>
-              <li><div class="step-num">3</div><div>頭部 CT（平掃）：排除出血性中風（有出血不能溶栓）</div></li>
-              <li><div class="step-num">4</div><div>抽血：血糖、CBC、Coag（PT/INR）、電解質</div></li>
-              <li><div class="step-num">5</div><div>符合條件 → tPA 溶栓（症狀發作 4.5h 內）</div></li>
-              <li><div class="step-num">6</div><div>大血管阻塞（LVO）→ 機械取栓（24h 內）</div></li>
+              <li class="step-item"><div class="step-num">1</div><div>確認症狀發作時間（Last known well time）— 這是最重要的一個問題</div></li>
+              <li class="step-item"><div class="step-num">2</div><div>神經學檢查 + <button class="score-link" onclick="openModal('modal-nihss')">NIHSS 評分 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button></div></li>
+              <li class="step-item"><div class="step-num">3</div><div>頭部 CT（平掃）：排除出血性中風（有出血不能溶栓）</div></li>
+              <li class="step-item"><div class="step-num">4</div><div>抽血：血糖、CBC、Coag（PT/INR）、電解質</div></li>
+              <li class="step-item"><div class="step-num">5</div><div>符合條件 → tPA 溶栓（症狀發作 4.5h 內）</div></li>
+              <li class="step-item"><div class="step-num">6</div><div>大血管阻塞（LVO）→ 機械取栓（24h 內）</div></li>
             </ul>
           </div>
         </div>
@@ -598,12 +598,12 @@
           <div class="k-card-head"><span class="k-card-title">過敏性休克的處置順序</span></div>
           <div class="k-card-body">
             <ul class="step-list">
-              <li><div class="step-num">1</div><div><strong>Epinephrine 0.3-0.5mg IM（大腿外側）— 第一步，不要猶豫</strong></div></li>
-              <li><div class="step-num">2</div><div>平躺抬腿（維持靜脈回流）</div></li>
-              <li><div class="step-num">3</div><div>給氧、建立靜脈通路、大量輸液</div></li>
-              <li><div class="step-num">4</div><div>Diphenhydramine 50mg IV（抗組織胺，輔助）</div></li>
-              <li><div class="step-num">5</div><div>Methylprednisolone 125mg IV（預防雙相反應）</div></li>
-              <li><div class="step-num">6</div><div>無改善 → Epinephrine drip 或重複 IM</div></li>
+              <li class="step-item"><div class="step-num">1</div><div><strong>Epinephrine 0.3-0.5mg IM（大腿外側）— 第一步，不要猶豫</strong></div></li>
+              <li class="step-item"><div class="step-num">2</div><div>平躺抬腿（維持靜脈回流）</div></li>
+              <li class="step-item"><div class="step-num">3</div><div>給氧、建立靜脈通路、大量輸液</div></li>
+              <li class="step-item"><div class="step-num">4</div><div>Diphenhydramine 50mg IV（抗組織胺，輔助）</div></li>
+              <li class="step-item"><div class="step-num">5</div><div>Methylprednisolone 125mg IV（預防雙相反應）</div></li>
+              <li class="step-item"><div class="step-num">6</div><div>無改善 → Epinephrine drip 或重複 IM</div></li>
             </ul>
             <div class="alert alert-red" style="margin-top:12px;margin-bottom:0">
               <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
