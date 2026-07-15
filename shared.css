@@ -23,6 +23,8 @@
   --label-value-bg:  #eaf4ec; --label-value-text:  #1a5c2a; --label-value-border:  #c0ddc5;
   --label-urgent-bg: #fff0f0; --label-urgent-text: #c62834; --label-urgent-border: #f5c0c3;
   --label-patho-bg:  #f2eef8; --label-patho-text:  #5a3d7a; --label-patho-border:  #d5c8ec;
+  --label-ddx-bg:  #F4E3D7; --label-ddx-text:  #9D582A; --label-ddx-border:  #d5c8ec;
+  --label-tx-bg:  #E1F4F3; --label-tx-text:  #22D8CC; --label-tx-border:  #d5c8ec;
   --label-steps-bg:  #eef0f4; --label-steps-text:  #3a4a5c; --label-steps-border:  #cdd2da;
 }
 
@@ -236,7 +238,10 @@ nav {
 .tag-value  { background: var(--label-value-bg);  color: var(--label-value-text);  border-color: var(--label-value-border); }
 .tag-urgent { background: var(--label-urgent-bg); color: var(--label-urgent-text); border-color: var(--label-urgent-border); }
 .tag-patho  { background: var(--label-patho-bg);  color: var(--label-patho-text);  border-color: var(--label-patho-border); }
+.tag-ddx    { background: var(--label-ddx-bg);  color: var(--label-ddx-text);  border-color: var(--label-ddx-border); }
+.tag-tx     { background: var(--label-tx-bg);  color: var(--label-tx-text);  border-color: var(--label-tx-border); }
 .tag-steps  { background: var(--label-steps-bg);  color: var(--label-steps-text);  border-color: var(--label-steps-border); }
+
 
 /* ── CARD GRID ── */
 .card-grid { display: grid; gap: 14px; }
