@@ -238,6 +238,8 @@ nav {
 .tag-value  { background: var(--label-value-bg);  color: var(--label-value-text);  border-color: var(--label-value-border); }
 .tag-urgent { background: var(--label-urgent-bg); color: var(--label-urgent-text); border-color: var(--label-urgent-border); }
 .tag-patho  { background: var(--label-patho-bg);  color: var(--label-patho-text);  border-color: var(--label-patho-border); }
+.tag-ddx  { background: var(--label-ddx-bg);  color: var(--label-ddx-text);  border-color: var(--label-ddx-border); }
+.tag-tx  { background: var(--label-tx-bg);  color: var(--label-tx-text);  border-color: var(--label-tx-border); }
 .tag-steps  { background: var(--label-steps-bg);  color: var(--label-steps-text);  border-color: var(--label-steps-border); }
 
 /* ── CARD GRID ── */
