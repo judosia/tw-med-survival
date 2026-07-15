@@ -311,20 +311,6 @@ nav {
   flex-shrink: 0; margin-top: 1px;
 }
 
-li {
-  display: flex;         /* 1. 宣告這個容器要使用 Flexbox 排版 */
-  align-items: center;   /* 2. 讓裡面的子元素（數字、文字）垂直置中對齊 */
-  gap: 10px;             /* 3. 設定數字和文字之間的間距 */
-}
-
-.step-num {
-  background-color: #0D1F3C;
-  color: white;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
 /* ── ALERT ── */
 .alert {
   border-radius: 8px; padding: 12px 16px; margin-bottom: 14px;
