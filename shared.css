@@ -18,7 +18,7 @@
   --nav-h:   56px;
   --sidebar-w: 240px;
 
-  /* 標籤顏色系統 */
+   /* 標籤顏色系統 */
   --label-drug-bg:   #e8f2f8; --label-drug-text:   #1a3d5c; --label-drug-border:   #c5daea;
   --label-value-bg:  #eaf4ec; --label-value-text:  #1a5c2a; --label-value-border:  #c0ddc5;
   --label-urgent-bg: #fff0f0; --label-urgent-text: #c62834; --label-urgent-border: #f5c0c3;
@@ -238,10 +238,7 @@ nav {
 .tag-value  { background: var(--label-value-bg);  color: var(--label-value-text);  border-color: var(--label-value-border); }
 .tag-urgent { background: var(--label-urgent-bg); color: var(--label-urgent-text); border-color: var(--label-urgent-border); }
 .tag-patho  { background: var(--label-patho-bg);  color: var(--label-patho-text);  border-color: var(--label-patho-border); }
-.tag-ddx    { background: var(--label-ddx-bg);  color: var(--label-ddx-text);  border-color: var(--label-ddx-border); }
-.tag-tx     { background: var(--label-tx-bg);  color: var(--label-tx-text);  border-color: var(--label-tx-border); }
 .tag-steps  { background: var(--label-steps-bg);  color: var(--label-steps-text);  border-color: var(--label-steps-border); }
-
 
 /* ── CARD GRID ── */
 .card-grid { display: grid; gap: 14px; }
@@ -280,6 +277,8 @@ nav {
   color: #5a6a7a;
   line-height: 1.6;
 }
+.k-list li strong { white-space: nowrap; }
+.step-item > div strong { white-space: nowrap; }
 .k-card { cursor: default; }
 .k-card:hover { box-shadow: 0 4px 16px rgba(13,31,60,0.09); border-color: #c5cdd6; transform: none; }
 .k-card-toggle { display: none !important; }
