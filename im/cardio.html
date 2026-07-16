@@ -409,38 +409,6 @@
 
   </div>
 </div>
-
-<!-- TIMI Score Modal（ACS 版）-->
-<div class="score-modal-overlay" id="modal-timi-acs">
-  <div class="score-modal">
-    <div class="score-modal-head">
-      <h2>TIMI Risk Score — UA/NSTEMI</h2>
-      <button class="score-modal-close" onclick="closeModal('modal-timi-acs')">✕</button>
-    </div>
-    <div class="score-modal-body">
-      <table class="data-table">
-        <thead>
-          <tr><th>項目</th><th>分數</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>年齡 ≥65 歲</td><td><strong>+1</strong></td></tr>
-          <tr><td>≥3 個 CAD 危險因子（家族史、HTN、高血脂、DM、抽菸）</td><td><strong>+1</strong></td></tr>
-          <tr><td>已知 CAD（狹窄 ≥50%）</td><td><strong>+1</strong></td></tr>
-          <tr><td>ECG 有 ST 偏移</td><td><strong>+1</strong></td></tr>
-          <tr><td>24h 內 ≥2 次心絞痛</td><td><strong>+1</strong></td></tr>
-          <tr><td>7 天內使用過 Aspirin</td><td><strong>+1</strong></td></tr>
-          <tr><td>心肌酶升高（Troponin 或 CK-MB）</td><td><strong>+1</strong></td></tr>
-        </tbody>
-      </table>
-      <div class="score-result">
-        <strong>0-1 分：</strong>14 天事件率 5%<br/>
-        <strong>2 分：</strong>8%；<strong>3 分：</strong>13%；<strong>4 分：</strong>20%<br/>
-        <strong>5 分：</strong>26%；<strong>6-7 分：</strong>41%<br/>
-        <span style="color:var(--muted)">高風險（≥3 分）從 LMWH、GPI 和早期侵入性策略獲益更多</span>
-      </div>
-    </div>
-  </div>
-</div>
     
     <!-- ══════════════════════════════════
          AMI
@@ -1009,9 +977,158 @@
       </div>
     </div>
 
+    <!-- PA 導管 -->
+  <div class="topic-block" id="pa-catheter">
+    <div class="topic-block-head">
+      <span class="topic-block-title">肺動脈導管 PA Catheter & Tailored Therapy</span>
+      <div data-bm-id="pa-catheter" data-bm-dept="心臟科" data-bm-title="肺動脈導管">
+        <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+      </div>
+    </div>
+  
+    <div class="topic-intro">
+      PA 導管（Swan-Ganz catheter）透過 PCWP 估算左心充填壓，並藉由心輸出量和 SVR 指導血管擴張劑、升壓藥和強心劑的使用。核心邏輯：<strong>優化前負荷、後負荷、心肌收縮力</strong>，使 MAP &gt;60、CI &gt;2.2、PCWP &lt;18。
+    </div>
+  
+    <div class="card-grid col-2">
+  
+      <div class="k-card" data-bm-id="pac-indication" data-bm-dept="心臟科" data-bm-title="PA 導管適應症">
+        <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+        <div class="k-card-head"><span class="k-card-title">適應症</span></div>
+        <div class="k-card-body">
+          <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷用途</p>
+          <ul class="k-list">
+            <li>休克鑑別（心因性 vs 分布性）——尤其補液試驗失敗或風險高時</li>
+            <li>肺水腫鑑別（心因性 vs 非心因性）</li>
+            <li>評估心輸出量、心內分流、肺高壓、MR、心包填塞、心腎症候群</li>
+            <li>無法解釋的呼吸困難（運動或血管擴張劑誘發試驗）</li>
+          </ul>
+          <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+          <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療用途</p>
+          <ul class="k-list">
+            <li>心衰竭或休克的個別化治療（Tailored therapy）</li>
+            <li>肺高壓的血管擴張劑治療指引</li>
+            <li>高風險手術的術前評估、機械循環輔助裝置或心臟移植評估</li>
+          </ul>
+          <div class="alert alert-blue" style="margin-top:12px;margin-bottom:0">
+            <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+            <span>約一半的 CO 和 PCWP 臨床估算是錯的；CVP 和 PCWP 相關性差。用 PAC 回答血流動力學問題後就拔除，不要留著。</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="k-card" data-bm-id="pac-contraindication" data-bm-dept="心臟科" data-bm-title="PA 導管禁忌症與併發症">
+        <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+        <div class="k-card-head"><span class="k-card-title">禁忌症與併發症</span></div>
+        <div class="k-card-body">
+          <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">禁忌症</p>
+          <ul class="k-list">
+            <li><strong>絕對禁忌：</strong>右側心內膜炎、右心血栓 / 腫塊或機械瓣膜；近端 PE</li>
+            <li><strong>相對禁忌：</strong>凝血障礙（先矯正）、近期 PPM 或 ICD 植入、LBBB（約 5% 風險引發 RBBB → 完全性心臟傳導阻斷，需透視下置放）</li>
+          </ul>
+          <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+          <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">併發症</p>
+          <ul class="k-list">
+            <li><strong>靜脈通路：</strong>氣胸 / 血胸（~1%）、動脈穿刺、空氣栓塞</li>
+            <li><strong>推進中：</strong>心房 / 心室心律不整（20% NSVT；3% VT）、RBBB（5%）、導管打結、心臟穿孔 / 填塞、PA 破裂</li>
+            <li><strong>維護中：</strong>感染（導管 &gt;3 天風險升高）、血栓、肺梗塞（≤1%）、PA 假性動脈瘤（尤其肺高壓時）</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="k-card full" data-bm-id="pac-hemodynamics" data-bm-dept="心臟科" data-bm-title="休克血流動力學分型">
+        <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+        <div class="k-card-head"><span class="k-card-title">各型休克的血流動力學特徵</span></div>
+        <div class="k-card-body">
+          <table class="data-table" style="margin-bottom:12px">
+            <thead><tr><th>休克類型</th><th>RA（CVP）</th><th>PCWP</th><th>CO</th><th>SVR</th></tr></thead>
+            <tbody>
+              <tr><td><strong>低血容性</strong></td><td>↓</td><td>↓</td><td>↓</td><td>↑</td></tr>
+              <tr><td><strong>心因性</strong></td><td>正常或 ↑</td><td>↑</td><td>↓</td><td>↑</td></tr>
+              <tr><td><strong>右室梗塞 / 大型 PE</strong></td><td>↑</td><td>正常或 ↓</td><td>↓</td><td>↑</td></tr>
+              <tr><td><strong>心包填塞</strong></td><td>↑</td><td>↑</td><td>↓</td><td>↑</td></tr>
+              <tr><td><strong>分布性（敗血症）</strong></td><td>不定</td><td>不定</td><td>通常 ↑</td><td>↓</td></tr>
+            </tbody>
+          </table>
+          <ul class="k-list">
+            <li><strong>PCWP 波形異常：</strong>大 a 波 → 二尖瓣狹窄；大 v 波 → 二尖瓣逆流；y 下降鈍化 → 心包填塞；x 和 y 下降均陡峭 → 縮窄性心包炎</li>
+            <li><strong>臨床替代指標：</strong>RA ≈ JVP；CXR 肺水腫 → PCWP 升高；尿量 ∝ CO；毛細血管充血 &gt;2-3 秒 → SVR 升高</li>
+          </ul>
+        </div>
+      </div>
+  
+      <div class="k-card" data-bm-id="pac-tailored" data-bm-dept="心臟科" data-bm-title="心因性休克個別化治療目標">
+        <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+        <div class="k-card-head"><span class="k-card-title">心因性休克個別化治療目標</span></div>
+        <div class="k-card-body">
+          <ul class="k-list">
+            <li><strong>整體目標：</strong>MAP &gt;60、CI &gt;2.2（MVO₂ &gt;60%）、SVR ~1000、PCWP &lt;18</li>
+            <li><strong>優化前負荷（PCWP）：</strong></li>
+            <li>急性 MI 目標 PCWP ~14-18；急性失代償性 HF 目標 ≤14</li>
+            <li>升高 → 給晶體液（或輸血如有明顯貧血）；降低 → 利尿</li>
+            <li><strong>優化後負荷（SVR）：</strong></li>
+            <li>MAP &gt;60 且 SVR 高 → 血管擴張劑（Nitroprusside、NTG、ACEI）</li>
+            <li>MAP &lt;60 且 SVR 低 → 升壓藥（Norepinephrine 首選）</li>
+            <li><strong>優化心肌收縮力（CI）：</strong></li>
+            <li>Dobutamine（中等強心 + 輕度血管擴張）；Milrinone（強效強心 + 肺血管擴張）；Dopamine（高劑量時升壓）</li>
+            <li>機械輔助：Impella（STEMI 時 ↓ 死亡率）；IABP；VA-ECMO</li>
+          </ul>
+        </div>
+      </div>
+  
+      <div class="k-card" data-bm-id="pac-co" data-bm-dept="心臟科" data-bm-title="心輸出量測量方法">
+        <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+        <div class="k-card-head"><span class="k-card-title">心輸出量測量方法</span></div>
+        <div class="k-card-body">
+          <ul class="k-list">
+            <li><strong>熱稀釋法（Thermodilution）：</strong>從 RA 注射生理食鹽水，PA 熱感測器測量溫度變化；低 CO、嚴重 TR 或心內分流時不準確</li>
+            <li><strong>Fick 法：</strong>CO = O₂ 消耗量（mL/min）÷ 動靜脈 O₂ 含量差</li>
+            <li>C(a-v)O₂ = 1.36 × Hb × (SaO₂ − SmvO₂) × 10</li>
+            <li>SmvO₂ 是關鍵變數：&gt;80% → 懷疑導管位置（已 wedge）、L→R 分流、氧氣利用障礙（嚴重敗血症、CO 中毒）或 CO 極高</li>
+            <li class="note">測量時血壓讀取於呼氣末（自主呼吸時為高點；正壓通氣時為低點）</li>
+          </ul>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+    
   </main>
 </div>
 
+<!-- TIMI Score Modal（ACS 版）-->
+<div class="score-modal-overlay" id="modal-timi-acs">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>TIMI Risk Score — UA/NSTEMI</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-timi-acs')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead>
+          <tr><th>項目</th><th>分數</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>年齡 ≥65 歲</td><td><strong>+1</strong></td></tr>
+          <tr><td>≥3 個 CAD 危險因子（家族史、HTN、高血脂、DM、抽菸）</td><td><strong>+1</strong></td></tr>
+          <tr><td>已知 CAD（狹窄 ≥50%）</td><td><strong>+1</strong></td></tr>
+          <tr><td>ECG 有 ST 偏移</td><td><strong>+1</strong></td></tr>
+          <tr><td>24h 內 ≥2 次心絞痛</td><td><strong>+1</strong></td></tr>
+          <tr><td>7 天內使用過 Aspirin</td><td><strong>+1</strong></td></tr>
+          <tr><td>心肌酶升高（Troponin 或 CK-MB）</td><td><strong>+1</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>0-1 分：</strong>14 天事件率 5%<br/>
+        <strong>2 分：</strong>8%；<strong>3 分：</strong>13%；<strong>4 分：</strong>20%<br/>
+        <strong>5 分：</strong>26%；<strong>6-7 分：</strong>41%<br/>
+        <span style="color:var(--muted)">高風險（≥3 分）從 LMWH、GPI 和早期侵入性策略獲益更多</span>
+      </div>
+    </div>
+  </div>
+</div>  
+  
 <script src="../shared.js"></script>
 <script>
   const SEARCH_INDEX = [
