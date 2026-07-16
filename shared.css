@@ -228,6 +228,21 @@ nav {
 .bm-btn.active { border-color: var(--amber); color: var(--amber); background: #fff8e8; }
 .bm-btn svg { width: 14px; height: 14px; }
 
+/* ── 概念導讀 ── */
+.topic-intro {
+  background: var(--white);
+  border-left: 3px solid var(--navy);
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 0.84rem;
+  line-height: 1.75;
+  color: #3a4a5c;
+}
+.topic-intro strong {
+  color: var(--navy);
+}
+
 /* ── 標籤系統 ── */
 .tag {
   display: inline-flex; align-items: center; gap: 4px;
