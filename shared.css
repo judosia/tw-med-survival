@@ -187,6 +187,7 @@ nav {
   margin-left: var(--sidebar-w); flex: 1;
   padding: 40px 4% 100px;
   max-width: calc(100% - var(--sidebar-w));
+  overflow-x: hidden;  
 }
 
 /* ── PAGE HERO ── */
