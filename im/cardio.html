@@ -340,7 +340,7 @@
         <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">抗凝（選一）</p>
         <ul class="k-list">
           <li><strong>UFH：</strong>60 U/kg IVB（最大 4000 U）→ 12 U/kg/h，維持 aPTT 1.5-2× 正常值</li>
-          <li><strong>Enoxaparin：</strong>1 mg/kg SC bid（CrCl &lt;30 時改 qd）</li>
+          <li><strong>Enoxaparin：</strong>1 mg/kg SC bidㄑ</li>
           <li><strong>Bivalirudin：</strong>HIT 患者替代 UFH</li>
         </ul>
       </div>
@@ -348,9 +348,10 @@
 
     <div class="k-card" data-bm-id="acs-timi" data-bm-dept="心臟科" data-bm-title="TIMI Risk Score">
       <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-      <div class="k-card-head"><span class="k-card-title"><button class="score-link" onclick="openModal('modal-timi-acs')">TIMI Risk Score（UA/NSTEMI）<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button></span></div>
+      <div class="k-card-head"><span class="k-card-title">TIMI score</span></div>
       <div class="k-card-body">
         <ul class="k-list">
+          <li><button class="score-link" onclick="openModal('modal-timi-acs')">TIMI Risk Score（UA/NSTEMI）<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button></span></div></li>
           <li>0-1 分：低風險（14 天事件率 5%）→ 可考慮非侵入性策略</li>
           <li>2-4 分：中風險 → 住院、早期侵入性評估</li>
           <li>5-7 分：高風險（41%）→ 積極早期侵入性介入</li>
@@ -604,161 +605,202 @@
 
       </div>
     </div>
-    
-    <!-- ══════════════════════════════════
-         心臟衰竭
-    ══════════════════════════════════ -->
+
+    <!-- 心臟衰竭 Heart Failure -->
     <div class="topic-block" id="hf">
-      <div class="topic-block-head">
-        <span class="topic-block-title">心臟衰竭 Heart Failure</span>
-        <div data-bm-id="hf" data-bm-dept="心臟科" data-bm-title="心臟衰竭">
-          <button class="bm-btn" title="加入書籤">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          </button>
-        </div>
-      </div>
+    <div class="topic-block-head">
+    <span class="topic-block-title">心臟衰竭 Heart Failure</span>
+    <div data-bm-id="hf" data-bm-dept="心臟科" data-bm-title="心臟衰竭">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
 
-      <div class="alert alert-blue">
-        <span class="alert-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
-        <span>HFrEF（EF &lt;40%）和 HFpEF（EF ≥50%）治療策略不同，先確認 echo 結果再選藥。</span>
-      </div>
+  <div class="topic-intro">
+    心衰竭的評估核心是「<strong>濕或乾（充血程度）</strong>」和「<strong>冷或暖（灌流程度）</strong>」。急性期先去水、改善灌流；慢性期用 GDMT 四大藥物逆轉病程。HFrEF 和 HFpEF 治療策略不同，先確認 EF。
+  </div>
 
-      <!-- 概念導讀 -->
-      <div class="topic-intro">
-        心臟衰竭的處置分兩個層次：<strong>急性期先去水、改善症狀</strong>；
-        穩定後用 <strong>GDMT 四大藥物</strong>逆轉病程。
-        EF 決定你走哪條路——先看 echo，再選藥。
-      </div>
-      
-      <div class="card-grid col-2">
+  <div class="card-grid col-2">
 
-        <!-- 分類 -->
-        <div class="k-card" data-bm-id="hf-type" data-bm-dept="心臟科" data-bm-title="HF 分類">
-          <div class="k-card-tags">
-            <span class="tag tag-patho">機轉說明</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">HF 的兩大類型</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>HFrEF（收縮性）</strong>：EF &lt;40%，心肌收縮力下降，心輸出量不足</li>
-              <li><strong>HFpEF（舒張性）</strong>：EF ≥50%，心肌僵硬充填障礙，常見於老人、高血壓、糖尿病</li>
-              <li><strong>鬱血性（CHF）</strong>：左心衰 → 肺水腫；右心衰 → 周邊水腫、頸靜脈怒張</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- NYHA -->
-        <div class="k-card" data-bm-id="hf-nyha" data-bm-dept="心臟科" data-bm-title="NYHA 功能分級">
-          <div class="k-card-tags">
-            <span class="tag tag-value">數值判讀</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">NYHA 功能分級</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list numbered">
-              <li>無症狀，一般活動不受限</li>
-              <li>輕度活動即喘（爬樓梯、快走）</li>
-              <li>輕微活動就喘（日常生活受限）</li>
-              <li>休息時也喘，無法從事任何活動</li>
-              <li class="note">NYHA III-IV 死亡率高，積極治療，評估是否需心臟移植</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- 急性肺水腫 -->
-        <div class="k-card" data-bm-id="hf-acute" data-bm-dept="心臟科" data-bm-title="急性肺水腫處置">
-          <div class="k-card-tags">
-            <span class="tag tag-urgent">緊急處置</span>
-            <span class="tag tag-steps">步驟</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">急性肺水腫的處理順序</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="step-list">
-              <li class="step-item"><div class="step-num">1</div><div>坐起來、給氧（目標 SpO₂ &gt;94%）</div></li>
-              <li class="step-item"><div class="step-num">2</div><div>Furosemide 40-80mg IV</div></li>
-              <li class="step-item"><div class="step-num">3</div><div>Nitroglycerin（NTG）舌下或靜脈滴注（收縮壓 &gt;90 才給）</div></li>
-              <li class="step-item"><div class="step-num">4</div><div>嚴重者考慮 BiPAP，插管為最後手段</div></li>
-            </ul>
-            <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">
-              <span class="alert-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-              <span>「坐起 + 利尿 + 擴血管」是核心三步驟，順序不要亂</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- GDMT -->
-        <div class="k-card" data-bm-id="hf-gdmt" data-bm-dept="心臟科" data-bm-title="HFrEF 四大支柱藥物">
-          <div class="k-card-tags">
-            <span class="tag tag-drug">用藥指引</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">HFrEF 四大支柱藥物（GDMT）</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>ACEI/ARB 或 ARNI</strong>（Sacubitril/Valsartan）：降後負荷、逆轉心肌重塑</li>
-              <li><strong>Beta-blocker</strong>（Carvedilol、Bisoprolol、Metoprolol）：降心率、改善 EF</li>
-              <li><strong>MRA</strong>（Spironolactone）：抗醛固酮、降死亡率</li>
-              <li><strong>SGLT2i</strong>（Empagliflozin、Dapagliflozin）：降住院率和死亡率</li>
-              <li class="note">四個都用才是完整治療，缺一個都要有理由</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Diuretics -->
-        <div class="k-card" data-bm-id="hf-diuretics" data-bm-dept="心臟科" data-bm-title="利尿劑使用策略">
-          <div class="k-card-tags">
-            <span class="tag tag-drug">用藥指引</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">利尿劑的使用策略</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>Furosemide（Loop）</strong>：急性去水首選，IV 效果比口服快</li>
-              <li>目標：每天尿量 &gt;1-2L，體重每天下降 0.5-1kg</li>
-              <li>監測：K⁺（容易低血鉀）、Cr（過度利尿傷腎）</li>
-              <li><strong>Spironolactone</strong>：保鉀利尿，HFrEF 長期用</li>
-              <li><strong>Thiazide（HCTZ）</strong>：輕度水腫或加強 Loop 效果</li>
-              <li class="note">利尿抵抗：增加劑量、改 IV、加 Thiazide、或換 Tolvaptan</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- 監測 -->
-        <div class="k-card" data-bm-id="hf-monitor" data-bm-dept="心臟科" data-bm-title="住院期間監測指標">
-          <div class="k-card-tags">
-            <span class="tag tag-value">數值判讀</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">住院期間每天看這些</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li>體重（每天同時間量）</li>
-              <li>尿量 / 24h 出入量</li>
-              <li>電解質：K⁺、Na⁺、Cr</li>
-              <li>BNP 或 NT-proBNP（治療反應指標）</li>
-              <li>生命徵象：血壓、心率、SpO₂</li>
-              <li class="note">BNP 下降代表充血改善，是出院的重要參考指標</li>
-            </ul>
-          </div>
-        </div>
-
+    <div class="k-card" data-bm-id="hf-def" data-bm-dept="心臟科" data-bm-title="心衰竭定義與分類">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">定義與分類</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">依 EF 分類</p>
+        <ul class="k-list">
+          <li><strong>HFrEF：</strong>EF &lt;40%，收縮功能下降</li>
+          <li><strong>HFmrEF：</strong>EF 40-49%，輕度下降</li>
+          <li><strong>HFpEF：</strong>EF ≥50%，舒張功能障礙</li>
+          <li><strong>HFimpEF：</strong>基線 EF ≤40%，追蹤時 EF &gt;40% 且較基線上升 ≥10%</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">NYHA 功能分級</p>
+        <ul class="k-list numbered">
+          <li>無症狀，一般活動不受限</li>
+          <li>輕度活動即喘（爬樓梯、快走）</li>
+          <li>輕微活動就喘（日常生活受限）</li>
+          <li>休息時也喘，無法從事任何活動</li>
+        </ul>
       </div>
     </div>
-    
+
+    <div class="k-card" data-bm-id="hf-sx" data-bm-dept="心臟科" data-bm-title="心衰竭症狀與身體檢查">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">症狀與身體檢查</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">症狀</p>
+        <ul class="k-list">
+          <li><strong>低輸出：</strong>疲倦、無力、運動不耐受、意識改變、噁心嘔吐</li>
+          <li><strong>左心充血：</strong>呼吸困難、端坐呼吸、夜間陣發性呼吸困難</li>
+          <li><strong>右心充血：</strong>周邊水腫、右上腹不適、腹脹、早飽</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">身體檢查（「2 分鐘血流動力學評估」）</p>
+        <ul class="k-list">
+          <li><strong>充血（濕 vs 乾）：</strong>JVP 升高（JVP &gt;10 → PCWP &gt;22，敏感性 ~80%）；肝頸靜脈回流；S3；囉音；肝腫大；周邊水腫</li>
+          <li><strong>灌流（冷 vs 暖）：</strong>脈搏壓窄（&lt;25% 收縮壓 → CI &lt;2.2）；S1 軟；四肢冰冷蒼白；尿量減少</li>
+          <li class="note">慢性 HF 因淋巴代償，囉音和水腫常不明顯；JVP 是更可靠的充血指標</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="hf-precipitant" data-bm-dept="心臟科" data-bm-title="急性心衰竭誘發因素">
+      <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+      <div class="k-card-head"><span class="k-card-title">急性失代償的誘發因素</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>飲食不節制或藥物不遵從（~40%）</strong></li>
+          <li><strong>心肌缺血或梗塞（~10-15%）</strong></li>
+          <li><strong>腎衰竭：</strong>急性、CKD 惡化或透析不足 → 前負荷增加</li>
+          <li><strong>高血壓危象或 AS 惡化</strong>→ 左心後負荷增加</li>
+          <li><strong>藥物：</strong>β-blocker、CCB、NSAIDs、TZDs；化療（Anthracyclines、Trastuzumab）；酒精</li>
+          <li><strong>心律不整：</strong>心房顫動最常見</li>
+          <li><strong>急性瓣膜功能障礙：</strong>心內膜炎引起的急性 MR 或 AR</li>
+          <li><strong>其他：</strong>COPD 急性惡化、PE、貧血、甲狀腺疾病、感染</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="hf-workup" data-bm-dept="心臟科" data-bm-title="心衰竭評估檢查">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">評估與檢查</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>CXR：</strong>肺水腫、肋膜積液 ± 心臟擴大、肺紋路頂端增加、Kerley B lines；肺部超音波優於 CXR（PPV/NPV 92% vs 77%）</li>
+          <li><strong>BNP / NT-proBNP：</strong>敏感性 ≥95%，NPV ≥94%；腎功能不全、AF 時升高；肥胖時降低（HFpEF 常見）</li>
+          <li><strong>Echo：</strong>EF、心室大小、瓣膜、心包；組織都卜勒評估舒張功能</li>
+          <li><strong>器官灌流不足：</strong>Cr 升高、Na 降低、LFT 異常、Lactate 升高</li>
+          <li><strong>ECG：</strong>CAD 證據、LVH、LAE、心律不整、低電壓（浸潤性心肌病變）</li>
+          <li><strong>PA 導管：</strong>PCWP 升高、CVP 升高、CO 降低、SVR 升高（低輸出性心衰竭）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="hf-acute-rx" data-bm-dept="心臟科" data-bm-title="急性失代償性心衰竭處置">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+      <div class="k-card-head"><span class="k-card-title">急性失代償性心衰竭（ADHF）處置</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">充血處理（LMNOP）</p>
+        <ul class="k-list">
+          <li><strong>Lasix（Loop 利尿劑）：</strong>IV 劑量為平時口服劑量的 1-2.5 倍；IV 效果約為口服 2 倍（Furosemide 口服生物利用率約 50%）；可加 Thiazide 或 Acetazolamide 增強效果</li>
+          <li><strong>Morphine：</strong>降低症狀及前負荷</li>
+          <li><strong>Nitrates：</strong>降低前負荷（尤其合併高血壓時）</li>
+          <li><strong>Oxygen（± NIV）：</strong>CPAP 用於急性肺水腫；BiPAP 用於合併 CO₂ 滯留</li>
+          <li><strong>Position：</strong>坐起，雙腳下垂 → 減少靜脈回流</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">低灌流處理</p>
+        <ul class="k-list">
+          <li><strong>IV 血管擴張劑：</strong>Nitroprusside（降 SVR 效果強，有 CAD 時注意冠狀動脈竊血）；NTG（靜脈擴張 &gt; 動脈擴張，易產生耐受性）</li>
+          <li><strong>強心劑：</strong>Dobutamine（中等強心 + 輕度血管擴張，低劑量時）；Milrinone（強效強心 + 肺血管擴張，腎功能差時減量 50%）；Dopamine（高劑量時升壓）</li>
+          <li><strong>機械輔助：</strong>IABP（+0.5 L/min）；Impella（+3.7-5.5 L/min）；VA-ECMO（6 L/min）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">原有藥物調整</p>
+        <ul class="k-list">
+          <li><strong>RASi：</strong>低血壓時暫停或減量；AKI 時改 Hydralazine + Nitrates</li>
+          <li><strong>β-blocker：</strong>低灌流或低血壓時暫停</li>
+          <li class="note">若對治療無反應、容積狀態不確定、低血壓、低灌流或需要強心劑 → 考慮 PA 導管</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="hf-gdmt" data-bm-dept="心臟科" data-bm-title="HFrEF 慢性治療 GDMT">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">HFrEF 慢性治療（GDMT 四大支柱）</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>藥物</th><th>效益</th><th>注意事項</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>ARNI</strong>（Sacubitril/Valsartan）<br/><small>優先於 ACEI/ARB</small></td>
+              <td>CV 死亡及 HF 住院 ↓ 20% vs ARB</td>
+              <td>從 ACEI 換 ARNI 需洗脫 36h；有 Angioedema 病史禁用；監測低血壓、AKI、高血鉀</td>
+            </tr>
+            <tr>
+              <td><strong>β-blocker</strong><br/><small>Carvedilol、Metoprolol、Bisoprolol</small></td>
+              <td>死亡率 ↓ 35-40%；ADHF 時禁用</td>
+              <td>EF 初期會暫時下降後上升；從低劑量開始慢慢滴定</td>
+            </tr>
+            <tr>
+              <td><strong>MRA</strong>（Spironolactone / Eplerenone）</td>
+              <td>CV 死亡及 HF 住院 ↓ 30-35%</td>
+              <td>加在 RASi + β-blocker 之後；GFR &lt;30 或 K⁺ ≥5 禁用；監測高血鉀</td>
+            </tr>
+            <tr>
+              <td><strong>SGLT2i</strong>（Empagliflozin、Dapagliflozin）</td>
+              <td>死亡或 HF 住院 ↓ ~25%</td>
+              <td>eGFR &lt;20 資料有限；泌尿道感染風險；注意 euglycemic DKA</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">其他藥物</p>
+        <ul class="k-list">
+          <li><strong>Hydralazine + Nitrates：</strong>無法耐受 RASi 時，或黑人患者（A-HEFT：死亡率 ↓ 40%）</li>
+          <li><strong>Ivabradine：</strong>EF ≤35%、NYHA II-III、竇性心律 HR ≥70 且已用最大劑量 β-blocker；CV 死亡或 HF 住院 ↓ 18%</li>
+          <li><strong>Digoxin：</strong>HF 住院 ↓ 23%，不影響死亡率；最佳血中濃度 0.5-0.8 ng/mL</li>
+          <li><strong>Vericiguat：</strong>CV 死亡或 HF 住院 ↓ 10%（用於高風險、反覆住院患者）</li>
+          <li><strong>CRT：</strong>EF ≤35% + LBBB 或 IVCD ≥150ms + 有症狀 → 死亡及 HF 住院 ↓ ~40%</li>
+          <li><strong>ICD：</strong>一級預防 EF ≤30-35%；MI 後至少等 40 天、血運重建後 90 天</li>
+          <li><strong>靜脈鐵劑：</strong>NYHA II/III、EF ≤40%、Ferritin &lt;100 或 100-300 且 TSAT &lt;20% → HF 住院或 CV 死亡 ↓ ~20%</li>
+        </ul>
+        <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>避免使用：NSAIDs、非二氫吡啶 CCB（Verapamil、Diltiazem）、TZDs</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="hf-stage" data-bm-dept="心臟科" data-bm-title="心衰竭分期與治療">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">心衰竭分期治療（ACC/AHA Stage）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>Stage A（高風險）：</strong>無結構異常 → 控制 HTN、血脂、DM；戒菸；若有 HTN/DM/CAD 使用 ACEI/ARB</li>
+          <li><strong>Stage B（結構異常但無症狀）：</strong>Stage A 處置 + ACEI/ARB；若有 MI 或 EF 下降加 β-blocker；評估 ICD</li>
+          <li><strong>Stage C（有症狀 HF）：</strong>利尿劑 + 限鈉；HFrEF → GDMT 四大藥物 + 考慮 ICD/CRT；HFpEF → SGLT2i ± ARNI ± MRA ± GLP-1 RA（BMI &gt;30）</li>
+          <li><strong>Stage D（頑固性 HF）：</strong>考慮 IV 強心劑、LVAD、心臟移植或安寧緩和（4 年死亡率 &gt;50%）</li>
+          <li class="note">植入式 PA 壓力感測器：有症狀患者使用可減少住院約 30%</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="hfpef" data-bm-dept="心臟科" data-bm-title="HFpEF 治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">HFpEF 的治療</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li>約占所有 HF 的一半；常見於 HTN、DM、高齡、AF、CKD、肥胖</li>
+          <li><strong>SGLT2i：</strong>CV 死亡或 HF 住院 ↓ ~20%（目前最強的 HFpEF 實證）</li>
+          <li><strong>ARNI：</strong>vs ARB 趨勢改善但未達統計顯著；仍可合理使用</li>
+          <li><strong>MRA：</strong>HF 住院 ↓ ~18%，CV 死亡無顯著改善；GFR &lt;30 或高血鉀禁用</li>
+          <li><strong>GLP-1 RA：</strong>BMI ≥30 → 症狀改善且 CV 死亡或 HF 住院 ↓ ~35%</li>
+          <li><strong>基本處置：</strong>利尿去水（注意 HFpEF 心室順應性差，小量容積變化即影響充填壓）；控制 HTN、心跳過速、缺血；維持竇性心律</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
     <!-- ══════════════════════════════════
          心律不整
     ══════════════════════════════════ -->
@@ -872,6 +914,427 @@
       </div>
     </div>
 
+    <!-- 心肌病變 Cardiomyopathies -->
+<div class="topic-block" id="cardiomyopathy">
+  <div class="topic-block-head">
+    <span class="topic-block-title">心肌病變 Cardiomyopathies</span>
+    <div data-bm-id="cardiomyopathy" data-bm-dept="心臟科" data-bm-title="心肌病變">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    心肌病變依形態分為擴張型（DCM）、肥厚型（HCM）、限制型（RCM）和浸潤型。臨床上最重要的是<strong>區分可逆原因</strong>（毒性、心律不整、圍產期）和<strong>排除缺血性 CMP</strong>。HCM 的 LVOT 梗阻和猝死風險是管理重點。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="dcm" data-bm-dept="心臟科" data-bm-title="擴張型心肌病變 DCM">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">擴張型心肌病變（DCM）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常見原因</p>
+        <ul class="k-list">
+          <li><strong>家族性/基因（&gt;35%）：</strong>Titin 等 &gt;60 個基因突變；建議基因諮詢和家屬篩查</li>
+          <li><strong>毒性：</strong>酒精（~20%，通常每天 5 杯以上 &gt;5 年）；Anthracyclines（累積劑量 &gt;550 mg/m²）；Trastuzumab；Cocaine；放射線</li>
+          <li><strong>感染（10-15%）：</strong>病毒性心肌炎最常見；HIV、Chagas、Lyme</li>
+          <li><strong>浸潤型（5%）：</strong>Amyloid（通常 RCMP，但可為 DCM）；Sarcoidosis；Hemochromatosis</li>
+          <li><strong>圍產期：</strong>妊娠晚期至產後 5 個月；~1:2000；30% 下次懷孕復發</li>
+          <li><strong>Takotsubo（壓力性）：</strong>通常停經後女性；模擬 ACS（胸痛、STE、Tn 升高）；心尖氣球樣膨出；數週內通常改善</li>
+          <li><strong>心動過速性：</strong>心率/持續時間越長越易發生；心率/節律控制後通常可逆</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷評估</p>
+        <ul class="k-list">
+          <li><strong>ECG：</strong>PRWP、Q 波、BBB；低電壓；AF（20%）；AVB；可能正常</li>
+          <li><strong>Echo：</strong>LV 擴大、EF 下降、瀰漫性或局部 HK ± RV HK；± 壁內血栓</li>
+          <li><strong>Cardiac MRI：</strong>心肌炎或浸潤的高敏感性；延遲顯影（LGE）程度與死亡率相關</li>
+          <li><strong>抽血：</strong>TFT、鐵蛋白、HIV、SPEP、ANA；不建議常規病毒血清學</li>
+          <li><strong>冠狀動脈 CT 或侵入性攝影：</strong>排除缺血性 CMP（有危險因子、心絞痛病史、Q 波 MI 者）</li>
+          <li><strong>心內膜活檢：</strong>考慮於爆發性心肌炎或懷疑浸潤性疾病</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="myocarditis" data-bm-dept="心臟科" data-bm-title="心肌炎">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">心肌炎 Myocarditis</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常見原因</p>
+        <ul class="k-list">
+          <li><strong>病毒：</strong>Parvovirus B19、Coxsackie、Adenovirus、HIV、SARS-CoV-2 / 疫苗</li>
+          <li><strong>Giant Cell Myocarditis（GCM）：</strong>平均年齡 42 歲；爆發性、AVB/VT；預後差</li>
+          <li><strong>嗜酸性球心肌炎：</strong>過敏性（輕度 HF，但有 SCD 風險）；急性壞死性（ANEM，嚴重）</li>
+          <li><strong>免疫檢查點抑制劑（ICI）：</strong>分子模擬機制；發現即停藥</li>
+          <li><strong>Chagas：</strong>心尖動脈瘤 ± 血栓、RBBB、巨食道 / 巨結腸</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷與治療</p>
+        <ul class="k-list">
+          <li>表現多樣：從偶然發現到爆發性 HF 合併休克</li>
+          <li>可類似 ACS（胸痛、ECG 變化、Tn 升高，但 Tn 下降較慢）</li>
+          <li><strong>Cardiac MRI：</strong>可顯示水腫、充血、瘢痕（Lake Louise criteria）</li>
+          <li><strong>心內膜活檢：</strong>GCM 和嗜酸性球型有幫助；病毒型不建議常規</li>
+          <li><strong>治療：</strong>標準 HF 處置；GCM / 膠原血管疾病 / ICI 相關 → 免疫抑制治療；病毒型無特效治療</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="hcm" data-bm-dept="心臟科" data-bm-title="肥厚型心肌病變 HCM">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">肥厚型心肌病變（HCM）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">機轉與臨床特徵</p>
+        <ul class="k-list">
+          <li>肌節蛋白基因突變 → LV（通常 ≥15 mm）或 RV 肥厚，與血流動力學負荷不成比例；盛行率約 1/200-500</li>
+          <li><strong>動態 LVOT 梗阻（≥70%）：</strong>肥厚中膈 + SAM（二尖瓣前葉收縮期前移）→ 壓力梯度；Valsalva、站立、運動、強心藥加重；蹲下、握拳減輕（與 AS 相反）</li>
+          <li><strong>症狀：</strong>呼吸困難（90%）、心絞痛（25%，即使無冠心病）、心律不整（AF 20-25%）、暈厥、猝死</li>
+          <li><strong>雜音：</strong>胸骨左緣下方收縮期漸強漸弱雜音；Valsalva 和站立時增強（↓ preload）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li><strong>HF 症狀：</strong>β-blocker、Verapamil、Disopyramide（負性肌力藥物）；小心利尿劑（前負荷降低加重梗阻）；LVOTO 時避免血管擴張劑和 Digoxin</li>
+          <li><strong>Mavacamten（心肌肌凝蛋白抑制劑）：</strong>有梗阻且藥物治療無效 → 降低 LVOT 梯度和症狀；需監測 EF（可能下降 ~4%）；EF 必須 ≥55% 才可使用</li>
+          <li><strong>手術心肌切除：</strong>長期症狀改善率 90%；金標準</li>
+          <li><strong>酒精中膈消融：</strong>梯度降低 ~80%；老年或合併症多者替代手術；10-20% 需 PPM</li>
+          <li><strong>AF：</strong>β-blocker / 非二氫吡啶 CCB 控制心率；Amiodarone 維持竇律；無論 CHA₂DS₂-VASc 分數均建議抗凝（中風風險高）</li>
+          <li><strong>ICD：</strong>有 VT/VF 時；一級預防危險因子：猝死家族史、不明原因暈厥、LV 壁厚 ≥30 mm、LV 動脈瘤或 EF &lt;50%、運動時 SBP 未能上升或下降 ≥20 mmHg</li>
+          <li class="note">一級親屬：青少年或運動員期間每 12-18 個月做 Echo 篩查，之後每 5 年；若有已知基因突變者進行基因檢測</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="rcm" data-bm-dept="心臟科" data-bm-title="限制型/浸潤型心肌病變">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">限制型 / 浸潤型心肌病變（RCM）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常見原因</p>
+        <ul class="k-list">
+          <li><strong>Amyloidosis：</strong>AL（漿細胞疾病）、ATTR-m（家族性，TTR 基因突變）、ATTR-wt（野生型，老年男性）；ECG 低電壓 + Echo 心室壁增厚 = 高度懷疑；PYP SPECT 掃描診斷 ATTR</li>
+          <li><strong>Sarcoidosis：</strong>心臟受累 25-58%；ECG：AVB（75%）、RBBB、VT；PET：FDG 攝取增加；治療：類固醇 / 免疫調節劑（FDG-PET 陽性 + AVB/VT/LV 功能障礙）</li>
+          <li><strong>Hemochromatosis：</strong>中年男性（北歐裔）；鐵沉積 → 心律不整和 HF</li>
+          <li><strong>Fabry disease：</strong>糖鞘脂沉積；LVH + 腎病 + 神經痛</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床特徵與診斷</p>
+        <ul class="k-list">
+          <li>雙側 HF（右心症狀 &gt; 左心）；利尿劑抵抗性合併 AKI；栓塞；心律不整</li>
+          <li>JVP 升高 ± Kussmaul sign；± S3、S4；周邊和肺部水腫</li>
+          <li><strong>Echo：</strong>心室壁對稱性增厚、雙心房擴大、舒張功能障礙（E/A 升高）；± 壁內血栓</li>
+          <li><strong>心臟導管：</strong>舒張末壓升高且相等（LV = RV）；dip-and-plateau（方形根號 sign）；呼吸週期 LV-RV 壓力峰值一致（vs 縮窄性心包炎為不一致）</li>
+          <li><strong>Amyloid 評估：</strong>血清和尿液免疫固定電泳 + 游離輕鏈；若陰性 → PYP SPECT → 若陽性 → TTR 基因定序</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li>謹慎利尿（目標每天負平衡 ≤1L）；控制心率；維持竇性心律；± 抗凝</li>
+          <li><strong>ATTR amyloid：</strong>TTR 穩定劑（Tafamidis、Acoramidis）→ 症狀改善、死亡和 CV 住院 ↓；TTR siRNA（Patisiran、Vutrisiran）→ 保護功能、降低死亡</li>
+          <li><strong>AL amyloid：</strong>針對漿細胞疾病治療</li>
+          <li class="note">Digoxin 在 Amyloid 心肌病變中會增加心律不整風險，避免使用</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 瓣膜性心臟病 Valvular Heart Disease -->
+<div class="topic-block" id="valvular">
+  <div class="topic-block-head">
+    <span class="topic-block-title">瓣膜性心臟病 Valvular Heart Disease</span>
+    <div data-bm-id="valvular" data-bm-dept="心臟科" data-bm-title="瓣膜性心臟病">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    瓣膜性心臟病的處置核心是：<strong>症狀出現時機</strong>決定手術時機，<strong>Echo 數據</strong>決定嚴重程度。AS 是「症狀出現就要換瓣」；MR 是「心室開始代償失敗就要換」。TAVR 已大幅改變高手術風險患者的處置選項。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="as" data-bm-dept="心臟科" data-bm-title="主動脈瓣狹窄 AS">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">主動脈瓣狹窄（AS）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">病因與自然史</p>
+        <ul class="k-list">
+          <li><strong>鈣化性（&gt;70 歲最常見）：</strong>危險因子：HTN、高 LDL-C、高 Lp(a)、ESRD；AVA 每年約下降 0.15 cm²</li>
+          <li><strong>先天性二葉主動脈瓣：</strong>&lt;70 歲患者約 50% 的原因</li>
+          <li><strong>風濕性：</strong>通常合併 AR 和二尖瓣病變</li>
+          <li><strong>症狀出現後存活中位數：</strong>心絞痛 5 年；暈厥 3 年；CHF 2 年 → 症狀是手術時機的關鍵</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">身體檢查</p>
+        <ul class="k-list">
+          <li>胸骨右上緣收縮期漸強漸弱雜音，高頻粗糙，放射至頸動脈和心尖</li>
+          <li><strong>嚴重度指標：</strong>晚期達峰雜音；S2 矛盾分裂或 A2 聽不到；頸動脈脈搏細弱延遲（pulsus parvus et tardus）；S4；LV 抬舉</li>
+          <li>Valsalva 時雜音減弱（與 HCM 相反）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷與嚴重度分級</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>參數</th><th>輕度</th><th>中度</th><th>重度</th></tr></thead>
+          <tbody>
+            <tr><td>平均壓力梯度</td><td>&lt;20 mmHg</td><td>20-39 mmHg</td><td>≥40 mmHg</td></tr>
+            <tr><td>瓣膜面積（AVA）</td><td>&gt;1.5 cm²</td><td>1.0-1.5 cm²</td><td>≤1.0 cm²</td></tr>
+            <tr><td>最大流速</td><td>&lt;3 m/s</td><td>3-3.9 m/s</td><td>≥4 m/s</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>低流量低梯度（LFLG）AS：</strong>AVA ≤1 cm² 但平均梯度 &lt;40 mmHg；「典型」= EF &lt;50%；「矛盾型」= EF 正常但 LV 小（如 HTN 或 Amyloid）</li>
+          <li><strong>Dobutamine 激發試驗：</strong>SV ↑ 20% 且梯度 ↑（無 AVA 變化）→ 後負荷不匹配（真正嚴重）；SV ↑ 但梯度不變、AVA ↑ → 假性狹窄</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">瓣膜置換適應症</p>
+        <ul class="k-list">
+          <li><strong>明確適應症：</strong>有症狀的重度 AS（Stage D1、D2、D3 若 AS 為症狀原因）；無症狀重度 AS + EF &lt;50%（Stage C2）；重度 AS 同時接受其他心臟手術</li>
+          <li><strong>合理適應症：</strong>無症狀重度 AS 但運動時出現症狀或 BP 下降、極重度 AS（流速 ≥5 m/s）、BNP 快速升高、快速進展</li>
+          <li><strong>TAVR vs SAVR 選擇：</strong>外科風險低 → 兩者相當，根據解剖和患者偏好；高風險或無法手術 → TAVR 首選</li>
+          <li class="note">TAVR 術後需 Aspirin + Clopidogrel 3-6 個月；機械瓣需 Warfarin（INR 2.5-3.5）；生物瓣需 Aspirin ± 短期抗凝</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="ar" data-bm-dept="心臟科" data-bm-title="主動脈瓣逆流 AR">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">主動脈瓣逆流（AR）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">病因</p>
+        <ul class="k-list">
+          <li><strong>瓣膜本身：</strong>先天性二葉瓣、風濕性、感染性心內膜炎、黏液瘤樣退化</li>
+          <li><strong>主動脈根部擴大：</strong>HTN（最常見慢性 AR 原因）、馬凡氏症候群、主動脈炎（Takayasu、GCA、梅毒）、主動脈剝離（急性 AR）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">身體檢查</p>
+        <ul class="k-list">
+          <li>胸骨左緣早期舒張期漸弱雜音；坐前傾、呼氣時增強</li>
+          <li><strong>嚴重 AR 周邊徵象（脈壓增大）：</strong></li>
+          <li>Corrigan's pulse（水錘脈）；De Musset sign（頭隨心跳點動）；Quincke's pulse（指甲床毛細血管搏動）；Duroziez sign（股動脈雙重雜音）</li>
+          <li>Austin Flint 雜音：心尖舒張中期隆隆聲（逆流血液衝擊二尖瓣前葉）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">手術適應症</p>
+        <ul class="k-list">
+          <li>有症狀的嚴重 AR（任何 EF）</li>
+          <li>無症狀嚴重 AR + EF &lt;55% 或 LVESD &gt;50 mm</li>
+          <li>主動脈根部擴大（≥5.5 cm，或馬凡 ≥5.0 cm）</li>
+          <li><strong>急性嚴重 AR（如感染性心內膜炎或 A 型主動脈剝離）：</strong>緊急手術；血管擴張劑（Nitroprusside）橋接；禁用 β-blocker（需維持心率以縮短舒張期）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="mr" data-bm-dept="心臟科" data-bm-title="二尖瓣逆流 MR">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">二尖瓣逆流（MR）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">分類</p>
+        <ul class="k-list">
+          <li><strong>原發性（結構性）MR：</strong>二尖瓣脫垂（MVP，最常見）、風濕性、感染性心內膜炎、黏液瘤樣退化、腱索斷裂</li>
+          <li><strong>繼發性（功能性）MR：</strong>LV 擴大 → 瓣環擴張 + 乳突肌移位；缺血性（乳突肌功能障礙）；HCM（SAM）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">身體檢查</p>
+        <ul class="k-list">
+          <li>心尖高頻、全收縮期吹風樣雜音，放射至腋下；握拳時增強（↑ afterload）</li>
+          <li>MVP：收縮中期喀噠音 + 晚期收縮期雜音；站立時喀噠音提早（preload ↓）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">手術 / 介入適應症</p>
+        <ul class="k-list">
+          <li><strong>原發性 MR：</strong>有症狀重度 MR；無症狀重度 MR + EF 30-60% 或 LVESD ≥40 mm；修復優於置換（若解剖適合）</li>
+          <li><strong>繼發性 MR + HFrEF：</strong>GDMT 最佳化後仍有中重度 MR + LVEF ≤30-35% → 經導管二尖瓣修復（TEER，MitraClip）→ 死亡或 HF 住院 ↓ 25-30%</li>
+          <li class="note">繼發性 MR 手術置換無明確生存優勢，TEER 優先考慮</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="ms" data-bm-dept="心臟科" data-bm-title="二尖瓣狹窄 MS">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">二尖瓣狹窄（MS）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>主要病因：</strong>風濕性心臟病（最常見）；其他：二尖瓣環鈣化、先天性、類癌、SLE、黏多醣症</li>
+          <li><strong>症狀：</strong>勞累性呼吸困難、心悸（AF 很常見）、咳血；快心率或 AF 時症狀加重（舒張充填時間縮短）</li>
+          <li><strong>身體檢查：</strong>S1 增強；開瓣音（opening snap）後接舒張中期隆隆聲；左側臥位聽診最清楚</li>
+          <li><strong>嚴重度：</strong>重度 = MVA ≤1.5 cm²，平均梯度 ≥10 mmHg；開瓣音與 S2 間距越短 → 越嚴重</li>
+          <li><strong>AF 處置：</strong>心率控制優先（β-blocker 或非二氫吡啶 CCB）；所有 MS 合併 AF 均需抗凝（Warfarin 優於 DOAC）</li>
+          <li><strong>介入適應症：</strong>有症狀重度 MS → 經皮二尖瓣氣球擴張（PMBV）首選（若解剖適合，Echo score ≤8）；解剖不適合 → 外科手術</li>
+          <li class="note">PMBV 禁忌：左心耳血栓、中度以上 MR、嚴重瓣膜鈣化或交合不對稱</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="valve-ac" data-bm-dept="心臟科" data-bm-title="人工瓣膜抗凝">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">人工瓣膜抗凝原則</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>機械瓣：</strong>Warfarin 終生（不能用 DOAC）</li>
+          <li>二尖瓣機械瓣：INR 2.5-3.5</li>
+          <li>主動脈瓣機械瓣（低風險）：INR 2.0-3.0</li>
+          <li><strong>生物瓣（外科置換）：</strong>術後 3-6 個月 Aspirin ± 短期抗凝；之後僅 Aspirin</li>
+          <li><strong>TAVR 術後：</strong>Aspirin + Clopidogrel 3-6 個月 → 之後 Aspirin 單藥；若有其他抗凝指征（如 AF）→ 抗凝 + 評估是否加抗血小板</li>
+          <li><strong>瓣膜血栓：</strong>Warfarin + 考慮溶栓（左心高風險）或手術（左心首選）；右心瓣膜血栓 → 溶栓優先</li>
+          <li class="note">機械瓣橋接：需要手術時停 Warfarin，高風險（二尖瓣、AF、血栓病史）需 UFH 橋接；低風險主動脈瓣可不橋接</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 心包膜疾病 Pericardial Disease -->
+<div class="topic-block" id="pericardial">
+  <div class="topic-block-head">
+    <span class="topic-block-title">心包膜疾病 Pericardial Disease</span>
+    <div data-bm-id="pericardial" data-bm-dept="心臟科" data-bm-title="心包膜疾病">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    心包膜疾病分三大類：<strong>急性心包炎</strong>（以疼痛和摩擦音為主）、<strong>心包積液 / 填塞</strong>（壓迫心臟 → CO 下降）、<strong>縮窄性心包炎</strong>（纖維化 → 舒張受限）。三者病因有重疊，但機轉和處置截然不同。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="pericarditis-etiology" data-bm-dept="心臟科" data-bm-title="心包炎病因">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">急性心包炎病因</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>特發性（~90%）：</strong>多數為未確診的病毒感染</li>
+          <li><strong>感染性（&lt;5% 可確認）：</strong>病毒（Coxsackie、Parvovirus B19、EBV、VZV、HIV、SARS-CoV-2）；細菌（肺炎球菌、金葡菌、Lyme、TB）；真菌</li>
+          <li><strong>腫瘤性（&lt;10%）：</strong>轉移性最常見（肺癌、乳癌、淋巴瘤、白血病、RCC）</li>
+          <li><strong>自體免疫：</strong>SLE、RA、硬皮病、Sjögren's；血管炎（PAN、ANCA 陽性）；藥物性（Procainamide、Hydralazine、Isoniazid）</li>
+          <li><strong>心臟血管：</strong>STEMI 後（1-4 天）；Dressler 症候群（2-10 週後）；主動脈剝離；外傷 / 術後</li>
+          <li><strong>尿毒性：</strong>透析前約 5-13%；慢性透析患者約 20%</li>
+          <li><strong>放射線：</strong>&gt;40 Gy 照射縱膈；急性或延遲發生</li>
+          <li><strong>積液不伴心包炎：</strong>右心衰竭、肝硬化、腎病症候群、甲狀腺低下、Amyloid（滲出液）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="pericarditis-dx" data-bm-dept="心臟科" data-bm-title="急性心包炎診斷">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">急性心包炎診斷</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷標準（≥2 項）</p>
+        <ul class="k-list">
+          <li><strong>胸痛：</strong>胸骨後、胸膜炎性、體位性（坐前傾緩解）；可放射至斜方肌；TB、腫瘤、放射線、尿毒性可無疼痛</li>
+          <li><strong>心包摩擦音：</strong>胸骨左緣下方最清楚；可有三個成分（心房收縮、心室收縮、心室舒張）；易消失，重複聽診</li>
+          <li><strong>ECG 變化：</strong>瀰漫性 ST 上升（上凹形）+ PR 下降（aVR 相反）；四個階段演進；大量積液時可見低電壓 + electrical alternans</li>
+          <li><strong>新發心包積液（Echo）：</strong>積液本身不能確診心包炎，但支持診斷</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">輔助檢查</p>
+        <ul class="k-list">
+          <li><strong>Troponin 升高（~30%）：</strong>代表合併心肌炎（預後較差）</li>
+          <li><strong>ESR / CRP：</strong>80% 升高；CRP 可預測復發風險</li>
+          <li>CXR：積液 &gt;250 mL → 心影增大呈「水壺形」</li>
+          <li>MRI：心包增厚/發炎；評估心肌受累</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="pericarditis-rx" data-bm-dept="心臟科" data-bm-title="急性心包炎治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">急性心包炎治療</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>高劑量 NSAID 或 Aspirin：</strong>Ibuprofen 600-800 mg tid 或 ASA 650-1000 mg tid × 7-14 天後逐漸減量；急性 MI 後優先選 ASA；加 PPI 保護胃</li>
+          <li><strong>Colchicine 0.5 mg bid（≤70 kg 則 qd）× 3 個月：</strong>復發或難治性心包炎風險 ↓ 50%；注意 Amiodarone、Diltiazem、Verapamil 和 Atorvastatin 會升高 Colchicine 毒性（抑制 P-gp 和 CYP3A4）</li>
+          <li><strong>類固醇：</strong>避免（↑ 復發率）；僅限於：自體免疫疾病、尿毒性、懷孕、NSAID 禁忌；若必要用低劑量（Prednisone 0.2-0.5 mg/kg）緩慢減量</li>
+          <li><strong>活動限制：</strong>症狀緩解 + CRP 下降前避免運動；運動員需額外等待 3 個月且 Echo/ECG 正常</li>
+          <li><strong>急性特發性心包炎：</strong>70-90% 自限性</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">復發性心包炎（約 30%）</p>
+        <ul class="k-list">
+          <li>高風險因子：亞急性發病、大量積液或填塞、體溫 &gt;38°C、NSAID 7 天後無反應</li>
+          <li>治療：Colchicine 0.5 mg bid × 6 個月；難治性 → IL-1 拮抗劑（Anakinra 或 Rilonacept ↓ 復發風險）</li>
+          <li>反覆積液 → 考慮心包開窗術</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="tamponade" data-bm-dept="心臟科" data-bm-title="心包填塞">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">心包填塞 Cardiac Tamponade</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">病理機轉</p>
+        <ul class="k-list">
+          <li>心包壓力升高 → 心腔壓縮 → 靜脈回流下降 → CO 下降</li>
+          <li>四腔舒張壓升高且相等 → y 下降鈍化（TV 開放時幾乎無血流流入 RV）</li>
+          <li>心室相互依存性增加 → <strong>奇脈（Pulsus paradoxus）</strong>：吸氣時 RV 擴張 → 室間隔左移 → LV 充填 ↓ → SBP 吸氣時下降 ≥10 mmHg</li>
+          <li class="note">快速積液（如主動脈或心室破裂）在積液量不大時即可造成填塞，因為心包來不及延展</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現與診斷</p>
+        <ul class="k-list">
+          <li><strong>Beck's Triad（少數同時出現）：</strong>心音遙遠（28%）、JVP 升高（76%）、低血壓（26%）</li>
+          <li><strong>奇脈（Se 82%、Sp 70%）：</strong>吸氣 SBP 下降 ≥10 mmHg；鑑別診斷：PE、低血容、嚴重 COPD、Auto-PEEP、RV 梗塞</li>
+          <li><strong>呼吸急促但肺部清澈（無肺水腫）</strong>；反射性心跳過速</li>
+          <li><strong>ECG：</strong>心跳過速、低電壓（42%）、electrical alternans（20%）</li>
+          <li><strong>Echo（診斷首選）：</strong>積液、IVC 飽脹、RA 舒張期塌陷（Se 85%）、RV 舒張期塌陷（Se &lt;80%，Sp 90%）、呼吸相位性跨瓣速度變化</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li><strong>補液</strong>（謹慎，過多反而加重）；正性肌力藥物（避免 β-blocker）</li>
+          <li><strong>避免升壓藥</strong>（↓ SV 且可能 ↓ HR）；<strong>避免正壓通氣</strong>（進一步阻礙心臟充填）</li>
+          <li><strong>心包穿刺術（Pericardiocentesis）：</strong>根本治療；主動脈或心室破裂例外 → 緊急手術（病情太差可先小量引流防止 PEA）</li>
+          <li>引流後 RA 壓仍高 → 鑑別：積液性縮窄（visceral pericardium 縮窄）或合併心肌功能障礙</li>
+          <li>積液快速再積聚、包裹性或血性 → 外科引流</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="constrictive" data-bm-dept="心臟科" data-bm-title="縮窄性心包炎">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">縮窄性心包炎 Constrictive Pericarditis</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">機轉與病因</p>
+        <ul class="k-list">
+          <li>纖維化心包 → 心室舒張充填受限 → 靜脈壓升高</li>
+          <li>急性心包炎後發生率約 1-2%；TB、細菌性、腫瘤、放射線、術後心包膜炎風險最高</li>
+          <li><strong>Kussmaul sign：</strong>吸氣時 JVP 不下降（正常應下降）；因剛性心包無法傳遞負壓</li>
+          <li>早期快速充填後突然受阻 → 舒張壓迅速上升 → 明顯 x 和 y 下降</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">縮窄性心包炎 vs 限制型心肌病變</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>評估</th><th>縮窄性心包炎</th><th>限制型心肌病變</th></tr></thead>
+          <tbody>
+            <tr><td>Kussmaul sign</td><td>陽性</td><td>± 陽性</td></tr>
+            <tr><td>心尖搏動</td><td>通常不可及</td><td>有力，± S3、S4</td></tr>
+            <tr><td>心包敲擊音</td><td>有（少見）</td><td>無</td></tr>
+            <tr><td>Echo e'（組織速度）</td><td>正常或升高（&gt;12 cm/s）</td><td>下降（&lt;8 cm/s）</td></tr>
+            <tr><td>呼吸相位跨瓣速度變化</td><td>明顯（25-40%）</td><td>&lt;10%</td></tr>
+            <tr><td>肝靜脈逆流</td><td>呼氣時</td><td>吸氣時</td></tr>
+            <tr><td>CT / MRI</td><td>心包增厚（&gt;4 mm）</td><td>心包正常</td></tr>
+            <tr><td>NT-proBNP</td><td>不定</td><td>通常明顯升高</td></tr>
+            <tr><td>心導管 LV-RV 壓力峰值</td><td>呼吸不一致（discordance）</td><td>呼吸一致（concordance）</td></tr>
+            <tr><td>LVEDP vs RVEDP</td><td>相等</td><td>LVEDP &gt; RVEDP</td></tr>
+            <tr><td>RVSP</td><td>&lt;55 mmHg（Se 90%）</td><td>&gt;55 mmHg</td></tr>
+          </tbody>
+        </table>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li>有血管內容積過多時謹慎利尿</li>
+          <li><strong>心包切除術（Pericardiectomy）：</strong>感染性或晚期縮窄 → 根本治療；手術死亡率 5-10%</li>
+          <li><strong>抗炎治療：</strong>NSAIDs + Colchicine（若有發炎徵象，如 CRP 升高或 MRI 顯示心包增強）；部分短暫性縮窄可在數月內自行緩解</li>
+          <li class="note">縮窄性心包炎中 AF 很常見（高達 33%）；TB 是心包鈣化最常見原因（側位 CXR 可見）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
     <!-- ══════════════════════════════════
          高血壓用藥
     ══════════════════════════════════ -->
