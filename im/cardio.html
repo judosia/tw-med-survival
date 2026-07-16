@@ -8,14 +8,6 @@
   <link rel="stylesheet" href="../shared.css"/>
 </head>
 <body>
-
-<style>
-  .score-modal-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-</style>
   
 <!-- NAV -->
 <nav>
@@ -64,12 +56,16 @@
     <a href="#ad"          class="sidebar-link">主動脈剝離 AD</a>
     
     <div class="sidebar-section-title">基礎</div>
-    <a href="#ccd"          class="sidebar-link">慢性冠心病</a>
-    <a href="#acs"          class="sidebar-link">急性冠心症</a>
-    <a href="#hf"          class="sidebar-link">心臟衰竭</a>
-    <a href="#arrhythmia"  class="sidebar-link">心律不整</a>
-    <a href="#htn-drugs"   class="sidebar-link">高血壓用藥</a>
-    <a href="#dm-drugs"    class="sidebar-link">糖尿病用藥</a>
+    <a href="#ccd"             class="sidebar-link">慢性冠心病</a>
+    <a href="#acs"             class="sidebar-link">急性冠心症</a>
+    <a href="#hf"              class="sidebar-link">心臟衰竭</a>
+    <a href="#arrhythmia"      class="sidebar-link">心律不整</a>
+    <a href="#cardiomyopathy"  class="sidebar-link">心肌病變</a>
+    <a href="#valvular"        class="sidebar-link">瓣膜性心臟病</a>
+    <a href="#pericardial"     class="sidebar-link">心包膜疾病</a>
+    <a href="#htn-drugs"       class="sidebar-link">高血壓用藥</a>
+    <a href="#dm-drugs"        class="sidebar-link">糖尿病用藥</a>
+    <a href="#pa-catheter"     class="sidebar-link">肺動脈導管</a>
 
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">其他科別</div>
@@ -1556,7 +1552,6 @@
   </div>
 </div>
 
-    
   </main>
 </div>
 
@@ -1594,6 +1589,25 @@
   
 <script src="../shared.js"></script>
 <script>
+  // Modal 函數
+  function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeModal(overlay.id);
+  });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+  }
+});
   const SEARCH_INDEX = [
     { id:'hf',          dept:'心臟科', title:'心臟衰竭',           url:'#hf',          text:'HFrEF HFpEF 鬱血性 NYHA 急性肺水腫 Furosemide GDMT ACEI ARB Beta-blocker MRA SGLT2i BNP 利尿劑' },
     { id:'ami',         dept:'心臟科', title:'急性心肌梗塞 AMI',    url:'#ami',         text:'ACS STEMI NSTEMI UA Troponin ECG ST 上升 PCI Aspirin Ticagrelor Heparin Statin DAPT 心因性休克 右心梗塞' },
