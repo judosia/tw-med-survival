@@ -111,14 +111,21 @@
     <div class="sidebar-section-title">基礎</div>
     <a href="#ccd"             class="sidebar-link">慢性冠心病</a>
     <a href="#acs"             class="sidebar-link">急性冠心症</a>
+    <a href="#pa-catheter"     class="sidebar-link">肺動脈PA導管</a>
     <a href="#hf"              class="sidebar-link">心臟衰竭</a>
-    <a href="#arrhythmia"      class="sidebar-link">心律不整</a>
     <a href="#cardiomyopathy"  class="sidebar-link">心肌病變</a>
+    <a href="#arrhythmia"      class="sidebar-link">心律不整</a>
+    <a href="#arrhythmia"      class="sidebar-link">心房顫動</a>
+    <a href="#arrhythmia"      class="sidebar-link">昏厥</a>
+    <a href="#arrhythmia"      class="sidebar-link">節律裝置</a>
     <a href="#valvular"        class="sidebar-link">瓣膜性心臟病</a>
     <a href="#pericardial"     class="sidebar-link">心包膜疾病</a>
-    <a href="#htn-drugs"       class="sidebar-link">高血壓用藥</a>
+    <a href="#htn-drugs"       class="sidebar-link">主動脈瘤</a>
+    <a href="#htn-drugs"       class="sidebar-link">急性主動脈症候群</a>
+    <a href="#htn-drugs"       class="sidebar-link">高血壓/HTN用藥</a>
     <a href="#dm-drugs"        class="sidebar-link">糖尿病用藥</a>
-    <a href="#pa-catheter"     class="sidebar-link">肺動脈導管</a>
+    <a href="#dm-drugs"        class="sidebar-link">術前評估</a>
+    <a href="#dm-drugs"        class="sidebar-link">PAD</a>
 
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">其他科別</div>
@@ -858,118 +865,122 @@
 
   </div>
 </div>
-    <!-- ══════════════════════════════════
-         心律不整
-    ══════════════════════════════════ -->
-    <div class="topic-block" id="arrhythmia">
-      <div class="topic-block-head">
-        <span class="topic-block-title">心律不整 Arrhythmia</span>
-        <div data-bm-id="arrhythmia" data-bm-dept="心臟科" data-bm-title="心律不整">
-          <button class="bm-btn" title="加入書籤">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          </button>
-        </div>
-      </div>
+    <!-- 心律不整 Arrhythmias -->
+<div class="topic-block" id="arrhythmia">
+  <div class="topic-block-head">
+    <span class="topic-block-title">心律不整 Arrhythmias</span>
+    <div data-bm-id="arrhythmia" data-bm-dept="心臟科" data-bm-title="心律不整">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
 
-      <div class="card-grid col-1">
+  <div class="topic-intro">
+    心律不整的評估從<strong>血流動力學穩不穩定</strong>開始：不穩定 → 立刻電擊；穩定 → 先鑑別心律，再決定治療。寬 QRS 心搏過速一律先當 VT 處理，不要因為血壓正常就假設是 SVT。
+  </div>
 
-        <div class="k-card" data-bm-id="arr-first" data-bm-dept="心臟科" data-bm-title="心律不整第一步判斷">
-          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
-          <div class="k-card-head">
-            <span class="k-card-title">看到心律不整先問這個</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="step-list">
-              <li class="step-item"><div class="step-num">1</div><div>病人穩定嗎？（血壓、意識、有無胸痛）</div></li>
-              <li class="step-item"><div class="step-num">2</div><div><strong>不穩定</strong> → 電擊優先，診斷在後</div></li>
-              <li class="step-item"><div class="step-num">3</div><div><strong>穩定</strong> → QRS 寬還是窄？規則還是不規則？</div></li>
-            </ul>
-            <div class="alert alert-blue" style="margin-top:12px;margin-bottom:0">
-              <span class="alert-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
-              <span>「穩不穩定」決定給藥還是電擊，比先搞清楚診斷更重要</span>
-            </div>
-          </div>
-        </div>
+  <div class="card-grid col-2">
 
-      </div>
-
-      <div class="card-grid col-2" style="margin-top:14px">
-
-        <div class="k-card" data-bm-id="arr-afib" data-bm-dept="心臟科" data-bm-title="AFib / AFlutter">
-          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
-          <div class="k-card-head">
-            <span class="k-card-title">AFib / AFlutter</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li>AFib：不規則、無 P wave、顫動基線</li>
-              <li>AFlutter：鋸齒狀 F wave（300bpm），通常 2:1 傳導 → 心跳 150</li>
-              <li><strong>心率控制</strong>：Beta-blocker 或 Diltiazem</li>
-              <li><strong>節律控制</strong>：Amiodarone 或電擊（血流不穩、症狀明顯）</li>
-              <li><strong>抗凝</strong>：CHA₂DS₂-VASc ≥2（男）或 ≥3（女）開始抗凝</li>
-              <li class="note">發作 &gt;48h 或不確定 → 抗凝 3 週後再電擊，或 TEE 排除血栓</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="k-card" data-bm-id="arr-vtvf" data-bm-dept="心臟科" data-bm-title="VT / VF 處置">
-          <div class="k-card-tags">
-            <span class="tag tag-urgent">緊急處置</span>
-          </div>
-          <div class="k-card-head">
-            <span class="k-card-title">VT / VF — 致命心律</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>無脈性 VT / VF</strong>：立刻 CPR + 電擊（200J 雙相）</li>
-              <li><strong>有脈性 VT（穩定）</strong>：Amiodarone 150mg IV over 10min</li>
-              <li><strong>有脈性 VT（不穩定）</strong>：同步電擊 100J 起</li>
-              <li>找可逆原因：低血鉀、低鎂、缺氧、藥物</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="k-card" data-bm-id="arr-brady" data-bm-dept="心臟科" data-bm-title="心搏過緩">
-          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
-          <div class="k-card-head">
-            <span class="k-card-title">心搏過緩</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li>有症狀才需要處理（頭暈、昏厥、低血壓、胸痛）</li>
-              <li>Atropine 0.5mg IV，可重複至 3mg</li>
-              <li>無效 → Dopamine drip 或 Transcutaneous pacing</li>
-              <li>High-degree AV block（II度 Type II、III度）→ 暫時性節律器</li>
-              <li class="note">Atropine 對 High-degree AV block 通常無效，不要一直等</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="k-card" data-bm-id="arr-svt" data-bm-dept="心臟科" data-bm-title="SVT 處置">
-          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
-          <div class="k-card-head">
-            <span class="k-card-title">SVT — 窄 QRS 規則快速</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="step-list">
-              <li class="step-item"><div class="step-num">1</div><div>Valsalva maneuver 或 Carotid massage</div></li>
-              <li class="step-item"><div class="step-num">2</div><div>Adenosine 6mg 快速 IV push + 20mL NS flush</div></li>
-              <li class="step-item"><div class="step-num">3</div><div>無效 → 12mg，再無效 → 12mg</div></li>
-            </ul>
-            <div class="alert alert-red" style="margin-top:10px;margin-bottom:0">
-              <span class="alert-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-              <span>WPW 禁用 Adenosine、Digoxin → 改用 Procainamide</span>
-            </div>
-          </div>
-        </div>
-
+    <div class="k-card" data-bm-id="brady-avblock" data-bm-dept="心臟科" data-bm-title="房室傳導阻滯">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">房室傳導阻滯（AV Block）</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>類型</th><th>ECG 特徵</th><th>處置</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>一度 AVB</strong></td>
+              <td>PR &gt;200 ms，每個 P 波都傳導（1:1）</td>
+              <td>通常不需處理</td>
+            </tr>
+            <tr>
+              <td><strong>二度 Mobitz I（Wenckebach）</strong></td>
+              <td>PR 逐漸延長直到 P 波不傳導（群組性心跳）；QRS 正常；AVN 病變</td>
+              <td>通常無症狀，不需 Rx；頸動脈按摩加重，Atropine 改善</td>
+            </tr>
+            <tr>
+              <td><strong>二度 Mobitz II</strong></td>
+              <td>PR 固定但間歇性 P 波不傳導；QRS 通常寬；His-Purkinje 病變</td>
+              <td>可進展為完全 AVB → 備節律器；Atropine 可能惡化</td>
+            </tr>
+            <tr>
+              <td><strong>三度（完全）AVB</strong></td>
+              <td>P 波和 QRS 完全解離；逸脫心律（窄 = 交界性；寬 = 心室性）</td>
+              <td>通常需永久性節律器</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>常見原因：</strong>藥物（β-blocker、CCB、Amiodarone、Digoxin）、缺血（下壁 MI）、心肌炎、浸潤性疾病、術後</li>
+          <li><strong>暫時性節律器適應症：</strong>血流動力學不穩定的心搏過緩；可逆原因（藥物過量、Lyme、心肌炎、術後）造成的症狀性心搏過緩</li>
+        </ul>
       </div>
     </div>
+
+    <div class="k-card" data-bm-id="svt" data-bm-dept="心臟科" data-bm-title="上心室頻脈 SVT">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">上心室頻脈（SVT）鑑別</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">鑑別重點</p>
+        <ul class="k-list">
+          <li><strong>竇性心搏過速（ST）：</strong>有原因（疼痛、發燒、低血容、低氧、PE、貧血）→ 治療原因</li>
+          <li><strong>AVNRT（最常見）：</strong>突發突停；P 波埋在 QRS 後（偽 RSR' 在 V1）→ 迷走神經操作或 Adenosine</li>
+          <li><strong>AVRT（WPW）：</strong>有輔助傳導路徑；pre-excitation（δ wave）→ 小心 Adenosine（可能引發 AF→VF）</li>
+          <li><strong>心房撲動（AFL）：</strong>鋸齒波（F 波，下壁導程最明顯）；典型 2:1 傳導 → 心室率 150 bpm</li>
+          <li><strong>多源性心房頻脈（MAT）：</strong>≥3 種 P 波形態；常見於 COPD → 治療原發病</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">穩定 SVT 的處置</p>
+        <ul class="k-list">
+          <li><strong>迷走神經操作：</strong>改良式 Valsalva（平躺抬腿）；頸動脈竇按摩（先聽診確認無血管雜音）</li>
+          <li><strong>Adenosine 6 mg IV 快速推注：</strong>AVNRT/AVRT 可終止；AF/AFL 可暫時加深 AV Block 顯示 F 波；WPW 合併 AF 禁用</li>
+          <li><strong>β-blocker 或非二氫吡啶 CCB：</strong>控制心率；WPW 合併 AF 禁用</li>
+          <li>長期：射頻消融（AFL/AVNRT ~95%；AVRT ~90%；AF ~70%）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="wpw" data-bm-dept="心臟科" data-bm-title="WPW 症候群">
+      <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+      <div class="k-card-head"><span class="k-card-title">WPW 症候群 — 避免 AV 結阻斷劑</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>Pre-excitation ECG：</strong>PR 縮短 + QRS 增寬 + δ wave（QRS 起始斜升）</li>
+          <li><strong>WPW 症候群：</strong>Pre-excitation + 陣發性頻脈（AVRT 最常見）</li>
+          <li><strong>順向性 AVRT（orthodromic，最常見）：</strong>窄 QRS SVT；電流下經 AVN、上經輔助路徑</li>
+          <li><strong>逆向性 AVRT（antidromic，少見）：</strong>寬 QRS SVT；電流下經輔助路徑</li>
+          <li><strong>WPW + AF（最危險）：</strong>快速傳導經輔助路徑 → 不規則寬 QRS → 可惡化成 VF</li>
+          <li class="note" style="color:var(--red);font-weight:600">WPW + AF：禁用 CCB、β-blocker、Amiodarone、Digoxin、Adenosine → 可加速輔助路徑傳導 → VF！用 Procainamide 或 DCCV</li>
+          <li>長期治療：射頻消融（有症狀者）；無症狀者若 EPS 可誘發或運動時仍有 pre-excitation 也考慮消融</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="vt" data-bm-dept="心臟科" data-bm-title="心室頻脈 VT">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">心室頻脈（VT）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">支持 VT 的 ECG 特徵（假設 VT 直到排除為止）</p>
+        <ul class="k-list">
+          <li>先前有 MI 或 LV 功能障礙 → 寬 QRS 頻脈最可能是 VT</li>
+          <li><strong>AV 解離</strong>（P 波和 QRS 各自跑）→ 確診 VT；或有融合心跳、捕獲心跳</li>
+          <li>QRS &gt;140 ms（RBBB 型）或 &gt;160 ms（LBBB 型）</li>
+          <li>極度電軸偏移；V1-V6 concordance（全部同向）</li>
+          <li>aVR 有初始 R 波</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">VT 的處置</p>
+        <ul class="k-list">
+          <li><strong>血流動力學不穩定：</strong>立刻同步電擊（Synchronized cardioversion）</li>
+          <li><strong>血流動力學穩定：</strong>Amiodarone 150 mg IV over 10 min → 1 mg/min；或 Procainamide；Lidocaine 效果較差</li>
+          <li><strong>Torsades de Pointes（TdP，多形性 VT + QT 延長）：</strong>停用 QT 延長藥物、補 K⁺ 和 Mg²⁺；心搏過緩引發者 → 起搏（加快心率縮短 QT）</li>
+          <li><strong>VT Storm（24h 內 ≥3 次）：</strong>β-blocker + Amiodarone；鎮靜；考慮星狀神經節阻斷；穩定後考慮射頻消融</li>
+          <li><strong>長期：</strong>ICD（二級預防）；AAD（β-blocker、Amiodarone、Sotalol）；射頻消融</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
 
     <!-- 心肌病變 Cardiomyopathies -->
 <div class="topic-block" id="cardiomyopathy">
@@ -1096,6 +1107,298 @@
   </div>
 </div>
 
+    <!-- 心房顫動 Atrial Fibrillation -->
+<div class="topic-block" id="afib">
+  <div class="topic-block-head">
+    <span class="topic-block-title">心房顫動 Atrial Fibrillation</span>
+    <div data-bm-id="afib" data-bm-dept="心臟科" data-bm-title="心房顫動">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    AF 的處置有三個核心問題：<strong>① 心率要不要控制</strong>、<strong>② 要不要恢復竇性心律</strong>、<strong>③ 要不要抗凝</strong>。抗凝的決策依 CHA₂DS₂-VASc 分數，中風預防永遠優先考慮，即使計畫恢復竇律也不能省略。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="afib-classification" data-bm-dept="心臟科" data-bm-title="心房顫動分類">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">分類與流行病學</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床分類</p>
+        <ul class="k-list">
+          <li><strong>陣發性：</strong>自行終止，&lt;7 天</li>
+          <li><strong>持續性：</strong>&gt;7 天</li>
+          <li><strong>長期持續性：</strong>&gt;12 個月</li>
+          <li><strong>永久性：</strong>不計畫恢復或維持竇性心律</li>
+          <li><strong>亞臨床 AF：</strong>無症狀，由監測裝置發現</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常見誘發原因（急性）</p>
+        <ul class="k-list">
+          <li><strong>心臟性：</strong>HF、心肌炎、缺血/MI、高血壓危象、瓣膜病、心臟手術</li>
+          <li><strong>肺部：</strong>COPD 急性惡化、PNA、PE、OSA</li>
+          <li><strong>代謝性：</strong>高兒茶酚胺狀態（感染、手術後、Pheo）、甲狀腺毒症</li>
+          <li><strong>藥物：</strong>酒精（Holiday Heart）、古柯鹼、安非他命、Ibrutinib</li>
+          <li><strong>神經性：</strong>蜘蛛膜下腔出血、缺血性中風</li>
+          <li class="note">約 50% 的急性 AF 找不到可識別的原因</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="afib-eval" data-bm-dept="心臟科" data-bm-title="心房顫動評估">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">初始評估</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>H&P + ECG：</strong>確認 AF（不規則不整齊、無明確 P 波）</li>
+          <li><strong>CXR：</strong>肺水腫、心臟擴大</li>
+          <li><strong>TTE：</strong>LA 大小、有無血栓、瓣膜、LV 功能、心包</li>
+          <li><strong>抽血：</strong>BMP、TFT（甲狀腺功能）；r/o MI 若有其他缺血症狀</li>
+          <li><strong>懷疑 OSA：</strong>睡眠檢查</li>
+          <li>急性 AF &lt;48h：約 70% 在 48h 內自行轉回竇性心律</li>
+          <li class="note">積極處理 HTN、OSA 和酒精可降低 AF 復發風險</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="afib-ratecontrol" data-bm-dept="心臟科" data-bm-title="心房顫動心率控制">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">心率控制（Rate Control）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>目標心率：</strong>靜息時 &lt;110 bpm（寬鬆控制）；症狀持續或 LV 功能受損時目標 &lt;80 bpm</li>
+          <li><strong>β-blocker：</strong>Metoprolol 或 Atenolol；最常用，尤其合併 HF 或 CAD</li>
+          <li><strong>非二氫吡啶 CCB：</strong>Diltiazem 或 Verapamil；HFrEF 禁用</li>
+          <li><strong>Digoxin：</strong>效果較差（靜息心率控制），可作為輔助或 β-blocker/CCB 禁忌時使用</li>
+          <li><strong>Amiodarone：</strong>其他藥物失敗時或急性期</li>
+        </ul>
+        <div class="alert alert-red" style="margin-top:12px;margin-bottom:0">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>WPW 合併 AF：IV β-blocker、CCB、Digoxin <strong>全部禁用</strong>！→ 用 Procainamide、Ibutilide 或 DCCV</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="afib-rhythmcontrol" data-bm-dept="心臟科" data-bm-title="心房顫動節律控制">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">節律控制（Rhythm Control）與電擊整律</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">節律控制趨勢</p>
+        <ul class="k-list">
+          <li>越來越傾向節律控制，尤其有症狀且 LVEF 低者</li>
+          <li>早期節律控制（AAD 或消融）優於常規治療，可達到更多竇性心律且 ↓ MACE</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">電擊整律（Cardioversion）安全原則</p>
+        <ul class="k-list">
+          <li><strong>AF &gt;48h 或不確定時程：</strong>血栓風險 2-5% → 需 TEE 排除血栓，或確保治療性抗凝 ≥3 週，才能整律</li>
+          <li><strong>緊急整律：</strong>立刻靜脈抗凝 + 整律；整律後持續抗凝 ≥4 週（心房頓挫效應）</li>
+          <li><strong>穩定患者、急性發作（&lt;36h）：</strong>早期整律 vs 觀察等待（β-blocker + 抗凝）→ 4 週竇性心律維持率相似</li>
+          <li>整律成功率與 AF 持續時間和 LA 大小成反比；控制誘發因素可提高成功率</li>
+          <li>整律前考慮先給 AAD（如 Amiodarone）預處理，尤其先前整律失敗者</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">射頻消融（Ablation）</p>
+        <ul class="k-list">
+          <li>肺靜脈隔離（PVI）：成功率 50-70%，優於 AAD</li>
+          <li>↓ 症狀、↑ 生活品質、↓ 進展為持續性 AF</li>
+          <li><strong>HFrEF（EF &lt;35%，NYHA II-IV）：</strong>消融 vs 心率/節律藥物 → ↓ 死亡或 HF 住院</li>
+          <li>消融後需持續抗凝 ≥3 個月，之後若 CHA₂DS₂-VASc ≥2 長期抗凝</li>
+          <li>罕見但嚴重的併發症（&lt;1%）：中風、心包填塞、橫膈神經損傷、肺靜脈狹窄、食道-LA 瘻管</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="afib-anticoag" data-bm-dept="心臟科" data-bm-title="心房顫動抗凝治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">口服抗凝治療（OAC）— CHA₂DS₂-VASc</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">
+          <button class="score-link" onclick="openModal('modal-chads')">CHA₂DS₂-VASc 評分表 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+        </p>
+        <ul class="k-list">
+          <li>男性 ≥2 分或女性 ≥3 分 → 建議抗凝</li>
+          <li>男性 1 分或女性 2 分 → 考慮抗凝或 ASA 或不治療</li>
+          <li>男性 0 分或女性 1 分 → 合理不治療</li>
+          <li><strong>無論分數高低均需抗凝：</strong>中重度風濕性二尖瓣狹窄、機械瓣、HCM、Amyloid</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">藥物選擇</p>
+        <ul class="k-list">
+          <li><strong>DOAC 優先於 Warfarin</strong>（非瓣膜性 AF）：效果相當或更好，顱內出血 ↓，監測更方便</li>
+          <li><strong>Warfarin（INR 2-3）仍優先：</strong>中重度風濕性二尖瓣狹窄、機械瓣</li>
+          <li><strong>AF + CAD/PCI：</strong>DOAC + Clopidogrel（不用 Ticagrelor 或 Prasugrel）± ASA（1-4 週後停 ASA）；12 個月後考慮 DOAC 單藥</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">非藥物預防中風</p>
+        <ul class="k-list">
+          <li><strong>左心耳封堵術（LAA Occlusion）：</strong>長期抗凝禁忌時考慮；術後 OAC + ASA × 45 天 → DAPT × 4.5 個月 → ASA 終生</li>
+          <li>心臟手術同時進行外科 LAA 封堵可減少中風風險</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">心房撲動（AFL）</p>
+        <ul class="k-list">
+          <li>中風風險與 AF 相似 → 抗凝原則同 AF</li>
+          <li>典型 AFL（cavotricuspid isthmus）射頻消融成功率 95%</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CHA₂DS₂-VASc Modal -->
+<div class="score-modal-overlay" id="modal-chads">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>CHA₂DS₂-VASc 評分</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-chads')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>項目</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C</strong> — CHF / LV 功能障礙（EF ≤40%）</td><td><strong>+1</strong></td></tr>
+          <tr><td><strong>H</strong> — 高血壓（HTN）</td><td><strong>+1</strong></td></tr>
+          <tr><td><strong>A₂</strong> — 年齡 ≥75 歲</td><td><strong>+2</strong></td></tr>
+          <tr><td><strong>D</strong> — 糖尿病（DM）</td><td><strong>+1</strong></td></tr>
+          <tr><td><strong>S₂</strong> — 中風 / TIA 病史</td><td><strong>+2</strong></td></tr>
+          <tr><td><strong>V</strong> — 血管疾病（MI、PAD、主動脈斑塊）</td><td><strong>+1</strong></td></tr>
+          <tr><td><strong>A</strong> — 年齡 65-74 歲</td><td><strong>+1</strong></td></tr>
+          <tr><td><strong>Sc</strong> — 女性（Sex category）</td><td><strong>+1</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>男性 ≥2 分 / 女性 ≥3 分：</strong>建議抗凝治療<br/>
+        <strong>男性 1 分 / 女性 2 分：</strong>考慮抗凝<br/>
+        <strong>男性 0 分 / 女性 1 分：</strong>合理不治療<br/>
+        <span style="color:var(--muted)">女性性別本身不計入總分，需有其他危險因子才考慮抗凝；未治療中風年發生率約 4.5%，抗凝可降低 68%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- 昏厥 Syncope -->
+<div class="topic-block" id="syncope">
+  <div class="topic-block-head">
+    <span class="topic-block-title">昏厥 Syncope</span>
+    <div data-bm-id="syncope" data-bm-dept="心臟科" data-bm-title="昏厥">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    昏厥定義是<strong>短暫性全腦灌流不足</strong>造成的意識喪失，自行恢復。最重要的第一步是排除<strong>心因性昏厥</strong>——它的一年猝死率高達 20-40%。病史和身體檢查是最有效益的評估工具，約 40% 的案例無法找到明確原因。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="syncope-etiology" data-bm-dept="心臟科" data-bm-title="昏厥原因">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">昏厥病因分類</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>神經心因性（~25%，最常見）：</strong>迷走神經性（血管迷走性）；排便、排尿、咳嗽、吞嚥誘發；頸動脈竇過敏；通常有前驅症狀（流汗、噁心、視力模糊）</li>
+          <li><strong>直立性低血壓（~10%）：</strong>低血容、利尿劑；自律神經病變（DM、酒精、Parkinson's、POTS）；血管擴張劑</li>
+          <li><strong>心因性（~20%，預後最差）：</strong></li>
+          <li>心律不整（~15%）：心搏過緩（SSS、高度 AVB）；心搏過速（VT、SVT 合併結構性心臟病）</li>
+          <li>機械性（~5%）：重度 AS、MS、HCM（LVOTO）、肺高壓、心包填塞、PE、AAA 破裂</li>
+          <li><strong>神經性（~10%）：</strong>椎基底動脈供血不足、腦血管剝離、SAH</li>
+          <li class="note">暈厥不是昏厥：癲癇、低血糖、低血氧、猝倒症、精神性（不同機轉、不同處置）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="syncope-hx" data-bm-dept="心臟科" data-bm-title="昏厥病史評估">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">病史評估重點</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">發作前情境</p>
+        <ul class="k-list">
+          <li><strong>運動中：</strong>AS、HCM、肺高壓 → 高風險</li>
+          <li><strong>姿勢改變（站起來）：</strong>直立性低血壓</li>
+          <li><strong>情緒、疼痛、長時間站立、悶熱環境：</strong>血管迷走性</li>
+          <li><strong>頭部轉動、刮鬍子：</strong>頸動脈竇過敏</li>
+          <li><strong>手臂運動：</strong>鎖骨下動脈竊血</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">昏厥本身的特徵</p>
+        <ul class="k-list">
+          <li><strong>突發無前驅：</strong>心因性（心律不整）高度懷疑</li>
+          <li><strong>前驅症狀（流汗、噁心、視力模糊）：</strong>血管迷走性</li>
+          <li><strong>仰臥或運動中發作：</strong>心因性</li>
+          <li><strong>伴隨胸痛或心悸：</strong>心因性</li>
+          <li><strong>&lt;10 秒抽搐：</strong>短暫腦部低灌流可引發，不代表癲癇</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">可能引發昏厥的藥物</p>
+        <ul class="k-list">
+          <li>血管擴張劑：α-blocker、硝酸鹽、ACEI/ARB、CCB</li>
+          <li>利尿劑；負性心跳藥（β-blocker、CCB）</li>
+          <li>QT 延長藥物：Class IA/IC/III 抗心律不整藥</li>
+          <li>精神科藥物：抗精神病藥、TCA、苯二氮平類</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="syncope-workup" data-bm-dept="心臟科" data-bm-title="昏厥評估工具">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">身體檢查與輔助檢查</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">身體檢查</p>
+        <ul class="k-list">
+          <li><strong>直立性血壓：</strong>陽性 = 站立 3 分鐘內 SBP ↓ ≥20 mmHg 或 DBP ↓ ≥10 mmHg 或 SBP &lt;90 mmHg</li>
+          <li><strong>POTS：</strong>站立 10 分鐘內 HR ↑ ≥30 bpm</li>
+          <li><strong>兩側血壓：</strong>不對稱 → 主動脈剝離、鎖骨下動脈竊血</li>
+          <li><strong>頸動脈竇按摩：</strong>先聽診確認無血管雜音；陽性 = 心臟暫停 &gt;3 秒或 SBP ↓ &gt;50 mmHg</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">輔助檢查</p>
+        <ul class="k-list">
+          <li><strong>ECG（必做）：</strong>50% 異常，但僅 &lt;10% 能確診原因；看心搏過緩、QT 延長、WPW、Brugada、ε 波（ACM）、缺血性變化</li>
+          <li><strong>Echo：</strong>排除結構性心臟病（HCM、AS、CMP、心包積液）</li>
+          <li><strong>Holter / 事件記錄器 / 植入式心臟監測器：</strong>懷疑心律不整性昏厥；症狀越少見越需要植入式（電池壽命 2-3 年）</li>
+          <li><strong>傾斜台試驗（Tilt table test）：</strong>懷疑神經心因性或直立性低血壓，初步評估陰性時考慮；敏感性和特異性有限</li>
+          <li><strong>EPS：</strong>高風險且強烈懷疑心律不整但無法確認（如先前有 MI）；ECG/Echo 正常者避免</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="syncope-highrisk" data-bm-dept="心臟科" data-bm-title="昏厥高風險特徵">
+      <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+      <div class="k-card-head"><span class="k-card-title">高風險特徵 → 住院心電監測</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li>年齡 &gt;60 歲；有 CAD、HF/CMP、瓣膜病、先天性心臟病、心律不整病史</li>
+          <li>家族猝死史</li>
+          <li>符合心因性昏厥特徵：無前驅症狀、運動中、仰臥發作、伴隨外傷</li>
+          <li>伴隨胸痛或呼吸困難</li>
+          <li>生命徵象異常、心臟/肺部/神經學檢查異常</li>
+          <li>Hct 偏低</li>
+          <li>ECG 有傳導異常、心律不整或缺血性變化；有 PPM/ICD</li>
+          <li class="note">Canadian Syncope Risk Score：低風險且急診觀察 2h 無心律不整 → 30 天事件率僅 0.2%</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="syncope-tx" data-bm-dept="心臟科" data-bm-title="昏厥治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">依病因治療</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>心因性昏厥：</strong>治療原發心律不整或心臟結構問題；Brugada / Sarcoid / ACM / 早期復極 + 昏厥 → 考慮 ICD</li>
+          <li><strong>血管迷走性昏厥：</strong>避免誘發因素；物理反壓動作（雙腿交叉、握拳）；↑ 鈉攝取和補液；Fludrocortisone 或 Midodrine；反覆發作 + 記錄器顯示心臟暫停 → 考慮節律器</li>
+          <li><strong>直立性低血壓：</strong>每天 2-3L 液體 + 10g 鈉；緩慢起身；彈性襪；Midodrine、Fludrocortisone、Droxidopa</li>
+          <li class="note">確認駕駛法規（各地規定不同）和 MD 通報義務；評估運動、操作機械或高風險職業的適當性</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
     <!-- 瓣膜性心臟病 Valvular Heart Disease -->
 <div class="topic-block" id="valvular">
   <div class="topic-block-head">
@@ -1392,6 +1695,131 @@
   </div>
 </div>
     
+    <!-- 高血壓 Hypertension -->
+<div class="topic-block" id="htn">
+  <div class="topic-block-head">
+    <span class="topic-block-title">高血壓 Hypertension</span>
+    <div data-bm-id="htn" data-bm-dept="心臟科" data-bm-title="高血壓">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    高血壓的治療目標是 &lt;130/80 mmHg。藥物選擇依<strong>合併症</strong>決定，不是每個人都從同一個藥開始。高血壓急症（Hypertensive Emergency）定義是 BP &gt;180/120 <strong>加上器官損傷</strong>，數字高但無症狀不是急症。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="htn-workup" data-bm-dept="心臟科" data-bm-title="高血壓初始評估">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">初始評估目標</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>三個目標：</strong>找出 CV 危險因子；考慮次發性原因；評估標靶器官損傷</li>
+          <li><strong>病史：</strong>CAD、HF、TIA/CVA、PAD、DM、腎功能不全、OSA；家族史；飲食（鈉攝取量）；NSAIDs、OCP 等藥物</li>
+          <li><strong>身體檢查：</strong>兩側血壓（必量）；眼底鏡；心臟（LVH、雜音）；血管（血管雜音、脈搏）；腹部（腫塊或血管雜音）</li>
+          <li><strong>常規檢查：</strong>K、BUN、Cr、Ca、血糖、Hct、尿液分析、血脂、TSH；ECG（評估 LVH）；尿液 albumin:creatinine</li>
+          <li><strong>居家血壓監測：</strong>可改善血壓控制；24 小時目標 &lt;130/80；考慮於白袍高血壓、隱匿性高血壓或頑固性高血壓</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="htn-secondarycauses" data-bm-dept="心臟科" data-bm-title="高血壓次發性原因">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">次發性高血壓常見原因</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>腎實質性：</strong>最常見；蛋白尿、Cr 升高</li>
+          <li><strong>腎血管性（腎動脈狹窄）：</strong>年輕女性（FMD）或老年動脈粥樣硬化；腹部血管雜音；啟動 RASi 後 Cr 快速升高</li>
+          <li><strong>原發性醛固酮增多症：</strong>低血鉀 + 高血壓；腎上腺瘤或增生；renin/aldosterone 比值升高</li>
+          <li><strong>嗜鉻細胞瘤（Pheo）：</strong>陣發性高血壓、頭痛、流汗、心悸；24h 尿液 metanephrines</li>
+          <li><strong>Cushing's：</strong>向心性肥胖、滿月臉、紫色妊娠紋</li>
+          <li><strong>OSA：</strong>阻塞性睡眠呼吸中止症；頑固性高血壓的重要原因</li>
+          <li><strong>藥物：</strong>OCP、類固醇、NSAIDs（尤其 COX-2）、Epo、CsA、酒精</li>
+          <li><strong>主動脈縮窄：</strong>下肢脈搏減弱、收縮期雜音、橈股脈衝延遲</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="htn-rx" data-bm-dept="心臟科" data-bm-title="高血壓藥物選擇">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">高血壓藥物選擇（依合併症）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">一般原則</p>
+        <ul class="k-list">
+          <li>目標 &lt;130/80 mmHg；高 CV 風險者 SBP 120 多可進一步降低 MACE（但增加 HoTN、AKI、暈厥、電解質異常風險）</li>
+          <li>每降低 SBP 5 mmHg → 缺血性心臟病、中風、HF 風險各 ↓ 約 10%</li>
+          <li><strong>無合併症：</strong>CCB、ARB/ACEI 或 Thiazide（首選 Chlorthalidone）三選一；β-blocker 不是第一線</li>
+          <li><strong>黑人患者：</strong>合理以 CCB 或 Thiazide 開始</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">依合併症選藥</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>合併症</th><th>首選藥物</th></tr></thead>
+          <tbody>
+            <tr><td>CAD / 冠心病</td><td>ACEI 或 ARB；ACEI + CCB 優於 ACEI + Thiazide；心絞痛可加 β-blocker 或硝酸鹽</td></tr>
+            <tr><td>MI 後</td><td>ACEI/ARB ± Aldosterone 拮抗劑 ± β-blocker</td></tr>
+            <tr><td>心臟衰竭</td><td>RASi + β-blocker + 利尿劑 + MRA（+ SGLT2i）</td></tr>
+            <tr><td>中風後</td><td>ACEI ± Thiazide</td></tr>
+            <tr><td>糖尿病</td><td>ACEI 或 ARB；± SGLT2i；可加 Thiazide 或 CCB</td></tr>
+            <tr><td>CKD</td><td>ACEI 或 ARB；SGLT2i</td></tr>
+            <tr><td>懷孕</td><td>Methyldopa、Labetalol、Nifedipine；目標 &lt;140/90；禁 ACEI/ARB</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-blue" style="margin-top:12px;margin-bottom:0">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+          <span>生活型態調整每項可降 SBP 約 5 mmHg：減重（BMI 18.5-24.9）、有氧運動、DASH 飲食、減鈉（≤1.5 g/天）、限酒</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="htn-resistant" data-bm-dept="心臟科" data-bm-title="頑固性高血壓">
+      <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+      <div class="k-card-head"><span class="k-card-title">頑固性高血壓</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>定義：</strong>使用 ≥3 種降壓藥（含利尿劑）仍未達標</li>
+          <li><strong>先排除假性頑固：</strong>血壓測量不準確（袖帶太小）、飲食不遵從（高鈉攝取）、服藥不規律、白袍高血壓（用 ABPM 確認）</li>
+          <li><strong>確保有效利尿：</strong>Chlorthalidone 或 Indapamide 優於 HCTZ；eGFR &lt;30 時 Loop 利尿劑優於 Thiazide</li>
+          <li><strong>可加入：</strong>Aldosterone 拮抗劑（Spironolactone）；血管擴張型 β-blocker（Carvedilol、Labetalol）；α-blocker；直接血管擴張劑</li>
+          <li>腎臟去神經術（Renal Denervation）：導管射頻或超音波消融 → 24h 血壓下降約 5-10 mmHg</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="htn-emergency" data-bm-dept="心臟科" data-bm-title="高血壓急症處置">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">高血壓急症（Hypertensive Emergency）處置</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">降壓目標</p>
+        <ul class="k-list">
+          <li><strong>主動脈剝離、子癲前症、Pheo：</strong>第 1 小時內 SBP &lt;140（主動脈剝離目標 &lt;120）</li>
+          <li><strong>其他高血壓急症：</strong>第 1 小時降低 ≤25%；之後 2-6 小時降至 160/100-110；1-2 天內緩慢達到正常值</li>
+          <li><strong>急性缺血性中風（72h 內）：</strong>溶栓前 &lt;185/110；未溶栓者允許 &lt;220/120</li>
+          <li class="note">嚴重無症狀高血壓（次急症，無器官損傷）：不需 IV 藥物，口服藥物緩慢調整即可</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">IV 降壓藥物選擇</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>藥物</th><th>劑量</th><th>適用情境</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Labetalol</strong></td><td>20-80 mg IVB q10min 或 0.4-2 mg/min</td><td>主動脈剝離、ACS、中風、子癲前症</td></tr>
+            <tr><td><strong>Esmolol</strong></td><td>0.5-1 mg/kg 負荷 → 50-200 μg/kg/min</td><td>主動脈剝離、ACS</td></tr>
+            <tr><td><strong>Nicardipine</strong></td><td>5-15 mg/h（可每 5 分鐘 ↑ 2.5 mg/h）</td><td>中風、AKI、子癲前症、Pheo</td></tr>
+            <tr><td><strong>Clevidipine</strong></td><td>1-32 mg/h（每 5-10 分鐘滴定）</td><td>中風、肺水腫、AKI、Pheo</td></tr>
+            <tr><td><strong>Nitroprusside</strong></td><td>0.25-10 μg/kg/min</td><td>肺水腫（注意氰化物毒性）</td></tr>
+            <tr><td><strong>Nitroglycerin</strong></td><td>5-500 μg/min</td><td>肺水腫、ACS</td></tr>
+            <tr><td><strong>Hydralazine</strong></td><td>10-20 mg q20-30min PRN</td><td>子癲前症</td></tr>
+            <tr><td><strong>Phentolamine</strong></td><td>5-15 mg bolus q5-15min</td><td>Pheo</td></tr>
+            <tr><td><strong>Fenoldopam</strong></td><td>0.1-1.6 μg/kg/min</td><td>AKI（腎保護）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
     <!-- ══════════════════════════════════
          高血壓用藥
     ══════════════════════════════════ -->
@@ -1613,6 +2041,218 @@
   </div>
 </div>
 
+    <!-- 主動脈瘤 Aortic Aneurysms -->
+<div class="topic-block" id="aortic-aneurysm">
+  <div class="topic-block-head">
+    <span class="topic-block-title">主動脈瘤 Aortic Aneurysms</span>
+    <div data-bm-id="aortic-aneurysm" data-bm-dept="心臟科" data-bm-title="主動脈瘤">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    主動脈瘤分胸主動脈瘤（TAA）和腹主動脈瘤（AAA）。危險在於<strong>破裂</strong>，破裂後 24 小時死亡率約 80%。治療核心是<strong>控制危險因子減緩擴張</strong>，達到手術閾值才介入。大小是最重要的手術決策依據。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="aneurysm-rf" data-bm-dept="心臟科" data-bm-title="主動脈瘤危險因子">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">危險因子與病因</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床危險因子</p>
+        <ul class="k-list">
+          <li>HTN、抽菸、高血脂、高齡、男性（AAA 為女性 5 倍）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">遺傳性病因（TAA 為主）</p>
+        <ul class="k-list">
+          <li><strong>Marfan 症候群（FBN1）：</strong>水晶體異位、高身材、蜘蛛指、胸廓畸形</li>
+          <li><strong>Loeys-Dietz：</strong>眼距過寬、懸雍垂裂開、皮膚半透明</li>
+          <li><strong>Ehlers-Danlos（COL3A1）：</strong>易瘀傷、皮膚半透明、子宮或腸道破裂風險</li>
+          <li><strong>先天性：</strong>二葉主動脈瓣（BAV）、Turner 症候群、主動脈縮窄</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">主動脈炎</p>
+        <ul class="k-list">
+          <li>GCA、Takayasu、Behçet's、梅毒性主動脈炎</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="aneurysm-surveillance" data-bm-dept="心臟科" data-bm-title="主動脈瘤追蹤與篩查">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">篩查與追蹤間隔</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">篩查適應症</p>
+        <ul class="k-list">
+          <li><strong>TAA：</strong>BAV；或一等親有 TAA、剝離或 BAV；或有遺傳症候群</li>
+          <li><strong>AAA：</strong>65-75 歲男性有抽菸史或家族史 → 腹部超音波篩查</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">典型擴張速率</p>
+        <ul class="k-list">
+          <li><strong>TAA：</strong>約 0.05 cm/年；確診後 6 個月複查，之後每 6-24 個月</li>
+          <li><strong>AAA：</strong>約 0.26 cm/年</li>
+          <li>&lt;4 cm：每 3 年；4-4.9 cm（男）/ 4-4.4 cm（女）：每 1 年</li>
+          <li>≥5 cm（男）/ ≥4.5 cm（女）：每 6 個月</li>
+          <li class="note">25% TAA 患者同時有 AAA，25% AAA 患者同時有 TAA → 考慮全主動脈影像</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="aneurysm-tx" data-bm-dept="心臟科" data-bm-title="主動脈瘤治療">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">治療：危險因子控制與手術時機</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">危險因子控制</p>
+        <ul class="k-list">
+          <li>戒菸；Statin（LDL-C &lt;70 mg/dL）；考慮 ASA</li>
+          <li><strong>血壓控制目標 &lt;120-130/80：</strong>β-blocker 第一線（↓ dP/dt，減緩擴張）；Marfan 症候群可用 ARB</li>
+          <li>低強度 CV 運動可以；避免 Valsalva 動作（如舉重）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">手術介入閾值</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>類型</th><th>手術閾值</th></tr></thead>
+          <tbody>
+            <tr><td>TAA（Marfan 或其他遺傳性）</td><td>≥4.5-5.0 cm</td></tr>
+            <tr><td>TAA（散發性或 BAV）</td><td>≥5.0-5.5 cm</td></tr>
+            <tr><td>TAA 快速增長</td><td>≥0.3 cm/年（連續 2 次）或 0.5 cm/1 年</td></tr>
+            <tr><td>TAA 降主動脈</td><td>≥5.5 cm</td></tr>
+            <tr><td>AAA（男）</td><td>≥5.5 cm 或 ≥0.5 cm/6 個月</td></tr>
+            <tr><td>AAA（女）</td><td>≥5.0 cm</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>AAA 破裂 24 小時死亡率 ~80%；TAA &gt;6 cm 每年破裂風險 7%。破裂前手術死亡率遠低於破裂後。</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 急性主動脈症候群 Acute Aortic Syndromes -->
+<div class="topic-block" id="acute-aortic">
+  <div class="topic-block-head">
+    <span class="topic-block-title">急性主動脈症候群 Acute Aortic Syndromes</span>
+    <div data-bm-id="acute-aortic" data-bm-dept="心臟科" data-bm-title="急性主動脈症候群">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    急性主動脈症候群包含<strong>主動脈剝離</strong>（最常見）、壁內血腫（IMH）、穿透性主動脈潰瘍（PAU）。Type A（近端）需緊急手術，Type B（遠端）以藥物為主。核心處置是<strong>立刻控制心率和血壓</strong>——先用 β-blocker，再加血管擴張劑。
+  </div>
+
+  <div class="alert alert-red">
+    <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+    <span>Type A 主動脈剝離早期死亡率約每小時 1-2%，未手術死亡率 57%，手術後降至 18%。立刻外科會診。</span>
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="aod-classify" data-bm-dept="心臟科" data-bm-title="主動脈剝離分類">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">定義與分類</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">三種急性主動脈症候群</p>
+        <ul class="k-list">
+          <li><strong>主動脈剝離：</strong>內膜撕裂 → 血液進入主動脈中層（形成假腔）</li>
+          <li><strong>壁內血腫（IMH）：</strong>滋養血管破裂 → 中層出血，無內膜撕裂口；D-dimer 對此型敏感性差</li>
+          <li><strong>穿透性主動脈潰瘍（PAU）：</strong>粥狀硬化斑塊穿透內膜 → 中層出血</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Stanford 分類</p>
+        <ul class="k-list">
+          <li><strong>Type A（近端）：</strong>累及升主動脈，不論起源 → 緊急手術</li>
+          <li><strong>Type B（遠端）：</strong>僅累及降主動脈（左鎖骨下動脈遠端）→ 藥物為主</li>
+          <li class="note">近端比遠端更常見；HTN 佔 &gt;70% 的剝離原因</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="aod-sx" data-bm-dept="心臟科" data-bm-title="主動脈剝離臨床表現">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">臨床表現與身體檢查</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>表現</th><th>Type A（近端）</th><th>Type B（遠端）</th></tr></thead>
+          <tbody>
+            <tr><td>「主動脈」疼痛（突發、撕裂感、最痛在發作瞬間）</td><td>94%（胸、背）</td><td>98%（背、胸、腹）</td></tr>
+            <tr><td>暈厥（常因心包填塞）</td><td>13%</td><td>4%</td></tr>
+            <tr><td>心衰竭（急性 AR）</td><td>9%</td><td>3%</td></tr>
+            <tr><td>低血壓或休克</td><td>25%</td><td>4%</td></tr>
+            <tr><td>脈搏不對稱</td><td>19%</td><td>9%</td></tr>
+            <tr><td>AR 雜音</td><td>44%</td><td>12%</td></tr>
+            <tr><td>高血壓</td><td>36%</td><td>70%</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li class="note">ACS 是漸進性加重的胸痛；主動脈剝離是<strong>最痛在發作瞬間</strong>，之後不會更痛——這是重要的鑑別點</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="aod-dx" data-bm-dept="心臟科" data-bm-title="主動脈剝離診斷">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">診斷工具與風險評分</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>CXR：</strong>60-90% 異常（縱膈腔增寬、左側肋膜積液），但正常不能排除</li>
+          <li><strong>CT angiography：</strong>首選，快速且可用，Se/Sp ≥93%；可看到剝離起始點、範圍和併發症</li>
+          <li><strong>TEE：</strong>近端 Se &gt;95%，遠端 80%；可評估冠狀動脈、心包、AR；氣管後有盲點</li>
+          <li><strong>MRI：</strong>Se/Sp &gt;98%，但耗時且不易取得</li>
+          <li><strong>D-dimer &lt;500 ng/mL：</strong>Se/NPV ~97%，Sp ~50%；高風險或懷疑 IMH 時不適用</li>
+          <li><strong>ADD-RS 風險評分（0-3 分）：</strong>危險因子 + 主動脈疼痛 + 灌流缺損/AR/休克；&gt;1 分 → 影像檢查；≤1 分且 D-dimer &lt;500 → NPV &gt;99%</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="aod-tx" data-bm-dept="心臟科" data-bm-title="主動脈剝離治療">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">治療原則</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>目標：</strong>HR 60-80、中央 SBP &lt;120（維持最低有效灌流壓）</li>
+          <li><strong>注意假性低血壓：</strong>鎖骨下動脈剝離會讓手臂血壓偏低 → 用最高的血壓讀數，並放動脈導管</li>
+          <li><strong>第一步 IV β-blocker：</strong>Esmolol 或 Labetalol → 先降心率，防止血管擴張劑引起的反射性心跳加速</li>
+          <li><strong>β-blocker 禁忌：</strong>改用非二氫吡啶 CCB（Diltiazem 或 Verapamil）</li>
+          <li><strong>之後加血管擴張劑：</strong>Nitroprusside 降 SBP</li>
+          <li><strong>低血壓時：</strong>緊急外科會診；輸液維持 MAP 60-65 mmHg；升壓藥；排除填塞、AR、破裂</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <ul class="k-list">
+          <li><strong>Type A：</strong>所有急性（&lt;15 天）都需外科手術；慢性若有進展、AR 或動脈瘤也需手術</li>
+          <li><strong>Type B：</strong>無併發症 → 藥物治療；有併發症（灌流不足、無法控制的高血壓或疼痛）→ TEVAR（血管內修復）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="aod-complication" data-bm-dept="心臟科" data-bm-title="主動脈剝離併發症">
+      <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+      <div class="k-card-head"><span class="k-card-title">主動脈剝離的併發症（~20% 發生）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>破裂：</strong>進入心包 → 填塞（避免心包穿刺，除非 PEA）；進入肋膜腔、縱膈或腹膜後 → 出血性休克</li>
+          <li><strong>灌流不足（Malperfusion）：</strong>分支動脈部分或完全阻塞</li>
+          <li>冠狀動脈（通常 RCA）→ 下壁 MI</li>
+          <li>頸動脈 → CVA、Horner syndrome</li>
+          <li>肋間 / 腰椎動脈 → 脊髓缺血 / 下肢癱瘓</li>
+          <li>腹腔 / 腸繫膜動脈 → 腸缺血</li>
+          <li>腎動脈 → AKI 或頑固性高血壓</li>
+          <li><strong>主動脈逆流（AR）：</strong>環狀擴張或假腔推移瓣葉 → 急性 AR</li>
+          <li><strong>進展：</strong>假腔持續擴大、動脈瘤形成</li>
+          <li class="note">持續無法控制的血壓或持續疼痛 → 懷疑有併發症或剝離延伸，需立刻重新評估</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
   </main>
 </div>
 
