@@ -1362,36 +1362,6 @@
   </div>
 </div>
 
-<!-- CHA₂DS₂-VASc Modal -->
-<div class="score-modal-overlay" id="modal-chads">
-  <div class="score-modal">
-    <div class="score-modal-head">
-      <h2>CHA₂DS₂-VASc 評分</h2>
-      <button class="score-modal-close" onclick="closeModal('modal-chads')">✕</button>
-    </div>
-    <div class="score-modal-body">
-      <table class="data-table">
-        <thead><tr><th>項目</th><th>分數</th></tr></thead>
-        <tbody>
-          <tr><td><strong>C</strong> — CHF / LV 功能障礙（EF ≤40%）</td><td><strong>+1</strong></td></tr>
-          <tr><td><strong>H</strong> — 高血壓（HTN）</td><td><strong>+1</strong></td></tr>
-          <tr><td><strong>A₂</strong> — 年齡 ≥75 歲</td><td><strong>+2</strong></td></tr>
-          <tr><td><strong>D</strong> — 糖尿病（DM）</td><td><strong>+1</strong></td></tr>
-          <tr><td><strong>S₂</strong> — 中風 / TIA 病史</td><td><strong>+2</strong></td></tr>
-          <tr><td><strong>V</strong> — 血管疾病（MI、PAD、主動脈斑塊）</td><td><strong>+1</strong></td></tr>
-          <tr><td><strong>A</strong> — 年齡 65-74 歲</td><td><strong>+1</strong></td></tr>
-          <tr><td><strong>Sc</strong> — 女性（Sex category）</td><td><strong>+1</strong></td></tr>
-        </tbody>
-      </table>
-      <div class="score-result">
-        <strong>男性 ≥2 分 / 女性 ≥3 分：</strong>建議抗凝治療<br/>
-        <strong>男性 1 分 / 女性 2 分：</strong>考慮抗凝<br/>
-        <strong>男性 0 分 / 女性 1 分：</strong>合理不治療<br/>
-        <span style="color:var(--muted)">女性性別本身不計入總分，需有其他危險因子才考慮抗凝；未治療中風年發生率約 4.5%，抗凝可降低 68%</span>
-      </div>
-    </div>
-  </div>
-</div>
 
     <!-- 昏厥 Syncope -->
 <div class="topic-block" id="syncope">
@@ -2511,36 +2481,6 @@
 
   </div>
 </div>
-
-<!-- RCRI Modal（術前版）-->
-<div class="score-modal-overlay" id="modal-rcri-cardio">
-  <div class="score-modal">
-    <div class="score-modal-head">
-      <h2>RCRI 修訂版心臟風險指數</h2>
-      <button class="score-modal-close" onclick="closeModal('modal-rcri-cardio')">✕</button>
-    </div>
-    <div class="score-modal-body">
-      <table class="data-table">
-        <thead><tr><th>項目</th><th>分數</th></tr></thead>
-        <tbody>
-          <tr><td>高風險手術（腹腔內、胸腔內、腹股溝上血管手術）</td><td><strong>+1</strong></td></tr>
-          <tr><td>缺血性心臟病（心絞痛、MI 病史、使用硝酸鹽）</td><td><strong>+1</strong></td></tr>
-          <tr><td>充血性心臟衰竭病史</td><td><strong>+1</strong></td></tr>
-          <tr><td>腦血管疾病（中風、TIA 病史）</td><td><strong>+1</strong></td></tr>
-          <tr><td>術前使用胰島素治療的糖尿病</td><td><strong>+1</strong></td></tr>
-          <tr><td>術前血清肌酸酐 &gt;2.0 mg/dL</td><td><strong>+1</strong></td></tr>
-        </tbody>
-      </table>
-      <div class="score-result">
-        <strong>0 分：</strong>MACE 風險 &lt;1%<br/>
-        <strong>1 分：</strong>MACE 風險 ~1%<br/>
-        <strong>2 分：</strong>MACE 風險 ~2.4%<br/>
-        <strong>≥3 分：</strong>MACE 風險 &gt;5.4% → 考慮術前心臟評估或延後手術<br/>
-        <span style="color:var(--muted)">MACE = 主要心臟不良事件（心肌梗塞、心因性死亡、心搏停止）</span>
-      </div>
-    </div>
-  </div>
-</div>
     
     <!-- 周邊動脈疾病 PAD -->
 <div class="topic-block" id="pad">
@@ -2685,7 +2625,68 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- CHA₂DS₂-VASc Modal -->
+<div class="score-modal-overlay" id="modal-chads">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>CHA₂DS₂-VASc 評分</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-chads')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>項目</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td><strong>C</strong> — CHF / LV 功能障礙（EF ≤40%）</td><td><strong>+1</strong></td></tr>
+          <tr><td><strong>H</strong> — 高血壓（HTN）</td><td><strong>+1</strong></td></tr>
+          <tr><td><strong>A₂</strong> — 年齡 ≥75 歲</td><td><strong>+2</strong></td></tr>
+          <tr><td><strong>D</strong> — 糖尿病（DM）</td><td><strong>+1</strong></td></tr>
+          <tr><td><strong>S₂</strong> — 中風 / TIA 病史</td><td><strong>+2</strong></td></tr>
+          <tr><td><strong>V</strong> — 血管疾病（MI、PAD、主動脈斑塊）</td><td><strong>+1</strong></td></tr>
+          <tr><td><strong>A</strong> — 年齡 65-74 歲</td><td><strong>+1</strong></td></tr>
+          <tr><td><strong>Sc</strong> — 女性（Sex category）</td><td><strong>+1</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>男性 ≥2 分 / 女性 ≥3 分：</strong>建議抗凝治療<br/>
+        <strong>男性 1 分 / 女性 2 分：</strong>考慮抗凝<br/>
+        <strong>男性 0 分 / 女性 1 分：</strong>合理不治療<br/>
+        <span style="color:var(--muted)">女性性別本身不計入總分，需有其他危險因子才考慮抗凝；未治療中風年發生率約 4.5%，抗凝可降低 68%</span>
+      </div>
+    </div>
+  </div>
 </div>  
+
+<!-- RCRI Modal（術前版）-->
+<div class="score-modal-overlay" id="modal-rcri-cardio">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>RCRI 修訂版心臟風險指數</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-rcri-cardio')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table">
+        <thead><tr><th>項目</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td>高風險手術（腹腔內、胸腔內、腹股溝上血管手術）</td><td><strong>+1</strong></td></tr>
+          <tr><td>缺血性心臟病（心絞痛、MI 病史、使用硝酸鹽）</td><td><strong>+1</strong></td></tr>
+          <tr><td>充血性心臟衰竭病史</td><td><strong>+1</strong></td></tr>
+          <tr><td>腦血管疾病（中風、TIA 病史）</td><td><strong>+1</strong></td></tr>
+          <tr><td>術前使用胰島素治療的糖尿病</td><td><strong>+1</strong></td></tr>
+          <tr><td>術前血清肌酸酐 &gt;2.0 mg/dL</td><td><strong>+1</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="score-result">
+        <strong>0 分：</strong>MACE 風險 &lt;1%<br/>
+        <strong>1 分：</strong>MACE 風險 ~1%<br/>
+        <strong>2 分：</strong>MACE 風險 ~2.4%<br/>
+        <strong>≥3 分：</strong>MACE 風險 &gt;5.4% → 考慮術前心臟評估或延後手術<br/>
+        <span style="color:var(--muted)">MACE = 主要心臟不良事件（心肌梗塞、心因性死亡、心搏停止）</span>
+      </div>
+    </div>
+  </div>
+</div>
   
 <script src="../shared.js"></script>
 <script>
