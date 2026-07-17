@@ -2711,13 +2711,27 @@ document.addEventListener('keydown', e => {
   }
 });
   const SEARCH_INDEX = [
-    { id:'hf',          dept:'心臟科', title:'心臟衰竭',           url:'#hf',          text:'HFrEF HFpEF 鬱血性 NYHA 急性肺水腫 Furosemide GDMT ACEI ARB Beta-blocker MRA SGLT2i BNP 利尿劑' },
-    { id:'ami',         dept:'心臟科', title:'急性心肌梗塞 AMI',    url:'#ami',         text:'ACS STEMI NSTEMI UA Troponin ECG ST 上升 PCI Aspirin Ticagrelor Heparin Statin DAPT 心因性休克 右心梗塞' },
-    { id:'ad',          dept:'心臟科', title:'主動脈剝離 AD',       url:'#ad',          text:'Stanford Type A Type B 撕裂感 縱膈腔 Esmolol Labetalol CT angiography 心臟外科' },
-    { id:'arrhythmia',  dept:'心臟科', title:'心律不整',            url:'#arrhythmia',  text:'AFib AFlutter VT VF 心搏過緩 SVT Adenosine Amiodarone Atropine WPW CHA2DS2 電擊 節律器' },
-    { id:'htn-drugs',   dept:'心臟科', title:'高血壓用藥選擇',      url:'#htn-drugs',   text:'ACEI ARB CCB Amlodipine Diltiazem Thiazide HCTZ Beta-blocker Metoprolol' },
-    { id:'dm-drugs',    dept:'心臟科', title:'糖尿病用藥選擇',      url:'#dm-drugs',    text:'Metformin SGLT2i GLP-1 DPP-4i SU 胰島素 Glargine Basal Bolus Sliding scale NPO 低血糖' },
-  ];
+  { id:'hf',               dept:'心臟科', title:'心臟衰竭',               url:'#hf',               text:'', modalIds:[] },
+  { id:'ami',              dept:'心臟科', title:'急性心肌梗塞 AMI',        url:'#ami',              text:'', modalIds:[] },
+  { id:'ad',               dept:'心臟科', title:'主動脈剝離 AD',           url:'#ad',               text:'', modalIds:[] },
+  { id:'arrhythmia',       dept:'心臟科', title:'心律不整',               url:'#arrhythmia',       text:'', modalIds:[] },
+  { id:'htn-drugs',        dept:'心臟科', title:'高血壓用藥選擇',          url:'#htn-drugs',        text:'', modalIds:[] },
+  { id:'dm-drugs',         dept:'心臟科', title:'糖尿病用藥選擇',          url:'#dm-drugs',         text:'', modalIds:[] },
+  { id:'ccd',              dept:'心臟科', title:'慢性冠心病 CCD',          url:'#ccd',              text:'', modalIds:[] },
+  { id:'acs',              dept:'心臟科', title:'急性冠心症 ACS',          url:'#acs',              text:'', modalIds:['modal-timi-acs'] },
+  { id:'pa-catheter',      dept:'心臟科', title:'肺動脈導管',              url:'#pa-catheter',      text:'', modalIds:[] },
+  { id:'cardiomyopathy',   dept:'心臟科', title:'心肌病變',               url:'#cardiomyopathy',   text:'', modalIds:[] },
+  { id:'valvular',         dept:'心臟科', title:'瓣膜性心臟病',            url:'#valvular',         text:'', modalIds:[] },
+  { id:'pericardial',      dept:'心臟科', title:'心包膜疾病',              url:'#pericardial',      text:'', modalIds:[] },
+  { id:'htn',              dept:'心臟科', title:'高血壓',                 url:'#htn',              text:'', modalIds:[] },
+  { id:'aortic-aneurysm',  dept:'心臟科', title:'主動脈瘤',               url:'#aortic-aneurysm',  text:'', modalIds:[] },
+  { id:'acute-aortic',     dept:'心臟科', title:'急性主動脈症候群',        url:'#acute-aortic',     text:'', modalIds:[] },
+  { id:'afib',             dept:'心臟科', title:'心房顫動',               url:'#afib',             text:'', modalIds:['modal-chads'] },
+  { id:'syncope',          dept:'心臟科', title:'昏厥',                   url:'#syncope',          text:'', modalIds:[] },
+  { id:'crmd',             dept:'心臟科', title:'心臟節律管理裝置',        url:'#crmd',             text:'', modalIds:['modal-rcri-cardio'] },
+  { id:'periop',           dept:'心臟科', title:'非心臟手術心臟風險評估',  url:'#periop',           text:'', modalIds:['modal-rcri-cardio'] },
+  { id:'pad',              dept:'心臟科', title:'周邊動脈疾病 PAD',        url:'#pad',              text:'', modalIds:[] },
+];
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
   } else {
