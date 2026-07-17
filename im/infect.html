@@ -37,22 +37,40 @@
 
 <div class="page-wrap">
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-head">感染科</div>
-    <div class="sidebar-section-title">核心概念</div>
-    <a href="#sepsis"     class="sidebar-link">敗血症 Sepsis</a>
-    <a href="#abx-choice" class="sidebar-link">抗生素選擇原則</a>
-    <a href="#abx-common" class="sidebar-link">常用抗生素整理</a>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-section-title">常見感染</div>
-    <a href="#pneumonia"  class="sidebar-link">肺炎</a>
-    <a href="#uti"        class="sidebar-link">泌尿道感染</a>
-    <a href="#ssti"       class="sidebar-link">皮膚軟組織感染</a>
-    <a href="#meningitis" class="sidebar-link">腦膜炎</a>
-    <a href="#ie"         class="sidebar-link">感染性心內膜炎</a>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-section-title">其他科別</div>
-    <a href="cardio.html" class="sidebar-link">心臟科 →</a>
-  </aside>
+  <div class="sidebar-head">感染科</div>
+
+  <div class="sidebar-section-title">核心概念</div>
+  <a href="#sepsis"            class="sidebar-link">敗血症 Sepsis</a>
+  <a href="#abx-choice"        class="sidebar-link">抗生素選擇原則</a>
+  <a href="#abx-common"        class="sidebar-link">常用抗生素整理</a>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-title">呼吸道 / 黴菌</div>
+  <a href="#pneumonia"         class="sidebar-link">肺炎</a>
+  <a href="#fungal"            class="sidebar-link">黴菌感染</a>
+  <a href="#immunocompromised" class="sidebar-link">免疫抑制宿主感染</a>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-title">泌尿道 / 皮膚骨骼</div>
+  <a href="#uti"               class="sidebar-link">泌尿道感染</a>
+  <a href="#ssti-osteo"        class="sidebar-link">軟組織與骨骼感染</a>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-title">神經 / 血流</div>
+  <a href="#neuro-infxn"       class="sidebar-link">神經感染</a>
+  <a href="#bacteremia-ie"     class="sidebar-link">菌血症與心內膜炎</a>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-title">特殊感染</div>
+  <a href="#tb"                class="sidebar-link">結核病</a>
+  <a href="#hiv"               class="sidebar-link">HIV/AIDS</a>
+  <a href="#tick-borne"        class="sidebar-link">蜱蟲傳播疾病</a>
+  <a href="#fever-syndromes"   class="sidebar-link">發燒症候群</a>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-title">其他科別</div>
+  <a href="cardio.html"        class="sidebar-link">心臟科 →</a>
+</aside>
 
   <main class="main-content">
     <div class="breadcrumb">
@@ -2047,17 +2065,20 @@
 <script src="../shared.js"></script>
 <script>
   const SEARCH_INDEX = [
+    { id:'sepsis',           dept:'感染科', title:'敗血症 Sepsis',              url:'#sepsis',        text:'', modalIds:[] },
+    { id:'abx-choice',       dept:'感染科', title:'抗生素選擇原則',          url:'#abx-choice',           text:'', modalIds:[] },
+    { id:'abx-common',       dept:'感染科', title:'常用抗生素整理',  url:'#abx-common',text:'', modalIds:[] },
     { id:'pneumonia',        dept:'感染科', title:'肺炎',              url:'#pneumonia',        text:'', modalIds:[] },
     { id:'fungal',           dept:'感染科', title:'黴菌感染',          url:'#fungal',           text:'', modalIds:[] },
     { id:'immunocompromised',dept:'感染科', title:'免疫抑制宿主感染',  url:'#immunocompromised',text:'', modalIds:[] },
     { id:'uti',              dept:'感染科', title:'泌尿道感染',        url:'#uti',              text:'', modalIds:[] },
     { id:'ssti-osteo',       dept:'感染科', title:'軟組織與骨骼感染',  url:'#ssti-osteo',       text:'', modalIds:[] },
     { id:'neuro-infxn',      dept:'感染科', title:'神經感染',          url:'#neuro-infxn',      text:'', modalIds:[] },
-    { id:'bacteremia-ie',   dept:'感染科', title:'菌血症與心內膜炎', url:'#bacteremia-ie', text:'', modalIds:['modal-duke'] },
-    { id:'tb',              dept:'感染科', title:'結核病',            url:'#tb',            text:'', modalIds:[] },
-    { id:'hiv',             dept:'感染科', title:'HIV/AIDS',          url:'#hiv',           text:'', modalIds:[] },
-    { id:'tick-borne',      dept:'感染科', title:'蜱蟲傳播疾病',      url:'#tick-borne',    text:'', modalIds:[] },
-    { id:'fever-syndromes', dept:'感染科', title:'發燒症候群',        url:'#fever-syndromes', text:'', modalIds:[] },
+    { id:'bacteremia-ie',    dept:'感染科', title:'菌血症與心內膜炎', url:'#bacteremia-ie', text:'', modalIds:['modal-duke'] },
+    { id:'tb',               dept:'感染科', title:'結核病',            url:'#tb',            text:'', modalIds:[] },
+    { id:'hiv',              dept:'感染科', title:'HIV/AIDS',          url:'#hiv',           text:'', modalIds:[] },
+    { id:'tick-borne',       dept:'感染科', title:'蜱蟲傳播疾病',      url:'#tick-borne',    text:'', modalIds:[] },
+    { id:'fever-syndromes',  dept:'感染科', title:'發燒症候群',        url:'#fever-syndromes', text:'', modalIds:[] },
   ];
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
