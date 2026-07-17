@@ -255,15 +255,20 @@
       </table>
     </div>
 
-    <!-- 肺炎 -->
-    <div class="topic-block" id="pneumonia">
-      <div class="topic-block-head">
-        <span class="topic-block-title">肺炎 Pneumonia</span>
-        <div data-bm-id="pneumonia" data-bm-dept="感染科" data-bm-title="肺炎">
-          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-      </div>
-      <div class="card-grid col-2">
+    <!-- 肺炎 Pneumonia -->
+<div class="topic-block" id="pneumonia">
+  <div class="topic-block-head">
+    <span class="topic-block-title">肺炎 Pneumonia</span>
+    <div data-bm-id="pneumonia" data-bm-dept="感染科" data-bm-title="肺炎">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    肺炎的處置核心是：先依<strong>臨床場域（CAP/HAP/VAP）</strong>推測病原體，再依<strong>嚴重度</strong>決定住院與否及抗生素強度。抗生素選擇在門診、病房、ICU 三個場景完全不同，不要套用同一個方案。
+  </div>
+  
+    <div class="card-grid col-2">
         <div class="k-card" data-bm-id="pna-type" data-bm-dept="感染科" data-bm-title="肺炎分類">
           <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
           <div class="k-card-head"><span class="k-card-title">CAP vs HAP vs VAP</span></div>
@@ -318,7 +323,130 @@
           </div>
         </div>
       </div>
+    <div class="k-card" data-bm-id="pna-micro" data-bm-dept="感染科" data-bm-title="肺炎病原體">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">依場域推測病原體</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>場域</th><th>主要病原體</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>CAP（社區）</strong></td>
+              <td>50-60% 找不到病原；病毒約 25%（流感、RSV、hMPV、COVID-19）；細菌：S. pneumoniae（最常見）、Mycoplasma、Chlamydia（年輕健康者）、Legionella（老人、吸菸、免疫低下、TNF 抑制劑）、H. influenzae（COPD）、Klebsiella（酒精、吸入性）</td>
+            </tr>
+            <tr>
+              <td><strong>HAP（住院 ≥48h）</strong></td>
+              <td>S. aureus、Pseudomonas、Klebsiella、E. coli、Enterobacter、Acinetobacter；90 天內 IV 抗生素是 MDR 的危險因子；病毒約 20%</td>
+            </tr>
+            <tr>
+              <td><strong>VAP（插管 ≥48h）</strong></td>
+              <td>同 HAP；MDR 風險更高</td>
+            </tr>
+            <tr>
+              <td><strong>膿胸</strong></td>
+              <td>S. pneumo、S. aureus、E. coli、Klebsiella、H. influenzae、厭氧菌</td>
+            </tr>
+            <tr>
+              <td><strong>肺膿瘍</strong></td>
+              <td>多菌性，含口腔菌叢；S. aureus、厭氧菌、Strep、GNR（Klebsiella、Pseudomonas）、Nocardia、Actinomyces、黴菌、分枝桿菌</td>
+            </tr>
+            <tr>
+              <td><strong>免疫抑制宿主</strong></td>
+              <td>以上 + PCP、Cryptococcus、Nocardia、非 TB 分枝桿菌、CMV、侵襲性黴菌</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+
+    <div class="k-card" data-bm-id="pna-dx" data-bm-dept="感染科" data-bm-title="肺炎診斷評估">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">診斷評估</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>定義：</strong>發燒、咳嗽、膿痰、呼吸困難 + 胸部影像新浸潤</li>
+          <li><strong>痰液 Gram stain / 培養：</strong>高品質痰液（&lt;10 扁平上皮細胞/低倍視野）才有意義；抗生素給藥 &gt;10h 後敏感性下降</li>
+          <li><strong>Procalcitonin：</strong>細菌性（非病毒性）肺炎時升高；&lt;0.25（ICU &lt;0.5）或下降 ≥80% 可考慮停抗生素，縮短療程 2-3 天；免疫抑制者不適用</li>
+          <li><strong>嚴重肺炎才做：</strong>Legionella 尿液抗原（僅測 L. pneumophila 血清型 1，佔臨床感染 60-70%）；S. pneumoniae 尿液抗原（Se 70%，Sp &gt;90%）；血培養（陽性率 ~10%）</li>
+          <li><strong>懷疑 TB：</strong>誘導痰 AFB 染色 ×3（每次間隔 ≥8h，至少一次晨痰）→ 呼吸道隔離；TB PCR</li>
+          <li><strong>支氣管鏡：</strong>免疫抑制、重症、治療無效、懷疑 PCP 或培養陰性時</li>
+          <li class="note">qSOFA &gt;2 分（RR &gt;22、意識改變、SBP &lt;100）預測不良結果，考慮 ICU 評估</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="pna-tx" data-bm-dept="感染科" data-bm-title="肺炎抗生素治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">抗生素選擇（依場域和嚴重度）</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>情境</th><th>建議抗生素方案</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>CAP 門診</strong></td>
+              <td>Amoxicillin、Azithromycin 或 Doxycycline（當地抗藥率 &gt;25% 時避免後兩者）</td>
+            </tr>
+            <tr>
+              <td><strong>CAP 病房</strong></td>
+              <td>[第三代 Cephalosporin + Azithromycin] 或 Levofloxacin；加 Macrolide 可提升臨床反應</td>
+            </tr>
+            <tr>
+              <td><strong>CAP 加護病房</strong></td>
+              <td>第三代 Cephalosporin + Azithromycin；有 MRSA 或 Pseudomonas 危險因子才加強覆蓋</td>
+            </tr>
+            <tr>
+              <td><strong>HAP / VAP</strong></td>
+              <td>[Pip-tazo 或 Cefepime 或 Carbapenem] + [Vancomycin 或 Linezolid]；可加 FQ 或 Azithromycin 若懷疑非典型菌；Daptomycin 在肺部無效</td>
+            </tr>
+            <tr>
+              <td><strong>膿胸 / 肺膿瘍</strong></td>
+              <td>[第三代 Cephalosporin + Metronidazole] 或 Ampicillin-sulbactam；有危險因子才覆蓋 Pseudomonas 或 MRSA；膿胸需引流（&gt;1 cm）± 胸管；肺膿瘍通常不需引流</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>療程：</strong>CAP 5-7 天（臨床改善後 IV → PO）；HAP/VAP 7 天；膿胸/肺膿瘍 2-6 週</li>
+          <li><strong>類固醇：</strong>重度 CAP（CRP &gt;204 mg/L）可能 ↓ 機械通氣、ARDS 和死亡率，但 ↑ 高血糖和再住院；流感性肺炎避免使用</li>
+          <li><strong>懷疑 TB 時避免使用 Quinolone</strong>（會掩蓋症狀延誤診斷）</li>
+          <li class="note">治療無改善的原因：時間不夠（發燒可持續 &gt;4 天）、藥物濃度不足（Vancomycin 谷值 &lt;15-20）、抗藥菌或重複感染、診斷錯誤（黴菌/病毒/PE/CHF/ILD）、旁肺積液/膿胸/肺膿瘍</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="viral-pna" data-bm-dept="感染科" data-bm-title="病毒性呼吸道感染">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">病毒性呼吸道感染</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">流感（A 型 & B 型）</p>
+        <ul class="k-list">
+          <li><strong>Neuraminidase 抑制劑（Oseltamivir）：</strong>症狀 48h 內開始效果最佳；重症或免疫抑制者即使 &gt;48h 也應盡快給</li>
+          <li><strong>Baloxavir（核酸內切酶抑制劑）：</strong>第一天症狀和病毒量下降優於 Oseltamivir；重症資料不足；有抗藥性出現</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">COVID-19</p>
+        <ul class="k-list">
+          <li><strong>非住院：</strong>Nirmatrelvir/Ritonavir（Paxlovid，注意藥物交互作用）或 Remdesivir &gt; Molnupiravir</li>
+          <li><strong>住院需補充氧氣：</strong>Dexamethasone 6 mg/天 × 最多 10 天 ± Remdesivir</li>
+          <li><strong>住院機械通氣或 ECMO：</strong>Dexamethasone + 抗 IL-6（Tocilizumab）或 抗 JAK（Baricitinib）</li>
+          <li>高血栓風險 → 抗凝（預防或治療劑量依嚴重度）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="pna-prevention" data-bm-dept="感染科" data-bm-title="肺炎預防">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">肺炎鏈球菌疫苗適應症</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>適用對象：</strong>≥50 歲；或 19-49 歲合併以下任一：CHF、肺部疾病、肝硬化、DM、酒精、抽菸、免疫抑制（ESRD、器官移植、HIV、白血病、無脾症）</li>
+          <li><strong>未曾接種：</strong>接種 1 劑 PCV-21、PCV-20 或 PCV15/PPSV23 系列</li>
+          <li><strong>流感疫苗：</strong>建議所有 &gt;6 個月的人每年接種；&gt;75 歲或 ≥60 歲高風險者也考慮 RSV 疫苗</li>
+          <li><strong>流感暴露後預防：</strong>高風險接觸者 Oseltamivir × 7 天或 Baloxavir 單次</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
 
     <!-- UTI -->
     <div class="topic-block" id="uti">
