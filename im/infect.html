@@ -296,19 +296,7 @@
             </ul>
           </div>
         </div>
-        <div class="k-card" data-bm-id="pna-tx" data-bm-dept="感染科" data-bm-title="CAP 治療">
-          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
-          <div class="k-card-head"><span class="k-card-title">CAP 抗生素選擇</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>門診輕度</strong>：Amoxicillin 或 Doxycycline 或 Azithromycin</li>
-              <li><strong>住院非重症</strong>：Ceftriaxone + Azithromycin</li>
-              <li><strong>住院重症 / ICU</strong>：β-lactam + Azithromycin 或 Fluoroquinolone</li>
-              <li><strong>HAP（無 Pseudomonas 風險）</strong>：Ceftriaxone 或 Pip/Tazo</li>
-              <li><strong>HAP（有 Pseudomonas 風險）</strong>：Pip/Tazo 或 Cefepime 或 Meropenem</li>
-            </ul>
-          </div>
-        </div>
+        
         <div class="k-card" data-bm-id="pna-monitor" data-bm-dept="感染科" data-bm-title="肺炎監測">
           <div class="k-card-tags"><span class="tag tag-value">監測指標</span></div>
           <div class="k-card-head"><span class="k-card-title">住院肺炎的監測重點</span></div>
@@ -448,14 +436,19 @@
     </div>
   </div>
 
-    <!-- UTI -->
+    <!-- 泌尿道感染 UTI -->
     <div class="topic-block" id="uti">
       <div class="topic-block-head">
-        <span class="topic-block-title">泌尿道感染 UTI</span>
-        <div data-bm-id="uti" data-bm-dept="感染科" data-bm-title="泌尿道感染 UTI">
+        <span class="topic-block-title">泌尿道感染 Urinary Tract Infections</span>
+        <div data-bm-id="uti" data-bm-dept="感染科" data-bm-title="泌尿道感染">
           <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
         </div>
       </div>
+      
+  <div class="topic-intro">
+    UTI 的核心觀念：<strong>無症狀菌尿幾乎不需要治療</strong>（懷孕和泌尿科手術前是例外）。有症狀才治療，且要根據是否「複雜性」決定抗生素強度和療程。反覆培養不明菌叢而無症狀，通常是污染而非感染。
+  </div>
+      
       <div class="card-grid col-2">
         <div class="k-card" data-bm-id="uti-type" data-bm-dept="感染科" data-bm-title="UTI 分類">
           <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
@@ -484,17 +477,130 @@
             </ul>
           </div>
         </div>
+
+    <div class="k-card" data-bm-id="uti-def" data-bm-dept="感染科" data-bm-title="UTI 定義與分類">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">定義與分類</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>無症狀菌尿：</strong>尿液有細菌但無感染症狀 → <strong>通常不需治療</strong>；例外：懷孕、近期（1-2 個月）腎臟移植、侵入性泌尿道手術前</li>
+          <li><strong>非複雜性 UTI：</strong>感染侷限於膀胱，無上泌尿道或全身感染徵象</li>
+          <li><strong>複雜性 UTI：</strong>感染延伸至膀胱以外（腎盂腎炎、腎 / 腎周膿瘍、前列腺炎），表現為發燒、寒顫、倦怠、腰痛、CVA 叩痛或骨盆 / 會陰疼痛；更易發生菌血症或敗血症</li>
+          <li class="note">男性、腎結石、支架、尿流改道、免疫抑制、DM 者<strong>不自動算複雜性</strong>；懷孕和腎臟移植才自動算複雜性</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">病原體</p>
+        <ul class="k-list">
+          <li><strong>非複雜性：</strong>E. coli（80%）、Proteus、Klebsiella、S. saprophyticus</li>
+          <li><strong>複雜性：</strong>以上 + Pseudomonas、Enterococcus、Staph（少見原發性 UTI 病原）；MDR 風險 ↑</li>
+          <li><strong>導管相關：</strong>E. coli 最常見、Candida、Enterococcus、Pseudomonas、其他 GNR</li>
+          <li><strong>尿道炎：</strong>Chlamydia trachomatis、N. gonorrhoeae、Ureaplasma、Trichomonas、Mycoplasma genitalium、HSV</li>
+        </ul>
       </div>
     </div>
 
-    <!-- SSTI -->
-    <div class="topic-block" id="ssti">
+    <div class="k-card" data-bm-id="uti-sx" data-bm-dept="感染科" data-bm-title="UTI 臨床表現">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">臨床表現與診斷</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+        <ul class="k-list">
+          <li><strong>膀胱炎（Cystitis）：</strong>排尿疼痛、尿急、頻尿、血尿、恥骨上疼痛；無發燒</li>
+          <li><strong>尿道炎：</strong>排尿疼痛、尿道分泌物（見 STI）</li>
+          <li><strong>急性前列腺炎：</strong>會陰疼痛、發燒、前列腺觸診壓痛</li>
+          <li><strong>慢性前列腺炎：</strong>類似膀胱炎症狀 + 排尿障礙（猶豫、尿流弱）</li>
+          <li><strong>腎盂腎炎：</strong>發燒、寒顫、腰痛或背痛、噁心嘔吐、腹瀉</li>
+          <li><strong>腎膿瘍：</strong>腎盂腎炎症狀 + 適當抗生素後仍持續發燒</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷</p>
+        <ul class="k-list">
+          <li><strong>尿液分析：</strong>膿尿 + 菌尿 ± 血尿 ± 亞硝酸鹽</li>
+          <li><strong>尿液培養（中段尿或導尿）：</strong>≥10⁵ CFU/mL 為陽性；某些情境 ≥10² 也有意義</li>
+          <li><strong>導管相關 UTI：</strong>需要症狀 + 單一菌種 ≥10³ CFU/mL（更換 Foley 後的乾淨檢體）；單純膿尿不足以診斷</li>
+          <li><strong>血培養：</strong>發燒患者取得；複雜性 UTI 考慮</li>
+          <li><strong>CT 腹/骨盆：</strong>重症、懷疑阻塞、適當抗生素 48-72h 後症狀未改善時</li>
+          <li class="note">所有男性 UTI 都應考慮前列腺炎，做前列腺觸診</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="uti-tx" data-bm-dept="感染科" data-bm-title="UTI 治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">治療（依情境選擇，根據培養結果降階）</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>情境</th><th>建議抗生素方案</th><th>療程</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>無症狀菌尿</strong></td>
+              <td>通常不治療；懷孕 / 術前例外</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td><strong>非複雜性膀胱炎</strong></td>
+              <td>Nitrofurantoin（Macrobid 100 mg q12h）；或 TMP-SMX DS；或 Fosfomycin 3g 單次</td>
+              <td>5 天（Nitro）/ 3 天（TMP-SMX）/ 單次（Fosfomycin）</td>
+            </tr>
+            <tr>
+              <td><strong>複雜性膀胱炎（門診）</strong></td>
+              <td>FQ 或 TMP-SMX PO（FQ 和 TMP-SMX 優於 β-lactam）</td>
+              <td>7-14 天</td>
+            </tr>
+            <tr>
+              <td><strong>複雜性膀胱炎（住院）</strong></td>
+              <td>Ceftriaxone 或 FQ IV；GPC 加 Vancomycin</td>
+              <td>7-14 天</td>
+            </tr>
+            <tr>
+              <td><strong>急性前列腺炎</strong></td>
+              <td>FQ 或 TMP-SMX PO</td>
+              <td>14-28 天</td>
+            </tr>
+            <tr>
+              <td><strong>慢性前列腺炎</strong></td>
+              <td>FQ 或 TMP-SMX PO</td>
+              <td>6-12 週</td>
+            </tr>
+            <tr>
+              <td><strong>腎盂腎炎（門診）</strong></td>
+              <td>FQ × 7 天或 TMP-SMX PO × 14 天</td>
+              <td>7-14 天</td>
+            </tr>
+            <tr>
+              <td><strong>腎盂腎炎（住院）</strong></td>
+              <td>Ceftriaxone × 14 天；MDR 風險者 Cefepime、Pip-tazo 或 Carbapenem；臨床改善後 IV → PO</td>
+              <td>14 天</td>
+            </tr>
+            <tr>
+              <td><strong>腎膿瘍</strong></td>
+              <td>引流 + 腎盂腎炎方案抗生素</td>
+              <td>依引流反應</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="alert alert-blue" style="margin-bottom:0">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+          <span>有導管者：移除或更換導管後再培養；導管存在時膿尿不足以診斷 UTI；盡早拔除 Foley 是預防 CAUTI 的最有效介入。</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 軟組織與骨骼感染 SSTI -->
+    <div class="topic-block" id="ssti-osteo">
       <div class="topic-block-head">
-        <span class="topic-block-title">皮膚軟組織感染 SSTI</span>
-        <div data-bm-id="ssti" data-bm-dept="感染科" data-bm-title="皮膚軟組織感染">
+        <span class="topic-block-title">軟組織與骨骼感染 Skin, Soft Tissue & Bone Infections</span>
+        <div data-bm-id="ssti" data-bm-dept="感染科" data-bm-title="軟組織與骨骼感染">
           <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
         </div>
       </div>
+      <div class="topic-intro">
+    皮膚軟組織感染的關鍵判斷是：<strong>有沒有膿（purulent）</strong>決定是否需要覆蓋 MRSA；<strong>有沒有壞死</strong>決定是否需要緊急手術。壞死性筋膜炎是外科急症，臨床高度懷疑就要立刻手術探查，不要等影像確認。
+      </div>
+      
       <div class="card-grid col-2">
         <div class="k-card" data-bm-id="ssti-type" data-bm-dept="感染科" data-bm-title="SSTI 鑑別">
           <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
@@ -522,6 +628,164 @@
             </ul>
           </div>
         </div>
+
+        <div class="k-card" data-bm-id="cellulitis" data-bm-dept="感染科" data-bm-title="蜂窩性組織炎">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">蜂窩性組織炎（Cellulitis）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">危險因子</p>
+        <ul class="k-list">
+          <li>外傷、水腫、皮膚炎症或感染、肥胖、DM、其他免疫抑制</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">無膿性（Non-purulent）</p>
+        <ul class="k-list">
+          <li><strong>主要病原：</strong>β-溶血性鏈球菌 &gt; S. aureus</li>
+          <li><strong>輕度：</strong>口服 Penicillin VK 或第一代 Cephalosporin</li>
+          <li><strong>中度：</strong>IV Penicillin、Ceftriaxone 或 Cefazolin</li>
+          <li><strong>重度：</strong>IV Vancomycin + Pip-tazo（± Clindamycin 或 Linezolid 若懷疑毒素休克症候群）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">有膿性（Purulent）</p>
+        <ul class="k-list">
+          <li><strong>主要病原：</strong>MRSA（高達 75%）&gt;&gt; β-溶血性鏈球菌</li>
+          <li><strong>輕度：</strong>切開引流（I&D）+ Clindamycin 或 TMP-SMX</li>
+          <li><strong>中度：</strong>I&D + TMP-SMX、Doxycycline 或 Linezolid</li>
+          <li><strong>重度：</strong>I&D + IV Vancomycin、Daptomycin 或 Linezolid</li>
+          <li class="note">療程 5-14 天依嚴重度和反應決定；抗生素開始後紅腫可能暫時加重（細菌死亡引發炎症）；畫出邊界追蹤進展；肥胖患者需足夠劑量</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="bite-wound" data-bm-dept="感染科" data-bm-title="咬傷感染">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">咬傷感染</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>暴露</th><th>病原體</th><th>臨床特點</th><th>治療</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>貓咬傷</strong></td>
+              <td>Pasteurella spp.</td>
+              <td>快速發作紅腫、淋巴管炎、發燒</td>
+              <td>Amoxicillin-clavulanate</td>
+            </tr>
+            <tr>
+              <td><strong>狗咬傷</strong></td>
+              <td>Pasteurella & Capnocytophaga</td>
+              <td>無脾 / 肝硬化者可引發嚴重敗血症合併 DIC 和壞疽</td>
+              <td>Amoxicillin-clavulanate；懷疑 Capno → Pip-tazo 或 Carbapenem</td>
+            </tr>
+            <tr>
+              <td><strong>穿刺傷</strong></td>
+              <td>Pseudomonas</td>
+              <td>可合併深層膿瘍</td>
+              <td>依藥敏選藥</td>
+            </tr>
+            <tr>
+              <td><strong>園藝（土壤暴露）</strong></td>
+              <td>Sporothrix</td>
+              <td>潰瘍性結節、淋巴管播散</td>
+              <td>Itraconazole</td>
+            </tr>
+            <tr>
+              <td><strong>鹽水 / 生牡蠣</strong></td>
+              <td>V. vulnificus</td>
+              <td>出血性水泡、敗血症（肝硬化 / 鐵過載者尤危）</td>
+              <td>Doxycycline + Ceftazidime 或 Ceftriaxone</td>
+            </tr>
+            <tr>
+              <td><strong>淡水</strong></td>
+              <td>Aeromonas</td>
+              <td>可引發肌肉壞死 / 橫紋肌溶解</td>
+              <td>FQ、TMP-SMX 或 Ceftriaxone</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="necrotizing" data-bm-dept="感染科" data-bm-title="壞死性筋膜炎">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">壞死性軟組織感染（NSTI）— 外科急症</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>臨床診斷足以啟動緊急手術探查，<strong>不要等影像確認</strong>。延誤清創每延一小時死亡率顯著上升。</span>
+        </div>
+        <div class="card-grid col-2" style="margin-bottom:12px">
+          <div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">分型</p>
+            <ul class="k-list">
+              <li><strong>Type I（多菌性）：</strong>混合需氧 + 厭氧菌；多見於老年合併症患者；Fournier's gangrene（會陰 / 生殖器）；頭頸部 NSTI 來自口腔菌叢</li>
+              <li><strong>Type II（單菌性）：</strong>通常為 A 群鏈球菌；也可為 Staph、Vibrio、Aeromonas；常合併毒素休克症候群（TSS）</li>
+              <li><strong>梭狀芽孢桿菌肌壞死（氣性壞疽）：</strong>C. perfringens；外傷傷口（Gram stain 顯示大型鈍頭 GPC 桿菌）</li>
+            </ul>
+          </div>
+          <div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+            <ul class="k-list">
+              <li>紅腫熱 + 全身症狀 ± 捻髮音、水泡、壞死</li>
+              <li><strong>疼痛程度與外觀不成比例</strong>（早期皮膚看起來還好，但底下已壞死）</li>
+              <li>皮膚感覺過敏，之後變得麻木（神經壞死）</li>
+              <li>快速進展</li>
+            </ul>
+          </div>
+        </div>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li><strong>緊急手術清創（最重要）：</strong>廣泛切除壞死組織，通常需要多次清創</li>
+          <li><strong>經驗性抗生素：</strong>[Pip-tazo 或 Ceftriaxone + Metronidazole 或 Carbapenem] + [Vancomycin 或 Linezolid]</li>
+          <li><strong>A 群鏈球菌：</strong>Penicillin + Clindamycin 或 Linezolid（Clindamycin 抑制毒素產生）+ 考慮 IVIG（毒素休克症候群）</li>
+          <li>非對比 CT 有助於定位（但不能阻礙手術）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="diabetic-foot" data-bm-dept="感染科" data-bm-title="糖尿病足感染">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">糖尿病足感染</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>輕度：</strong>淺表潰瘍、紅腫 &lt;2 cm、無深層侵犯；S. aureus 或需氧鏈球菌 → 口服抗 GPC 藥物（Dicloxacillin、Cephalexin；MRSA → TMP-SMX 或 Doxycycline）</li>
+          <li><strong>中度：</strong>深層侵犯或紅腫 ≥2 cm、無全身症狀；多菌性（Pseudomonas、Enterococcus、GNR、厭氧菌）→ IV：Vancomycin + Ceftriaxone ± Metronidazole</li>
+          <li><strong>重度：</strong>任何足部感染 + ≥2 項 SIRS → IV 廣效：Vancomycin + [Cefepime 或 Pip-tazo]（潮濕傷口、水暴露或溫暖地區加 Pseudomonas 覆蓋）</li>
+          <li><strong>骨髓炎排除：</strong>可探及骨頭、潰瘍 &gt;2 cm 或持續 &gt;1-2 週、ESR &gt;70 → MRI 評估</li>
+          <li><strong>治療原則：</strong>清創、非負重、傷口護理、血糖控制；許多需要手術（清創、血管重建或截肢）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="osteomyelitis" data-bm-dept="感染科" data-bm-title="骨髓炎">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">骨髓炎（Osteomyelitis）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>血行性（Hematogenous）：</strong>S. aureus 最常見；脊椎骨髓炎（Pott's disease = 結核性）好發於 IVDU</li>
+          <li><strong>連續性（Contiguous）：</strong>開放骨折 / 骨科手術 → S. aureus + S. epidermidis；皮膚破損 + 血管功能不全（糖尿病足、壓瘡）→ 多菌性</li>
+          <li><strong>症狀：</strong>局部軟組織受損 ± 瘻管；發燒、倦怠、盜汗（血行性多於連續性）；脊椎骨髓炎 → 持續局部背痛 ± 發燒</li>
+          <li><strong>診斷：</strong>骨骼切片或手術 / 經皮穿刺組織培養（需氧、厭氧、結核和黴菌培養 + 病理）；不要靠潰瘍拭子；X-ray 早期正常，溶骨性病變在 2-6 週後才出現；<strong>MRI 為首選影像</strong>（Se 90%，Sp 82%）</li>
+          <li><strong>治療：</strong>依培養結果選抗生素；脊椎骨髓炎 6 週；啟動至少 7 天後若穩定可考慮 IV → PO（高生物利用率藥物如 FQ）；需手術情況：治療失敗、慢性骨髓炎、神經壓迫、感染假體</li>
+          <li class="note">ESR &gt;70 大幅提高骨髓炎可能性；CSF / 骨骼 / 血液培養的結果決定療程長短</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="epidural-abscess" data-bm-dept="感染科" data-bm-title="硬膜外膿瘍">
+      <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+      <div class="k-card-head"><span class="k-card-title">脊椎硬膜外膿瘍（Epidural Abscess）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>來源：</strong>血行性播散（2/3）：皮膚感染、牙科膿瘍、心內膜炎；直接延伸（1/3）：脊椎骨髓炎、骶骨褥瘡、脊椎麻醉 / 手術、腰椎穿刺</li>
+          <li><strong>危險因子：</strong>IVDU、DM、腎衰竭、酒精、免疫抑制</li>
+          <li><strong>主要病原：</strong>S. aureus 最常見；免疫抑制者考慮黴菌、TB、Nocardia</li>
+          <li><strong>症狀：</strong>背痛合併脊椎 / 椎旁壓痛 + 發燒 → 之後神經根病變；脊髓壓迫或馬尾症候群是<strong>外科急症</strong></li>
+          <li><strong>診斷：</strong>MRI 加顯影劑（首選）；抽取膿瘍液做 Gram stain + 培養；血培養（常陰性）</li>
+          <li><strong>治療：</strong>廣效抗生素（覆蓋 MRSA 和 GNR）± 手術（椎弓板切除術和清創）；出現早期脊髓壓迫症狀 → 緊急手術</li>
+          <li class="note">三聯症：背痛 → 神經根痛 → 神經功能缺損；出現神經功能缺損代表需要立刻手術</li>
+        </ul>
+      </div>
+    </div>
       </div>
     </div>
 
@@ -604,6 +868,237 @@
       </div>
     </div>
 
+    <!-- 黴菌感染 Fungal Infections -->
+<div class="topic-block" id="fungal">
+  <div class="topic-block-head">
+    <span class="topic-block-title">黴菌感染 Fungal Infections</span>
+    <div data-bm-id="fungal" data-bm-dept="感染科" data-bm-title="黴菌感染">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    黴菌感染分兩大類：<strong>機會性感染</strong>（Candida、Aspergillus、Zygomycetes——需要免疫抑制宿主）和<strong>地方性黴菌</strong>（Cryptococcus、Histoplasma、Coccidioides、Blastomyces——也可感染正常宿主）。診斷先靠抗原檢測，治療依菌種選藥，不能通用。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="fungal-dx" data-bm-dept="感染科" data-bm-title="黴菌診斷工具">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">黴菌診斷工具</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">抗原檢測</p>
+        <ul class="k-list">
+          <li><strong>1,3-β-D glucan（Se 75%，Sp 85%）：</strong>可偵測 Candida、Aspergillus、Histo、Coccidio、PCP；<strong>無法偵測</strong> Mucor、Rhizopus、Blasto、Crypto</li>
+          <li><strong>Galactomannan（Se 71%，Sp 89%）：</strong>Aspergillus 專用；BAL 優於血清；只在血液腫瘤惡性病或 HSCT 驗血清，不適用實體器官移植</li>
+          <li><strong>Histo 尿液/血清抗原：</strong>尿液 Se 90%（血清 80%）適合播散性感染；特異性受其他黴菌交叉反應影響</li>
+          <li><strong>Crypto 抗原（血清、CSF）：</strong>侵襲性感染 Se &gt;90%，Sp 86-100%；任何確診 Crypto 都要做腰椎穿刺</li>
+          <li><strong>Coccidioides 抗體：</strong>暴露後 7-21 天可測到 IgG/IgM</li>
+          <li class="note">培養：Candida 可從血液/尿液生長；其他黴菌血培養敏感性低；懷疑 Coccidio 需告知檢驗室（生物危害）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="candida" data-bm-dept="感染科" data-bm-title="念珠菌感染">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">念珠菌感染（Candida）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">危險因子</p>
+        <ul class="k-list">
+          <li>中性白血球低下、免疫抑制、廣效抗生素、血管內導管（尤其 TPN）、IVDU、腹部手術、DM、腎衰竭、年齡 &gt;65</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現與治療</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>臨床情境</th><th>治療</th></tr></thead>
+          <tbody>
+            <tr><td>黏膜皮膚（口腔鵝口瘡、食道炎、外陰陰道炎）</td><td>Clotrimazole、Nystatin、Fluconazole、Itraconazole</td></tr>
+            <tr><td>念珠菌尿（有症狀或膿尿）</td><td>Fluconazole；重症或免疫抑制者可膀胱灌注 Amphotericin</td></tr>
+            <tr><td>念珠菌血症（無中性白血球低下）</td><td>Echinocandin（Micafungin 第一線）；穩定且無前期 Azole 暴露可用 Fluconazole；移除 CVC；檢測 Azole 抗藥性</td></tr>
+            <tr><td>念珠菌血症（合併中性白血球低下）</td><td>Echinocandin 或 Amphotericin；移除 CVC；檢測 Azole 抗藥性</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-red" style="margin-bottom:0">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>血液培養長出 Candida <strong>永遠不是污染</strong>！必須眼科會診排除視網膜受累，TTE ± TEE 排除心內膜炎。</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="aspergillus" data-bm-dept="感染科" data-bm-title="麴菌感染">
+      <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+      <div class="k-card-head"><span class="k-card-title">麴菌感染（Aspergillus）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>ABPA（支氣管肺麴菌過敏症）：</strong>氣道對 Aspergillus 殖居的過敏反應</li>
+          <li><strong>慢性肺麴菌病：</strong>包括麴菌球（fungus ball）、肺結節、慢性空洞性肺麴菌病；表現為亞急性咳嗽、呼吸困難、咳血；麴菌球可無症狀</li>
+          <li><strong>侵襲性麴菌病：</strong>好發於長期中性白血球低下者；主要為肺部感染（胸痛、咳嗽、咳血）</li>
+          <li><strong>CT 特徵：</strong>實心或空洞結節、<strong>Halo sign</strong>（結節周圍磨玻璃）→ 侵襲性麴菌病的早期特徵</li>
+          <li><strong>肺外侵犯：</strong>鼻竇炎（類似 Zygomycetes）、CNS（腦膿瘍、黴菌性動脈瘤）、眼內炎、皮膚、GI</li>
+          <li><strong>治療：</strong>Voriconazole 或 Posaconazole 優於 Amphotericin；麴菌球考慮手術切除</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="zygomycetes" data-bm-dept="感染科" data-bm-title="接合菌感染">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">接合菌感染（Zygomycetes：Mucor、Rhizopus）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>危險因子：</strong>DM（尤其 DKA）、血液腫瘤惡性病、中性白血球低下、器官移植、慢性類固醇、鐵過載、外傷、<strong>前期 Voriconazole 使用</strong></li>
+          <li><strong>鼻腦型（最典型）：</strong>嚴重眶周 / 顏面疼痛腫脹、視力改變、鼻竇炎、眼肌麻痹、鼻黏膜潰瘍 / 壞死、頭痛</li>
+          <li><strong>其他類型：</strong>肺部（肺炎合併梗塞和壞死）；皮膚（硬化性疼痛蜂窩組織炎 ± 焦痂）；GI（壞死性潰瘍）；腎臟（腰痛、發燒）</li>
+          <li><strong>治療（死亡率高）：</strong>第一線為清創手術 + Amphotericin；改善後可降階至 Posaconazole 或 Isavuconazole</li>
+          <li class="note">組織切片<strong>不要研磨</strong>——Zygomycetes 的菌絲會被破壞，導致培養假陰性</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="cryptococcus" data-bm-dept="感染科" data-bm-title="隱球菌感染">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">隱球菌感染（Cryptococcus）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>好發族群：</strong>免疫抑制最易感（AIDS、器官移植、肝硬化）；C. gattii 也感染正常宿主</li>
+          <li><strong>CNS 腦膜腦炎（最常見）：</strong>亞急性頭痛、發燒、頸部僵硬、腦神經異常 ± 意識改變</li>
+          <li><strong>其他部位：</strong>肺部、泌尿道、皮膚、CNS 隱球菌瘤；任何確診 Crypto 都必須做 LP</li>
+          <li><strong>診斷：</strong>CSF 細胞數在 HIV 患者可能很低；血清 / CSF CrAg（Se 99%，Sp 86-100%）；培養</li>
+          <li><strong>CNS 治療三階段：</strong></li>
+          <li>誘導期：Amphotericin 1-2 週 ± Flucytosine 2 週</li>
+          <li>鞏固期：Fluconazole</li>
+          <li>維持期：Fluconazole</li>
+          <li><strong>顱內壓升高：</strong>可能需要重複腰椎穿刺或腦室腹腔引流（VP shunt）</li>
+          <li><strong>非 CNS 感染（HIV 陰性）：</strong>考慮 Fluconazole 即可</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="endemic-fungi" data-bm-dept="感染科" data-bm-title="地方性黴菌">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">地方性黴菌（Histoplasma、Coccidioides、Blastomyces）</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>黴菌</th><th>流行地區</th><th>臨床特點</th><th>治療</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Histoplasma</strong></td>
+              <td>美國中部和東南部</td>
+              <td>急性：肺炎 ± 肺門淋巴結腫大；慢性：空洞性肺病；播散性（免疫抑制）：發燒、體重減輕、黏膜病變、意識改變、關節炎、心包炎、脾腫大、血球減少</td>
+              <td>輕中度：Itraconazole；播散性/重症：Amphotericin → Itraconazole</td>
+            </tr>
+            <tr>
+              <td><strong>Coccidioides</strong></td>
+              <td>美國西南部、中南美洲</td>
+              <td>急性：亞臨床肺炎、關節痛、皮疹（結節性紅斑）；慢性（免疫抑制）：呼吸困難、咳血；播散：腦膜炎、骨骼、皮膚</td>
+              <td>免疫抑制輕度肺炎考慮 Azole；重症/CNS：Amphotericin；肺外 CNS 外：Azole；部分需清創</td>
+            </tr>
+            <tr>
+              <td><strong>Blastomyces</strong></td>
+              <td>美國東半部</td>
+              <td>急性：肺炎（可進展至 ARDS）；慢性：咳嗽、B 症狀、纖維結節浸潤 ± 空洞；播散（免疫抑制）：皮疹（疣狀、潰瘍性病灶）、皮下結節、骨骼、GU（前列腺、附睪）</td>
+              <td>輕中度：Itraconazole；播散性/重症/CNS：Amphotericin → Itraconazole</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 免疫抑制宿主感染 -->
+<div class="topic-block" id="immunocompromised">
+  <div class="topic-block-head">
+    <span class="topic-block-title">免疫抑制宿主感染 Infections in Immunocompromised Hosts</span>
+    <div data-bm-id="immunocompromised" data-bm-dept="感染科" data-bm-title="免疫抑制宿主感染">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    免疫抑制患者的感染評估核心是：<strong>先確認免疫缺陷的類型</strong>，再推測最可能的病原體。不同免疫缺陷有不同的「典型病原體」——體液免疫低下的人不容易得到 PCP，細胞免疫低下的人不容易得到莢膜菌。了解缺陷類型才能準確目標治療。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="immuno-type" data-bm-dept="感染科" data-bm-title="免疫缺陷類型與病原體">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">免疫缺陷類型與對應病原體</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>免疫缺陷類型</th><th>典型病原體</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>體液免疫缺陷</strong><br/><small>CVID、多發性骨髓瘤、無脾症</small></td>
+              <td>莢膜菌：S. pneumoniae、H. influenzae、N. meningitidis（接種這三種疫苗）；GNR、Capnocytophaga；寄生蟲：Babesia、Giardia；病毒：VZV、Echovirus、Enterovirus</td>
+            </tr>
+            <tr>
+              <td><strong>顆粒球低下 / 中性白血球低下</strong><br/><small>包含 DM、ESRD 的功能性損傷</small></td>
+              <td>革蘭陽性：凝固酶陰性葡萄球菌、S. aureus、Viridans Strep、S. pneumoniae；革蘭陰性：E. coli、Klebsiella、Pseudomonas；黴菌：Candida（酵母菌）、Aspergillus、Mucor（黴菌）；病毒：VZV、HSV、CMV</td>
+            </tr>
+            <tr>
+              <td><strong>細胞免疫缺陷</strong><br/><small>HIV/AIDS、慢性類固醇、移植後、DM、ESRD、自體免疫疾病</small></td>
+              <td>細菌：Salmonella、Listeria、Legionella、Nocardia、TB、非 TB 分枝桿菌；黴菌：Candida、Crypto、Histo、Coccidio、Aspergillus、PCP、Zygomycetes；病毒：HSV、VZV、CMV、EBV、JC virus、BK virus；寄生蟲：Toxoplasma、Cryptosporidium、Strongyloides</td>
+            </tr>
+            <tr>
+              <td><strong>器官功能障礙</strong></td>
+              <td>肝硬化：Vibrio、莢膜菌；ESRD：顆粒球和細胞免疫均受損；鐵過載或去鐵胺使用：Yersinia、Zygomycetes</td>
+            </tr>
+            <tr>
+              <td><strong>生物製劑</strong><br/><small>TNF 抑制劑、抗 B 細胞藥物</small></td>
+              <td>細菌：敗血症、TB、NTM、Listeria、Legionella；黴菌：PCP、Histo、Coccidio、Aspergillus；病毒：JC virus（PML）、EBV、HSV、VZV、HBV；寄生蟲：Strongyloides 再活化；使用前必須篩查 TB</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="neutropenic-fever" data-bm-dept="感染科" data-bm-title="中性白血球低下性發燒">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">中性白血球低下性發燒（Febrile Neutropenia）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>定義：</strong>ANC &lt;500（或 &lt;1000 且預計 &lt;500）+ 單次體溫 ≥38.3°C 或持續 ≥38°C 超過 1h</li>
+          <li><strong>低風險（可門診口服）：</strong>門診狀態、ECOG 0-1、&lt;60 歲、實體腫瘤、無症狀、體溫 &lt;39°C、無 HoTN、無缺氧 → Ciprofloxacin + Amoxicillin-clavulanate PO</li>
+          <li><strong>高風險（需住院 IV）：</strong>住院中、ANC 預期 &lt;100 超過 7 天、血流動力學不穩定、肝腎功能異常、黏膜炎嚴重 → 廣效 β-lactam（Cefepime、Pip-tazo 或 Carbapenem）IV</li>
+          <li><strong>加 Vancomycin 的情況：</strong>導管相關感染、皮膚 / 軟組織感染、血流動力學不穩定、已知 MRSA 定殖</li>
+          <li><strong>加抗黴菌的情況：</strong>發燒 4-7 天無改善 → 加 Echinocandin 或 Amphotericin（懷疑侵襲性黴菌）</li>
+          <li class="note">血培養 ≥2 組（1 組周邊 + 1 組導管）在給予抗生素前抽取，不要延誤抗生素</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="pcp" data-bm-dept="感染科" data-bm-title="PCP 肺囊蟲肺炎">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">PCP（Pneumocystis jirovecii 肺炎）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>好發：</strong>HIV（CD4 &lt;200）、器官移植、長期類固醇（&gt;20 mg/天 Prednisolone &gt;1 個月）、血液腫瘤惡性病</li>
+          <li><strong>症狀：</strong>亞急性呼吸困難（數週）、乾咳、低度發燒；HIV 患者症狀較輕進展較慢</li>
+          <li><strong>檢查：</strong>CXR：雙側瀰漫性間質浸潤（可正常）；LDH 通常升高；1,3-β-D glucan 升高；確診靠 BAL（誘導痰敏感性較低）；DFA 或 PCR 染色</li>
+          <li><strong>治療：</strong>TMP-SMX（每天 15-20 mg/kg TMP 分 3-4 次）× 21 天；輕症可口服</li>
+          <li><strong>類固醇適應症：</strong>PaO₂ &lt;70 mmHg 或 A-a 梯度 &gt;35 → Prednisone 40 mg bid × 5 天 → 40 mg qd × 5 天 → 20 mg qd × 11 天（↓ 呼吸衰竭和死亡率）</li>
+          <li><strong>預防：</strong>CD4 &lt;200 或類固醇使用者 → TMP-SMX DS 1 顆 qd；或 Atovaquone、Dapsone、吸入 Pentamidine</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="transplant-infxn" data-bm-dept="感染科" data-bm-title="移植後感染時間軸">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">器官移植後感染時間軸</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>移植後 &lt;1 個月：</strong>手術相關感染（傷口、尿管、導管）；供體來源的感染；受體潛伏感染再活化（HSV、結核）；院內感染（MRSA、Candida、GNR）</li>
+          <li><strong>移植後 1-6 個月（免疫抑制最強）：</strong>機會性感染為主：CMV（最重要）、PCP、Aspergillus、Cryptococcus、Nocardia、Listeria、BK virus（腎移植）；Histo、Coccidio（地方性）</li>
+          <li><strong>移植後 &gt;6 個月：</strong>免疫功能逐漸恢復；社區感染（流感、肺炎鏈球菌）；晚期機會性感染（慢性排斥者仍有風險）；移植後淋巴增生症（PTLD，EBV 相關）</li>
+          <li class="note">CMV 是移植後 1-6 個月最重要的病毒感染；供體陽性/受體陰性（D+/R-）風險最高 → 預防性使用 Valganciclovir</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
   </main>
 </div>
 
