@@ -96,7 +96,36 @@ function initSearch(index) {
   const input    = document.getElementById('search-input');
   const dropdown = document.getElementById('search-dropdown');
   if (!input || !dropdown) return;
-
+ 
+  // 自動從 DOM 抓取每個 topic-block 的完整文字
+  index.forEach(item => {
+    const blockEl = document.getElementById(item.id);
+    if (blockEl) {
+      const domText = blockEl.innerText
+        .replace(/\s+/g, ' ')
+        .trim();
+      item.text = (item.text || '') + ' ' + domText;
+    }
+  });
+ 
+  // 另外抓取所有 Modal 的文字，附加到對應的索引條目
+  // Modal id 格式：modal-xxx，對應到 SEARCH_INDEX 裡 url 含 #xxx 的條目
+  document.querySelectorAll('.score-modal-overlay').forEach(modal => {
+    const modalText = modal.innerText.replace(/\s+/g, ' ').trim();
+    const modalId = modal.id; // e.g. "modal-timi-acs"
+    // 找到 url 最接近的條目（用 modal id 的後半段比對）
+    const suffix = modalId.replace(/^modal-/, ''); // e.g. "timi-acs"
+    index.forEach(item => {
+      if (
+        item.url.includes(suffix) ||
+        item.id.includes(suffix) ||
+        (item.modalIds && item.modalIds.includes(modalId))
+      ) {
+        item.text += ' ' + modalText;
+      }
+    });
+  });
+ 
   function hl(text, q) {
     return text.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<mark>$1</mark>');
   }
@@ -106,7 +135,7 @@ function initSearch(index) {
     const s = Math.max(0, i-20), e = Math.min(text.length, i+len);
     return (s>0?'…':'') + text.slice(s,e) + (e<text.length?'…':'');
   }
-
+ 
   input.addEventListener('input', () => {
     const q = input.value.trim();
     if (!q) { dropdown.classList.remove('open'); return; }
