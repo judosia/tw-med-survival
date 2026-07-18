@@ -37,22 +37,35 @@
 
 <div class="page-wrap">
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-head">胸腔科</div>
-    <a href="#copd"        class="sidebar-link">COPD</a>
-    <a href="#asthma"      class="sidebar-link">氣喘</a>
-    <a href="#pneumonia"   class="sidebar-link">肺炎</a>
-    <a href="#pe"          class="sidebar-link">肺栓塞 PE</a>
-    
-    <a href="../im/cardio.html#pa-catheter" class="sidebar-link">PA 導管 →（心臟科）</a>
-    <a href="#effusion"    class="sidebar-link">胸腔積液</a>
-    <a href="#resp-fail"   class="sidebar-link">呼吸衰竭</a>
-    
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-section-title">其他科別</div>
-    <a href="cardio.html"  class="sidebar-link">心臟科 →</a>
-    <a href="infect.html"  class="sidebar-link">感染科 →</a>
-    <a href="general.html" class="sidebar-link">一般內科 →</a>
-  </aside>
+  <div class="sidebar-head">胸腔科</div>
+
+  <div class="sidebar-section-title">阻塞性肺疾病</div>
+  <a href="#copd"             class="sidebar-link">慢性阻塞性肺疾病 COPD</a>
+  <a href="#bronchiectasis"   class="sidebar-link">支氣管擴張與囊性纖維化</a>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-title">肺部病灶</div>
+  <a href="#pulmonary-nodule" class="sidebar-link">肺部結節</a>
+  <a href="#hemoptysis"       class="sidebar-link">咳血</a>
+  <a href="#ild"              class="sidebar-link">間質性肺疾病 ILD</a>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-title">肋膜 / 血管</div>
+  <a href="#pleural"          class="sidebar-link">肋膜疾病</a>
+  <a href="#vte"              class="sidebar-link">靜脈血栓栓塞 VTE</a>
+  <a href="#pulm-htn"         class="sidebar-link">肺高壓</a>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-title">重症</div>
+  <a href="#respiratory-failure" class="sidebar-link">呼吸衰竭 / 呼吸器 / ARDS</a>
+  <a href="#sepsis"           class="sidebar-link">敗血症與休克</a>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section-title">其他科別</div>
+  <a href="cardio.html#pa-catheter" class="sidebar-link">PA 導管 →（心臟科）</a>
+  <a href="cardio.html#pulm-htn"    class="sidebar-link">肺高壓血管藥物 →（心臟科）</a>
+  <a href="infect.html#sepsis"      class="sidebar-link">敗血症抗生素原則 →（感染科）</a>
+</aside>
 
   <main class="main-content">
     <div class="breadcrumb">
@@ -236,115 +249,536 @@
   </div>
 </div>
 
-    <!-- 氣喘 -->
-    <div class="topic-block" id="asthma">
-      <div class="topic-block-head">
-        <span class="topic-block-title">氣喘 Asthma</span>
-        <div data-bm-id="asthma" data-bm-dept="胸腔科" data-bm-title="氣喘">
-          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-      </div>
-      <div class="card-grid col-2">
-        <div class="k-card" data-bm-id="asthma-vs-copd" data-bm-dept="胸腔科" data-bm-title="氣喘 vs COPD">
-          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
-          <div class="k-card-head"><span class="k-card-title">氣喘 vs COPD 鑑別</span></div>
-          <div class="k-card-body">
-            <table class="data-table" style="margin-bottom:0">
-              <thead><tr><th></th><th>氣喘</th><th>COPD</th></tr></thead>
-              <tbody>
-                <tr><td>年齡</td><td>常見年輕人</td><td>常見 &gt;40 歲</td></tr>
-                <tr><td>病程</td><td>間歇性，可完全緩解</td><td>持續性，漸進惡化</td></tr>
-                <tr><td>誘發因子</td><td>過敏原、運動、冷空氣</td><td>抽菸（主要）</td></tr>
-                <tr><td>可逆性</td><td>支氣管擴張後 FEV₁ 恢復</td><td>不完全可逆</td></tr>
-                <tr><td>痰液</td><td>清澈黏稠</td><td>可膿性</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="k-card" data-bm-id="asthma-severity" data-bm-dept="胸腔科" data-bm-title="氣喘急性發作嚴重度">
-          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-          <div class="k-card-head"><span class="k-card-title">急性發作嚴重度評估</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>輕度</strong>：說話成句、SpO₂ &gt;95%、RR &lt;20</li>
-              <li><strong>中度</strong>：說話斷句、SpO₂ 91-95%、RR 20-30、使用輔助呼吸肌</li>
-              <li><strong>重度</strong>：說話單字、SpO₂ &lt;91%、RR &gt;30、無法平躺</li>
-              <li><strong>瀕危</strong>：意識改變、呼吸音消失（silent chest）、發紺</li>
-              <li class="note">Silent chest 是最危險的警訊，不是好轉，是氣流已嚴重受阻</li>
-            </ul>
-          </div>
-        </div>
-        <div class="k-card full" data-bm-id="asthma-tx" data-bm-dept="胸腔科" data-bm-title="氣喘急性發作處置">
-          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
-          <div class="k-card-head"><span class="k-card-title">急性發作處置</span></div>
-          <div class="k-card-body">
-            <ul class="step-list">
-              <li class="step-item"><div class="step-num">1</div><div>Salbutamol（Ventolin）MDI 4-8 puffs 或 nebulizer 2.5-5mg，每 20 分鐘 ×3 次</div></li>
-              <li class="step-item"><div class="step-num">2</div><div>Ipratropium nebulizer（與 Salbutamol 合用，中重度）</div></li>
-              <li class="step-item"><div class="step-num">3</div><div>全身性類固醇：Prednisolone 40-60mg PO 或 Methylprednisolone 80mg IV</div></li>
-              <li class="step-item"><div class="step-num">4</div><div>氧氣：目標 SpO₂ &gt;94%（氣喘不像 COPD，可以給高濃度氧）</div></li>
-              <li class="step-item"><div class="step-num">5</div><div>重度無效 → Magnesium sulfate 2g IV over 20min、考慮插管</div></li>
-            </ul>
-          </div>
-        </div>
-        <div class="k-card" data-bm-id="asthma-controller" data-bm-dept="胸腔科" data-bm-title="氣喘長期控制用藥">
-          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
-          <div class="k-card-head"><span class="k-card-title">長期控制用藥（GINA 步驟治療）</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>Step 1-2</strong>：低劑量 ICS + SABA PRN（或 SABA 單獨）</li>
-              <li><strong>Step 3</strong>：低劑量 ICS + LABA</li>
-              <li><strong>Step 4</strong>：中高劑量 ICS + LABA</li>
-              <li><strong>Step 5</strong>：加 LAMA、Anti-IgE（Omalizumab）、Anti-IL5</li>
-              <li class="note">ICS 是氣喘長期控制的基石，SABA 單獨使用不能長期控制發炎</li>
-            </ul>
-          </div>
-        </div>
+    <!-- 支氣管擴張與囊性纖維化 -->
+<div class="topic-block" id="bronchiectasis">
+  <div class="topic-block-head">
+    <span class="topic-block-title">支氣管擴張與囊性纖維化 Bronchiectasis & CF</span>
+    <div data-bm-id="bronchiectasis" data-bm-dept="胸腔科" data-bm-title="支氣管擴張與囊性纖維化">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    支氣管擴張是氣道慢性發炎 → 擴張 → 黏液清除障礙的惡性循環。治療以<strong>清除分泌物和控制感染</strong>為主。CF 是其中最重要的遺傳性病因，現在有 CFTR 調節劑可改變病程。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="bronchiectasis-etiology" data-bm-dept="胸腔科" data-bm-title="支氣管擴張病因">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">支氣管擴張病因與評估</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>病因</th><th>其他特徵</th><th>評估</th></tr></thead>
+          <tbody>
+            <tr><td>慢性感染（TB、ABPA）</td><td>反覆浸潤、難治氣喘（ABPA）</td><td>痰培養（含分枝桿菌、黴菌）；IgE；嗜酸性球</td></tr>
+            <tr><td>原發性纖毛運動障礙</td><td>鼻竇炎、不育、中耳炎</td><td>Dynein 基因突變</td></tr>
+            <tr><td>免疫缺乏</td><td>兒童期反覆感染</td><td>IgA、IgG、IgM 及次類別</td></tr>
+            <tr><td>RA、Sjögren、ANCA</td><td>呼吸症狀可先於關節症狀</td><td>RF、CCP、SS-A/B、ANCA</td></tr>
+            <tr><td>α1-AT 缺乏</td><td>下葉肺氣腫</td><td>A1AT 濃度和基因型</td></tr>
+            <tr><td>解剖異常</td><td>右中葉症候群、異物吸入</td><td>支氣管鏡</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list" style="margin-top:10px">
+          <li><strong>CT 特徵：</strong>"軌道征"（tram track）、支氣管壁增厚、管腔擴張</li>
+          <li><strong>PFT：</strong>阻塞型；急性惡化與 FEV1 持續下降相關</li>
+        </ul>
       </div>
     </div>
 
-    <!-- 肺炎（胸腔科角度） -->
-    <div class="topic-block" id="pneumonia">
-      <div class="topic-block-head">
-        <span class="topic-block-title">肺炎 Pneumonia（胸腔科重點）</span>
-        <div data-bm-id="pulm-pna" data-bm-dept="胸腔科" data-bm-title="肺炎（胸腔科）">
-          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-      </div>
-      <div class="alert alert-blue">
-        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
-        <span>肺炎的抗生素選擇詳見感染科，這裡著重胸腔科角度的評估和併發症處理。</span>
-      </div>
-      <div class="card-grid col-2">
-        <div class="k-card" data-bm-id="pna-complication" data-bm-dept="胸腔科" data-bm-title="肺炎併發症">
-          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
-          <div class="k-card-head"><span class="k-card-title">肺炎常見併發症</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>肋膜積液（Parapneumonic effusion）</strong>：超音波確認，分單純性 vs 複雜性</li>
-              <li><strong>膿胸（Empyema）</strong>：pH &lt;7.2、LDH &gt;1000、Glucose &lt;60 → 需引流</li>
-              <li><strong>肺膿瘍（Lung abscess）</strong>：影像上出現 air-fluid level，延長抗生素療程</li>
-              <li><strong>呼吸衰竭</strong>：進展至 ARDS，考慮 ICU 和機械通氣</li>
-              <li class="note">治療 48-72h 無改善 → 重新評估：耐藥菌？非典型？膿胸？腫瘤阻塞？</li>
-            </ul>
-          </div>
-        </div>
-        <div class="k-card" data-bm-id="pna-xray" data-bm-dept="胸腔科" data-bm-title="肺炎影像判讀">
-          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-          <div class="k-card-head"><span class="k-card-title">CXR 和 CT 的判讀重點</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>葉性肺炎（Lobar）</strong>：整葉實質化，多為 S. pneumoniae</li>
-              <li><strong>支氣管肺炎（Bronchopneumonia）</strong>：片狀浸潤，多為 HAP 菌種</li>
-              <li><strong>間質性肺炎（Interstitial）</strong>：雙側磨玻璃影，多為非典型或病毒</li>
-              <li>Air bronchogram：實質化中看到充氣支氣管，代表氣道通暢但肺泡實化</li>
-              <li class="note">CXR 比 CT 慢 24-48h 顯示，臨床惡化不要等 CXR 確認</li>
-            </ul>
-          </div>
-        </div>
+    <div class="k-card" data-bm-id="bronchiectasis-tx" data-bm-dept="胸腔科" data-bm-title="支氣管擴張治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">支氣管擴張治療</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>急性惡化：</strong>抗生素依先前培養菌種；無培養資料 → FQ；避免 Azithromycin（NTM 感染風險）</li>
+          <li><strong>慢性管理：</strong>治療潛在原因；胸腔物理治療；吸入高滲鹽水；支氣管擴張劑</li>
+          <li><strong>Brensocatib（DPP-1 抑制劑）：</strong>↓ 急性惡化（NEJM 2025）</li>
+          <li><strong>氣道清除：</strong>Guaifenesin；振動排痰裝置（Aerobika、Acapella）；胸腔物理治療</li>
+          <li><strong>預防性 Azithromycin：</strong>非 CF 患者可減少惡化，但需考慮 NTM 風險</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">非結核分枝桿菌（NTM）</p>
+        <ul class="k-list">
+          <li>慢性咳嗽、體重下降；Lady Windermere 症候群（老年女性右中葉和舌葉支氣管擴張）</li>
+          <li>確診：CT（樹芽征、結節、空洞）+ 痰 × 3 或 BAL，AFB 染色 + 培養</li>
+          <li>治療：依藥敏結果選藥；[Azithromycin 或 Clarithromycin] + Rifamycin + Ethambutol × ≥12 個月</li>
+        </ul>
       </div>
     </div>
 
+    <div class="k-card full" data-bm-id="cf" data-bm-dept="胸腔科" data-bm-title="囊性纖維化">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">囊性纖維化（Cystic Fibrosis）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li>體染色體隱性遺傳；CFTR 基因突變 → 氯離子通道異常 → 黏液增厚 → 黏膜纖毛清除障礙 → 反覆感染 → 支氣管擴張</li>
+          <li><strong>臨床特徵：</strong>反覆肺炎 / 鼻竇炎；DIOS（遠端腸阻塞症候群）；胰臟外分泌不足（脂肪瀉、吸收不良）；CF 相關糖尿病；不育</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性惡化治療</p>
+        <ul class="k-list">
+          <li>積極氣道清除；依痰培養結果選擇抗生素（Pseudomonas 需雙重覆蓋）</li>
+          <li>常見病原：Pseudomonas、MRSA、非典型 H. flu、Stenotrophomonas、Burkholderia、NTM</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">慢性管理</p>
+        <ul class="k-list">
+          <li>氣道清除：胸腔物理治療、吸入高滲鹽水、吸入 Dornase alfa（DNAse）、SABA</li>
+          <li>有持續性 Pseudomonas → 吸入 Tobramycin 或 Aztreonam</li>
+          <li>慢性呼吸症狀 → 口服 Azithromycin</li>
+          <li><strong>CFTR 調節劑：</strong></li>
+          <li>Ivacaftor（CFTR 增強劑）：適用特定突變</li>
+          <li>Elexacaftor + Tezacaftor + Ivacaftor（三合一）：同型 ΔF508 突變 → 顯著改善 FEV1 和生活品質</li>
+          <li><strong>肺移植：</strong>FEV1 &lt;30%、快速下降、6MWT &lt;400 m、有肺高壓、臨床明顯惡化時轉介</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 肺部結節 -->
+<div class="topic-block" id="pulmonary-nodule">
+  <div class="topic-block-head">
+    <span class="topic-block-title">肺部結節 Pulmonary Nodule</span>
+    <div data-bm-id="pulmonary-nodule" data-bm-dept="胸腔科" data-bm-title="肺部結節">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    孤立性肺部結節（&lt;3 cm）的核心問題是：<strong>這顆結節是惡性的嗎？</strong>高危險因子包括大小 ≥2.3 cm、毛刺邊緣、上葉位置、女性、&gt;60 歲、抽菸。低風險者定期 CT 追蹤；高風險且可手術者積極取樣。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="nodule-etiology" data-bm-dept="胸腔科" data-bm-title="肺部結節病因">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">良性 vs 惡性病因</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>良性（~70%）</th><th>惡性（~30%）</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>肉芽腫（80%）：TB、Histo、Coccidio<br/>錯構瘤（10%）<br/>支氣管源性囊腫、AVM、肺梗塞<br/>GPA、RA 結節、Sarcoidosis</td>
+              <td>原發性肺癌（75%）：周邊 → 腺癌（最常見）；中央 → 鱗狀細胞、小細胞<br/>轉移性（20%）：肉瘤、黑色素瘤、乳癌、頭頸、大腸、睪丸、腎臟<br/>類癌</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="k-list" style="margin-top:10px">
+          <li><strong>高風險特徵：</strong>大小（≥2.3 cm）、毛刺邊緣、上葉、女性、&gt;60 歲、&gt;1 包/天現役抽菸、未戒菸</li>
+          <li><strong>鈣化型態：</strong>層狀鈣化 → 肉芽腫；爆米花狀 → 錯構瘤；無鈣化 → ↑ 惡性機率</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="nodule-mgmt" data-bm-dept="胸腔科" data-bm-title="肺部結節處置">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">評估與處置</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>PET：</strong>偵測腫瘤代謝活性，Se 97%、Sp 78%（尤其 &gt;8 mm）；可協助決定是否取樣 vs 追蹤 CT，也用於手術前分期</li>
+          <li><strong>經皮針刺切片（TTNB）：</strong>技術可行時 97% 可得確定診斷</li>
+          <li><strong>VATS：</strong>針對無法穿刺的病灶；敏感性高且可同時切除</li>
+          <li><strong>支氣管鏡切片：</strong>多數病灶太小需搭配超音波（EBUS）；導航支氣管鏡（Navigational bronch）取樣率約 70%</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">處置決策</p>
+        <ul class="k-list">
+          <li><strong>低風險（惡性率 &lt;5%）：</strong>定期 CT 追蹤（頻率依風險決定）；與病人共同討論是否切片</li>
+          <li><strong>高風險且可手術：</strong>TBB、TTNB 或 VATS → 若惡性則葉切除</li>
+          <li><strong>次實性結節（Subsolid）：</strong>若為惡性通常生長緩慢 → 追蹤期較長；PET 掃描輔助</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 咳血 -->
+<div class="topic-block" id="hemoptysis">
+  <div class="topic-block-head">
+    <span class="topic-block-title">咳血 Hemoptysis</span>
+    <div data-bm-id="hemoptysis" data-bm-dept="胸腔科" data-bm-title="咳血">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    咳血的危險在於<strong>窒息，不是失血</strong>——死亡原因是血液阻塞氣道，而非大量出血。大量咳血（&gt;100 mL/h）需立刻維持氣道通暢，將出血側朝下、選擇性插管正常肺，並緊急支氣管鏡或介入放射科。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="hemoptysis-etiology" data-bm-dept="胸腔科" data-bm-title="咳血病因">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">病因分類</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>感染 / 發炎（最常見輕度咳血）：</strong>支氣管炎；支氣管擴張（CF 常見大量咳血）；TB 或麴菌球（可大量）；肺炎或肺膿瘍</li>
+          <li><strong>腫瘤：</strong>原發性肺癌（可大量）；轉移（偶爾）</li>
+          <li><strong>心血管：</strong>PE（可大量）；PA 破裂（插管 / 操作後）；CHF；二尖瓣狹窄；外傷 / 異物；支氣管血管瘻</li>
+          <li><strong>血管炎：</strong>GPA（抗 PR3）、anti-GBM（Goodpasture's）、Behçet's、SLE</li>
+          <li><strong>其他：</strong>AVM、抗凝血藥（合併潛在肺部疾病）、凝血功能障礙、古柯鹼、肺含鐵血黃素沉著症</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="hemoptysis-mgmt" data-bm-dept="胸腔科" data-bm-title="咳血處置">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">診斷與治療</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷</p>
+        <ul class="k-list">
+          <li>排除 GI 或 ENT 來源（病史 + 必要時內視鏡）</li>
+          <li>確認出血是單側或雙側、局部或瀰漫性、氣道或肺實質 → CXR / CT ± 支氣管鏡</li>
+          <li>PT、PTT、CBC 排除凝血功能障礙</li>
+          <li>痰液培養 / 染色：細菌、黴菌、AFB；細胞學排除惡性</li>
+          <li>ANCA、anti-GBM、ANA、尿液分析排除血管炎 / 肺腎症候群</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">大量咳血處置</p>
+        <ul class="k-list">
+          <li><strong>出血側朝下（保護正常肺）</strong>；選擇性插管正常肺若需要</li>
+          <li>維持氣體交換；逆轉凝血異常；治療原因；<strong>止咳劑可能 ↑ 窒息風險，避免使用</strong></li>
+          <li><strong>吸入 Tranexamic acid：</strong>初步資料有效</li>
+          <li><strong>血管攝影：</strong>診斷 + 治療（球囊阻塞或選擇性支氣管動脈栓塞）</li>
+          <li><strong>硬式支氣管鏡：</strong>比彈性支氣管鏡有更多治療選項（電灼、雷射）</li>
+          <li><strong>手術切除：</strong>其他方法失敗時</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 間質性肺疾病 ILD -->
+<div class="topic-block" id="ild">
+  <div class="topic-block-head">
+    <span class="topic-block-title">間質性肺疾病 Interstitial Lung Disease</span>
+    <div data-bm-id="ild" data-bm-dept="胸腔科" data-bm-title="間質性肺疾病">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    ILD 的評估從<strong>排除模仿者（CHF、感染、惡性腫瘤）</strong>開始，再依<strong>暴露史、CT 型態、血清學、病理</strong>分類。IPF 是最常見且預後最差的特發性 ILD，進展不可逆；NSIP 和 COP 對類固醇反應好。HRCT 型態是最重要的非侵入性診斷工具。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="ild-workup" data-bm-dept="胸腔科" data-bm-title="ILD 評估">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">ILD 評估框架</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">四大類別</p>
+        <ul class="k-list">
+          <li><strong>①　Sarcoidosis</strong></li>
+          <li><strong>②　暴露相關：</strong>藥物、放射線、有機和無機粉塵、電子煙</li>
+          <li><strong>③　膠原血管疾病：</strong>硬皮病、ANCA、肌炎、RA</li>
+          <li><strong>④　特發性：</strong>IPF、NSIP、COP、AIP、DIP、RB-ILD</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">病史重點</p>
+        <ul class="k-list">
+          <li><strong>職業 / 暴露：</strong>鳥類、黴菌、石綿、矽、鈹、藥物、放射線</li>
+          <li><strong>發病速度：</strong>急性（&lt;1 個月）→ 感染、CHF、過敏性肺炎、嗜酸性球性肺炎、AIP、COP、藥物；亞急性 / 慢性 → 大多數 ILD</li>
+          <li><strong>肺外症狀：</strong>皮疹、關節痛 / 炎、肌痛、乾燥症、脫髮、Raynaud's → 膠原血管疾病</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷工具</p>
+        <ul class="k-list">
+          <li><strong>HRCT：</strong>最重要的非侵入性工具；上葉為主 → 過敏性肺炎、煤礦塵、矽肺、抽菸相關、Sarcoidosis；下葉為主 → NSIP、UIP、石綿肺</li>
+          <li><strong>PFT：</strong>DLCO 最早期異常；限制型（↓ 肺容積）；低氧（尤其運動時）</li>
+          <li><strong>血清學：</strong>ACE、ANA、RF、ANCA、CCP、SSA/SSB、Scl-70、CK、Aldolase、肌炎抗體組合</li>
+          <li><strong>BAL：</strong>特定情況（感染、出血、嗜酸性球症候群、過敏性肺炎）；淋巴球 &gt;35% → 過敏性肺炎</li>
+          <li><strong>切片：</strong>冷凍切片（Cryobiopsy）vs VATS，依位置決定；原因不明時</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="sarcoidosis" data-bm-dept="胸腔科" data-bm-title="Sarcoidosis">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">肉芽腫病（Sarcoidosis）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">多器官表現</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>器官</th><th>表現</th></tr></thead>
+          <tbody>
+            <tr><td><strong>肺部</strong></td><td>肺門淋巴結腫大；纖維化；肺高壓。Stage I = 雙側肺門 LAN；II = LAN + ILD；III = ILD；IV = 瀰漫纖維化</td></tr>
+            <tr><td><strong>皮膚（15%）</strong></td><td>蠟樣皮膚斑；狼瘡皮疹（violaceous 顏面病灶）；結節性紅斑（好預後）</td></tr>
+            <tr><td><strong>眼睛（10-30%）</strong></td><td>前 &gt; 後葡萄膜炎；↑ 淚腺</td></tr>
+            <tr><td><strong>內分泌 / 腎臟（10%）</strong></td><td>高鈣血症（10%）、高鈣尿症（40%）；腎結石</td></tr>
+            <tr><td><strong>神經（10%）</strong></td><td>第 VII 腦神經麻痺；周邊神經病變；CNS 病灶；癲癇</td></tr>
+            <tr><td><strong>心臟（5%）</strong></td><td>傳導阻滯；心律不整；心肌病變</td></tr>
+            <tr><td><strong>肝脾骨髓</strong></td><td>肉芽腫性肝炎（25%）；脾臟和骨髓肉芽腫（50%）</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>Löfgren 症候群：</strong>結節性紅斑 + 肺門腺病 + 關節炎 → 好預後</li>
+          <li><strong>診斷：</strong>淋巴結切片 → 非乾酪性肉芽腫 + 多核巨細胞；EBUS 優於傳統支氣管鏡；ACE（Se 60%，Sp 80%）</li>
+          <li><strong>治療：</strong>類固醇（有症狀或肺外器官功能障礙）；Hydroxychloroquine 用於廣泛皮膚病；難治性 → MTX、AZA、MMF 或 anti-TNF</li>
+          <li class="note">預後：約 2/3 在 10 年內自然緩解（Stage I 60-80%、Stage II 50-60%、Stage III 30%）；約 1/3 進展</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="pneumoconiosis" data-bm-dept="胸腔科" data-bm-title="職業性肺塵症">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">職業性暴露 / 過敏性肺炎</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">無機粉塵（肺塵症）</p>
+        <ul class="k-list">
+          <li><strong>煤礦工：</strong>上葉為主；可進展為大塊纖維化</li>
+          <li><strong>矽肺：</strong>上葉結節 ± 蛋殼狀淋巴結鈣化；↑ 結核感染風險</li>
+          <li><strong>石綿肺：</strong>下葉纖維化 + 鈣化胸膜斑；也與間皮瘤和肺癌相關</li>
+          <li><strong>鈹肺：</strong>多系統肉芽腫性疾病，類似 Sarcoidosis</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">過敏性肺炎（有機粉塵）</p>
+        <ul class="k-list">
+          <li>疏鬆非乾酪性肉芽腫</li>
+          <li><strong>抗原：</strong>農夫肺（嗜熱性放線菌孢子）；鳥類飼養者肺（鳥類羽毛蛋白）；加濕器肺</li>
+          <li>BAL 淋巴球 &gt;35% 支持診斷</li>
+          <li>急性：發燒、呼吸困難、咳嗽（暴露後 4-6 小時）；慢性：肺纖維化</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="iip" data-bm-dept="胸腔科" data-bm-title="特發性間質性肺炎">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">特發性間質性肺炎（IIPs）比較</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>類型</th><th>CT / 病理特徵</th><th>臨床特點</th><th>預後</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>IPF（UIP 型）</strong></td>
+              <td>網狀浸潤、蜂窩肺、牽引性支氣管擴張；周邊、胸膜下、下葉為主</td>
+              <td>症狀 &gt;12 個月；漸進性呼吸困難、乾咳；Velcro 囉音</td>
+              <td>5 年死亡率 ~80%</td>
+            </tr>
+            <tr>
+              <td><strong>NSIP</strong></td>
+              <td>均質磨玻璃或實變；胸膜下保留；對稱、周邊、下葉；有細胞型和纖維型</td>
+              <td>症狀數月至數年；常見於膠原血管疾病</td>
+              <td>5 年死亡率 10%</td>
+            </tr>
+            <tr>
+              <td><strong>COP（隱源性機化性肺炎）</strong></td>
+              <td>斑片狀、游走性實變；胸膜下和支氣管周圍；小氣道和肺泡管肉芽腫增生</td>
+              <td>感染後、放射線後、藥物反應；症狀 &lt;3 個月</td>
+              <td>5 年死亡率 &lt;5%；類固醇反應極好</td>
+            </tr>
+            <tr>
+              <td><strong>AIP（急性間質性肺炎）</strong></td>
+              <td>瀰漫性磨玻璃、實變；中央 &gt; 周邊；路徑類似 DAD</td>
+              <td>症狀 &lt;3 週；快速進展至呼吸衰竭</td>
+              <td>6 個月死亡率 60%</td>
+            </tr>
+            <tr>
+              <td><strong>DIP / RB-ILD</strong></td>
+              <td>瀰漫磨玻璃（DIP）；支氣管壁增厚、小葉中心結節（RB-ILD）；上葉為主</td>
+              <td>30-50 歲抽菸者；症狀數週至數月</td>
+              <td>戒菸可能治癒；死亡率低</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li><strong>所有 ILD：</strong>補充氧氣、肺復健、GERD 治療、肺高壓篩查、轉介肺移植（重度）</li>
+          <li><strong>IPF：</strong>Pirfenidone 或 Nintedanib（抗纖維化）→ ↓ FVC 下降速率；急性惡化 → 高劑量類固醇；戒菸</li>
+          <li><strong>NSIP（細胞型）、COP、LIP：</strong>類固醇；CTD 相關 NSIP → MMF + Rituximab</li>
+          <li><strong>DIP / RB-ILD：</strong>戒菸可能足夠</li>
+          <li><strong>AIP：</strong>高劑量類固醇（無 RCT 資料）</li>
+          <li class="note">嗜酸性球肺浸潤（PIE）：ABPA、Löffler's、急性或慢性嗜酸性球性肺炎 → 類固醇；急性型 → 停菸</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="ctd-ild" data-bm-dept="胸腔科" data-bm-title="膠原血管疾病相關 ILD">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">膠原血管疾病相關 ILD</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>硬皮病：</strong>ILD 約 50%（最高）；肺高壓約 10%（限制型更常見）</li>
+          <li><strong>PM-DM（多發性肌炎 / 皮肌炎）：</strong>ILD + 皮膚 / 肌肉症狀；Antisynthetase 症候群（anti-Jo-1）</li>
+          <li><strong>MCTD：</strong>肺高壓 + 纖維化</li>
+          <li><strong>Sjögren's：</strong>ILD + 乾燥症</li>
+          <li><strong>SLE 和 RA：</strong>肋膜炎和胸膜積液更常見；SLE 可引發 DAH</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">血管炎相關肺部表現</p>
+        <ul class="k-list">
+          <li><strong>GPA（Wegener's）：</strong>c-ANCA + 壞死性肉芽腫；肺 + 腎 + ENT</li>
+          <li><strong>EGPA（Churg-Strauss）：</strong>c- 或 p-ANCA + 嗜酸性球 + 壞死性肉芽腫；氣喘</li>
+          <li><strong>MPA：</strong>p-ANCA + 無肉芽腫</li>
+          <li><strong>Goodpasture's：</strong>DAH + RPGN；抽菸者；anti-GBM 90%</li>
+          <li><strong>LAM：</strong>囊性改變；女性；用 Sirolimus 治療</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 肋膜疾病 Pleural Disease -->
+<div class="topic-block" id="pleural">
+  <div class="topic-block-head">
+    <span class="topic-block-title">肋膜疾病 Pleural Disease</span>
+    <div data-bm-id="pleural" data-bm-dept="胸腔科" data-bm-title="肋膜疾病">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    肋膜積液的評估核心是：<strong>Light's criteria 區分滲出液 vs 漏出液</strong>，再依細胞分類、培養、ADA 等縮窄鑑別。滲出液以惡性、肺炎旁積液和 TB 最重要。氣胸分張力性（緊急）和非張力性——張力性氣胸是臨床診斷，不要等 X 光確認才處理。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="pleural-etiology" data-bm-dept="胸腔科" data-bm-title="肋膜積液病因">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">漏出液 vs 滲出液病因</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">漏出液（Transudate）</p>
+        <ul class="k-list">
+          <li><strong>CHF（40%）：</strong>80% 雙側 ± 心臟擴大；積極利尿後可呈假性滲出液</li>
+          <li><strong>肝性胸水：</strong>腹腔液經橫膈裂孔進入；常右側（2/3）且量大（即使腹水不多）</li>
+          <li><strong>腎病症候群：</strong>通常小量、雙側、無症狀（需排除 PE，因高凝狀態）</li>
+          <li><strong>縮窄性心包炎：</strong>聽診有 knock、影像顯示鈣化或增厚</li>
+          <li><strong>其他：</strong>PE（通常為滲出液）、惡性（淋巴管阻塞時）、黏液水腫、CAPD</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">滲出液（Exudate）</p>
+        <ul class="k-list">
+          <li><strong>肺炎旁積液（25%）：</strong>細菌性 → 未治療可從無菌 → 纖維膿性 → 機化；TB → 常 &gt;50% 淋巴球、ADA &gt;40；黴菌、病毒（通常少量）</li>
+          <li><strong>惡性（15%）：</strong>原發性肺癌最常見；轉移（乳癌、淋巴瘤）；間皮瘤</li>
+          <li><strong>PE（10%）：</strong>約 40% 的 PE 有積液；75% 為滲出液；出血性→高度懷疑 PE</li>
+          <li><strong>膠原血管疾病：</strong>RA（量大）、SLE（量小）、GPA、EGPA</li>
+          <li><strong>腹部疾病：</strong>胰腺炎（澱粉酶高）、膽囊炎、食道破裂、腹腔膿瘍</li>
+          <li><strong>血胸：</strong>積液 / 血液 Hct &gt;50%；外傷、PE、惡性、凝血障礙、主動脈病變</li>
+          <li><strong>乳糜胸：</strong>三酸甘油酯 &gt;110；胸管損傷（外傷、惡性、LAM）</li>
+          <li><strong>其他：</strong>CABG 後（左側）；Dressler's 症候群；黃指甲症候群</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="pleural-dx" data-bm-dept="胸腔科" data-bm-title="肋膜積液診斷">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">胸腔穿刺術與 Light's Criteria</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">胸腔穿刺術適應症</p>
+        <ul class="k-list">
+          <li>所有 &gt;1 cm（臥位 X 光）的積液</li>
+          <li>懷疑 CHF 可先利尿 → 48h 後 75% 消退；若不對稱、發燒、胸痛或未消退 → 穿刺</li>
+          <li>肺炎旁積液應盡快穿刺（無法靠臨床排除感染）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Light's Criteria（滿足任一即為滲出液）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>標準</th><th>閾值</th></tr></thead>
+          <tbody>
+            <tr><td>積液蛋白 / 血清蛋白</td><td>&gt;0.5</td></tr>
+            <tr><td>積液 LDH / 血清 LDH</td><td>&gt;0.6</td></tr>
+            <tr><td>積液 LDH</td><td>&gt;血清 LDH 正常值上限的 2/3</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>三項測試法（特異性更高，任一符合即為滲出液）：</strong>積液膽固醇 &gt;55 mg/dL；積液 LDH &gt;200 U/L；積液膽固醇 / 血清膽固醇 &gt;0.3</li>
+          <li><strong>CHF 假性滲出液：</strong>利尿後蛋白升高；積液膽固醇有助於鑑別</li>
+          <li><strong>併發性肺炎旁積液：</strong>Gram stain 或培養陽性；或 pH &lt;7.2；或葡萄糖 &lt;60 → 需插胸管</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">積液細胞分類</p>
+        <ul class="k-list">
+          <li><strong>中性球為主：</strong>肺炎旁積液、PE、胰腺炎</li>
+          <li><strong>淋巴球 &gt;50%：</strong>惡性、TB、風濕科疾病</li>
+          <li><strong>嗜酸性球 &gt;10%：</strong>血液、空氣、藥物反應、石綿、PE</li>
+          <li><strong>ADA &gt;70：</strong>高度懷疑 TB；&lt;40 可排除 TB</li>
+          <li><strong>NT-proBNP ≥1500 pg/mL：</strong>CHF（Se 91%、Sp 93%）</li>
+          <li><strong>澱粉酶升高：</strong>胰腺疾病（胰澱粉酶）或食道破裂（唾液澱粉酶）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="pleural-tx" data-bm-dept="胸腔科" data-bm-title="肋膜積液治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">肋膜積液治療</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>症狀性積液：</strong>治療性胸腔穿刺；治療原發疾病</li>
+          <li><strong>肺炎旁積液：</strong>未併發 → 肺炎抗生素；超過半側胸腔、併發性或膿胸 → 插胸管（否則纖維化 → 需手術剝除）；包裹性 → 胸管或 VATS；胸管內 tPA + DNase → ↓ 手術需求</li>
+          <li><strong>惡性積液：</strong>系列性穿刺 vs 胸管 + 胸膜固定術（成功率 80-90%）vs 留置胸膜導管（住院天數 ↓ 但不良事件 ↑）；全身類固醇和 pH &lt;7.2 → 胸膜固定術失敗率 ↑</li>
+          <li><strong>TB 積液：</strong>通常自行吸收，但仍需治療活動性 TB</li>
+          <li><strong>肝性胸水：</strong>↓ 腹水（限鈉 + 利尿）；避免插胸管；系列性穿刺；TIPS；VATS 關閉橫膈裂孔；肝臟移植是根本治療</li>
+          <li class="note">穿刺複雜度低（即使 INR ~1.9、使用 DOAC 或 Clopidogrel）；U/S 引導下出血風險低；每次移除 &gt;1.5 L → 注意再擴張性肺水腫</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="pneumothorax" data-bm-dept="胸腔科" data-bm-title="氣胸">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">氣胸（Pneumothorax）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">分類與病因</p>
+        <ul class="k-list">
+          <li><strong>原發性自發性氣胸（PSP）：</strong>無潛在肺疾病；高瘦男性、抽菸者；肺尖肺大泡破裂</li>
+          <li><strong>次發性自發性氣胸（SSP）：</strong>潛在肺疾病（COPD、CF、LAM、LCH、PCP、結核）；更危險</li>
+          <li><strong>醫源性：</strong>胸腔穿刺、CVC 置放（鎖骨下）、機械通氣（氣壓傷）</li>
+          <li><strong>外傷性：</strong>穿透或鈍挫傷</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">張力性氣胸（Tension PTX）</p>
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>張力性氣胸是<strong>臨床診斷</strong>——不要等 X 光確認！低血壓 + 頸靜脈怒張 + 氣管偏移 + 呼吸音消失 → 立刻針刺減壓（第 2 肋間鎖骨中線）→ 再插胸管。</span>
+        </div>
+        <ul class="k-list">
+          <li><strong>機轉：</strong>單向活瓣效應 → 氣體持續進入胸膜腔 → 縱膈移位 → 對側肺和靜脈回流受壓 → CO 下降 → 心跳停止</li>
+          <li><strong>表現：</strong>嚴重呼吸困難、低血壓、頸靜脈怒張、患側呼吸音消失、氣管偏向健側</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">非張力性氣胸處置</p>
+        <ul class="k-list">
+          <li><strong>小型 PSP（&lt;2 cm 肺尖至胸壁）且無症狀：</strong>觀察 ± 高流量氧氣（加速氮氣吸收）；可門診追蹤</li>
+          <li><strong>大型 PSP 或任何 SSP：</strong>抽氣（Aspiration）或胸管</li>
+          <li><strong>胸管大小：</strong>小管（8-14Fr）≈ 大管；小管更舒適</li>
+          <li><strong>復發性或持續性氣漏：</strong>VATS + 大泡切除 + 胸膜固定術</li>
+          <li class="note">機械通氣患者發生氣胸 → 高 PIP、單側呼吸音消失、血壓下降 → 立刻胸管，不能只抽氣</li>
+        </ul>
+      </div>
+    </div>
+    <div class="k-card" data-bm-id="effusion-workup" data-bm-dept="胸腔科" data-bm-title="胸腔積液檢查">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">肋膜液分析要送哪些</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>常規</strong>：蛋白質、LDH、葡萄糖、pH、細胞計數分類</li>
+              <li><strong>感染懷疑</strong>：革蘭氏染色、培養（需氧/厭氧）</li>
+              <li><strong>惡性懷疑</strong>：細胞學（送多量，敏感性較高）</li>
+              <li><strong>TB 懷疑</strong>：ADA（Adenosine deaminase）&gt;40 高度懷疑</li>
+              <li>同時抽血送：蛋白質、LDH、白蛋白（Light's criteria 計算用）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="effusion-tx" data-bm-dept="胸腔科" data-bm-title="胸腔積液引流">
+          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">何時需要引流</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li>呼吸困難症狀明顯 → 治療性引流（symptom relief）</li>
+              <li>膿胸（pH &lt;7.2、Glucose &lt;60、膿性外觀）→ 置放 chest tube</li>
+              <li>大型積液（&gt;1/2 胸腔）→ 考慮引流</li>
+              <li>首次引流量 ≤1000-1500mL（避免 re-expansion pulmonary edema）</li>
+              <li class="note">心衰竭引起的漏出液 → 先治療心衰竭，不一定要引流</li>
+            </ul>
+          </div>
+        </div>
+  </div>
+</div>
+    
     <!-- PE -->
     <div class="topic-block" id="pe">
       <div class="topic-block-head">
@@ -747,567 +1181,117 @@
 
   </div>
 </div>
+
     
-    <!-- 肺部結節 -->
-<div class="topic-block" id="pulmonary-nodule">
-  <div class="topic-block-head">
-    <span class="topic-block-title">肺部結節 Pulmonary Nodule</span>
-    <div data-bm-id="pulmonary-nodule" data-bm-dept="胸腔科" data-bm-title="肺部結節">
-      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-    </div>
-  </div>
-
-  <div class="topic-intro">
-    孤立性肺部結節（&lt;3 cm）的核心問題是：<strong>這顆結節是惡性的嗎？</strong>高危險因子包括大小 ≥2.3 cm、毛刺邊緣、上葉位置、女性、&gt;60 歲、抽菸。低風險者定期 CT 追蹤；高風險且可手術者積極取樣。
-  </div>
-
-  <div class="card-grid col-2">
-
-    <div class="k-card" data-bm-id="nodule-etiology" data-bm-dept="胸腔科" data-bm-title="肺部結節病因">
-      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
-      <div class="k-card-head"><span class="k-card-title">良性 vs 惡性病因</span></div>
-      <div class="k-card-body">
-        <table class="data-table" style="margin-bottom:0">
-          <thead><tr><th>良性（~70%）</th><th>惡性（~30%）</th></tr></thead>
-          <tbody>
-            <tr>
-              <td>肉芽腫（80%）：TB、Histo、Coccidio<br/>錯構瘤（10%）<br/>支氣管源性囊腫、AVM、肺梗塞<br/>GPA、RA 結節、Sarcoidosis</td>
-              <td>原發性肺癌（75%）：周邊 → 腺癌（最常見）；中央 → 鱗狀細胞、小細胞<br/>轉移性（20%）：肉瘤、黑色素瘤、乳癌、頭頸、大腸、睪丸、腎臟<br/>類癌</td>
-            </tr>
-          </tbody>
-        </table>
-        <ul class="k-list" style="margin-top:10px">
-          <li><strong>高風險特徵：</strong>大小（≥2.3 cm）、毛刺邊緣、上葉、女性、&gt;60 歲、&gt;1 包/天現役抽菸、未戒菸</li>
-          <li><strong>鈣化型態：</strong>層狀鈣化 → 肉芽腫；爆米花狀 → 錯構瘤；無鈣化 → ↑ 惡性機率</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card" data-bm-id="nodule-mgmt" data-bm-dept="胸腔科" data-bm-title="肺部結節處置">
-      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
-      <div class="k-card-head"><span class="k-card-title">評估與處置</span></div>
-      <div class="k-card-body">
-        <ul class="k-list">
-          <li><strong>PET：</strong>偵測腫瘤代謝活性，Se 97%、Sp 78%（尤其 &gt;8 mm）；可協助決定是否取樣 vs 追蹤 CT，也用於手術前分期</li>
-          <li><strong>經皮針刺切片（TTNB）：</strong>技術可行時 97% 可得確定診斷</li>
-          <li><strong>VATS：</strong>針對無法穿刺的病灶；敏感性高且可同時切除</li>
-          <li><strong>支氣管鏡切片：</strong>多數病灶太小需搭配超音波（EBUS）；導航支氣管鏡（Navigational bronch）取樣率約 70%</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">處置決策</p>
-        <ul class="k-list">
-          <li><strong>低風險（惡性率 &lt;5%）：</strong>定期 CT 追蹤（頻率依風險決定）；與病人共同討論是否切片</li>
-          <li><strong>高風險且可手術：</strong>TBB、TTNB 或 VATS → 若惡性則葉切除</li>
-          <li><strong>次實性結節（Subsolid）：</strong>若為惡性通常生長緩慢 → 追蹤期較長；PET 掃描輔助</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- 咳血 -->
-<div class="topic-block" id="hemoptysis">
-  <div class="topic-block-head">
-    <span class="topic-block-title">咳血 Hemoptysis</span>
-    <div data-bm-id="hemoptysis" data-bm-dept="胸腔科" data-bm-title="咳血">
-      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-    </div>
-  </div>
-
-  <div class="topic-intro">
-    咳血的危險在於<strong>窒息，不是失血</strong>——死亡原因是血液阻塞氣道，而非大量出血。大量咳血（&gt;100 mL/h）需立刻維持氣道通暢，將出血側朝下、選擇性插管正常肺，並緊急支氣管鏡或介入放射科。
-  </div>
-
-  <div class="card-grid col-2">
-
-    <div class="k-card" data-bm-id="hemoptysis-etiology" data-bm-dept="胸腔科" data-bm-title="咳血病因">
-      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
-      <div class="k-card-head"><span class="k-card-title">病因分類</span></div>
-      <div class="k-card-body">
-        <ul class="k-list">
-          <li><strong>感染 / 發炎（最常見輕度咳血）：</strong>支氣管炎；支氣管擴張（CF 常見大量咳血）；TB 或麴菌球（可大量）；肺炎或肺膿瘍</li>
-          <li><strong>腫瘤：</strong>原發性肺癌（可大量）；轉移（偶爾）</li>
-          <li><strong>心血管：</strong>PE（可大量）；PA 破裂（插管 / 操作後）；CHF；二尖瓣狹窄；外傷 / 異物；支氣管血管瘻</li>
-          <li><strong>血管炎：</strong>GPA（抗 PR3）、anti-GBM（Goodpasture's）、Behçet's、SLE</li>
-          <li><strong>其他：</strong>AVM、抗凝血藥（合併潛在肺部疾病）、凝血功能障礙、古柯鹼、肺含鐵血黃素沉著症</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card" data-bm-id="hemoptysis-mgmt" data-bm-dept="胸腔科" data-bm-title="咳血處置">
-      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
-      <div class="k-card-head"><span class="k-card-title">診斷與治療</span></div>
-      <div class="k-card-body">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷</p>
-        <ul class="k-list">
-          <li>排除 GI 或 ENT 來源（病史 + 必要時內視鏡）</li>
-          <li>確認出血是單側或雙側、局部或瀰漫性、氣道或肺實質 → CXR / CT ± 支氣管鏡</li>
-          <li>PT、PTT、CBC 排除凝血功能障礙</li>
-          <li>痰液培養 / 染色：細菌、黴菌、AFB；細胞學排除惡性</li>
-          <li>ANCA、anti-GBM、ANA、尿液分析排除血管炎 / 肺腎症候群</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">大量咳血處置</p>
-        <ul class="k-list">
-          <li><strong>出血側朝下（保護正常肺）</strong>；選擇性插管正常肺若需要</li>
-          <li>維持氣體交換；逆轉凝血異常；治療原因；<strong>止咳劑可能 ↑ 窒息風險，避免使用</strong></li>
-          <li><strong>吸入 Tranexamic acid：</strong>初步資料有效</li>
-          <li><strong>血管攝影：</strong>診斷 + 治療（球囊阻塞或選擇性支氣管動脈栓塞）</li>
-          <li><strong>硬式支氣管鏡：</strong>比彈性支氣管鏡有更多治療選項（電灼、雷射）</li>
-          <li><strong>手術切除：</strong>其他方法失敗時</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- 支氣管擴張與囊性纖維化 -->
-<div class="topic-block" id="bronchiectasis">
-  <div class="topic-block-head">
-    <span class="topic-block-title">支氣管擴張與囊性纖維化 Bronchiectasis & CF</span>
-    <div data-bm-id="bronchiectasis" data-bm-dept="胸腔科" data-bm-title="支氣管擴張與囊性纖維化">
-      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-    </div>
-  </div>
-
-  <div class="topic-intro">
-    支氣管擴張是氣道慢性發炎 → 擴張 → 黏液清除障礙的惡性循環。治療以<strong>清除分泌物和控制感染</strong>為主。CF 是其中最重要的遺傳性病因，現在有 CFTR 調節劑可改變病程。
-  </div>
-
-  <div class="card-grid col-2">
-
-    <div class="k-card" data-bm-id="bronchiectasis-etiology" data-bm-dept="胸腔科" data-bm-title="支氣管擴張病因">
-      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
-      <div class="k-card-head"><span class="k-card-title">支氣管擴張病因與評估</span></div>
-      <div class="k-card-body">
-        <table class="data-table" style="margin-bottom:0">
-          <thead><tr><th>病因</th><th>其他特徵</th><th>評估</th></tr></thead>
-          <tbody>
-            <tr><td>慢性感染（TB、ABPA）</td><td>反覆浸潤、難治氣喘（ABPA）</td><td>痰培養（含分枝桿菌、黴菌）；IgE；嗜酸性球</td></tr>
-            <tr><td>原發性纖毛運動障礙</td><td>鼻竇炎、不育、中耳炎</td><td>Dynein 基因突變</td></tr>
-            <tr><td>免疫缺乏</td><td>兒童期反覆感染</td><td>IgA、IgG、IgM 及次類別</td></tr>
-            <tr><td>RA、Sjögren、ANCA</td><td>呼吸症狀可先於關節症狀</td><td>RF、CCP、SS-A/B、ANCA</td></tr>
-            <tr><td>α1-AT 缺乏</td><td>下葉肺氣腫</td><td>A1AT 濃度和基因型</td></tr>
-            <tr><td>解剖異常</td><td>右中葉症候群、異物吸入</td><td>支氣管鏡</td></tr>
-          </tbody>
-        </table>
-        <ul class="k-list" style="margin-top:10px">
-          <li><strong>CT 特徵：</strong>"軌道征"（tram track）、支氣管壁增厚、管腔擴張</li>
-          <li><strong>PFT：</strong>阻塞型；急性惡化與 FEV1 持續下降相關</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card" data-bm-id="bronchiectasis-tx" data-bm-dept="胸腔科" data-bm-title="支氣管擴張治療">
-      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
-      <div class="k-card-head"><span class="k-card-title">支氣管擴張治療</span></div>
-      <div class="k-card-body">
-        <ul class="k-list">
-          <li><strong>急性惡化：</strong>抗生素依先前培養菌種；無培養資料 → FQ；避免 Azithromycin（NTM 感染風險）</li>
-          <li><strong>慢性管理：</strong>治療潛在原因；胸腔物理治療；吸入高滲鹽水；支氣管擴張劑</li>
-          <li><strong>Brensocatib（DPP-1 抑制劑）：</strong>↓ 急性惡化（NEJM 2025）</li>
-          <li><strong>氣道清除：</strong>Guaifenesin；振動排痰裝置（Aerobika、Acapella）；胸腔物理治療</li>
-          <li><strong>預防性 Azithromycin：</strong>非 CF 患者可減少惡化，但需考慮 NTM 風險</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">非結核分枝桿菌（NTM）</p>
-        <ul class="k-list">
-          <li>慢性咳嗽、體重下降；Lady Windermere 症候群（老年女性右中葉和舌葉支氣管擴張）</li>
-          <li>確診：CT（樹芽征、結節、空洞）+ 痰 × 3 或 BAL，AFB 染色 + 培養</li>
-          <li>治療：依藥敏結果選藥；[Azithromycin 或 Clarithromycin] + Rifamycin + Ethambutol × ≥12 個月</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card full" data-bm-id="cf" data-bm-dept="胸腔科" data-bm-title="囊性纖維化">
-      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
-      <div class="k-card-head"><span class="k-card-title">囊性纖維化（Cystic Fibrosis）</span></div>
-      <div class="k-card-body">
-        <ul class="k-list">
-          <li>體染色體隱性遺傳；CFTR 基因突變 → 氯離子通道異常 → 黏液增厚 → 黏膜纖毛清除障礙 → 反覆感染 → 支氣管擴張</li>
-          <li><strong>臨床特徵：</strong>反覆肺炎 / 鼻竇炎；DIOS（遠端腸阻塞症候群）；胰臟外分泌不足（脂肪瀉、吸收不良）；CF 相關糖尿病；不育</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性惡化治療</p>
-        <ul class="k-list">
-          <li>積極氣道清除；依痰培養結果選擇抗生素（Pseudomonas 需雙重覆蓋）</li>
-          <li>常見病原：Pseudomonas、MRSA、非典型 H. flu、Stenotrophomonas、Burkholderia、NTM</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">慢性管理</p>
-        <ul class="k-list">
-          <li>氣道清除：胸腔物理治療、吸入高滲鹽水、吸入 Dornase alfa（DNAse）、SABA</li>
-          <li>有持續性 Pseudomonas → 吸入 Tobramycin 或 Aztreonam</li>
-          <li>慢性呼吸症狀 → 口服 Azithromycin</li>
-          <li><strong>CFTR 調節劑：</strong></li>
-          <li>Ivacaftor（CFTR 增強劑）：適用特定突變</li>
-          <li>Elexacaftor + Tezacaftor + Ivacaftor（三合一）：同型 ΔF508 突變 → 顯著改善 FEV1 和生活品質</li>
-          <li><strong>肺移植：</strong>FEV1 &lt;30%、快速下降、6MWT &lt;400 m、有肺高壓、臨床明顯惡化時轉介</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-    <!-- 間質性肺疾病 ILD -->
-<div class="topic-block" id="ild">
-  <div class="topic-block-head">
-    <span class="topic-block-title">間質性肺疾病 Interstitial Lung Disease</span>
-    <div data-bm-id="ild" data-bm-dept="胸腔科" data-bm-title="間質性肺疾病">
-      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-    </div>
-  </div>
-
-  <div class="topic-intro">
-    ILD 的評估從<strong>排除模仿者（CHF、感染、惡性腫瘤）</strong>開始，再依<strong>暴露史、CT 型態、血清學、病理</strong>分類。IPF 是最常見且預後最差的特發性 ILD，進展不可逆；NSIP 和 COP 對類固醇反應好。HRCT 型態是最重要的非侵入性診斷工具。
-  </div>
-
-  <div class="card-grid col-2">
-
-    <div class="k-card" data-bm-id="ild-workup" data-bm-dept="胸腔科" data-bm-title="ILD 評估">
-      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
-      <div class="k-card-head"><span class="k-card-title">ILD 評估框架</span></div>
-      <div class="k-card-body">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">四大類別</p>
-        <ul class="k-list">
-          <li><strong>①　Sarcoidosis</strong></li>
-          <li><strong>②　暴露相關：</strong>藥物、放射線、有機和無機粉塵、電子煙</li>
-          <li><strong>③　膠原血管疾病：</strong>硬皮病、ANCA、肌炎、RA</li>
-          <li><strong>④　特發性：</strong>IPF、NSIP、COP、AIP、DIP、RB-ILD</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">病史重點</p>
-        <ul class="k-list">
-          <li><strong>職業 / 暴露：</strong>鳥類、黴菌、石綿、矽、鈹、藥物、放射線</li>
-          <li><strong>發病速度：</strong>急性（&lt;1 個月）→ 感染、CHF、過敏性肺炎、嗜酸性球性肺炎、AIP、COP、藥物；亞急性 / 慢性 → 大多數 ILD</li>
-          <li><strong>肺外症狀：</strong>皮疹、關節痛 / 炎、肌痛、乾燥症、脫髮、Raynaud's → 膠原血管疾病</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷工具</p>
-        <ul class="k-list">
-          <li><strong>HRCT：</strong>最重要的非侵入性工具；上葉為主 → 過敏性肺炎、煤礦塵、矽肺、抽菸相關、Sarcoidosis；下葉為主 → NSIP、UIP、石綿肺</li>
-          <li><strong>PFT：</strong>DLCO 最早期異常；限制型（↓ 肺容積）；低氧（尤其運動時）</li>
-          <li><strong>血清學：</strong>ACE、ANA、RF、ANCA、CCP、SSA/SSB、Scl-70、CK、Aldolase、肌炎抗體組合</li>
-          <li><strong>BAL：</strong>特定情況（感染、出血、嗜酸性球症候群、過敏性肺炎）；淋巴球 &gt;35% → 過敏性肺炎</li>
-          <li><strong>切片：</strong>冷凍切片（Cryobiopsy）vs VATS，依位置決定；原因不明時</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card" data-bm-id="sarcoidosis" data-bm-dept="胸腔科" data-bm-title="Sarcoidosis">
-      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
-      <div class="k-card-head"><span class="k-card-title">肉芽腫病（Sarcoidosis）</span></div>
-      <div class="k-card-body">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">多器官表現</p>
-        <table class="data-table" style="margin-bottom:12px">
-          <thead><tr><th>器官</th><th>表現</th></tr></thead>
-          <tbody>
-            <tr><td><strong>肺部</strong></td><td>肺門淋巴結腫大；纖維化；肺高壓。Stage I = 雙側肺門 LAN；II = LAN + ILD；III = ILD；IV = 瀰漫纖維化</td></tr>
-            <tr><td><strong>皮膚（15%）</strong></td><td>蠟樣皮膚斑；狼瘡皮疹（violaceous 顏面病灶）；結節性紅斑（好預後）</td></tr>
-            <tr><td><strong>眼睛（10-30%）</strong></td><td>前 &gt; 後葡萄膜炎；↑ 淚腺</td></tr>
-            <tr><td><strong>內分泌 / 腎臟（10%）</strong></td><td>高鈣血症（10%）、高鈣尿症（40%）；腎結石</td></tr>
-            <tr><td><strong>神經（10%）</strong></td><td>第 VII 腦神經麻痺；周邊神經病變；CNS 病灶；癲癇</td></tr>
-            <tr><td><strong>心臟（5%）</strong></td><td>傳導阻滯；心律不整；心肌病變</td></tr>
-            <tr><td><strong>肝脾骨髓</strong></td><td>肉芽腫性肝炎（25%）；脾臟和骨髓肉芽腫（50%）</td></tr>
-          </tbody>
-        </table>
-        <ul class="k-list">
-          <li><strong>Löfgren 症候群：</strong>結節性紅斑 + 肺門腺病 + 關節炎 → 好預後</li>
-          <li><strong>診斷：</strong>淋巴結切片 → 非乾酪性肉芽腫 + 多核巨細胞；EBUS 優於傳統支氣管鏡；ACE（Se 60%，Sp 80%）</li>
-          <li><strong>治療：</strong>類固醇（有症狀或肺外器官功能障礙）；Hydroxychloroquine 用於廣泛皮膚病；難治性 → MTX、AZA、MMF 或 anti-TNF</li>
-          <li class="note">預後：約 2/3 在 10 年內自然緩解（Stage I 60-80%、Stage II 50-60%、Stage III 30%）；約 1/3 進展</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card" data-bm-id="pneumoconiosis" data-bm-dept="胸腔科" data-bm-title="職業性肺塵症">
-      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
-      <div class="k-card-head"><span class="k-card-title">職業性暴露 / 過敏性肺炎</span></div>
-      <div class="k-card-body">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">無機粉塵（肺塵症）</p>
-        <ul class="k-list">
-          <li><strong>煤礦工：</strong>上葉為主；可進展為大塊纖維化</li>
-          <li><strong>矽肺：</strong>上葉結節 ± 蛋殼狀淋巴結鈣化；↑ 結核感染風險</li>
-          <li><strong>石綿肺：</strong>下葉纖維化 + 鈣化胸膜斑；也與間皮瘤和肺癌相關</li>
-          <li><strong>鈹肺：</strong>多系統肉芽腫性疾病，類似 Sarcoidosis</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">過敏性肺炎（有機粉塵）</p>
-        <ul class="k-list">
-          <li>疏鬆非乾酪性肉芽腫</li>
-          <li><strong>抗原：</strong>農夫肺（嗜熱性放線菌孢子）；鳥類飼養者肺（鳥類羽毛蛋白）；加濕器肺</li>
-          <li>BAL 淋巴球 &gt;35% 支持診斷</li>
-          <li>急性：發燒、呼吸困難、咳嗽（暴露後 4-6 小時）；慢性：肺纖維化</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card full" data-bm-id="iip" data-bm-dept="胸腔科" data-bm-title="特發性間質性肺炎">
-      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-      <div class="k-card-head"><span class="k-card-title">特發性間質性肺炎（IIPs）比較</span></div>
-      <div class="k-card-body">
-        <table class="data-table" style="margin-bottom:12px">
-          <thead><tr><th>類型</th><th>CT / 病理特徵</th><th>臨床特點</th><th>預後</th></tr></thead>
-          <tbody>
-            <tr>
-              <td><strong>IPF（UIP 型）</strong></td>
-              <td>網狀浸潤、蜂窩肺、牽引性支氣管擴張；周邊、胸膜下、下葉為主</td>
-              <td>症狀 &gt;12 個月；漸進性呼吸困難、乾咳；Velcro 囉音</td>
-              <td>5 年死亡率 ~80%</td>
-            </tr>
-            <tr>
-              <td><strong>NSIP</strong></td>
-              <td>均質磨玻璃或實變；胸膜下保留；對稱、周邊、下葉；有細胞型和纖維型</td>
-              <td>症狀數月至數年；常見於膠原血管疾病</td>
-              <td>5 年死亡率 10%</td>
-            </tr>
-            <tr>
-              <td><strong>COP（隱源性機化性肺炎）</strong></td>
-              <td>斑片狀、游走性實變；胸膜下和支氣管周圍；小氣道和肺泡管肉芽腫增生</td>
-              <td>感染後、放射線後、藥物反應；症狀 &lt;3 個月</td>
-              <td>5 年死亡率 &lt;5%；類固醇反應極好</td>
-            </tr>
-            <tr>
-              <td><strong>AIP（急性間質性肺炎）</strong></td>
-              <td>瀰漫性磨玻璃、實變；中央 &gt; 周邊；路徑類似 DAD</td>
-              <td>症狀 &lt;3 週；快速進展至呼吸衰竭</td>
-              <td>6 個月死亡率 60%</td>
-            </tr>
-            <tr>
-              <td><strong>DIP / RB-ILD</strong></td>
-              <td>瀰漫磨玻璃（DIP）；支氣管壁增厚、小葉中心結節（RB-ILD）；上葉為主</td>
-              <td>30-50 歲抽菸者；症狀數週至數月</td>
-              <td>戒菸可能治癒；死亡率低</td>
-            </tr>
-          </tbody>
-        </table>
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
-        <ul class="k-list">
-          <li><strong>所有 ILD：</strong>補充氧氣、肺復健、GERD 治療、肺高壓篩查、轉介肺移植（重度）</li>
-          <li><strong>IPF：</strong>Pirfenidone 或 Nintedanib（抗纖維化）→ ↓ FVC 下降速率；急性惡化 → 高劑量類固醇；戒菸</li>
-          <li><strong>NSIP（細胞型）、COP、LIP：</strong>類固醇；CTD 相關 NSIP → MMF + Rituximab</li>
-          <li><strong>DIP / RB-ILD：</strong>戒菸可能足夠</li>
-          <li><strong>AIP：</strong>高劑量類固醇（無 RCT 資料）</li>
-          <li class="note">嗜酸性球肺浸潤（PIE）：ABPA、Löffler's、急性或慢性嗜酸性球性肺炎 → 類固醇；急性型 → 停菸</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card" data-bm-id="ctd-ild" data-bm-dept="胸腔科" data-bm-title="膠原血管疾病相關 ILD">
-      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
-      <div class="k-card-head"><span class="k-card-title">膠原血管疾病相關 ILD</span></div>
-      <div class="k-card-body">
-        <ul class="k-list">
-          <li><strong>硬皮病：</strong>ILD 約 50%（最高）；肺高壓約 10%（限制型更常見）</li>
-          <li><strong>PM-DM（多發性肌炎 / 皮肌炎）：</strong>ILD + 皮膚 / 肌肉症狀；Antisynthetase 症候群（anti-Jo-1）</li>
-          <li><strong>MCTD：</strong>肺高壓 + 纖維化</li>
-          <li><strong>Sjögren's：</strong>ILD + 乾燥症</li>
-          <li><strong>SLE 和 RA：</strong>肋膜炎和胸膜積液更常見；SLE 可引發 DAH</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">血管炎相關肺部表現</p>
-        <ul class="k-list">
-          <li><strong>GPA（Wegener's）：</strong>c-ANCA + 壞死性肉芽腫；肺 + 腎 + ENT</li>
-          <li><strong>EGPA（Churg-Strauss）：</strong>c- 或 p-ANCA + 嗜酸性球 + 壞死性肉芽腫；氣喘</li>
-          <li><strong>MPA：</strong>p-ANCA + 無肉芽腫</li>
-          <li><strong>Goodpasture's：</strong>DAH + RPGN；抽菸者；anti-GBM 90%</li>
-          <li><strong>LAM：</strong>囊性改變；女性；用 Sirolimus 治療</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-    <!-- 肋膜疾病 Pleural Disease -->
-<div class="topic-block" id="pleural">
-  <div class="topic-block-head">
-    <span class="topic-block-title">肋膜疾病 Pleural Disease</span>
-    <div data-bm-id="pleural" data-bm-dept="胸腔科" data-bm-title="肋膜疾病">
-      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-    </div>
-  </div>
-
-  <div class="topic-intro">
-    肋膜積液的評估核心是：<strong>Light's criteria 區分滲出液 vs 漏出液</strong>，再依細胞分類、培養、ADA 等縮窄鑑別。滲出液以惡性、肺炎旁積液和 TB 最重要。氣胸分張力性（緊急）和非張力性——張力性氣胸是臨床診斷，不要等 X 光確認才處理。
-  </div>
-
-  <div class="card-grid col-2">
-
-    <div class="k-card" data-bm-id="pleural-etiology" data-bm-dept="胸腔科" data-bm-title="肋膜積液病因">
-      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
-      <div class="k-card-head"><span class="k-card-title">漏出液 vs 滲出液病因</span></div>
-      <div class="k-card-body">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">漏出液（Transudate）</p>
-        <ul class="k-list">
-          <li><strong>CHF（40%）：</strong>80% 雙側 ± 心臟擴大；積極利尿後可呈假性滲出液</li>
-          <li><strong>肝性胸水：</strong>腹腔液經橫膈裂孔進入；常右側（2/3）且量大（即使腹水不多）</li>
-          <li><strong>腎病症候群：</strong>通常小量、雙側、無症狀（需排除 PE，因高凝狀態）</li>
-          <li><strong>縮窄性心包炎：</strong>聽診有 knock、影像顯示鈣化或增厚</li>
-          <li><strong>其他：</strong>PE（通常為滲出液）、惡性（淋巴管阻塞時）、黏液水腫、CAPD</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">滲出液（Exudate）</p>
-        <ul class="k-list">
-          <li><strong>肺炎旁積液（25%）：</strong>細菌性 → 未治療可從無菌 → 纖維膿性 → 機化；TB → 常 &gt;50% 淋巴球、ADA &gt;40；黴菌、病毒（通常少量）</li>
-          <li><strong>惡性（15%）：</strong>原發性肺癌最常見；轉移（乳癌、淋巴瘤）；間皮瘤</li>
-          <li><strong>PE（10%）：</strong>約 40% 的 PE 有積液；75% 為滲出液；出血性→高度懷疑 PE</li>
-          <li><strong>膠原血管疾病：</strong>RA（量大）、SLE（量小）、GPA、EGPA</li>
-          <li><strong>腹部疾病：</strong>胰腺炎（澱粉酶高）、膽囊炎、食道破裂、腹腔膿瘍</li>
-          <li><strong>血胸：</strong>積液 / 血液 Hct &gt;50%；外傷、PE、惡性、凝血障礙、主動脈病變</li>
-          <li><strong>乳糜胸：</strong>三酸甘油酯 &gt;110；胸管損傷（外傷、惡性、LAM）</li>
-          <li><strong>其他：</strong>CABG 後（左側）；Dressler's 症候群；黃指甲症候群</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card" data-bm-id="pleural-dx" data-bm-dept="胸腔科" data-bm-title="肋膜積液診斷">
-      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-      <div class="k-card-head"><span class="k-card-title">胸腔穿刺術與 Light's Criteria</span></div>
-      <div class="k-card-body">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">胸腔穿刺術適應症</p>
-        <ul class="k-list">
-          <li>所有 &gt;1 cm（臥位 X 光）的積液</li>
-          <li>懷疑 CHF 可先利尿 → 48h 後 75% 消退；若不對稱、發燒、胸痛或未消退 → 穿刺</li>
-          <li>肺炎旁積液應盡快穿刺（無法靠臨床排除感染）</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Light's Criteria（滿足任一即為滲出液）</p>
-        <table class="data-table" style="margin-bottom:12px">
-          <thead><tr><th>標準</th><th>閾值</th></tr></thead>
-          <tbody>
-            <tr><td>積液蛋白 / 血清蛋白</td><td>&gt;0.5</td></tr>
-            <tr><td>積液 LDH / 血清 LDH</td><td>&gt;0.6</td></tr>
-            <tr><td>積液 LDH</td><td>&gt;血清 LDH 正常值上限的 2/3</td></tr>
-          </tbody>
-        </table>
-        <ul class="k-list">
-          <li><strong>三項測試法（特異性更高，任一符合即為滲出液）：</strong>積液膽固醇 &gt;55 mg/dL；積液 LDH &gt;200 U/L；積液膽固醇 / 血清膽固醇 &gt;0.3</li>
-          <li><strong>CHF 假性滲出液：</strong>利尿後蛋白升高；積液膽固醇有助於鑑別</li>
-          <li><strong>併發性肺炎旁積液：</strong>Gram stain 或培養陽性；或 pH &lt;7.2；或葡萄糖 &lt;60 → 需插胸管</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">積液細胞分類</p>
-        <ul class="k-list">
-          <li><strong>中性球為主：</strong>肺炎旁積液、PE、胰腺炎</li>
-          <li><strong>淋巴球 &gt;50%：</strong>惡性、TB、風濕科疾病</li>
-          <li><strong>嗜酸性球 &gt;10%：</strong>血液、空氣、藥物反應、石綿、PE</li>
-          <li><strong>ADA &gt;70：</strong>高度懷疑 TB；&lt;40 可排除 TB</li>
-          <li><strong>NT-proBNP ≥1500 pg/mL：</strong>CHF（Se 91%、Sp 93%）</li>
-          <li><strong>澱粉酶升高：</strong>胰腺疾病（胰澱粉酶）或食道破裂（唾液澱粉酶）</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card" data-bm-id="pleural-tx" data-bm-dept="胸腔科" data-bm-title="肋膜積液治療">
-      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
-      <div class="k-card-head"><span class="k-card-title">肋膜積液治療</span></div>
-      <div class="k-card-body">
-        <ul class="k-list">
-          <li><strong>症狀性積液：</strong>治療性胸腔穿刺；治療原發疾病</li>
-          <li><strong>肺炎旁積液：</strong>未併發 → 肺炎抗生素；超過半側胸腔、併發性或膿胸 → 插胸管（否則纖維化 → 需手術剝除）；包裹性 → 胸管或 VATS；胸管內 tPA + DNase → ↓ 手術需求</li>
-          <li><strong>惡性積液：</strong>系列性穿刺 vs 胸管 + 胸膜固定術（成功率 80-90%）vs 留置胸膜導管（住院天數 ↓ 但不良事件 ↑）；全身類固醇和 pH &lt;7.2 → 胸膜固定術失敗率 ↑</li>
-          <li><strong>TB 積液：</strong>通常自行吸收，但仍需治療活動性 TB</li>
-          <li><strong>肝性胸水：</strong>↓ 腹水（限鈉 + 利尿）；避免插胸管；系列性穿刺；TIPS；VATS 關閉橫膈裂孔；肝臟移植是根本治療</li>
-          <li class="note">穿刺複雜度低（即使 INR ~1.9、使用 DOAC 或 Clopidogrel）；U/S 引導下出血風險低；每次移除 &gt;1.5 L → 注意再擴張性肺水腫</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="k-card" data-bm-id="pneumothorax" data-bm-dept="胸腔科" data-bm-title="氣胸">
-      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
-      <div class="k-card-head"><span class="k-card-title">氣胸（Pneumothorax）</span></div>
-      <div class="k-card-body">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">分類與病因</p>
-        <ul class="k-list">
-          <li><strong>原發性自發性氣胸（PSP）：</strong>無潛在肺疾病；高瘦男性、抽菸者；肺尖肺大泡破裂</li>
-          <li><strong>次發性自發性氣胸（SSP）：</strong>潛在肺疾病（COPD、CF、LAM、LCH、PCP、結核）；更危險</li>
-          <li><strong>醫源性：</strong>胸腔穿刺、CVC 置放（鎖骨下）、機械通氣（氣壓傷）</li>
-          <li><strong>外傷性：</strong>穿透或鈍挫傷</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">張力性氣胸（Tension PTX）</p>
-        <div class="alert alert-red" style="margin-bottom:12px">
-          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-          <span>張力性氣胸是<strong>臨床診斷</strong>——不要等 X 光確認！低血壓 + 頸靜脈怒張 + 氣管偏移 + 呼吸音消失 → 立刻針刺減壓（第 2 肋間鎖骨中線）→ 再插胸管。</span>
-        </div>
-        <ul class="k-list">
-          <li><strong>機轉：</strong>單向活瓣效應 → 氣體持續進入胸膜腔 → 縱膈移位 → 對側肺和靜脈回流受壓 → CO 下降 → 心跳停止</li>
-          <li><strong>表現：</strong>嚴重呼吸困難、低血壓、頸靜脈怒張、患側呼吸音消失、氣管偏向健側</li>
-        </ul>
-        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
-        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">非張力性氣胸處置</p>
-        <ul class="k-list">
-          <li><strong>小型 PSP（&lt;2 cm 肺尖至胸壁）且無症狀：</strong>觀察 ± 高流量氧氣（加速氮氣吸收）；可門診追蹤</li>
-          <li><strong>大型 PSP 或任何 SSP：</strong>抽氣（Aspiration）或胸管</li>
-          <li><strong>胸管大小：</strong>小管（8-14Fr）≈ 大管；小管更舒適</li>
-          <li><strong>復發性或持續性氣漏：</strong>VATS + 大泡切除 + 胸膜固定術</li>
-          <li class="note">機械通氣患者發生氣胸 → 高 PIP、單側呼吸音消失、血壓下降 → 立刻胸管，不能只抽氣</li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</div>
-    
-    <!-- 胸腔積液 -->
-    <div class="topic-block" id="effusion">
+    <!-- 氣喘 -->
+    <div class="topic-block" id="asthma">
       <div class="topic-block-head">
-        <span class="topic-block-title">胸腔積液 Pleural Effusion</span>
-        <div data-bm-id="effusion" data-bm-dept="胸腔科" data-bm-title="胸腔積液">
+        <span class="topic-block-title">氣喘 Asthma</span>
+        <div data-bm-id="asthma" data-bm-dept="胸腔科" data-bm-title="氣喘">
           <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
         </div>
       </div>
       <div class="card-grid col-2">
-        <div class="k-card" data-bm-id="effusion-light" data-bm-dept="胸腔科" data-bm-title="Light's Criteria">
+        <div class="k-card" data-bm-id="asthma-vs-copd" data-bm-dept="胸腔科" data-bm-title="氣喘 vs COPD">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">氣喘 vs COPD 鑑別</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th></th><th>氣喘</th><th>COPD</th></tr></thead>
+              <tbody>
+                <tr><td>年齡</td><td>常見年輕人</td><td>常見 &gt;40 歲</td></tr>
+                <tr><td>病程</td><td>間歇性，可完全緩解</td><td>持續性，漸進惡化</td></tr>
+                <tr><td>誘發因子</td><td>過敏原、運動、冷空氣</td><td>抽菸（主要）</td></tr>
+                <tr><td>可逆性</td><td>支氣管擴張後 FEV₁ 恢復</td><td>不完全可逆</td></tr>
+                <tr><td>痰液</td><td>清澈黏稠</td><td>可膿性</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="asthma-severity" data-bm-dept="胸腔科" data-bm-title="氣喘急性發作嚴重度">
           <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-          <div class="k-card-head"><span class="k-card-title">Light's Criteria 分類</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性發作嚴重度評估</span></div>
           <div class="k-card-body">
             <ul class="k-list">
-              <li>符合任一條 = <strong>滲出液（Exudate）</strong>：</li>
-              <li>肋膜液蛋白 / 血清蛋白 &gt;0.5</li>
-              <li>肋膜液 LDH / 血清 LDH &gt;0.6</li>
-              <li>肋膜液 LDH &gt;2/3 血清 LDH 正常上限</li>
-              <li>三項都不符合 = <strong>漏出液（Transudate）</strong></li>
-            </ul>
-            <div class="alert alert-blue" style="margin-top:12px;margin-bottom:0">
-              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
-              <span>漏出液：心衰竭、肝硬化、低白蛋白。滲出液：感染、惡性腫瘤、PE、自體免疫</span>
-            </div>
-          </div>
-        </div>
-        <div class="k-card" data-bm-id="effusion-workup" data-bm-dept="胸腔科" data-bm-title="胸腔積液檢查">
-          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
-          <div class="k-card-head"><span class="k-card-title">肋膜液分析要送哪些</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>常規</strong>：蛋白質、LDH、葡萄糖、pH、細胞計數分類</li>
-              <li><strong>感染懷疑</strong>：革蘭氏染色、培養（需氧/厭氧）</li>
-              <li><strong>惡性懷疑</strong>：細胞學（送多量，敏感性較高）</li>
-              <li><strong>TB 懷疑</strong>：ADA（Adenosine deaminase）&gt;40 高度懷疑</li>
-              <li>同時抽血送：蛋白質、LDH、白蛋白（Light's criteria 計算用）</li>
+              <li><strong>輕度</strong>：說話成句、SpO₂ &gt;95%、RR &lt;20</li>
+              <li><strong>中度</strong>：說話斷句、SpO₂ 91-95%、RR 20-30、使用輔助呼吸肌</li>
+              <li><strong>重度</strong>：說話單字、SpO₂ &lt;91%、RR &gt;30、無法平躺</li>
+              <li><strong>瀕危</strong>：意識改變、呼吸音消失（silent chest）、發紺</li>
+              <li class="note">Silent chest 是最危險的警訊，不是好轉，是氣流已嚴重受阻</li>
             </ul>
           </div>
         </div>
-        <div class="k-card" data-bm-id="effusion-tx" data-bm-dept="胸腔科" data-bm-title="胸腔積液引流">
-          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
-          <div class="k-card-head"><span class="k-card-title">何時需要引流</span></div>
+        <div class="k-card full" data-bm-id="asthma-tx" data-bm-dept="胸腔科" data-bm-title="氣喘急性發作處置">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span><span class="tag tag-steps">步驟</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性發作處置</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li class="step-item"><div class="step-num">1</div><div>Salbutamol（Ventolin）MDI 4-8 puffs 或 nebulizer 2.5-5mg，每 20 分鐘 ×3 次</div></li>
+              <li class="step-item"><div class="step-num">2</div><div>Ipratropium nebulizer（與 Salbutamol 合用，中重度）</div></li>
+              <li class="step-item"><div class="step-num">3</div><div>全身性類固醇：Prednisolone 40-60mg PO 或 Methylprednisolone 80mg IV</div></li>
+              <li class="step-item"><div class="step-num">4</div><div>氧氣：目標 SpO₂ &gt;94%（氣喘不像 COPD，可以給高濃度氧）</div></li>
+              <li class="step-item"><div class="step-num">5</div><div>重度無效 → Magnesium sulfate 2g IV over 20min、考慮插管</div></li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="asthma-controller" data-bm-dept="胸腔科" data-bm-title="氣喘長期控制用藥">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">長期控制用藥（GINA 步驟治療）</span></div>
           <div class="k-card-body">
             <ul class="k-list">
-              <li>呼吸困難症狀明顯 → 治療性引流（symptom relief）</li>
-              <li>膿胸（pH &lt;7.2、Glucose &lt;60、膿性外觀）→ 置放 chest tube</li>
-              <li>大型積液（&gt;1/2 胸腔）→ 考慮引流</li>
-              <li>首次引流量 ≤1000-1500mL（避免 re-expansion pulmonary edema）</li>
-              <li class="note">心衰竭引起的漏出液 → 先治療心衰竭，不一定要引流</li>
+              <li><strong>Step 1-2</strong>：低劑量 ICS + SABA PRN（或 SABA 單獨）</li>
+              <li><strong>Step 3</strong>：低劑量 ICS + LABA</li>
+              <li><strong>Step 4</strong>：中高劑量 ICS + LABA</li>
+              <li><strong>Step 5</strong>：加 LAMA、Anti-IgE（Omalizumab）、Anti-IL5</li>
+              <li class="note">ICS 是氣喘長期控制的基石，SABA 單獨使用不能長期控制發炎</li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-      
+
+    <!-- 肺炎（胸腔科角度） -->
+    <div class="topic-block" id="pneumonia">
+      <div class="topic-block-head">
+        <span class="topic-block-title">肺炎 Pneumonia（胸腔科重點）</span>
+        <div data-bm-id="pulm-pna" data-bm-dept="胸腔科" data-bm-title="肺炎（胸腔科）">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="alert alert-blue">
+        <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+        <span>肺炎的抗生素選擇詳見感染科，這裡著重胸腔科角度的評估和併發症處理。</span>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="pna-complication" data-bm-dept="胸腔科" data-bm-title="肺炎併發症">
+          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+          <div class="k-card-head"><span class="k-card-title">肺炎常見併發症</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>肋膜積液（Parapneumonic effusion）</strong>：超音波確認，分單純性 vs 複雜性</li>
+              <li><strong>膿胸（Empyema）</strong>：pH &lt;7.2、LDH &gt;1000、Glucose &lt;60 → 需引流</li>
+              <li><strong>肺膿瘍（Lung abscess）</strong>：影像上出現 air-fluid level，延長抗生素療程</li>
+              <li><strong>呼吸衰竭</strong>：進展至 ARDS，考慮 ICU 和機械通氣</li>
+              <li class="note">治療 48-72h 無改善 → 重新評估：耐藥菌？非典型？膿胸？腫瘤阻塞？</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pna-xray" data-bm-dept="胸腔科" data-bm-title="肺炎影像判讀">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">CXR 和 CT 的判讀重點</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>葉性肺炎（Lobar）</strong>：整葉實質化，多為 S. pneumoniae</li>
+              <li><strong>支氣管肺炎（Bronchopneumonia）</strong>：片狀浸潤，多為 HAP 菌種</li>
+              <li><strong>間質性肺炎（Interstitial）</strong>：雙側磨玻璃影，多為非典型或病毒</li>
+              <li>Air bronchogram：實質化中看到充氣支氣管，代表氣道通暢但肺泡實化</li>
+              <li class="note">CXR 比 CT 慢 24-48h 顯示，臨床惡化不要等 CXR 確認</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 呼吸衰竭 Respiratory Failure -->
 <div class="topic-block" id="respiratory-failure">
   <div class="topic-block-head">
@@ -1522,18 +1506,177 @@
 
   </div>
 </div>
+
+    <!-- 敗血症與休克 Sepsis & Shock -->
+<div class="topic-block" id="sepsis">
+  <div class="topic-block-head">
+    <span class="topic-block-title">敗血症與休克 Sepsis & Shock</span>
+    <div data-bm-id="sepsis" data-bm-dept="胸腔科" data-bm-title="敗血症與休克">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    敗血症的處置核心是<strong>早期辨識 + 立刻抗生素 + 積極補液</strong>——每延誤 1 小時給抗生素，死亡率增加 7.6%。休克的分型依血流動力學決定（見心臟科 PA 導管 block），敗血性休克首選 Norepinephrine。乳酸清除率和微血管充填時間是目前最佳的復甦監測指標。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="sepsis-def" data-bm-dept="胸腔科" data-bm-title="敗血症定義">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">定義與診斷標準</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>敗血症：</strong>感染引起的生命威脅性器官功能障礙（SOFA ≥2）</li>
+          <li><strong>敗血性休克：</strong>敗血症 + 需要升壓藥維持 MAP ≥65 + Lactate &gt;2 mmol/L（充分補液後）</li>
+          <li><strong>篩查工具：</strong>SIRS、NEWS、MEWS 用於早期辨識；qSOFA（RR &gt;22、意識改變、SBP &lt;100）預測不良結果</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">SOFA 評分</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>器官</th><th>評估指標</th></tr></thead>
+          <tbody>
+            <tr><td><strong>呼吸</strong></td><td>↓ P/F ratio</td></tr>
+            <tr><td><strong>凝血</strong></td><td>↓ 血小板</td></tr>
+            <tr><td><strong>肝臟</strong></td><td>↑ Bilirubin</td></tr>
+            <tr><td><strong>心血管</strong></td><td>↓ MAP 或 ↑ 升壓藥</td></tr>
+            <tr><td><strong>CNS</strong></td><td>↓ GCS</td></tr>
+            <tr><td><strong>腎臟</strong></td><td>↑ Creatinine 或 ↓ 尿量</td></tr>
+          </tbody>
+        </table>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">休克定義</p>
+        <ul class="k-list">
+          <li>組織低灌流 → ↓ 組織 O₂ 輸送和 / 或 ↑ O₂ 消耗或 O₂ 利用障礙</li>
+          <li><strong>典型徵象：</strong>低血壓（SBP &lt;90 或較基礎值 ↓ &gt;40 mmHg）、心搏過速、少尿（UOP &lt;0.5 mL/kg/h）、意識改變、代謝性酸中毒 ± 乳酸升高</li>
+          <li><strong>隱性休克：</strong>SVR 升高可維持 SBP 但組織灌流差；Shock index（HR/SBP）&gt;0.9 和脈壓差 &lt;25% 是線索</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="sepsis-fluid" data-bm-dept="胸腔科" data-bm-title="敗血症液體復甦">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">液體復甦</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>初始：</strong>30 mL/kg 晶體液在 3 小時內分次給予</li>
+          <li><strong>晶體液 = 膠體液：</strong>復甦效果相當，晶體液更便宜</li>
+          <li><strong>平衡晶體（LR、Plasma-Lyte）vs NS：</strong>在死亡率、器官衰竭或 RRT 方面無一致性差異</li>
+          <li><strong>NaHCO₃：</strong>AKI + pH &lt;7.2 時可能 ↓ 死亡率和 RRT 需求</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">液體反應性預測</p>
+        <ul class="k-list">
+          <li><strong>動態指標（優）：</strong>脈壓隨呼吸變化 &gt;13%；IVC 直徑隨呼吸變化；被動抬腿試驗後脈壓 ↑ &gt;10%</li>
+          <li><strong>靜態 CVP（差）：</strong>不是液體反應性的可靠替代指標</li>
+          <li><strong>充分初始復甦後：</strong>限制液體策略（傾向升壓藥）vs 自由液體策略 → 結果無差異</li>
+          <li>合併 ARDS / ALI 時：目標 CVP 4-6 mmHg → ↑ 脫機天數</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="sepsis-pressors" data-bm-dept="胸腔科" data-bm-title="敗血症升壓藥">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">升壓藥與強心劑</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>MAP 目標 65 mmHg：</strong>與 80-85 mmHg 效果相當，且 ↓ AF 發生率</li>
+          <li><strong>Norepinephrine（首選）：</strong>相比 Dopamine ↓ 心律不整和死亡率；敗血性休克首選升壓藥</li>
+          <li><strong>Vasopressin：</strong>加在 Norepinephrine 上（不是用高劑量 Norepinephrine）→ ↓ AF 和 RRT 需求約 1/4</li>
+          <li><strong>頑固性血管麻痺時：</strong>Angiotensin II；Hydroxocobalamin；Methylene blue；類固醇</li>
+          <li><strong>Dopamine：</strong>不再是敗血性休克首選（心律不整和死亡率較高）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">復甦目標</p>
+        <ul class="k-list">
+          <li><strong>乳酸清除率 ≥20% / 2h：</strong>和 ScvO₂ 目標一樣有效</li>
+          <li><strong>微血管充填時間 ≤3 秒（每 30 分鐘評估）：</strong>和乳酸清除率一樣好，甚至更優</li>
+          <li class="note">EGDT（早期目標導向治療）在當前早期抗生素 + 充分補液的時代，相比常規治療無死亡率優勢且增加醫療成本</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="sepsis-abx" data-bm-dept="胸腔科" data-bm-title="敗血症抗生素">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">抗生素與類固醇</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">抗生素</p>
+        <ul class="k-list">
+          <li><strong>辨識後立刻給予：</strong>每延誤 1 小時死亡率 ↑ 7.6%；急診 3 小時內給藥 → ↓ 住院死亡率</li>
+          <li><strong>盡可能先抽血培養 ×2 組再給藥（不要因此延誤）</strong></li>
+          <li>廣效覆蓋：GPC（含 MRSA）+ GNR（含高度抗藥菌）± 厭氧菌</li>
+          <li><strong>Procalcitonin 引導停藥：</strong>對死亡率影響仍不確定</li>
+          <li><strong>Candida 覆蓋（Micafungin）：</strong>危重症 + Candida 定殖 + 不明感染源 → ↓ 侵襲性黴菌感染，尤其 β-glucan &gt;80 時</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">類固醇</p>
+        <ul class="k-list">
+          <li><strong>Hydrocortisone 50 mg IV q6h + Fludrocortisone 50 μg NGT qd：</strong>敗血性休克 → ↓ 休克持續時間約 1 天，可能 ↓ 死亡率</li>
+          <li><strong>適應症：</strong>升壓藥劑量持續增加的頑固性休克</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="shock-types" data-bm-dept="胸腔科" data-bm-title="休克分型">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">休克分型與處置方向</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>休克類型</th><th>CVP</th><th>PCWP</th><th>CO</th><th>SVR</th><th>處置方向</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>低血容性</strong><br/><small>出血、嚴重脫水</small></td>
+              <td>↓</td><td>↓</td><td>↓</td><td>↑</td>
+              <td>補液（出血 → 輸血）；止血</td>
+            </tr>
+            <tr>
+              <td><strong>心因性</strong><br/><small>心肌梗塞、嚴重心衰竭</small></td>
+              <td>↑</td><td>↑</td><td>↓</td><td>↑</td>
+              <td>強心劑（Dobutamine）；血管擴張劑；機械輔助；治療原因</td>
+            </tr>
+            <tr>
+              <td><strong>阻塞性</strong><br/><small>PE、心包填塞、張力性氣胸</small></td>
+              <td>↑</td><td>↓（填塞、氣胸）或↑（PE）</td><td>↓</td><td>↑</td>
+              <td>解除阻塞（心包穿刺、胸管、溶栓）</td>
+            </tr>
+            <tr>
+              <td><strong>分布性</strong><br/><small>敗血症、過敏性、神經性</small></td>
+              <td>不定</td><td>不定</td><td>↑（通常）</td><td>↓</td>
+              <td>Norepinephrine；治療原因；類固醇（敗血性）；Epinephrine（過敏性）</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>過敏性休克：</strong>Epinephrine 0.3 mg IM 大腿外側（第一線，不要等）；補液；Diphenhydramine；類固醇（預防雙相反應）；病患應攜帶 EpiPen</li>
+          <li><strong>神經性休克：</strong>脊椎損傷後交感神經張力喪失 → 低血壓 + 心搏過緩（vs 出血性休克心搏過速）→ 補液 + 升壓藥 + 阿托品</li>
+          <li class="note">臨床難以區分時 → 超音波評估 IVC、LV、RV、心包積液（RUSH 檢查）；或考慮 PA 導管（見心臟科 PA 導管 block）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+    
   </main>
 </div>
 
 <script src="../shared.js"></script>
 <script>
   const SEARCH_INDEX = [
-    { id:'copd',      dept:'胸腔科', title:'COPD',       url:'#copd',      text:'FEV1 FVC GOLD LABA LAMA ICS AECOPD BiPAP Salbutamol Ipratropium 戒菸 SpO2 88 92' },
-    { id:'asthma',    dept:'胸腔科', title:'氣喘',       url:'#asthma',    text:'Salbutamol Ventolin MDI nebulizer Ipratropium Prednisolone ICS SABA LABA GINA silent chest 支氣管擴張' },
-    { id:'pneumonia', dept:'胸腔科', title:'肺炎',       url:'#pneumonia', text:'膿胸 Empyema 肺膿瘍 ARDS 肋膜積液 CXR air bronchogram 葉性 支氣管肺炎 間質性' },
-    { id:'pe',        dept:'胸腔科', title:'肺栓塞 PE',  url:'#pe',        text:'Wells D-dimer CTPA DVT 溶栓 tPA Heparin DOAC Rivaroxaban Apixaban RV dysfunction S1Q3T3' },
-    { id:'effusion',  dept:'胸腔科', title:'胸腔積液',   url:'#effusion',  text:'Light criteria 漏出液 滲出液 LDH 蛋白質 ADA 膿胸 pH 引流 chest tube 心衰竭 惡性' },
-    { id:'resp-fail', dept:'胸腔科', title:'呼吸衰竭',   url:'#resp-fail', text:'Type 1 Type 2 PaO2 PaCO2 CPAP BiPAP NIV ARDS Berlin P/F ratio 俯臥 Prone PEEP 保護性通氣' },
+  { id:'copd',               dept:'胸腔科', title:'慢性阻塞性肺疾病 COPD',    url:'#copd',               text:'', modalIds:[] },
+  { id:'pulmonary-nodule',   dept:'胸腔科', title:'肺部結節',                 url:'#pulmonary-nodule',   text:'', modalIds:[] },
+  { id:'hemoptysis',         dept:'胸腔科', title:'咳血',                     url:'#hemoptysis',         text:'', modalIds:[] },
+  { id:'bronchiectasis',     dept:'胸腔科', title:'支氣管擴張與囊性纖維化',    url:'#bronchiectasis',     text:'', modalIds:[] },
+  { id:'ild',                dept:'胸腔科', title:'間質性肺疾病 ILD',          url:'#ild',                text:'', modalIds:[] },
+  { id:'pleural',            dept:'胸腔科', title:'肋膜疾病',                 url:'#pleural',            text:'', modalIds:[] },
+  { id:'pe',                 dept:'胸腔科', title:'肺栓塞 PE',                url:'#pe',                  text:'', modalIds:[] },
+  { id:'vte',                dept:'胸腔科', title:'靜脈血栓栓塞 VTE',          url:'#vte',                text:'', modalIds:[] },
+  { id:'pulm-htn',           dept:'胸腔科', title:'肺高壓',                   url:'#pulm-htn',           text:'', modalIds:[] },
+  { id:'respiratory-failure',dept:'胸腔科', title:'呼吸衰竭、呼吸器管理與 ARDS', url:'#respiratory-failure', text:'', modalIds:[] },
+  { id:'sepsis',             dept:'胸腔科', title:'敗血症與休克',              url:'#sepsis',             text:'', modalIds:[] },
+];
+    
+    
   ];
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
