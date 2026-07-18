@@ -38,7 +38,7 @@
 <div class="page-wrap">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-head">腎臟科</div>
-    <a href="#abg"           class="sidebar-link">酸鹼異常 Acid-Base Disturbances</a>
+    <a href="#acid-base"     class="sidebar-link">酸鹼異常 Acid-Base Disturbances</a>
     <a href="#aki"           class="sidebar-link">急性腎損傷 AKI</a>
     <a href="#ckd"           class="sidebar-link">慢性腎臟病 CKD</a>
     <a href="#renal-failure" class="sidebar-link">腎衰竭 Kidney Disease</a>
@@ -76,13 +76,71 @@
     </div>
 
     <!-- 酸鹼異常 Acid-Base Disturbances -->
-<div class="topic-block" id="acid-base">
-  <div class="topic-block-head">
+    <div class="topic-block" id="acid-base">
+    <div class="topic-block-head">
     <span class="topic-block-title">酸鹼異常 Acid-Base Disturbances</span>
     <div data-bm-id="acid-base" data-bm-dept="腎內科" data-bm-title="酸鹼異常">
       <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
     </div>
   </div>
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="abg-steps" data-bm-dept="腎臟科" data-bm-title="ABG 四步驟判讀法">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">ABG 四步驟判讀法</span></div>
+          <div class="k-card-body">
+            <ul class="step-list">
+              <li class="step-item"><div class="step-num">1</div><div><strong>pH</strong>：&lt;7.35 = 酸中毒；&gt;7.45 = 鹼中毒；7.35-7.45 = 正常</div></li>
+              <li class="step-item"><div class="step-num">2</div><div><strong>PaCO₂</strong>：&lt;35 = 呼吸性鹼（過度換氣）；&gt;45 = 呼吸性酸（低換氣）</div></li>
+              <li class="step-item"><div class="step-num">3</div><div><strong>HCO₃⁻</strong>：&lt;22 = 代謝性酸；&gt;26 = 代謝性鹼；正常 22-26 mEq/L</div></li>
+              <li class="step-item"><div class="step-num">4</div><div><strong>代償是否適當？</strong> 不適當 = 混合型酸鹼異常</div></li>
+            </ul>
+          </div>
+        </div>
+      
+        <div class="k-card" data-bm-id="abg-compensation" data-bm-dept="腎臟科" data-bm-title="代償公式">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">代償公式（判斷是否混合型）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>代謝性酸中毒</strong>：預期 PaCO₂ = 1.5×HCO₃⁻ + 8 ± 2（Winter's formula）</li>
+              <li><strong>代謝性鹼中毒</strong>：預期 PaCO₂ = 0.7×HCO₃⁻ + 21 ± 2</li>
+              <li><strong>呼吸性酸中毒（急性）</strong>：HCO₃⁻ 每上升 1 mEq，PaCO₂ 上升 10</li>
+              <li><strong>呼吸性酸中毒（慢性）</strong>：HCO₃⁻ 每上升 3.5 mEq，PaCO₂ 上升 10</li>
+              <li><strong>呼吸性鹼中毒（急性）</strong>：HCO₃⁻ 每下降 2 mEq，PaCO₂ 下降 10</li>
+              <li class="note">實際值偏離預期值 → 混合型酸鹼異常，要找第二個原因</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="abg-ag" data-bm-dept="腎臟科" data-bm-title="Anion Gap 計算">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">Anion Gap 計算與鑑別</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>AG = Na⁺ – (Cl⁻ + HCO₃⁻)</strong>，正常值 8-12 mEq/L</li>
+              <li><strong>AG 升高代謝性酸中毒（MUDPILES）</strong>：</li>
+              <li>M — Methanol；U — Uremia；D — DKA</li>
+              <li>P — Paraldehyde；I — Isoniazid/Iron；L — Lactic acidosis；E — Ethylene glycol；S — Salicylates</li>
+              <li><strong>正常 AG 代謝性酸中毒</strong>：腹瀉、RTA（腎小管性酸中毒）、NS 大量輸液</li>
+              <li class="note">白蛋白每下降 1 g/dL，AG 正常值降低 2.5，低白蛋白患者要校正 AG</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="abg-common" data-bm-dept="腎臟科" data-bm-title="常見臨床酸鹼情境">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">常見臨床酸鹼情境</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>Sepsis</strong>：代謝性酸（Lactic acidosis）+ 呼吸性鹼（過度換氣）</li>
+              <li><strong>COPD 急性惡化</strong>：呼吸性酸中毒（CO₂ 滯留）</li>
+              <li><strong>嚴重嘔吐</strong>：代謝性鹼中毒（失去 HCl）</li>
+              <li><strong>DKA</strong>：AG 升高代謝性酸（酮酸）</li>
+              <li><strong>腎衰竭</strong>：正常或 AG 升高代謝性酸</li>
+              <li><strong>過度換氣（焦慮）</strong>：呼吸性鹼中毒（PaCO₂ 降低）</li>
+            </ul>
+          </div>
+        </div>
+        
 
   <div class="topic-intro">
     酸鹼分析的步驟：<strong>① 看 pH 決定酸鹼症；② 看主要異常（HCO₃ 或 PaCO₂）；③ 計算代償是否適當；④ 代謝性酸中毒要算 AG；⑤ AG 升高要算 Δ/Δ 找出混合型。</strong>代償永遠不會讓 pH 完全正常——正常 pH 代表混合型。
@@ -1137,74 +1195,6 @@
               <li><strong>高血鎂（&gt;2.5 mg/dL）</strong>：腎衰竭、過多 Mg 補充（緩瀉劑）</li>
               <li>症狀：&gt;4 mg/dL 反射消失；&gt;6 mg/dL 呼吸抑制；&gt;9 mg/dL 心跳停止</li>
               <li>處置：Ca gluconate（拮抗）+ 透析（嚴重）</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 酸鹼判讀 -->
-    <div class="topic-block" id="abg">
-      <div class="topic-block-head">
-        <span class="topic-block-title">酸鹼判讀 ABG Interpretation</span>
-        <div data-bm-id="abg" data-bm-dept="腎臟科" data-bm-title="酸鹼判讀">
-          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-      </div>
-      <div class="card-grid col-1">
-        <div class="k-card" data-bm-id="abg-steps" data-bm-dept="腎臟科" data-bm-title="ABG 四步驟判讀法">
-          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
-          <div class="k-card-head"><span class="k-card-title">ABG 四步驟判讀法</span></div>
-          <div class="k-card-body">
-            <ul class="step-list">
-              <li class="step-item"><div class="step-num">1</div><div><strong>pH</strong>：&lt;7.35 = 酸中毒；&gt;7.45 = 鹼中毒；7.35-7.45 = 正常</div></li>
-              <li class="step-item"><div class="step-num">2</div><div><strong>PaCO₂</strong>：&lt;35 = 呼吸性鹼（過度換氣）；&gt;45 = 呼吸性酸（低換氣）</div></li>
-              <li class="step-item"><div class="step-num">3</div><div><strong>HCO₃⁻</strong>：&lt;22 = 代謝性酸；&gt;26 = 代謝性鹼；正常 22-26 mEq/L</div></li>
-              <li class="step-item"><div class="step-num">4</div><div><strong>代償是否適當？</strong> 不適當 = 混合型酸鹼異常</div></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="card-grid col-2" style="margin-top:14px">
-        <div class="k-card" data-bm-id="abg-compensation" data-bm-dept="腎臟科" data-bm-title="代償公式">
-          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-          <div class="k-card-head"><span class="k-card-title">代償公式（判斷是否混合型）</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>代謝性酸中毒</strong>：預期 PaCO₂ = 1.5×HCO₃⁻ + 8 ± 2（Winter's formula）</li>
-              <li><strong>代謝性鹼中毒</strong>：預期 PaCO₂ = 0.7×HCO₃⁻ + 21 ± 2</li>
-              <li><strong>呼吸性酸中毒（急性）</strong>：HCO₃⁻ 每上升 1 mEq，PaCO₂ 上升 10</li>
-              <li><strong>呼吸性酸中毒（慢性）</strong>：HCO₃⁻ 每上升 3.5 mEq，PaCO₂ 上升 10</li>
-              <li><strong>呼吸性鹼中毒（急性）</strong>：HCO₃⁻ 每下降 2 mEq，PaCO₂ 下降 10</li>
-              <li class="note">實際值偏離預期值 → 混合型酸鹼異常，要找第二個原因</li>
-            </ul>
-          </div>
-        </div>
-        <div class="k-card" data-bm-id="abg-ag" data-bm-dept="腎臟科" data-bm-title="Anion Gap 計算">
-          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-          <div class="k-card-head"><span class="k-card-title">Anion Gap 計算與鑑別</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>AG = Na⁺ – (Cl⁻ + HCO₃⁻)</strong>，正常值 8-12 mEq/L</li>
-              <li><strong>AG 升高代謝性酸中毒（MUDPILES）</strong>：</li>
-              <li>M — Methanol；U — Uremia；D — DKA</li>
-              <li>P — Paraldehyde；I — Isoniazid/Iron；L — Lactic acidosis；E — Ethylene glycol；S — Salicylates</li>
-              <li><strong>正常 AG 代謝性酸中毒</strong>：腹瀉、RTA（腎小管性酸中毒）、NS 大量輸液</li>
-              <li class="note">白蛋白每下降 1 g/dL，AG 正常值降低 2.5，低白蛋白患者要校正 AG</li>
-            </ul>
-          </div>
-        </div>
-        <div class="k-card" data-bm-id="abg-common" data-bm-dept="腎臟科" data-bm-title="常見臨床酸鹼情境">
-          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
-          <div class="k-card-head"><span class="k-card-title">常見臨床酸鹼情境</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>Sepsis</strong>：代謝性酸（Lactic acidosis）+ 呼吸性鹼（過度換氣）</li>
-              <li><strong>COPD 急性惡化</strong>：呼吸性酸中毒（CO₂ 滯留）</li>
-              <li><strong>嚴重嘔吐</strong>：代謝性鹼中毒（失去 HCl）</li>
-              <li><strong>DKA</strong>：AG 升高代謝性酸（酮酸）</li>
-              <li><strong>腎衰竭</strong>：正常或 AG 升高代謝性酸</li>
-              <li><strong>過度換氣（焦慮）</strong>：呼吸性鹼中毒（PaCO₂ 降低）</li>
             </ul>
           </div>
         </div>
