@@ -38,13 +38,18 @@
 <div class="page-wrap">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-head">腎臟科</div>
-    <a href="#aki"       class="sidebar-link">急性腎損傷 AKI</a>
-    <a href="#ckd"       class="sidebar-link">慢性腎臟病 CKD</a>
-    <a href="#potassium" class="sidebar-link">血鉀異常</a>
-    <a href="#sodium"    class="sidebar-link">血鈉異常</a>
-    <a href="#calcium"   class="sidebar-link">血鈣 / 血鎂異常</a>
-    <a href="#abg"       class="sidebar-link">酸鹼判讀</a>
-    <a href="#dialysis"  class="sidebar-link">透析時機</a>
+    <a href="#abg"           class="sidebar-link">酸鹼異常 Acid-Base Disturbances</a>
+    <a href="#aki"           class="sidebar-link">急性腎損傷 AKI</a>
+    <a href="#ckd"           class="sidebar-link">慢性腎臟病 CKD</a>
+    <a href="#renal-failure" class="sidebar-link">腎衰竭 Kidney Disease</a>
+    <a href="#diuretics" class="sidebar-link">利尿劑 Diuretics</a>
+    <a href="#sodium"        class="sidebar-link">血鈉異常</a>
+    <a href="#potassium"     class="sidebar-link">血鉀異常</a>
+    <a href="#calcium"       class="sidebar-link">血鈣 / 血鎂</a>
+    <a href="#dialysis"      class="sidebar-link">透析時機</a>
+    <a href="#glomerular"    class="sidebar-link">腎絲球疾病 Glomerular Disease</a>
+    <a href="#urinalysis"    class="sidebar-link">尿液分析 Urinalysis</a>
+    <a href="#nephrolithiasis"    class="sidebar-link">腎結石 Nephrolithiasis</a>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">其他科別</div>
     <a href="cardio.html"  class="sidebar-link">心臟科 →</a>
@@ -1674,12 +1679,13 @@
 <script>
   const SEARCH_INDEX = [
   { id:'acid-base',      dept:'腎內科', title:'酸鹼異常',    url:'#acid-base',      text:'', modalIds:[] },
-  { id:'aki',         dept:'腎內科', title:'急性腎損傷 AKI',   url:'#sodium',         text:'', modalIds:[] }, 
-  { id:'ckd',         dept:'腎內科', title:'慢性腎臟病 CKD',   url:'#sodium',         text:'', modalIds:[] }, 
+  { id:'aki',         dept:'腎內科', title:'急性腎損傷 AKI',   url:'#aki',         text:'', modalIds:[] }, 
+  { id:'ckd',         dept:'腎內科', title:'慢性腎臟病 CKD',   url:'#ckd',         text:'', modalIds:[] }, 
   { id:'renal-failure',  dept:'腎內科', title:'腎衰竭 Kidney disease',       url:'#renal-failure',  text:'', modalIds:[] },
+  { id:'diuretics', dept:'腎內科', title:'利尿劑', url:'#diuretics', text:'', modalIds:[] },
   { id:'sodium',         dept:'腎內科', title:'鈉水恆定性',   url:'#sodium',         text:'', modalIds:[] },
   { id:'potassium',      dept:'腎內科', title:'鉀恆定性',     url:'#potassium',      text:'', modalIds:[] },
-  { id:'calcium',       dept:'calcium', title:'血鈣/血鎂異常,     url:'#potassium',      text:'', modalIds:[] },
+  { id:'calcium',       dept:'calcium', title:'血鈣/血鎂異常,     url:'#calcium',      text:'', modalIds:[] },
   { id:'glomerular',     dept:'腎內科', title:'腎絲球疾病',   url:'#glomerular',     text:'', modalIds:[] },
   { id:'urinalysis',     dept:'腎內科', title:'尿液分析',     url:'#urinalysis',     text:'', modalIds:[] },
   { id:'nephrolithiasis',dept:'腎內科', title:'腎結石',       url:'#nephrolithiasis',text:'', modalIds:[] },
