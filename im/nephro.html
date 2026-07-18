@@ -53,6 +53,7 @@
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">其他科別</div>
     <a href="cardio.html"  class="sidebar-link">心臟科 →</a>
+    <a href="pulm.html"  class="sidebar-link">胸腔科 →</a>
     <a href="infect.html"  class="sidebar-link">感染科 →</a>
     <a href="general.html" class="sidebar-link">一般內科 →</a>
   </aside>
@@ -83,7 +84,6 @@
       <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
     </div>
   </div>
-      </div>
     <div class="topic-intro">
     酸鹼分析的步驟：<strong>① 看 pH 決定酸鹼症；② 看主要異常（HCO₃ 或 PaCO₂）；③ 計算代償是否適當；④ 代謝性酸中毒要算 AG；⑤ AG 升高要算 Δ/Δ 找出混合型。</strong>代償永遠不會讓 pH 完全正常——正常 pH 代表混合型。
   </div>
@@ -306,128 +306,7 @@
   </div>
 </div>
     
-    <!-- AKI -->
-    <div class="topic-block" id="aki">
-      <div class="topic-block-head">
-        <span class="topic-block-title">急性腎損傷 AKI</span>
-        <div data-bm-id="aki" data-bm-dept="腎臟科" data-bm-title="急性腎損傷 AKI">
-          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-      </div>
-      <div class="card-grid col-2">
-        <div class="k-card" data-bm-id="aki-def" data-bm-dept="腎臟科" data-bm-title="AKI 定義與分期">
-          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-          <div class="k-card-head"><span class="k-card-title">KDIGO 定義與分期</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>定義</strong>：48h 內 Cr 上升 ≥0.3 mg/dL，或 7天內上升 ≥1.5 倍，或<br/>尿量 &lt;0.5mL/kg/hr &gt;6h</li>
-              <li><strong>Stage 1</strong>：Cr ×1.5-1.9 或 ↑≥0.3 mg/dL；尿量 &lt;0.5mL/kg/hr &gt;6h</li>
-              <li><strong>Stage 2</strong>：Cr ×2-2.9；尿量 &lt;0.5mL/kg/hr &gt;12h</li>
-              <li><strong>Stage 3</strong>：Cr ×3 或 ≥4.0 或開始透析；尿量 &lt;0.3mL/kg/hr &gt;24h 或無尿 &gt;12h</li>
-              <li class="note">尿量標準同樣重要，不要只看 Cr，尿量減少更早反映 AKI</li>
-            </ul>
-          </div>
-        </div>
-        <div class="k-card" data-bm-id="aki-cause" data-bm-dept="腎臟科" data-bm-title="AKI 三大原因">
-          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
-          <div class="k-card-head"><span class="k-card-title">腎前性 / 腎性 / 腎後性</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>腎前性（最常見）</strong>：低血容、低血壓、心衰竭 → BUN/Cr &gt;20、FENa &lt;1%</li>
-              <li><strong>腎性</strong>：ATN（缺血或腎毒性）、腎絲球腎炎、間質性腎炎 → FENa &gt;2%</li>
-              <li><strong>腎後性</strong>：尿路阻塞（攝護腺、結石、腫瘤）→ 超音波看腎盂擴張</li>
-              <li class="note">腎後性是最容易可逆的，一定要超音波排除阻塞</li>
-            </ul>
-          </div>
-        </div>
-        <div class="k-card full" data-bm-id="aki-tx" data-bm-dept="腎臟科" data-bm-title="AKI 處置">
-          <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
-          <div class="k-card-head"><span class="k-card-title">AKI 的處置原則</span></div>
-          <div class="k-card-body">
-            <ul class="step-list">
-              <li class="step-item"><div class="step-num">1</div><div>超音波排除腎後性阻塞（最快且最可逆）</div></li>
-              <li class="step-item"><div class="step-num">2</div><div>評估容積狀態：低血容給輸液；過多給利尿劑</div></li>
-              <li class="step-item"><div class="step-num">3</div><div>停止腎毒性藥物：NSAIDs、Aminoglycosides、造影劑（高風險前預防性輸液）</div></li>
-              <li class="step-item"><div class="step-num">4</div><div>調整腎排除藥物劑量（依 eGFR）</div></li>
-              <li class="step-item"><div class="step-num">5</div><div>監測並處理：K⁺（高血鉀）、酸鹼（代謝性酸中毒）、體液平衡</div></li>
-              <li class="step-item"><div class="step-num">6</div><div>若符合透析指征 → 腎臟科會診</div></li>
-            </ul>
-            <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">
-              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-              <span>造影劑腎病預防：術前術後各 1L NS，停 Metformin 術前 24-48h</span>
-            </div>
-          </div>
-        </div>
-        <div class="k-card" data-bm-id="aki-ua" data-bm-dept="腎臟科" data-bm-title="尿液分析判讀">
-          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-          <div class="k-card-head"><span class="k-card-title">AKI 時尿液分析的意義</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>棕色顆粒圓柱</strong>（Muddy brown cast）：ATN</li>
-              <li><strong>紅血球圓柱</strong>（RBC cast）：腎絲球腎炎（緊急腎臟科會診）</li>
-              <li><strong>白血球圓柱</strong>（WBC cast）：間質性腎炎、腎盂腎炎</li>
-              <li><strong>玻璃樣圓柱</strong>（Hyaline cast）：腎前性、正常人也可見</li>
-              <li><strong>嗜酸性球尿</strong>（Eosinophiluria）：過敏性間質性腎炎（藥物引起）</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CKD -->
-    <div class="topic-block" id="ckd">
-      <div class="topic-block-head">
-        <span class="topic-block-title">慢性腎臟病 CKD</span>
-        <div data-bm-id="ckd" data-bm-dept="腎臟科" data-bm-title="慢性腎臟病 CKD">
-          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
-        </div>
-      </div>
-      <div class="card-grid col-2">
-        <div class="k-card" data-bm-id="ckd-stage" data-bm-dept="腎臟科" data-bm-title="CKD 分期">
-          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
-          <div class="k-card-head"><span class="k-card-title">CKD 分期（依 eGFR）</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>G1</strong>：eGFR ≥90（腎損傷但功能正常）</li>
-              <li><strong>G2</strong>：eGFR 60-89（輕度下降）</li>
-              <li><strong>G3a</strong>：eGFR 45-59（輕中度下降）</li>
-              <li><strong>G3b</strong>：eGFR 30-44（中重度下降）</li>
-              <li><strong>G4</strong>：eGFR 15-29（重度下降，開始透析準備）</li>
-              <li><strong>G5</strong>：eGFR &lt;15（腎衰竭，透析或移植）</li>
-              <li class="note">診斷需持續 &gt;3 個月，單次異常不等於 CKD</li>
-            </ul>
-          </div>
-        </div>
-        <div class="k-card" data-bm-id="ckd-complication" data-bm-dept="腎臟科" data-bm-title="CKD 併發症">
-          <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
-          <div class="k-card-head"><span class="k-card-title">CKD 常見併發症監測</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>高血壓</strong>：目標 &lt;130/80，首選 ACEI/ARB（減少蛋白尿）</li>
-              <li><strong>貧血</strong>：EPO 缺乏，Hb &lt;10 考慮 ESA 或鐵劑</li>
-              <li><strong>腎性骨病</strong>：高磷 + 低鈣 + PTH 升高 → 磷結合劑、活性維生素 D</li>
-              <li><strong>代謝性酸中毒</strong>：HCO₃⁻ &lt;22 → 補 NaHCO₃</li>
-              <li><strong>高血鉀</strong>：eGFR &lt;30 風險高，限鉀飲食、停 ACEI/ARB 若嚴重</li>
-              <li class="note">eGFR &lt;30 轉介腎臟科準備透析，不要等到 eGFR &lt;10 才轉</li>
-            </ul>
-          </div>
-        </div>
-        <div class="k-card" data-bm-id="ckd-drugs" data-bm-dept="腎臟科" data-bm-title="CKD 藥物調整">
-          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
-          <div class="k-card-head"><span class="k-card-title">CKD 時需要調整或停用的藥物</span></div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>停用</strong>：NSAIDs（腎毒性）、Metformin（eGFR &lt;30）</li>
-              <li><strong>減量</strong>：Vancomycin、Piperacillin/Tazo、Meropenem、Gabapentin</li>
-              <li><strong>避免</strong>：含鉀補充劑、保鉀利尿劑（eGFR &lt;30）</li>
-              <li><strong>ACEI/ARB</strong>：保護腎功能，但 eGFR 急速下降 &gt;30% 或 K⁺ &gt;5.5 時暫停</li>
-              <li><strong>造影劑</strong>：高風險患者（eGFR &lt;30）術前水化</li>
-              <li class="note">開藥前先查 eGFR，這是住院最常見的用藥錯誤來源之一</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+    
 
     <!-- 腎衰竭 Kidney Disease -->
 <div class="topic-block" id="renal-failure">
@@ -441,10 +320,67 @@
   <div class="topic-intro">
     AKI 的評估核心是：<strong>腎前性 vs 腎性 vs 腎後性</strong>，先排除可逆原因再處置。FENa 是主要鑑別工具，但有陷阱（使用利尿劑時改用 FEUN）。CKD 的管理重點是<strong>減緩進展</strong>（血壓、蛋白尿、SGLT2i）和<strong>預防透析前相關併發症</strong>。透析的緊急適應症記住縮寫：AEIOU。
   </div>
-
+<!-- AKI -->
+  <div class="subtopic-head" id="aki">
+    <span class="subtopic-title">急性腎損傷 AKI</span>
   <div class="card-grid col-2">
-
-    <div class="k-card full" data-bm-id="aki-etiology" data-bm-dept="腎內科" data-bm-title="AKI 分類與鑑別診斷">
+      <div class="k-card" data-bm-id="aki-def" data-bm-dept="腎臟科" data-bm-title="AKI 定義與分期">
+        <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+        <div class="k-card-head"><span class="k-card-title">KDIGO 定義與分期</span></div>
+        <div class="k-card-body">
+          <ul class="k-list">
+            <li><strong>定義</strong>：48h 內 Cr 上升 ≥0.3 mg/dL，或 7天內上升 ≥1.5 倍，或<br/>尿量 &lt;0.5mL/kg/hr &gt;6h</li>
+            <li><strong>Stage 1</strong>：Cr ×1.5-1.9 或 ↑≥0.3 mg/dL；尿量 &lt;0.5mL/kg/hr &gt;6h</li>
+            <li><strong>Stage 2</strong>：Cr ×2-2.9；尿量 &lt;0.5mL/kg/hr &gt;12h</li>
+            <li><strong>Stage 3</strong>：Cr ×3 或 ≥4.0 或開始透析；尿量 &lt;0.3mL/kg/hr &gt;24h 或無尿 &gt;12h</li>
+            <li class="note">尿量標準同樣重要，不要只看 Cr，尿量減少更早反映 AKI</li>
+          </ul>
+        </div>
+      </div>
+      <div class="k-card" data-bm-id="aki-cause" data-bm-dept="腎臟科" data-bm-title="AKI 三大原因">
+        <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+        <div class="k-card-head"><span class="k-card-title">腎前性 / 腎性 / 腎後性</span></div>
+        <div class="k-card-body">
+          <ul class="k-list">
+            <li><strong>腎前性（最常見）</strong>：低血容、低血壓、心衰竭 → BUN/Cr &gt;20、FENa &lt;1%</li>
+            <li><strong>腎性</strong>：ATN（缺血或腎毒性）、腎絲球腎炎、間質性腎炎 → FENa &gt;2%</li>
+            <li><strong>腎後性</strong>：尿路阻塞（攝護腺、結石、腫瘤）→ 超音波看腎盂擴張</li>
+            <li class="note">腎後性是最容易可逆的，一定要超音波排除阻塞</li>
+          </ul>
+        </div>
+      </div>
+      <div class="k-card full" data-bm-id="aki-tx" data-bm-dept="腎臟科" data-bm-title="AKI 處置">
+        <div class="k-card-tags"><span class="tag tag-steps">處置步驟</span></div>
+        <div class="k-card-head"><span class="k-card-title">AKI 的處置原則</span></div>
+        <div class="k-card-body">
+          <ul class="step-list">
+            <li class="step-item"><div class="step-num">1</div><div>超音波排除腎後性阻塞（最快且最可逆）</div></li>
+            <li class="step-item"><div class="step-num">2</div><div>評估容積狀態：低血容給輸液；過多給利尿劑</div></li>
+            <li class="step-item"><div class="step-num">3</div><div>停止腎毒性藥物：NSAIDs、Aminoglycosides、造影劑（高風險前預防性輸液）</div></li>
+            <li class="step-item"><div class="step-num">4</div><div>調整腎排除藥物劑量（依 eGFR）</div></li>
+            <li class="step-item"><div class="step-num">5</div><div>監測並處理：K⁺（高血鉀）、酸鹼（代謝性酸中毒）、體液平衡</div></li>
+            <li class="step-item"><div class="step-num">6</div><div>若符合透析指征 → 腎臟科會診</div></li>
+          </ul>
+          <div class="alert alert-amber" style="margin-top:12px;margin-bottom:0">
+            <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+            <span>造影劑腎病預防：術前術後各 1L NS，停 Metformin 術前 24-48h</span>
+          </div>
+        </div>
+      </div>
+      <div class="k-card" data-bm-id="aki-ua" data-bm-dept="腎臟科" data-bm-title="尿液分析判讀">
+        <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+        <div class="k-card-head"><span class="k-card-title">AKI 時尿液分析的意義</span></div>
+        <div class="k-card-body">
+          <ul class="k-list">
+            <li><strong>棕色顆粒圓柱</strong>（Muddy brown cast）：ATN</li>
+            <li><strong>紅血球圓柱</strong>（RBC cast）：腎絲球腎炎（緊急腎臟科會診）</li>
+            <li><strong>白血球圓柱</strong>（WBC cast）：間質性腎炎、腎盂腎炎</li>
+            <li><strong>玻璃樣圓柱</strong>（Hyaline cast）：腎前性、正常人也可見</li>
+            <li><strong>嗜酸性球尿</strong>（Eosinophiluria）：過敏性間質性腎炎（藥物引起）</li>
+          </ul>
+        </div>
+      </div>
+      <div class="k-card full" data-bm-id="aki-etiology" data-bm-dept="腎內科" data-bm-title="AKI 分類與鑑別診斷">
       <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
       <div class="k-card-head"><span class="k-card-title">AKI 分類與鑑別診斷</span></div>
       <div class="k-card-body">
@@ -492,39 +428,88 @@
         </table>
       </div>
     </div>
-
     <div class="k-card" data-bm-id="aki-workup" data-bm-dept="腎內科" data-bm-title="AKI 評估">
-      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
-      <div class="k-card-head"><span class="k-card-title">AKI 評估步驟</span></div>
-      <div class="k-card-body">
-        <ul class="k-list">
-          <li><strong>病史：</strong>藥物（NSAIDs、ACEI/ARB、顯影劑、抗生素）；低攝食；低血壓；感染 / 敗血症；外傷、肌肉痛；BPH / 尿瀦留；最重要：在 Cr 上升前 24-48h 的觸發因素</li>
-          <li><strong>身體檢查：</strong>生命徵象、容積狀態、皮疹</li>
-          <li><strong>尿液評估：</strong>輸出量、尿液分析（試紙 + 尿沉渣）、尿電解質和滲透壓</li>
-          <li><strong>FENa = (UNa/PNa)/(UCr/PCr)；</strong>使用利尿劑時改用 FEUN = (UUN/PUN)/(UCr/PCr)</li>
-          <li><strong>腎臟超音波或 CT：</strong>排除阻塞（腎積水）；評估腎臟大小（慢性腎臟萎縮）</li>
-          <li><strong>血清學（有適應症時）：</strong>見腎絲球疾病章節</li>
-          <li><strong>腎臟切片：</strong>原因不明（尤其有蛋白尿 / 血尿）；相對禁忌：SBP &gt;150、ASA / NSAID、抗凝血藥、肝硬化；GFR &lt;45 時先給 DDAVP</li>
-        </ul>
-      </div>
+    <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+    <div class="k-card-head"><span class="k-card-title">AKI 評估步驟</span></div>
+    <div class="k-card-body">
+      <ul class="k-list">
+        <li><strong>病史：</strong>藥物（NSAIDs、ACEI/ARB、顯影劑、抗生素）；低攝食；低血壓；感染 / 敗血症；外傷、肌肉痛；BPH / 尿瀦留；最重要：在 Cr 上升前 24-48h 的觸發因素</li>
+        <li><strong>身體檢查：</strong>生命徵象、容積狀態、皮疹</li>
+        <li><strong>尿液評估：</strong>輸出量、尿液分析（試紙 + 尿沉渣）、尿電解質和滲透壓</li>
+        <li><strong>FENa = (UNa/PNa)/(UCr/PCr)；</strong>使用利尿劑時改用 FEUN = (UUN/PUN)/(UCr/PCr)</li>
+        <li><strong>腎臟超音波或 CT：</strong>排除阻塞（腎積水）；評估腎臟大小（慢性腎臟萎縮）</li>
+        <li><strong>血清學（有適應症時）：</strong>見腎絲球疾病章節</li>
+        <li><strong>腎臟切片：</strong>原因不明（尤其有蛋白尿 / 血尿）；相對禁忌：SBP &gt;150、ASA / NSAID、抗凝血藥、肝硬化；GFR &lt;45 時先給 DDAVP</li>
+      </ul>
     </div>
+  </div>
 
-    <div class="k-card" data-bm-id="aki-specific" data-bm-dept="腎內科" data-bm-title="特殊 AKI 處置">
-      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
-      <div class="k-card-head"><span class="k-card-title">特殊 AKI 的處置</span></div>
-      <div class="k-card-body">
-        <ul class="k-list">
-          <li><strong>腎前性：</strong>等張晶體液 ≈ 白蛋白（均可）</li>
-          <li><strong>AIN：</strong>立刻停止可疑藥物；若 7 天內確診可考慮早期類固醇；ICI 引起的 AIN 依腫瘤科病程考慮再挑戰</li>
-          <li><strong>心腎症候群：</strong>IV Loop 利尿劑（高劑量 vs 低劑量、持續輸注 vs 間歇注射效果相當）；不建議 Dopamine、Nesiritide、超濾</li>
-          <li><strong>造影劑 AKI（CIN）：</strong>高風險（eGFR &lt;60，尤其合併蛋白尿、DM、MI、低血壓）→ 等張 IVF 預防；停 ACEI/ARB / NSAIDs / 利尿劑；最小造影劑量；使用等滲透壓造影劑；N-acetylcysteine 效益有爭議</li>
-          <li><strong>橫紋肌溶解：</strong>積極 IVF（目標 UOP ~3 mL/kg/h）；尿 pH &lt;6.5 考慮 NaHCO₃；監測 K 和 Ca；監測筋膜室症候群</li>
-          <li><strong>肝腎症候群（HRS）：</strong>Terlipressin 0.85 mg IV q6h × 3 天 → 再評估 Cr（或 Norepinephrine / Vasopressin）；出現低血氧或缺血時停止；橋接至肝臟移植</li>
-          <li><strong>阻塞性：</strong>若尿道梗阻 → Foley；若輸尿管以上 → 腎造瘺；注意梗阻後利尿（補充 ½ UOP 以 ½ NS）</li>
-        </ul>
-      </div>
+  <div class="k-card" data-bm-id="aki-specific" data-bm-dept="腎內科" data-bm-title="特殊 AKI 處置">
+    <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+    <div class="k-card-head"><span class="k-card-title">特殊 AKI 的處置</span></div>
+    <div class="k-card-body">
+      <ul class="k-list">
+        <li><strong>腎前性：</strong>等張晶體液 ≈ 白蛋白（均可）</li>
+        <li><strong>AIN：</strong>立刻停止可疑藥物；若 7 天內確診可考慮早期類固醇；ICI 引起的 AIN 依腫瘤科病程考慮再挑戰</li>
+        <li><strong>心腎症候群：</strong>IV Loop 利尿劑（高劑量 vs 低劑量、持續輸注 vs 間歇注射效果相當）；不建議 Dopamine、Nesiritide、超濾</li>
+        <li><strong>造影劑 AKI（CIN）：</strong>高風險（eGFR &lt;60，尤其合併蛋白尿、DM、MI、低血壓）→ 等張 IVF 預防；停 ACEI/ARB / NSAIDs / 利尿劑；最小造影劑量；使用等滲透壓造影劑；N-acetylcysteine 效益有爭議</li>
+        <li><strong>橫紋肌溶解：</strong>積極 IVF（目標 UOP ~3 mL/kg/h）；尿 pH &lt;6.5 考慮 NaHCO₃；監測 K 和 Ca；監測筋膜室症候群</li>
+        <li><strong>肝腎症候群（HRS）：</strong>Terlipressin 0.85 mg IV q6h × 3 天 → 再評估 Cr（或 Norepinephrine / Vasopressin）；出現低血氧或缺血時停止；橋接至肝臟移植</li>
+        <li><strong>阻塞性：</strong>若尿道梗阻 → Foley；若輸尿管以上 → 腎造瘺；注意梗阻後利尿（補充 ½ UOP 以 ½ NS）</li>
+      </ul>
     </div>
+  </div>
+    </div>
+  </div>
 
+  <!-- CKD -->
+  <div class="subtopic-head" id="aki">
+    <span class="subtopic-title">慢性腎臟病 CKD</span>
+    <div class="card-grid col-2">
+      <div class="k-card" data-bm-id="ckd-stage" data-bm-dept="腎臟科" data-bm-title="CKD 分期">
+        <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+        <div class="k-card-head"><span class="k-card-title">CKD 分期（依 eGFR）</span></div>
+        <div class="k-card-body">
+          <ul class="k-list">
+            <li><strong>G1</strong>：eGFR ≥90（腎損傷但功能正常）</li>
+            <li><strong>G2</strong>：eGFR 60-89（輕度下降）</li>
+            <li><strong>G3a</strong>：eGFR 45-59（輕中度下降）</li>
+            <li><strong>G3b</strong>：eGFR 30-44（中重度下降）</li>
+            <li><strong>G4</strong>：eGFR 15-29（重度下降，開始透析準備）</li>
+            <li><strong>G5</strong>：eGFR &lt;15（腎衰竭，透析或移植）</li>
+            <li class="note">診斷需持續 &gt;3 個月，單次異常不等於 CKD</li>
+          </ul>
+        </div>
+      </div>
+      <div class="k-card" data-bm-id="ckd-complication" data-bm-dept="腎臟科" data-bm-title="CKD 併發症">
+        <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+        <div class="k-card-head"><span class="k-card-title">CKD 常見併發症監測</span></div>
+        <div class="k-card-body">
+          <ul class="k-list">
+            <li><strong>高血壓</strong>：目標 &lt;130/80，首選 ACEI/ARB（減少蛋白尿）</li>
+            <li><strong>貧血</strong>：EPO 缺乏，Hb &lt;10 考慮 ESA 或鐵劑</li>
+            <li><strong>腎性骨病</strong>：高磷 + 低鈣 + PTH 升高 → 磷結合劑、活性維生素 D</li>
+            <li><strong>代謝性酸中毒</strong>：HCO₃⁻ &lt;22 → 補 NaHCO₃</li>
+            <li><strong>高血鉀</strong>：eGFR &lt;30 風險高，限鉀飲食、停 ACEI/ARB 若嚴重</li>
+            <li class="note">eGFR &lt;30 轉介腎臟科準備透析，不要等到 eGFR &lt;10 才轉</li>
+          </ul>
+        </div>
+      </div>
+      <div class="k-card" data-bm-id="ckd-drugs" data-bm-dept="腎臟科" data-bm-title="CKD 藥物調整">
+        <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+        <div class="k-card-head"><span class="k-card-title">CKD 時需要調整或停用的藥物</span></div>
+        <div class="k-card-body">
+          <ul class="k-list">
+            <li><strong>停用</strong>：NSAIDs（腎毒性）、Metformin（eGFR &lt;30）</li>
+            <li><strong>減量</strong>：Vancomycin、Piperacillin/Tazo、Meropenem、Gabapentin</li>
+            <li><strong>避免</strong>：含鉀補充劑、保鉀利尿劑（eGFR &lt;30）</li>
+            <li><strong>ACEI/ARB</strong>：保護腎功能，但 eGFR 急速下降 &gt;30% 或 K⁺ &gt;5.5 時暫停</li>
+            <li><strong>造影劑</strong>：高風險患者（eGFR &lt;30）術前水化</li>
+            <li class="note">開藥前先查 eGFR，這是住院最常見的用藥錯誤來源之一</li>
+          </ul>
+        </div>
+      </div>
+      
     <div class="k-card" data-bm-id="dialysis-indication" data-bm-dept="腎內科" data-bm-title="透析適應症">
       <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
       <div class="k-card-head"><span class="k-card-title">緊急透析適應症（AEIOU）</span></div>
@@ -606,7 +591,7 @@
         </ul>
       </div>
     </div>
-
+    </div>
   </div>
 </div>
 
