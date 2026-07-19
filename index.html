@@ -695,6 +695,24 @@
   <div class="section-eyebrow">分科知識</div>
   <h2 class="section-title">依科別快速查找</h2>
   <p class="section-desc">從內科到急診，把各科最核心的臨床知識整理成可快速查閱的格式。</p>
+  <!-- SEARCH BAR CONTAINER -->
+<div class="search-container" style="max-width: 540px; margin: 32px auto 0 auto; position: relative;">
+  <div style="position: relative; display: flex; align-items: center;">
+    <!-- 搜尋放大鏡圖標 -->
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" style="position: absolute; left: 16px; pointer-events: none;">
+      <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <!-- 搜尋輸入框 -->
+    <input type="text" id="main-search" placeholder="輸入疾病、科別或臨床評分... (如: 內科, CV, Stroke)" 
+           style="width: 100%; padding: 14px 16px 14px 46px; font-size: 1rem; border: 2px solid #cbd5e1; border-radius: 12px; background: #ffffff; color: #1e293b; outline: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: all 0.2s ease;">
+    <!-- 清除輸入按鈕 (預設隱藏) -->
+    <button id="search-clear" style="position: absolute; right: 16px; background: none; border: none; color: #94a3b8; cursor: pointer; display: none; font-size: 1.1rem; padding: 0;">✕</button>
+  </div>
+</div>
+
+<!-- 注意：為了讓 JavaScript 能夠篩選，請幫你的網格加上 id="specialty-grid" -->
+<div id="specialty-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 40px;">
+  <!-- 以下維持你原本的 內、外、急、兒 卡片 HTML 不變 -->
 
   <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 40px;">
 
@@ -959,6 +977,54 @@
         : 'rgba(255,255,255,0.7)';
     });
   });
+  // ==========================================
+// 關鍵字即時搜尋與卡片聯動過濾機制
+// ==========================================
+const searchInput = document.getElementById('main-search');
+const searchClear = document.getElementById('search-clear');
+const gridCards = document.querySelectorAll('#specialty-grid > a');
+
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    
+    // 控制清除按鈕的顯示/隱藏
+    searchClear.style.display = query.length > 0 ? 'block' : 'none';
+
+    gridCards.forEach(cardAnchor => {
+      // 抓取卡片內的標題 (如: 內科) 與 描述 (如: CV, ID...)
+      const title = cardAnchor.querySelector('h3').textContent.toLowerCase();
+      const desc = cardAnchor.querySelector('p').textContent.toLowerCase();
+
+      // 如果標題或副標包含關鍵字，就顯示，否則隱藏
+      if (title.includes(query) || desc.includes(query)) {
+        cardAnchor.style.display = 'block';
+        setTimeout(() => {
+          cardAnchor.style.opacity = '1';
+          cardAnchor.style.transform = 'scale(1)';
+        }, 10);
+      } else {
+        cardAnchor.style.opacity = '0';
+        cardAnchor.style.transform = 'scale(0.98)';
+        // 動態等待淡出動畫結束後再隱藏佔位，保持流暢感
+        setTimeout(() => {
+          if (cardAnchor.style.opacity === '0') {
+            cardAnchor.style.display = 'none';
+          }
+        }, 200);
+      }
+    });
+  });
+
+  // 點擊 ✕ 按鈕清除搜尋內容
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchClear.style.display = 'none';
+    searchInput.focus();
+    // 觸發 input 事件以重設所有卡片狀態
+    searchInput.dispatchEvent(new Event('input'));
+  });
+}
 </script>
 </body>
 </html>
