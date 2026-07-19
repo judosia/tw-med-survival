@@ -259,6 +259,18 @@ nav {
   background: var(--border);
 }
 
+/* 搜尋列核心互動樣式 */
+#main-search:focus {
+  border-color: #457B9D !important; /* 當點擊時，邊框變為溫和的沉穩藍 */
+  box-shadow: 0 10px 15px -3px rgba(69, 123, 157, 0.1), 0 4px 6px -2px rgba(69, 123, 157, 0.05) !important;
+  background-color: #ffffff;
+}
+
+/* 提供一個順暢的卡片淡入淡出動畫效果 */
+#specialty-grid a {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
 /* 書籤按鈕（在標題行右側） */
 .bm-btn {
   background: none; border: 1.5px solid var(--border);
