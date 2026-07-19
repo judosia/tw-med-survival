@@ -98,10 +98,6 @@
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-head">心臟科</div>
-   
-    <div class="sidebar-section-title">症狀s/s</div>
-    <a href="#chest-pain"         class="sidebar-link">胸痛</a>
-    <a href="#dyspnea"          class="sidebar-link">呼吸困難 Dyspnea</a>
     
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">緊急</div>
@@ -125,13 +121,14 @@
     <a href="#htn"             class="sidebar-link">高血壓 Hypertension/ HTN用藥</a>
     <a href="#dm-drugs"        class="sidebar-link">糖尿病用藥</a>
     <a href="#periop"          class="sidebar-link">術前評估</a>
-    <a href="#pad"            class="sidebar-link">PAD</a>
+    <a href="#pad"             class="sidebar-link">PAD</a>
 
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">其他科別</div>
-    <a href="general.html" class="sidebar-link" style="opacity:0.5">一般內科 →</a>
-    <a href="pulm.html"    class="sidebar-link" style="opacity:0.5">胸腔科 →</a>
-    <a href="nephro.html"  class="sidebar-link" style="opacity:0.5">腎臟科 →</a>
+    <a href="general.html" class="sidebar-link" style="opacity:0.5">General →</a>
+    <a href="pulm.html"    class="sidebar-link" style="opacity:0.5">Chest →</a>
+    <a href="nephro.html"  class="sidebar-link" style="opacity:0.5">Nephro →</a>
+    <a href="infect.html"  class="sidebar-link" style="opacity:0.5">ID →</a>
   </aside>
 
   <!-- MAIN -->
@@ -148,97 +145,6 @@
         <p>lub dub</p>
       </div>
       <div class="page-hero-bg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-    </div>
-
-    <!-- ══════════════════════════════════
-         chest pain
-    ══════════════════════════════════ -->
-    <div class="topic-block" id="chest-pain">
-      <div class="topic-block-head">
-        <span class="topic-block-title">胸痛 Chest pain</span>
-        <div data-bm-id="chest-pain" data-bm-dept="心臟科" data-bm-title="胸痛">
-          <button class="bm-btn" title="加入書籤">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          </button>
-        </div>
-      </div>
-      
-    <div class="card-grid col-2">
-
-    <div class="k-card" data-bm-id="ami-types" data-bm-dept="心臟科" data-bm-title="胸痛">
-          <div class="k-card-tags"><span class="tag tag-ddx">鑑別診斷</span></div>
-          <div class="k-card-head">
-            <span class="k-card-title">胸痛原因</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <p style="font-size:0.72rem; font-weight:700; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;">心因性</p>
-            <ul class="k-list">
-              <li><strong>ACS 急性冠心症</strong>: 胸骨下的壓迫感→ 輻射至頸部、下巴、手臂</li>
-              <li><strong>心包膜炎及心肌心包膜炎</strong>:尖銳痛→ 輻射至斜方肌 </li>
-              <li><strong>AD 主動脈剝離</strong>: 突然撕裂痛</li>
-              <li class="note">還沒想好要寫什麼...</li>
-            </ul>
-          <hr style="border:none; border-top:1px solid var(--border); margin:12px 0;">
-
-            <p style="font-size:0.72rem; font-weight:700; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;">肺因性</p>
-            <ul class="k-list">
-              <li><strong>肺炎</strong>- 肋膜痛：呼吸困難、發燒、咳嗽、痰、呼吸速率↑、爆裂音crackles、XR胸部浸潤</li>
-              <li><strong>PE 肺栓塞</strong>：突發胸痛合併呼吸困難、RR↑ & HR↑、SaO2↓、EKG變化、血管攝影或V/Q scan:(+)、±Troponin↑</li>
-              <li><strong>氣胸</strong>：突然發生，單側尖銳痛，隨呼吸加重、叩診痛名增加、呼吸音↓; XR氣胸</li>
-              <li><strong>肋膜炎</strong>：吸氣時加重的側胸痛±肋膜摩擦音</li>
-            </ul>
-
-          <hr style="border:none; border-top:1px solid var(--border); margin:12px 0;">
-
-            <p style="font-size:0.72rem; font-weight:700; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;">腸胃道</p>
-            <ul class="k-list">
-              <li><strong>GERD 胃食道逆流</strong>：飯後燒灼感，平躺↑、使用製酸劑症狀緩解↓; EGD、食道壓力檢查、食道酸鹼值檢測</li>
-              <li><strong>食道痙攣</strong>：和心絞痛很像，NTG/CCB後症狀緩解↓; 食道壓力測試</li>
-              <li><strong>Mallory-Weiss</strong>：因嘔吐而誘發食道破裂、±吐血:EGD</li>
-              <li><strong>Boerhaave syndrome</strong>：食道破裂、嚴重疼痛、吞嚥時超痛; 觸摸& CT可見縱隔腔有氣體</li>
-              <li><strong>PUD</strong>：上腹痛、製酸劑可解、±GIB:EGD、±幽門桿菌檢測</li>
-              <li><strong>膽道疾病</strong>：右上腹痛、噁心嘔吐、油脂類食物後症狀↑、肝功能檢查↑; echo</li>
-              <li><strong>胰臟炎</strong>：上腹部/背部不適;amylase↑ & lipase↑; abd CT</li>
-            </ul>
-          </div>
-    </div>
-    </div>
-    
-
-    </div>
-
-    <!-- ══════════════════════════════════
-         呼吸困難 Dyspnea
-    ══════════════════════════════════ -->
-    <div class="topic-block" id="chest-pain">
-      <div class="topic-block-head">
-        <span class="topic-block-title">呼吸困難 Dyspnea</span>
-        <div data-bm-id="chest-pain" data-bm-dept="心臟科" data-bm-title="呼吸困難 Dyspnea">
-          <button class="bm-btn" title="加入書籤">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          </button>
-        </div>
-      </div>
-      
-    <div class="card-grid col-2">
-
-    <div class="k-card" data-bm-id="ami-types" data-bm-dept="心臟科" data-bm-title="呼吸困難 Dyspnea">
-          <div class="k-card-tags"><span class="tag tag-ddx">鑑別診斷</span></div>
-          <div class="k-card-head">
-            <span class="k-card-title">胸痛原因</span>
-            <span class="k-card-toggle"><span class="toggle-arrow">›</span></span>
-          </div>
-          <div class="k-card-body">
-            <ul class="k-list">
-              <li><strong>ACS 急性冠心症</strong>: 胸骨下的壓迫感→ 輻射至頸部、下巴、手臂</li>
-              <li><strong>心包膜炎及心肌心包膜炎</strong>: 尖銳痛→ 輻射至斜方肌 </li>
-              <li><strong>AD 主動脈剝離</strong>: 突然撕裂痛</li>
-              <li class="note">還沒想好要寫什麼...</li>
-            </ul>
-          </div>
-        </div>
-    </div>
     </div>
 
     <!-- ══════════════════════════════════
