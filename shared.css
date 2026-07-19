@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════
-   醫院生存 note — 共用樣式
+   Med note — 共用樣式
    ═══════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -270,6 +270,40 @@ nav {
 .bm-btn:hover { border-color: var(--amber); color: var(--amber); }
 .bm-btn.active { border-color: var(--amber); color: var(--amber); background: #fff8e8; }
 .bm-btn svg { width: 14px; height: 14px; }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;             /* 背景透明，融入網頁底色 */
+  color: var(--text-main, #1e293b);    /* 使用深灰藍文字，看得清又不刺眼 */
+  border: 1px solid #cbd5e1;           /* 細緻的淺灰邊框 */
+  padding: 8px 18px;
+  border-radius: 8px;                  /* 圓角讓視覺更溫和 */
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;               /* 移除超連結的傳統底線 */
+  transition: all 0.2s ease-in-out;    /* 讓滑鼠移入時的變化很柔和 */
+}
+
+/* 滑鼠懸停與點擊時的細緻微互動 */
+.btn-ghost:hover {
+  background-color: rgba(30, 41, 59, 0.04); /* 淡淡的灰藍色陰影襯底 */
+  border-color: #94a3b8;                    /* 邊框微加深，提示可點擊 */
+  color: var(--primary-blue, #0f172a);      /* 文字稍微變深 */
+}
+
+/* 確保按鈕內附帶的 SVG 箭頭大小一致 */
+.btn-ghost svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+/* 滑鼠移入時，箭頭會微微往右指，製造精緻感 */
+.btn-ghost:hover svg {
+  transform: translateX(2px);
+}
 
 /* ── 概念導讀 ── */
 .topic-intro {
