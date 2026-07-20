@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>血液科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit; transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 560px; max-height: 85vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+    .score-result {
+      background: var(--light); border-radius: 8px;
+      padding: 14px 16px; margin-top: 8px;
+      font-size: 0.82rem; line-height: 1.65;
+    }
+    .score-result strong { color: var(--navy); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#im" class="nav-back">內科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">血液科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- 書籤面板 -->
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">血液科</div>
+
+    <div class="sidebar-section-title">紅血球</div>
+    <a href="#anemia"        class="sidebar-link">貧血</a>
+    <a href="#rbc-disorders" class="sidebar-link">RBC 異常（溶血、鐮刀型、地中海貧血）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">止血與凝血</div>
+    <a href="#platelet"      class="sidebar-link">血小板異常（ITP、HIT、TTP）</a>
+    <a href="#coagulation"   class="sidebar-link">凝血障礙（DIC、高凝、APS）</a>
+    <a href="#transfusion"   class="sidebar-link">輸血反應</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">骨髓疾病</div>
+    <a href="#mds-mpn"       class="sidebar-link">MDS + MPN（PV、ET、骨髓纖維化）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">惡性血液疾病</div>
+    <a href="#leukemia"      class="sidebar-link">白血病（AML、ALL、CML、CLL）</a>
+    <a href="#lymphoma"      class="sidebar-link">淋巴瘤（HL + NHL）</a>
+    <a href="#plasma-cell"   class="sidebar-link">漿細胞疾病（MM、MGUS）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">治療</div>
+    <a href="#hsct"          class="sidebar-link">造血幹細胞移植（HSCT）</a>
+    <a href="#immunotherapy" class="sidebar-link">免疫治療（ICI + CAR-T）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="rheum.html#autoinflammatory" class="sidebar-link">澱粉樣變 →（風濕科）</a>
+    <a href="pulm.html#vte"               class="sidebar-link">DVT / PE →（胸腔科）</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- PAGE HERO -->
+    <div class="page-hero" style="background: linear-gradient(135deg, #fff0f0 0%, #f0f0ff 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>血液科</h1>
+        <p>貧血、凝血障礙、骨髓疾病、白血病、淋巴瘤、漿細胞疾病與移植，依照小麻（Pocket Medicine）內容編排。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+          <path d="M12 8v4l3 3"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#im">分科知識 › 內科</a> › 血液科
+    </div>
+
+    <!-- 貧血 Anemia -->
+<div class="topic-block" id="anemia">
+  <div class="topic-block-head">
+    <span class="topic-block-title">貧血 Anemia</span>
+    <div data-bm-id="anemia" data-bm-dept="血液科" data-bm-title="貧血">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    貧血定義：Hct &lt;41% 或 Hb &lt;13.5 g/dL（男）；Hct &lt;36% 或 Hb &lt;12 g/dL（女）。評估從<strong>網狀紅血球指數（RI）</strong>開始：RI &gt;2% = 骨髓反應充分（周邊溶血或失血）；RI &lt;2% = 骨髓增生不良。再依 MCV 縮窄診斷。<strong>缺鐵性貧血</strong>是最常見的原因，先找出血點再補鐵；<strong>B12 缺乏</strong>不要只補葉酸（掩蓋神經症狀）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="anemia-eval" data-bm-dept="血液科" data-bm-title="貧血評估">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">貧血診斷評估</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>症狀：</strong>↓ O₂ 輸送 → 疲勞、勞動性呼吸困難、心絞痛（若有 CAD）</li>
+          <li><strong>體徵：</strong>蒼白（黏膜、掌心皺褶）；心搏過速；直立性低血壓；黃疸（溶血）；脾腫大（地中海貧血、腫瘤、慢性溶血）；瘀點 / 紫斑（出血或血小板異常）；舌炎（缺鐵、葉酸、B12 缺乏）；反甲（缺鐵）；神經異常（B12 缺乏）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷步驟</p>
+        <ul class="k-list">
+          <li><strong>CBC + 分類計數：</strong>RBC 參數含網狀紅血球、MCV（注意混合病因可 → 正常 MCV）、RDW</li>
+          <li><strong>網狀紅血球指數（RI）：</strong>= [網狀紅血球% × (患者 Hct / 正常 Hct)] / 成熟因子（Hct 45% = 1，35% = 1.5，25% = 2，20% = 2.5）；RI &gt;2% → 骨髓反應充分；RI &lt;2% → 增生不良</li>
+          <li><strong>周邊血液抹片：</strong>選 RBC 剛好互相接觸的區域；看 RBC 大小、形狀、包涵體；WBC 形態；血小板計數</li>
+          <li><strong>依需要加送：</strong>溶血指標（若 RI &gt;2%）；鐵 / TIBC / ferritin；葉酸、B12；LFT；Cr；TFT；Epo；Hb 電泳；酵素 / 基因突變篩查</li>
+          <li><strong>骨髓穿刺和切片：</strong>必要時</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="iron-deficiency" data-bm-dept="血液科" data-bm-title="缺鐵性貧血">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">缺鐵性貧血（IDA）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>機轉：</strong>骨髓鐵↓ + 體內鐵儲存耗竭 → ↓ 血基質合成 → 小球性貧血；疲勞等症狀可在貧血出現前就有</li>
+          <li><strong>其他症狀：</strong>情緒改變、落髮、口角炎、萎縮性舌炎、Pica（食冰、黏土等非營養物質）、反甲；Plummer-Vinson 症候群（IDA + 食道蹼 + 萎縮性舌炎）</li>
+          <li><strong>病因：</strong>慢性出血（GI〔含癌症〕、月經、寄生蟲、NSAIDs）；↓ 供應（營養不良；吸收↓：乳糜瀉、Crohn's、↑ 胃 pH、次全胃切除術）；↑ 需求（懷孕）</li>
+          <li><strong>診斷：</strong>↓ Fe、↑ TIBC、↓ 鐵飽和度（Fe/TIBC）、↓ Ferritin（尤其 &lt;30）、↑ 血小板；<strong>務必考慮 GIB 評估，含 H. pylori 血清學；考慮乳糜瀉抗體</strong></li>
+          <li><strong>治療：</strong>口服鐵（~6 週矯正貧血；~6 個月補充儲存量）；嚴重貧血、持續出血、手術前 Epo 療法、住院患者 → IV 鐵（注意：Ferumoxytol 可使 MRI T1 信號偏亮影響判讀）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="thalassemia" data-bm-dept="血液科" data-bm-title="地中海貧血">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">地中海貧血（Thalassemia）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">α-地中海貧血（α-globin 基因缺失）</p>
+        <ul class="k-list">
+          <li>正常 4 個 α 基因；好發於東南亞、地中海、非洲、中東</li>
+          <li>3 個 α → 靜默帶菌；2 個 α → α-thal 輕型（輕度貧血）；1 個 α → HbH（β4）病（嚴重貧血 + 溶血 + 脾腫大）；0 個 α → Hb Barts（γ4）= 子宮內缺氧和胎兒水腫</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">β-地中海貧血（β-globin 基因突變）</p>
+        <ul class="k-list">
+          <li>正常 2 個 β 基因；好發於地中海（希臘 / 義大利）、非洲、亞洲；突變可為缺失（β⁰）或↓產物（β⁺）</li>
+          <li>1 個突變 β 基因 → thal 輕型（不需輸血）；2 個突變 β 基因 → 依嚴重度分為需輸血（TDT）或非輸血依賴（NTDT）</li>
+          <li>黃疸（溶血）；多器官損害（鐵過載）；心肌病變；PAH；↓ 骨密度；肝脾腫大（骨髓外造血）；膽結石</li>
+          <li><strong>診斷：</strong>小球性貧血；排除缺鐵；MCV/RBC &lt;13（Mentzer 指數，Se 60%、Sp 98%）；± ↑ 網狀紅血球；嗜鹼性點彩；Hb 電泳（α-thal 輕型正常；β-thal 輕型 ↑ A2）；基因檢測</li>
+          <li><strong>治療：</strong>輸血（需要時）；慢性溶血補充葉酸；鐵螯合治療；考慮 Luspatercept（↓ TGF-β 信號 → 改善紅血球生成）；脾切除術；重症 → HSCT；基因治療（Exa-cel、Beti-cel 已核准）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="megaloblastic" data-bm-dept="血液科" data-bm-title="巨球性貧血">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">巨球性貧血（葉酸 / B12 缺乏）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>機轉：</strong>DNA 合成障礙 → 細胞質成熟快於細胞核 → 無效紅血球生成和大球性貧血；也見於 MDS</li>
+          <li><strong>抹片：</strong>嗜中性球過度分葉；大橢圓形紅血球；大小不等；形態多樣</li>
+          <li>↑ LDH + ↑ 間接膽紅素（無效紅血球生成）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">葉酸缺乏</p>
+        <ul class="k-list">
+          <li>儲存量僅供 2-3 個月</li>
+          <li><strong>病因：</strong>營養不良（酗酒、厭食、老年人）；↓ 吸收（乳糜瀉）；↑ 需求（慢性溶血、懷孕、惡性腫瘤、透析）；藥物（MTX、Pyrimethamine、TMP）</li>
+          <li><strong>診斷：</strong>↓ 葉酸；↓ RBC 葉酸；↑ 同半胱胺酸但甲基丙二酸（MMA）正常（不同於 B12 缺乏）</li>
+          <li><strong>治療：</strong>葉酸 1-5 mg PO qd 1-4 個月；<strong>先排除 B12 缺乏再補充</strong>（葉酸可逆轉 B12 缺乏的血液異常但不能逆轉神經異常，且可「竊取」B12 儲存 → 神經合併症惡化）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">B12 缺乏</p>
+        <ul class="k-list">
+          <li>B12 只存在於動物性食品；儲存量供 2-3 年；與內在因子（IF，胃壁細胞分泌）結合後在迴腸末端吸收</li>
+          <li><strong>病因：</strong>惡性貧血（PA，抗胃壁細胞自體免疫疾病，↑ 胃癌風險）；吸收↓（胃切除術、乳糜瀉、Crohn's、Metformin）；素食者；腸道細菌過度增殖；魚條蟲</li>
+          <li><strong>神經表現（亞急性聯合脊髓退化症）：</strong>影響周邊神經、脊髓後索和側索 → 麻木、感覺異常、↓ 振動和位置覺、共濟失調、失智、情緒改變</li>
+          <li><strong>診斷：</strong>↓ B12（甚至低正常值）；↑ 同半胱胺酸 + ↑ MMA（關鍵）；anti-IF Ab；惡性貧血時 ↑ Gastrin</li>
+          <li><strong>治療：</strong>B12 1 mg IM qd × 7 天 → qwk × 4-8 週 → 終身 qmo（惡性貧血必須 IM；非惡性貧血可口服）；神經異常在 6 個月內治療可逆轉</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="aci" data-bm-dept="血液科" data-bm-title="慢性發炎性貧血">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">慢性發炎性貧血（ACI）+ 再生不良性貧血</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">慢性發炎性貧血（ACI）</p>
+        <ul class="k-list">
+          <li><strong>機轉：</strong>↑ Hepcidin（IL-6、TNF-α 誘導）→ ↓ 鐵利用 + 功能性缺鐵；↓ Epo 反應性</li>
+          <li><strong>病因：</strong>自體免疫疾病、慢性感染、發炎、HIV、惡性腫瘤</li>
+          <li><strong>診斷：</strong>↓ Fe、↓ TIBC（鐵飽和度通常正常或偏低）；± ↑ Ferritin；通常正血球正色素（~70%）但若持久可呈小球性；同時存在缺鐵性貧血很常見（鑑別：Ferritin &lt;100 或 Fe/TIBC &lt;20% 提示同時有缺鐵）</li>
+          <li><strong>治療：</strong>治療原發疾病；若 Ferritin &lt;100 或 Fe/TIBC &lt;20% → 鐵劑；考慮 ESA（Epo &lt;500 時）；只在症狀性且等待時間不足以等 Epo 反應時才輸血</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">再生不良性貧血（Aplastic Anemia）</p>
+        <ul class="k-list">
+          <li>全血球減少 + ↓ 網狀紅血球 + 骨髓切片低細胞性；2-5/百萬/年；雙峰（青少年 + 老年）</li>
+          <li><strong>病因：</strong>特發性（1/2-2/3）；幹細胞破壞（放射線、化療、苯）；藥物反應（Chloramphenicol、NSAIDs、磺胺類、金、Carbamazepine、抗甲狀腺藥）；病毒（HHV-6、HIV、EBV、Parvovirus B19）；免疫疾病（SLE）；PNH；Fanconi 貧血；短縮端粒（TERT、TERC 突變）；體細胞突變（~50% 有 PNH 克隆）</li>
+          <li><strong>治療（依嚴重度和年齡）：</strong>中度 AA → 考慮 HSCT 或「三聯免疫抑制治療」（ATG + Cyclosporine + Eltrombopag）；重度 / 極重度 AA → HSCT（年輕者）或三聯 IST</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="other-anemias" data-bm-dept="血液科" data-bm-title="其他貧血">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">鐵粒幼細胞性貧血 + 其他正球性貧血</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">鐵粒幼細胞性貧血（Sideroblastic Anemia）</p>
+        <ul class="k-list">
+          <li><strong>機轉：</strong>RBC 前體細胞內血基質生合成缺陷</li>
+          <li><strong>病因：</strong>遺傳性 / X 連鎖（ALAS2 突變最常見）；特發性；MDS 伴環形鐵粒幼細胞；可逆性（酒精、鉛、INH、Chloramphenicol、銅缺乏、低體溫）</li>
+          <li><strong>診斷：</strong>MCV 可變；↑ 鐵飽和度、↑ Ferritin；嗜鹼性點彩；RBC Pappenheimer 小體（含 Fe 包涵體）；骨髓中的環形鐵粒幼細胞（含鐵粒線體）；基因檢測</li>
+          <li><strong>治療：</strong>治療可逆原因；Pyridoxine / Thiamine（依亞型）；MDS 相關治療；嚴重貧血支持性輸血 + 鐵螯合治療</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">非巨球性大球性貧血</p>
+        <ul class="k-list">
+          <li>肝臟疾病（常大球性，可見靶形紅血球或有溶血的棘紅血球）；酒精（骨髓抑制 + 大球性，獨立於葉酸 / B12 缺乏或肝硬化）；網狀紅血球增多；甲狀腺低下；MDS；藥物（Zidovudine、5-FU、Hydroxyurea、Ara-C）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">PNH（陣發性夜間血色素尿症）</p>
+        <ul class="k-list">
+          <li>獲得性 PIG-A 基因突變 → GPI 錨缺乏（↓ CD55、CD59）→ 補體介導 RBC 溶解、血小板聚集、高凝狀態；常與再生不良性貧血和 MDS 相關</li>
+          <li><strong>臨床：</strong>血管內溶血性貧血；高凝狀態（靜脈 &gt; 動脈，尤其腹腔內、腦靜脈）；平滑肌張力障礙；造血不良</li>
+          <li><strong>診斷：</strong>流式細胞術（↓ CD55 和 CD59）；尿液含鐵血黃素</li>
+          <li><strong>治療：</strong>支持性（鐵劑、葉酸、輸血）；考慮抗凝；C5 抑制劑（Ravulizumab &gt; Eculizumab）；補體旁路抑制劑（Iptacopan、Danicopan、Pegcetacoplan）；嚴重骨髓衰竭 → 異體 HSCT；接種莢膜細菌疫苗</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- RBC 異常 Red Cell Disorders -->
+<div class="topic-block" id="rbc-disorders">
+  <div class="topic-block-head">
+    <span class="topic-block-title">RBC 異常 Red Cell Disorders</span>
+    <div data-bm-id="rbc-disorders" data-bm-dept="血液科" data-bm-title="RBC 異常">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    溶血性貧血的診斷靠：↑ 網狀紅血球指數（RI &gt;2%）+ ↑ LDH + ↓ 觸珠蛋白（Haptoglobin，Se 83%、Sp 96%）+ ↑ 間接膽紅素。<strong>Coombs 試驗（DAT）</strong>陽性 = 免疫介導；陰性 = 非免疫介導（MAHA、機械性、酵素缺乏、遺傳性球形紅血球）。<strong>鐮刀型紅血球病</strong>：血管阻塞發作、急性胸部症候群、感染是最重要的住院原因；Hydroxyurea 是疾病改善藥物的一線選擇。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="hemolysis-eval" data-bm-dept="血液科" data-bm-title="溶血性貧血評估">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">溶血性貧血評估</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">溶血指標</p>
+        <ul class="k-list">
+          <li>↑ 網狀紅血球計數（RI &gt;2%）；↑ LDH；↓ Haptoglobin（Se 83%、Sp 96%）；↑ 間接膽紅素</li>
+          <li><strong>血管內溶血（在血管內破壞）：</strong>↑↑ LDH；↓↓ Haptoglobin；血色素血症、血色素尿症、含鐵血黃素尿症；病因：機械性心臟瓣膜、DIC、毒素</li>
+          <li><strong>血管外溶血（較常見，在 MΦ 清除受損 RBC）：</strong>脾腫大（網狀內皮系統增生）；↑ LDH；↓ Haptoglobin；病因：免疫介導、遺傳性球形紅血球症</li>
+          <li>家族史（貧血）；個人或家族史（膽結石）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>病因分類</th><th>機轉</th><th>例子</th><th>模式</th></tr></thead>
+          <tbody>
+            <tr><td><strong>內因性酵素缺乏</strong></td><td>RBC 代謝缺陷</td><td>G6PD 缺乏；丙酮酸激酶缺乏</td><td>遺傳性</td></tr>
+            <tr><td><strong>血色素病變</strong></td><td>異常 Hb</td><td>鐮刀型；地中海貧血</td><td>遺傳性</td></tr>
+            <tr><td><strong>膜異常</strong></td><td>RBC 骨架缺陷</td><td>遺傳性球形紅血球症；PNH；棘紅血球（肝病）</td><td>遺傳性 / 獲得性</td></tr>
+            <tr><td><strong>免疫介導</strong></td><td>抗體介導破壞</td><td>AIHA（溫型 / 冷型）；藥物誘發；輸血反應</td><td>獲得性</td></tr>
+            <tr><td><strong>機械性（MAHA）</strong></td><td>血管內剪切力</td><td>TTP / HUS / DIC；人工瓣膜；惡性 HTN</td><td>獲得性</td></tr>
+            <tr><td><strong>直接感染 / 毒素</strong></td><td>直接 RBC 損傷</td><td>瘧疾、巴貝蟲病；蛇毒；Wilson 病</td><td>獲得性</td></tr>
+            <tr><td><strong>脾功能亢進</strong></td><td>脾臟滯留</td><td>肝硬化、CHF、門靜脈血栓</td><td>獲得性</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="aiha" data-bm-dept="血液科" data-bm-title="自體免疫溶血性貧血">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">自體免疫溶血性貧血（AIHA）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">溫型 AIHA（最常見）</p>
+        <ul class="k-list">
+          <li><strong>機轉：</strong>IgG 抗體在體溫下與 RBC 結合 → 脾臟 MΦ 清除</li>
+          <li><strong>病因：</strong>特發性；淋巴增生性（CLL、NHL）；自體免疫（SLE）；藥物；HIV；巴貝蟲病</li>
+          <li><strong>診斷：</strong>DAT IgG 陽性（pan-agglutinin，不同於同種抗體）；抹片見球形紅血球</li>
+          <li><strong>治療：</strong>類固醇 ± 脾切除術、IVIG、細胞毒性藥物、RTX</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">冷凝集素病（Cold Agglutinin Disease）</p>
+        <ul class="k-list">
+          <li><strong>機轉：</strong>IgM 在 &lt;37°C 與 RBC 結合 → 補體固定 → 血管內溶血 + 肢端發紺（暴露於寒冷時）</li>
+          <li><strong>病因：</strong>特發性；淋巴增生性（Waldenström，單株型）；Mycoplasma pneumoniae 感染；傳染性單核球增多症（多株型）</li>
+          <li><strong>診斷：</strong>DAT C3 陽性；冷凝集素效價；熱幅度；抹片見 RBC 凝集</li>
+          <li><strong>治療：</strong>嚴重 → Sutimlimab 或血漿置換；RTX 和 / 或 Bendamustine；治療原發淋巴增生性疾病</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">藥物誘發溶血性貧血</p>
+        <ul class="k-list">
+          <li>Coombs 通常陰性；↑ LDH；停藥後改善</li>
+          <li>常見藥物：抗生素（Cephalosporins、磺胺類、Rifampin、Ribavirin）；心血管（Methyldopa、Procainamide、Quinidine、Thiazide）；TCA、Phenothiazine、NSAIDs、磺醯脲類、MTX、5-FU；Rasburicase（G6PD 缺乏時）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="g6pd-hs" data-bm-dept="血液科" data-bm-title="G6PD 缺乏 + 遺傳性球形紅血球症">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">G6PD 缺乏 + 遺傳性球形紅血球症</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">G6PD 缺乏</p>
+        <ul class="k-list">
+          <li>X 染色體連鎖；最常見於非洲裔或地中海裔；慢性溶血 DAT 陰性、RI &gt;2%、↑ LDH、↓ Haptoglobin；抹片可變；Heinz 小體（氧化 Hb）→ 被脾臟去除後形成「咬痕細胞」</li>
+          <li><strong>誘發溶血的藥物：</strong>磺胺類、Dapsone、Nitrofurantoin、Rasburicase、Primaquine、Doxorubicin、Methylene blue</li>
+          <li>也由感染、DKA、食物（蠶豆病，NEJM 2018；378:60）誘發</li>
+          <li><strong>治療：</strong>避免誘發因素；支持性治療</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">遺傳性球形紅血球症（HS）</p>
+        <ul class="k-list">
+          <li>RBC 膜骨架缺陷（Ankyrin、Spectrin、Band 3、Pallidin）；北歐族群最常見（1/5000）；75% 有家族史</li>
+          <li><strong>臨床：</strong>貧血、黃疸（主要在新生兒）、脾腫大、色素性膽結石</li>
+          <li><strong>診斷：</strong>抹片見球形紅血球；滲透脆性試驗（Se ~80%）；↓ EMA 結合（Se 93%、Sp 99%）；酸化甘油溶解試驗（Se 95%）</li>
+          <li><strong>治療：</strong>葉酸；輸血；中重度 HS 考慮脾切除術（需衡量未來血栓和感染風險增加）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="sickle-cell" data-bm-dept="血液科" data-bm-title="鐮刀型紅血球病">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">鐮刀型紅血球病（Sickle Cell Disease）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>遺傳：</strong>β-globin 隱性突變 → HbS 在低氧時聚合 → 膜損傷、RBC 脫水、↓ 變形性 → 溶血 + 微血管阻塞；~8% 非裔美國人為異合子（「鐮刀型特徵」，通常無症狀）；~1/400 為同合子（鐮刀型紅血球病）</li>
+          <li><strong>診斷：</strong>抹片見鐮刀形 RBC 和 Howell-Jolly 小體；Hb 電泳</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">主要臨床表現</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>表現</th><th>特徵 / 處置</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>血管阻塞發作</strong></td>
+              <td>誘因：脫水、感染、氣溫驟變、壓力、月經、酒精（但多數無明確誘因）；疼痛 ± 缺血 / 梗塞；可導致中風、MI、急性胸部症候群、VTE、腎乳頭壞死、股骨頭缺血性壞死、指趾炎（嬰幼兒）、陰莖異常勃起、視網膜病變；治療：患者導向止痛（依急性治療計畫）、IVF、VTE 預防；只在比平常更嚴重時才輸血</td>
+            </tr>
+            <tr>
+              <td><strong>急性胸部症候群</strong></td>
+              <td>血管阻塞 + 感染 + 肺不張 + 血栓 + 脂肪栓塞；診斷：影像肺浸潤 + 以下任一：發燒、低氧、呼吸症狀；治療：嚴重惡化 → RBC 交換輸血 vs 單純輸血；社區型肺炎覆蓋抗生素</td>
+            </tr>
+            <tr>
+              <td><strong>感染</strong></td>
+              <td>功能性脾功能低下 → 莢膜細菌菌血症、腦膜炎、肺炎；接種肺炎球菌、腦膜炎球菌、流感嗜血桿菌疫苗；HBV 疫苗；梗塞骨 → 骨髓炎（Salmonella、S. aureus）</td>
+            </tr>
+            <tr>
+              <td><strong>急性再生不良危象</strong></td>
+              <td>常由 Parvovirus B19 感染引起</td>
+            </tr>
+            <tr>
+              <td><strong>脾臟隔離危象</strong></td><td>可合併低血容性休克</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">疾病改善治療</p>
+        <ul class="k-list">
+          <li><strong>Hydroxyurea：</strong>↑ HbF；↓ 血管阻塞發作頻率和嚴重度；一線疾病改善藥物</li>
+          <li><strong>L-Glutamine：</strong>↓ 氧化壓力</li>
+          <li><strong>Crizanlizumab：</strong>P-selectin 拮抗劑（歐洲已撤銷，療效有爭議）</li>
+          <li><strong>基因治療：</strong>Exa-Cel（↑ HbF 表現）；Lovo-Cel（替換突變 β-globin 基因）</li>
+          <li><strong>輸血的主要適應症：</strong>急性胸部症候群；中風；多器官衰竭；症狀性貧血（Hgb 較基礎值 ↓ 2 g/dL）；手術預防性輸血；急性脾臟隔離；再生不良危象</li>
+        </ul>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">脾腫大病因速查</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>病因</th><th>例子</th></tr></thead>
+          <tbody>
+            <tr><td><strong>RES 增生</strong></td><td>溶血性貧血、鐮刀型、地中海貧血</td></tr>
+            <tr><td><strong>免疫增生</strong></td><td>感染（HIV、EBV、CMV、TB、瘧疾）；自體免疫（SLE、RA + Felty）；Sarcoidosis</td></tr>
+            <tr><td><strong>鬱血</strong></td><td>肝硬化、CHF、門靜脈 / 脾靜脈血栓</td></tr>
+            <tr><td><strong>浸潤（非惡性）</strong></td><td>Gaucher 病、Niemann-Pick 病；Histiocytosis X；脾囊腫</td></tr>
+            <tr><td><strong>腫瘤</strong></td><td>MPN（CML、PMF、PV、ET）；白血病；淋巴瘤（NHL、HL、毛細胞白血病、CLL）；骨髓瘤；澱粉樣變</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 血小板異常 Platelet Disorders -->
+<div class="topic-block" id="platelet">
+  <div class="topic-block-head">
+    <span class="topic-block-title">血小板異常 Platelet Disorders</span>
+    <div data-bm-id="platelet" data-bm-dept="血液科" data-bm-title="血小板異常">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    血小板異常的臨床線索：<strong>皮膚黏膜出血（瘀點、紫斑）= 血小板或血管問題</strong>；深部出血（血腫、關節出血）= 凝血因子問題。血小板 &lt;50k 小手術出血風險 ↑；&lt;20k 自發性出血風險 ↑；&lt;10k 嚴重生命威脅性出血風險 ↑。<strong>HIT</strong>：4T 評分 ≤3 NPV 99%，≥4 才送 PF4-Heparin 抗體；確診立刻停所有 Heparin（含沖管用 Heparin）並換非 Heparin 抗凝。<strong>TTP</strong>：血漿置換是緊急治療，血小板輸注禁忌（↑ 微血管血栓）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="thrombocytopenia-eval" data-bm-dept="血液科" data-bm-title="血小板減少評估">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">血小板減少症評估</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">出血風險</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>血小板計數</th><th>風險</th></tr></thead>
+          <tbody>
+            <tr><td>50,000–100,000</td><td>重大外傷風險；可進行一般手術</td></tr>
+            <tr><td>&lt;50,000</td><td>輕度外傷或手術風險</td></tr>
+            <tr><td>&lt;20,000</td><td>自發性出血風險（ITP 患者風險較低）</td></tr>
+            <tr><td>&lt;10,000</td><td>嚴重、生命威脅性出血風險</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">病因</p>
+        <ul class="k-list">
+          <li><strong>↓ 生成：</strong>骨髓低細胞性（再生不良性貧血、MDS、藥物〔Thiazide、抗生素、化療〕、酒精、肝硬化、病毒感染）；骨髓高細胞性（MDS、白血病、嚴重巨球性貧血）；骨髓置換（骨髓纖維化、血液和固態惡性腫瘤、肉芽腫）</li>
+          <li><strong>↑ 破壞（免疫介導）：</strong>原發性（ITP）；繼發性（感染〔HIV、HCV、HSV〕、膠原血管疾病〔SLE〕、APS、淋巴增生性〔CLL〕、藥物〔含 Heparin〕、同種免疫、疫苗誘發）</li>
+          <li><strong>↑ 破壞（非免疫）：</strong>MAHA（DIC、HUS、TTP）；Ticlopidine / Clopidogrel；血管炎；子癲前症 / HELLP；體外循環；IABP；海綿狀血管瘤</li>
+          <li><strong>分布異常：</strong>脾臟隔離；稀釋性；低體溫</li>
+          <li><strong>危重症：</strong>多因素</li>
+          <li class="note">偽血小板減少症：EDTA 誘導血小板聚集 → 自動計數偏低；周邊抹片確認</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="itp" data-bm-dept="血液科" data-bm-title="免疫性血小板減少症 ITP">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">免疫性血小板減少症（ITP）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li>孤立性血小板減少，由免疫介導血小板破壞（抗血小板自體抗體）+ ↓ 生成（抗巨核細胞抗體）引起，無明確誘因</li>
+          <li><strong>臨床：</strong>隱匿性黏膜皮膚出血；女：男 = 3:1</li>
+          <li><strong>排除診斷：</strong>CBC = 孤立性 ↓ 血小板（&lt;100k）；10% ITP + AIHA = Evans 症候群；周邊抹片：大血小板（排除假性血小板減少症）；血小板輸注反應差（30 分鐘後 ↑ &lt;10k）；骨髓切片：↑ 巨核細胞（不常規需要）</li>
+          <li><strong>評估繼發性 ITP：</strong>HIV、HCV；淋巴增生性和自體免疫疾病</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li>血小板 &gt;50k 且無出血 / 外傷 / 手術 / 抗凝 → 通常不需治療</li>
+          <li><strong>一線：</strong>類固醇（Prednisone 0.5-2 mg/kg/天減量 ~4 週，或 Dexamethasone 40 mg PO × 4 天）→ 70-90% 初始反應；IVIG（1 g/kg/天 × 2-3 天，需快速 ↑ 血小板時）→ 80% 初始反應，持續 2-6 週；Anti-Rh(D) Ig（RBC Rh(D) 陽性時替代 IVIG）</li>
+          <li><strong>二線：</strong>Romiplostim / Eltrombopag / Avatrombopag（TPO-R 促效劑 → ↑ 血小板生成）；RTX（Anti-CD20）± Dexamethasone；脾切除術（~65% 長期緩解）；AZA、CYC、MMF；Danazol；Fostamatinib（SYK 抑制劑）</li>
+          <li><strong>活動性出血：</strong>Methylprednisolone 1 g/天 IV × 3 天；IVIG；血小板輸注（合併 IVIG 或 Anti-Rh(D)）</li>
+          <li class="note">RTX 前確認 HBsAg 和 anti-HBc；IVIG 前確認 HBsAg（IVIG 可能改變結果）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="hit" data-bm-dept="血液科" data-bm-title="肝素誘發血小板減少症 HIT">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">肝素誘發血小板減少症（HIT）</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>確診 HIT → 立刻停所有 Heparin（含沖管用 Heparin、LMWH 預防）並換非 Heparin 抗凝。不要輸血小板（↑ 血栓風險）。不要先給 Warfarin（皮膚壞死風險）。</span>
+        </div>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>Type I（非臨床意義）</th><th>Type II（臨床重要 HIT）</th></tr></thead>
+          <tbody>
+            <tr><td><strong>機轉</strong></td><td>Heparin 直接效果（非免疫）</td><td>IgG 對 PF4-Heparin 複合體 → 血小板活化 → 血栓性血小板減少 + 促凝狀態</td></tr>
+            <tr><td><strong>發生率</strong></td><td>10-20%</td><td>UFH 1-3%；LMWH 0-0.8%</td></tr>
+            <tr><td><strong>發生時間</strong></td><td>開始後 1-4 天</td><td>開始後 4-10 天；若 100 天內有前次暴露則 &lt;24 小時</td></tr>
+            <tr><td><strong>血小板最低點</strong></td><td>&gt;100k</td><td>~60k；↓ &gt;50%</td></tr>
+            <tr><td><strong>後果</strong></td><td>無</td><td>血栓事件（HITT）30-50%</td></tr>
+            <tr><td><strong>處置</strong></td><td>可繼續 Heparin 觀察</td><td>立刻停 Heparin；改非 Heparin 抗凝</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">4T 評分</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>項目</th><th>2 分</th><th>1 分</th><th>0 分</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Thrombocytopenia</strong></td><td>↓ &gt;50% 且最低點 ≥20k</td><td>↓ 30-50% 或最低點 10-19k</td><td>↓ &lt;30% 或最低點 &lt;10k</td></tr>
+            <tr><td><strong>Timing</strong></td><td>5-10 天，或 ≤1 天（30 天內有 Heparin）</td><td>5-10 天；&gt;10 天；≤1 天（30-100 天內有 Heparin）</td><td>≤4 天（無近期 Heparin）</td></tr>
+            <tr><td><strong>Thrombosis</strong></td><td>新血栓；皮膚壞死；IV UFH 後急性反應</td><td>進展 / 復發血栓；懷疑血栓；非壞死性皮膚病灶</td><td>無</td></tr>
+            <tr><td><strong>oTher cause</strong></td><td>無其他原因</td><td>可能有其他原因</td><td>確定有其他原因</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>評分解讀：</strong>≤3 分 → NPV 99%，找其他原因；4-5 分 → PPV 22%；6-8 分 → PPV 64%；4 分以上 → 換非 Heparin 抗凝 + 送 PF4-Heparin ELISA</li>
+          <li><strong>確認試驗：</strong>PF4-Heparin ELISA（↑ 假陽性率）→ 必要時補 Serotonin 放釋試驗（SRA，Se/Sp &gt;95%）</li>
+          <li><strong>治療：</strong>停所有 Heparin（含沖管）；改 Argatroban、Bivalirudin、DOAC 或 Fondaparinux；若已給 Warfarin → 給 Vit K 逆轉（避免 Warfarin 皮膚壞死）；需抗凝後才能開始 Warfarin（血小板 &gt;150k 後疊加 ≥5 天）；篩查所有患者 DVT（超音波）；有血栓（HITT）→ 抗凝 ≥3-6 個月；無血栓（HIT）→ 最少 1 個月（多建議 3 個月）；30 天內血栓率 25-50%</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="tma" data-bm-dept="血液科" data-bm-title="血栓性微血管病變 TMA">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">血栓性微血管病變（TMA）：TTP / HUS</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>TMA 定義：</strong>內皮損傷 → 血小板聚集 + 微血管血栓 → ↓ 血小板 + RBC 溶血（MAHA）；診斷：無法解釋的血小板減少 + MAHA + 抹片見裂形紅血球（&gt;2-3/hpf）+ Coombs 陰性 + PT/PTT 和 Fibrinogen 正常 + ↑↑ LDH + ↑ 間接膽紅素 + ↓↓ Haptoglobin + ↑ Cr（HUS 尤其）</li>
+          <li><strong>鑑別：</strong>DIC（↑ PT/PTT；↓ Fibrinogen）；血管炎；惡性高血壓；子癲前症 / HELLP</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>TTP</th><th>補體介導 TMA（CM-TMA）</th><th>Shiga 毒素 HUS（ST-HUS）</th></tr></thead>
+          <tbody>
+            <tr><td><strong>機轉</strong></td><td>↓↓ ADAMTS13（遺傳性或自體抗體）→ 超大 vWF 多聚體 → 血小板聚集</td><td>補體基因變異或抗 CFH 自體抗體 → ↑ 補體活性；誘因：懷孕、感染、手術</td><td>Shiga 毒素損傷腎內皮細胞 → 腎內血栓</td></tr>
+            <tr><td><strong>臨床五聯症</strong></td><td>↓ 血小板 + MAHA（100%）± 意識改變（65%）± 腎衰竭（50%）± 發燒（25%）；不需全部五項</td><td>MAHA + ↓ 血小板 + AKI；無前驅腹瀉</td><td>MAHA + ↓ 血小板 + AKI + 血性腹瀉（E. coli O157:H7）</td></tr>
+            <tr><td><strong>治療</strong></td><td>緊急血漿置換 ± 類固醇；FFP（若延遲）；Caplacizumab；RTX（二級預防）；<strong>血小板輸注禁忌</strong></td><td>排除其他 TMA；若嚴重腎功能障礙考慮經驗性 Eculizumab 或 Ravulizumab</td><td>支持性治療；無需抗生素（↑ HUS 風險）</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>藥物誘發 TMA：</strong>免疫介導（抗體與血小板和內皮細胞反應，如 Quinine、Gemcitabine）；直接毒性（Gemcitabine、Mitomycin、Tacrolimus、CsA、Bevacizumab）</li>
+          <li class="note">TTP 中 PLASMIC 評分有助於與其他 TMA 鑑別（Lancet Haematol 2017;4:157）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 凝血障礙 Coagulopathies -->
+<div class="topic-block" id="coagulation">
+  <div class="topic-block-head">
+    <span class="topic-block-title">凝血障礙 Coagulopathies</span>
+    <div data-bm-id="coagulation" data-bm-dept="血液科" data-bm-title="凝血障礙">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    凝血障礙的鑑別從<strong>PT vs PTT vs 兩者都升高</strong>開始，再用混合試驗區分因子缺乏（混合後矯正）和因子抑制劑（混合後不矯正）。<strong>DIC</strong> = 急性消耗性凝血病，治療以原發病為主，支持性用 FFP / Cryo / 血小板。<strong>血友病 A/B</strong>：急性出血用替代因子；預防用長效因子或 Emicizumab（血友病 A）。<strong>APS</strong>：Warfarin 優於 DOAC（尤其三重陽性者）；妊娠 + VTE 病史 → LMWH + ASA。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="coag-screening" data-bm-dept="血液科" data-bm-title="凝血篩查判讀">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">凝血篩查異常判讀</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>PT</th><th>PTT</th><th>缺乏因子</th><th>遺傳性</th><th>獲得性</th></tr></thead>
+          <tbody>
+            <tr><td>↑</td><td>正常</td><td>VII</td><td>因子 VII 缺乏</td><td>Vit K 缺乏（早期）；肝病；因子抑制劑</td></tr>
+            <tr><td>正常</td><td>↑</td><td>VIII、IX、XI、XII</td><td>血友病 A（VIII）、B（IX）；vWD</td><td>抗磷脂抗體；因子抑制劑</td></tr>
+            <tr><td>↑</td><td>↑</td><td>I、II、V、X</td><td>Fibrinogen、FII 或 FV 缺乏</td><td>DIC；肝病；因子抑制劑</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">混合試驗（Mixing Study）</p>
+        <ul class="k-list">
+          <li>PT 或 PTT 升高 → 患者血漿與正常血漿 1:1 混合後重測</li>
+          <li><strong>矯正 → 因子缺乏：</strong>DIC（所有因子消耗）；肝病（↓ 所有因子，除 VIII）；Vit K 缺乏（↓ II、VII、IX、X 和 Protein C、S）</li>
+          <li><strong>不矯正 → 因子抑制劑：</strong>抗磷脂抗體；抗因子 VIII 自體抗體（最常見）</li>
+          <li class="note">鑑別肝病 vs DIC：DIC → 所有因子消耗（↓ V 和 VIII）；肝病 → ↓ 所有因子除 VIII（↓ V，正常 VIII）；Vit K 缺乏 → ↓ II、VII、IX、X（正常 V 和 VIII）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">抗凝劑拮抗藥物</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>抗凝劑</th><th>t1/2</th><th>監測</th><th>嚴重出血拮抗</th></tr></thead>
+          <tbody>
+            <tr><td><strong>UFH</strong></td><td>60-90 分</td><td>↑ PTT</td><td>Protamine 1 mg/100U UFH（最多 50 mg）</td></tr>
+            <tr><td><strong>LMWH</strong></td><td>2-7 小時</td><td>Anti-Xa</td><td>Protamine 逆轉 ~60%（1 mg/1 mg Enoxaparin）</td></tr>
+            <tr><td><strong>Warfarin</strong></td><td>36 小時</td><td>↑ PT</td><td>無出血：INR &gt;9 → Vit K 2.5 mg PO；有出血：Vit K 10 mg IV + 4F-PCC（INR 2-4：25 U/kg；4-6：35 U/kg；&gt;6：50 U/kg）或 FFP 2-4 U IV q6-8h</td></tr>
+            <tr><td><strong>Dabigatran</strong></td><td>~12 小時</td><td>↑ PTT</td><td>Idarucizumab（mAb 直接結合藥物）</td></tr>
+            <tr><td><strong>Rivaroxaban / Apixaban / Edoxaban</strong></td><td>8-12 小時</td><td>↑ PT（anti-Xa）</td><td>Andexanet（800 mg bolus → 8 mg/min × 2h）；無 Andexanet → 4F-PCC</td></tr>
+            <tr><td><strong>溶栓劑</strong></td><td>20 分</td><td>↓ Fibrinogen</td><td>Cryo、FFP ± Tranexamic acid 或 Aminocaproic acid</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="dic" data-bm-dept="血液科" data-bm-title="瀰漫性血管內凝血 DIC">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">瀰漫性血管內凝血（DIC）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>病因：</strong>外傷、休克、感染、惡性腫瘤（尤其 APL）、產科併發症</li>
+          <li><strong>病生理：</strong>大量凝血活化壓倒調控機制 → 微血管血栓 → 缺血 + MAHA；凝血因子和血小板急性消耗 → 出血；慢性 DIC → 可透過 ↑ 因子和血小板代償 → 血栓為主</li>
+          <li><strong>診斷：</strong>↑ PT；↑ PTT；↓ Fibrinogen（急性期可正常，因急性期反應物）；↑ FDP / D-dimer；↓ 血小板；裂形紅血球；↑ LDH；↓ Haptoglobin；慢性 DIC：↑ FDP / D-dimer，血小板和其他指標可變</li>
+          <li><strong>治療：</strong>治療原發病（最重要）；支持：FFP（若 PT/PTT 升高）；Cryo（目標 Fibrinogen &gt;100 mg/dL）；血小板（若 &lt;50k + 活動性出血）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="hemophilia" data-bm-dept="血液科" data-bm-title="血友病">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">血友病（Hemophilia A / B）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li>X 染色體連鎖隱性；因子 VIII（血友病 A）或 IX（血友病 B）缺乏或抑制</li>
+          <li><strong>嚴重度：</strong>輕度（5-25% 正常因子活性）；中度（1-5%）；重度（&lt;1%）</li>
+          <li><strong>臨床：</strong>血腫、關節出血（hemarthroses）、瘀傷、黏膜 / GI / GU 出血</li>
+          <li><strong>診斷：</strong>↑ PTT（混合後矯正）；正常 vWF；↓ VIII 或 IX；基因檢測；篩查抑制劑（尤其有前次因子輸注史且輸注效果變差時）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li><strong>輕度出血：</strong>Antifibrinolytics（TXA）± Desmopressin（血友病 A，若先前驗證有效）</li>
+          <li><strong>急性出血（中重度）：</strong>因子 VIII 或 IX 替代；若有抑制劑 → 繞過因子（rVIIa）</li>
+          <li><strong>預防（有出血病史或重度 &lt;1%）：</strong>傳統或長效因子製劑；Emicizumab（橋接因子 IX 和 X，用於血友病 A 有 / 無抑制劑）；避免合用 FEIBA + Emicizumab（TMA 風險）</li>
+          <li><strong>基因治療：</strong>已有核准的基因治療（血友病 A 和 B）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="hypercoag" data-bm-dept="血液科" data-bm-title="高凝狀態">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">高凝狀態（Hypercoagulable States）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">懷疑時機</p>
+        <ul class="k-list">
+          <li>年輕時出現靜脈（少數動脈）血栓；不尋常位置的血栓；復發性血栓或妊娠流失；陽性家族史</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">遺傳性血栓因子</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>危險因子</th><th>盛行率</th><th>VTE 相對風險</th><th>備註</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Factor V Leiden</strong></td><td>~5%</td><td>~5×</td><td>活化蛋白 C 抵抗</td></tr>
+            <tr><td><strong>凝血酶原基因突變</strong></td><td>2%</td><td>~4×</td><td>G20210A → ↑ 凝血酶原</td></tr>
+            <tr><td><strong>蛋白 C 缺乏</strong></td><td>0.02-0.05%</td><td>&gt;20×</td><td>Warfarin 皮膚壞死風險</td></tr>
+            <tr><td><strong>蛋白 S 缺乏</strong></td><td>0.01-1%</td><td>&gt;20×</td><td>—</td></tr>
+            <tr><td><strong>抗凝血酶 III 缺乏</strong></td><td>0.04%</td><td>&gt;20×</td><td>可能 Heparin 抵抗</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">獲得性血栓因子</p>
+        <ul class="k-list">
+          <li>腸繫膜或腦靜脈竇血栓 → 篩查 MPN（JAK2 V617F）和 PNH（流式細胞術）</li>
+          <li>動脈血栓無明確危險因子或位置不尋常 → 考慮 APS</li>
+          <li>初次無誘因 VTE → 年齡適當的惡性腫瘤篩查（隱匿性癌症約 4%；常規腹盆腔 CT 無額外效益）</li>
+          <li class="note">血栓因子檢測時機：避免在初次血栓診斷時送（消耗性降低 + 抗凝藥物干擾）；完成初始治療（3-6 個月）後再評估；結果是否影響長期抗凝決策才是送檢的理由</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="aps" data-bm-dept="血液科" data-bm-title="抗磷脂症候群 APS">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">抗磷脂症候群（APS）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Sapporo 修訂標準（≥1 臨床 + ≥1 實驗室）</p>
+        <ul class="k-list">
+          <li><strong>臨床：</strong>血栓性（大血管靜脈或動脈血栓，含中風）；產科（3 次 &lt;10 週自發性流產；或 ≥1 次 &gt;10 週胎兒死亡；或 &lt;34 週因子癲前症或胎盤功能不足早產）</li>
+          <li><strong>實驗室（同一抗體在相隔 ≥12 週 ≥2 次陽性）：</strong>Lupus anticoagulant（LA）；中至高效價抗心磷脂抗體（ACL）；或 β2-GP-I 抗體；IgG 比 IgM 更有意義；效價 &gt;40U 比低效價或單獨 IgM 更重要</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">其他表現</p>
+        <ul class="k-list">
+          <li>微血管 APS：DAH、網狀青斑、aPL 腎病、心臟損傷；心臟瓣膜增厚 / 疣狀贅生物；↓ 血小板</li>
+          <li><strong>病因：</strong>原發性（特發性）或繼發性（SLE 最常見；惡性腫瘤；感染；藥物反應）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li><strong>初次靜脈血栓：</strong>Warfarin INR 2-3；若非三重陽性可考慮 DOAC</li>
+          <li><strong>初次動脈血栓：</strong>Warfarin INR 2-3 ± ASA 81 mg/天</li>
+          <li><strong>三重陽性（ACL + LA + β2-GP-I 均陽性）：</strong>優先 Warfarin（DOAC 血栓復發率更高）</li>
+          <li><strong>復發性血栓：</strong>DOAC → Warfarin；↑ INR 目標；加 ASA；LMWH / Fondaparinux</li>
+          <li><strong>微血管 APS：</strong>免疫調節治療</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">災難性 APS（CAPS）</p>
+        <ul class="k-list">
+          <li>≥3 個器官系統在 &lt;1 週內受累 + APLA 陽性 + 組織微血栓；死亡率 44%</li>
+          <li><strong>治療：</strong>不要等切片和檢驗結果；立刻三聯療法（類固醇 + 抗凝 Heparin → Warfarin + 血漿置換 / IVIG）；考慮 RTX 和補體抑制（Eculizumab）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="vwd" data-bm-dept="血液科" data-bm-title="von Willebrand 病">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">von Willebrand 病（vWD）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li>最常見遺傳性出血疾病；vWF 功能 = 血小板黏附 + 因子 VIII 血漿載體</li>
+          <li>Type 1（~85%）：部分定量 vWF 缺乏；Type 2（~15%）：質性缺乏；Type 3（&lt;1%）：完全 / 幾乎完全缺乏</li>
+          <li><strong>獲得性 vWD：</strong>惡性腫瘤、MPN（↑ 血小板數）；自體免疫；甲狀腺低下；藥物；Heyde 症候群（嚴重 AS 誘發 vWF 破壞，合併 GI AVM 出血）</li>
+          <li><strong>診斷：</strong>↓ vWF 抗原（vWF:Ag）；↓ vWF 活性；正常 Propeptide；↓ 因子 VIII；± ↑ PTT；± ↓ 血小板；多聚體分析；基因檢測</li>
+          <li><strong>治療：</strong>輕度出血 / 預防：Desmopressin（DDAVP，先做療效試驗確認 Type 1 有效）；血小板輸注；Antifibrinolytics（TXA）；嚴重出血 → vWF 濃縮製劑</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 輸血反應 Transfusion Reactions -->
+<div class="topic-block" id="transfusion">
+  <div class="topic-block-head">
+    <span class="topic-block-title">輸血反應 Transfusion Reactions</span>
+    <div data-bm-id="transfusion" data-bm-dept="血液科" data-bm-title="輸血反應">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    輸血反應的第一步：<strong>立刻停止輸血，送血液銀行樣本和患者血樣重新確認血型</strong>。最危險的是急性溶血反應（ABO 不相容，多為人為錯誤）和 TRALI（輸血後急性肺損傷）。TACO（輸血相關循環過載）是最常見的嚴重輸血反應，老年和心功能不全患者尤其高風險。輸血指引：Hb &lt;7（穩定非出血患者）或 &lt;8（心血管疾病 / 術後）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="transfusion-reactions" data-bm-dept="血液科" data-bm-title="輸血反應分類">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">輸血反應分類與處置</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>類型</th><th>機轉</th><th>症狀</th><th>處置</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>急性溶血反應</strong><br/>（發生率 1:76,000，死亡 1:2M）</td>
+              <td>ABO 不相容（多為人為錯誤）→ 補體活化 → 血管內溶血</td>
+              <td>輸血中 / 後數分鐘：發燒、寒顫、腰痛、血色素尿、低血壓、休克、DIC、AKI；全身麻醉 → 只有低血壓和滲血</td>
+              <td><strong>立刻停輸血</strong>；支持（IVF、升壓藥）；強制尿液輸出（1 mL/kg/h）；送血液銀行；血液培養；腎衰竭和 DIC 處置</td>
+            </tr>
+            <tr>
+              <td><strong>遲發性溶血反應</strong><br/>（1:7000）</td>
+              <td>既往同種免疫（效價低不被篩查到）→ 次級免疫反應 → 血管外溶血</td>
+              <td>輸血後 2-10 天：低度發燒、↓ Hb、黃疸、↑ LDH（輕度）</td>
+              <td>無需特殊處置；告知血液銀行備查；若嚴重 → 換血或血漿置換</td>
+            </tr>
+            <tr>
+              <td><strong>發燒性非溶血性輸血反應（FNHTR）</strong><br/>（最常見，1-2%）</td>
+              <td>白血球細胞激素（術前貯存 RBC 或血小板的 WBC）</td>
+              <td>輸血中 / 後 6 小時內：發燒（≥1°C）、寒顫；通常自限</td>
+              <td>停輸血確認無溶血；Acetaminophen；可再繼續輸血；下次預防：白血球去除輸血製品</td>
+            </tr>
+            <tr>
+              <td><strong>過敏反應</strong><br/>（輕：1-2%；嚴重：1:50,000）</td>
+              <td>對血液製品蛋白的 IgE 介導（嚴重時尤其 IgA 缺乏患者）</td>
+              <td>搔癢、蕁麻疹（輕度）；支氣管痙攣、低血壓、全身性過敏（嚴重）</td>
+              <td>輕度：停輸血、Diphenhydramine → 症狀緩解後可繼續；嚴重：Epinephrine；下次預防：抗組織胺預防投藥；IgA 缺乏 → IgA 缺乏血液製品</td>
+            </tr>
+            <tr>
+              <td><strong>TRALI（輸血相關急性肺損傷）</strong><br/>（1:5000）</td>
+              <td>供血者抗 HLA / 抗中性球抗體 → 受血者肺中性球活化 → 非心因性肺水腫</td>
+              <td>輸血中 / 後 6 小時內：急性低氧（SpO₂↓）、雙側肺浸潤、低血壓、發燒；通常 3-4 天自限</td>
+              <td>停輸血；支持性（O₂、機械通氣）；告知血液銀行（追蹤供血者）；不給利尿劑（非心因性）</td>
+            </tr>
+            <tr>
+              <td><strong>TACO（輸血相關循環過載）</strong><br/>（最常見嚴重反應，1-8%）</td>
+              <td>容積過多 → 心因性肺水腫（尤其老年、心功能不全）</td>
+              <td>輸血中 / 後 12 小時內：急性呼吸困難、高血壓、心搏過速、頸靜脈怒張、雙側濕囉音</td>
+              <td>放慢或停止輸血；利尿劑；坐直；必要時 O₂</td>
+            </tr>
+            <tr>
+              <td><strong>敗血性輸血反應</strong><br/>（1:75,000，死亡 1:500,000）</td>
+              <td>細菌污染輸血製品（血小板 &gt; RBC，因 20-24°C 儲存）</td>
+              <td>高燒、嚴重低血壓、休克</td>
+              <td>停輸血；血液培養（患者和剩餘血液製品）；廣效抗生素；支持治療</td>
+            </tr>
+            <tr>
+              <td><strong>TA-GvHD</strong><br/>（罕見但死亡率 &gt;90%）</td>
+              <td>供血者 T 細胞攻擊免疫抑制受血者（或 HLA 半合子供血者）</td>
+              <td>輸血後 8-10 天：皮疹、腹瀉、肝炎、骨髓抑制</td>
+              <td>無有效治療；預防：免疫抑制患者輸照射血液製品</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">TRALI vs TACO 鑑別</p>
+        <ul class="k-list">
+          <li><strong>TRALI：</strong>低血壓；無容積過多跡象；BNP 正常；胸部 X 光雙側浸潤但無心臟擴大；可能有發燒</li>
+          <li><strong>TACO：</strong>高血壓；有容積過多跡象（JVD、S3）；↑ BNP；胸部 X 光心臟擴大 + 肺靜脈充血</li>
+          <li class="note">兩者可同時存在（TRALI + TACO）→ 輸血後急性呼吸困難的鑑別需要利尿劑試驗 + BNP 協助</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="transfusion-guidelines" data-bm-dept="血液科" data-bm-title="輸血指引">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">輸血指引與血液製品</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">RBC 輸血閾值</p>
+        <ul class="k-list">
+          <li><strong>限制性策略（Hb &lt;7 g/dL）：</strong>穩定非出血住院患者；ICU 患者</li>
+          <li><strong>較自由策略（Hb &lt;8 g/dL）：</strong>急性 MI / 不穩定心絞痛；術後患者；心血管手術後</li>
+          <li><strong>Hb &lt;10 g/dL：</strong>急性 STEMI 或中風患者（目標維持 Hb 10-12）</li>
+          <li>預期每單位 pRBC → Hb ↑ 1 g/dL 或 Hct ↑ 3%</li>
+          <li class="note">限制性策略在大多數住院患者（心因性休克除外）死亡率和心臟事件不劣於自由策略（NEJM MINT trial 2023）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">血小板輸血閾值</p>
+        <ul class="k-list">
+          <li><strong>預防性：</strong>血小板 &lt;10k（穩定）；&lt;20k（敗血症或其他出血危險因子）；&lt;50k（侵入性操作或外科手術）；&lt;100k（神經外科手術或眼科手術）</li>
+          <li><strong>治療性（活動性出血）：</strong>血小板 &lt;50k</li>
+          <li>預期每單位血小板 → ↑ 10-50k（依體重）</li>
+          <li>ITP 和 TTP 不建議預防性血小板輸血（TTP 禁忌）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">其他血液製品</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>製品</th><th>內容</th><th>適應症</th></tr></thead>
+          <tbody>
+            <tr><td><strong>FFP</strong></td><td>所有凝血因子（含 II、V、VII、VIII、IX、X、XI、Fibrinogen）</td><td>活動性出血 + PT/PTT 升高（&gt;1.5× ULN）；緊急逆轉 Warfarin；Vit K 缺乏</td></tr>
+            <tr><td><strong>Cryoprecipitate</strong></td><td>VIII、vWF、Fibrinogen、XIII</td><td>活動性出血 + Fibrinogen &lt;100 mg/dL；DIC；血友病 A（若因子濃縮製劑不可及）；vWD</td></tr>
+            <tr><td><strong>Albumin</strong></td><td>膠體</td><td>LVP（大量腹水穿刺後）；SBP；自發性胸管引流後；HRS 治療（不用於普通補液）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  const SEARCH_INDEX = [
+    { id:'anemia',        dept:'血液科', title:'貧血',                             url:'#anemia',        text:'', modalIds:[] },
+    { id:'rbc-disorders', dept:'血液科', title:'RBC 異常（溶血、鐮刀型、地中海貧血）', url:'#rbc-disorders', text:'', modalIds:[] },
+    { id:'platelet',      dept:'血液科', title:'血小板異常（ITP、HIT、TTP）',        url:'#platelet',      text:'', modalIds:[] },
+    { id:'coagulation',   dept:'血液科', title:'凝血障礙（DIC、高凝、APS）',         url:'#coagulation',   text:'', modalIds:[] },
+    { id:'transfusion',   dept:'血液科', title:'輸血反應',                          url:'#transfusion',   text:'', modalIds:[] },
+    { id:'mds-mpn',       dept:'血液科', title:'MDS + MPN（PV、ET、骨髓纖維化）',    url:'#mds-mpn',       text:'', modalIds:[] },
+    { id:'leukemia',      dept:'血液科', title:'白血病（AML、ALL、CML、CLL）',       url:'#leukemia',      text:'', modalIds:[] },
+    { id:'lymphoma',      dept:'血液科', title:'淋巴瘤（HL + NHL）',                url:'#lymphoma',      text:'', modalIds:[] },
+    { id:'plasma-cell',   dept:'血液科', title:'漿細胞疾病（MM、MGUS）',             url:'#plasma-cell',   text:'', modalIds:[] },
+    { id:'hsct',          dept:'血液科', title:'造血幹細胞移植（HSCT）',             url:'#hsct',          text:'', modalIds:[] },
+    { id:'immunotherapy', dept:'血液科', title:'免疫治療（ICI + CAR-T）',           url:'#immunotherapy', text:'', modalIds:[] },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
