@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>內分泌科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit; transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .score-link svg { width: 11px; height: 11px; }
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 560px; max-height: 85vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+    .score-modal-body .data-table { margin-bottom: 16px; }
+    .score-result {
+      background: var(--light); border-radius: 8px;
+      padding: 14px 16px; margin-top: 8px;
+      font-size: 0.82rem; line-height: 1.65;
+    }
+    .score-result strong { color: var(--navy); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#im" class="nav-back">內科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">內分泌科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- 書籤面板 -->
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">內分泌科</div>
+
+    <div class="sidebar-section-title">腦下垂體</div>
+    <a href="#pituitary" class="sidebar-link">腦下垂體疾病</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">甲狀腺</div>
+    <a href="#hypothyroid"  class="sidebar-link">甲狀腺低下</a>
+    <a href="#hyperthyroid" class="sidebar-link">甲狀腺亢進</a>
+    <a href="#thyroid-cancer" class="sidebar-link">甲狀腺癌</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">腎上腺</div>
+    <a href="#cushing"      class="sidebar-link">庫欣症候群</a>
+    <a href="#hyperaldo"    class="sidebar-link">原發性醛固酮增多症</a>
+    <a href="#adrenal-insufficiency" class="sidebar-link">腎上腺功能不足</a>
+    <a href="#pheo"         class="sidebar-link">嗜鉻細胞瘤 / 副神經節瘤</a>
+    <a href="#adrenal-incidentaloma" class="sidebar-link">腎上腺結節</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">鈣磷代謝</div>
+    <a href="#hypercalcemia"  class="sidebar-link">高鈣血症</a>
+    <a href="#hypocalcemia"   class="sidebar-link">低鈣血症</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">糖尿病</div>
+    <a href="#dm"           class="sidebar-link">糖尿病</a>
+    <a href="#dka"          class="sidebar-link">DKA / HHS</a>
+    <a href="#hypoglycemia" class="sidebar-link">低血糖</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他</div>
+    <a href="#dyslipidemia" class="sidebar-link">血脂異常</a>
+    <a href="#obesity"      class="sidebar-link">肥胖</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="nephro.html#sodium" class="sidebar-link">中樞性 DI →（腎內科）</a>
+    <a href="cardio.html#dm-drugs" class="sidebar-link">DM 心血管用藥 →（心臟科）</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- PAGE HERO -->
+    <div class="page-hero" style="background: linear-gradient(135deg, #f0f4ff 0%, #e8f4f8 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>內分泌科</h1>
+        <p>腦下垂體、甲狀腺、腎上腺、鈣磷代謝、糖尿病、血脂異常與肥胖，依照小麻（Pocket Medicine）內容編排。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#im">分科知識 › 內科</a> › 內分泌科
+    </div>
+
+    <!-- 內容從這裡開始 -->
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  const SEARCH_INDEX = [
+    { id:'pituitary',              dept:'內分泌科', title:'腦下垂體疾病',            url:'#pituitary',              text:'', modalIds:[] },
+    { id:'hypothyroid',            dept:'內分泌科', title:'甲狀腺低下',              url:'#hypothyroid',            text:'', modalIds:[] },
+    { id:'hyperthyroid',           dept:'內分泌科', title:'甲狀腺亢進',              url:'#hyperthyroid',           text:'', modalIds:[] },
+    { id:'thyroid-cancer',         dept:'內分泌科', title:'甲狀腺癌',               url:'#thyroid-cancer',         text:'', modalIds:[] },
+    { id:'cushing',                dept:'內分泌科', title:'庫欣症候群',              url:'#cushing',                text:'', modalIds:[] },
+    { id:'hyperaldo',              dept:'內分泌科', title:'原發性醛固酮增多症',       url:'#hyperaldo',              text:'', modalIds:[] },
+    { id:'adrenal-insufficiency',  dept:'內分泌科', title:'腎上腺功能不足',          url:'#adrenal-insufficiency',  text:'', modalIds:[] },
+    { id:'pheo',                   dept:'內分泌科', title:'嗜鉻細胞瘤 / 副神經節瘤', url:'#pheo',                   text:'', modalIds:[] },
+    { id:'adrenal-incidentaloma',  dept:'內分泌科', title:'腎上腺結節',              url:'#adrenal-incidentaloma',  text:'', modalIds:[] },
+    { id:'hypercalcemia',          dept:'內分泌科', title:'高鈣血症',                url:'#hypercalcemia',          text:'', modalIds:[] },
+    { id:'hypocalcemia',           dept:'內分泌科', title:'低鈣血症',                url:'#hypocalcemia',           text:'', modalIds:[] },
+    { id:'dm',                     dept:'內分泌科', title:'糖尿病',                  url:'#dm',                     text:'', modalIds:[] },
+    { id:'dka',                    dept:'內分泌科', title:'DKA / HHS',              url:'#dka',                    text:'', modalIds:[] },
+    { id:'hypoglycemia',           dept:'內分泌科', title:'低血糖',                  url:'#hypoglycemia',           text:'', modalIds:[] },
+    { id:'dyslipidemia',           dept:'內分泌科', title:'血脂異常',                url:'#dyslipidemia',           text:'', modalIds:[] },
+    { id:'obesity',                dept:'內分泌科', title:'肥胖',                    url:'#obesity',                text:'', modalIds:[] },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
