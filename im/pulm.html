@@ -1460,7 +1460,7 @@
       <div class="k-card-head"><span class="k-card-title">定義與診斷標準</span></div>
       <div class="k-card-body">
         <ul class="k-list">
-          <li><strong>敗血症：</strong>感染引起的生命威脅性器官功能障礙（SOFA ≥2）</li>
+          <li><strong>敗血症：</strong>感染引起的生命威脅性器官功能障礙（<button class="score-link" onclick="openModal('modal-sofa')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>SOFA</button> ≥2）</li>
           <li><strong>敗血性休克：</strong>敗血症 + 需要升壓藥維持 MAP ≥65 + Lactate &gt;2 mmol/L（充分補液後）</li>
           <li><strong>篩查工具：</strong>SIRS、NEWS、MEWS 用於早期辨識；qSOFA（RR &gt;22、意識改變、SBP &lt;100）預測不良結果</li>
         </ul>
@@ -1593,6 +1593,133 @@
   </main>
 </div>
 
+  <!-- SOFA Score Modal -->
+<div class="score-modal-overlay" id="modal-sofa">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>SOFA Score 計算</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-sofa')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table" style="margin-bottom:16px">
+        <thead>
+          <tr><th>器官系統</th><th>指標</th><th>0 分</th><th>1 分</th><th>2 分</th><th>3 分</th><th>4 分</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>呼吸</strong></td>
+            <td>PaO₂/FiO₂（mmHg）</td>
+            <td>≥400</td><td>300-399</td><td>200-299</td>
+            <td>100-199 + 呼吸器</td><td>&lt;100 + 呼吸器</td>
+          </tr>
+          <tr>
+            <td><strong>凝血</strong></td>
+            <td>血小板（×10³/μL）</td>
+            <td>≥150</td><td>100-149</td><td>50-99</td><td>20-49</td><td>&lt;20</td>
+          </tr>
+          <tr>
+            <td><strong>肝臟</strong></td>
+            <td>Bilirubin（mg/dL）</td>
+            <td>&lt;1.2</td><td>1.2-1.9</td><td>2.0-5.9</td><td>6.0-11.9</td><td>≥12.0</td>
+          </tr>
+          <tr>
+            <td><strong>心血管</strong></td>
+            <td>MAP 或升壓藥劑量（μg/kg/min）</td>
+            <td>MAP ≥70</td>
+            <td>MAP &lt;70</td>
+            <td>Dopamine ≤5 或 Dobutamine 任何劑量</td>
+            <td>Dopamine &gt;5 或 Epi/Norepi ≤0.1</td>
+            <td>Dopamine &gt;15 或 Epi/Norepi &gt;0.1</td>
+          </tr>
+          <tr>
+            <td><strong>CNS</strong></td>
+            <td>Glasgow Coma Scale（GCS）</td>
+            <td>15</td><td>13-14</td><td>10-12</td><td>6-9</td><td>&lt;6</td>
+          </tr>
+          <tr>
+            <td><strong>腎臟</strong></td>
+            <td>Creatinine（mg/dL）或尿量</td>
+            <td>&lt;1.2</td><td>1.2-1.9</td><td>2.0-3.4</td>
+            <td>3.5-4.9 或 UOP &lt;500 mL/天</td>
+            <td>≥5.0 或 UOP &lt;200 mL/天</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 互動計算器 -->
+      <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;">快速計算</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">呼吸（PaO₂/FiO₂）</label>
+          <select id="sofa-resp" onchange="calcSOFA()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:0.8rem">
+            <option value="0">≥400（0 分）</option>
+            <option value="1">300-399（1 分）</option>
+            <option value="2">200-299（2 分）</option>
+            <option value="3">100-199 + 呼吸器（3 分）</option>
+            <option value="4">&lt;100 + 呼吸器（4 分）</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">凝血（血小板 ×10³/μL）</label>
+          <select id="sofa-coag" onchange="calcSOFA()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:0.8rem">
+            <option value="0">≥150（0 分）</option>
+            <option value="1">100-149（1 分）</option>
+            <option value="2">50-99（2 分）</option>
+            <option value="3">20-49（3 分）</option>
+            <option value="4">&lt;20（4 分）</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">肝臟（Bilirubin mg/dL）</label>
+          <select id="sofa-liver" onchange="calcSOFA()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:0.8rem">
+            <option value="0">&lt;1.2（0 分）</option>
+            <option value="1">1.2-1.9（1 分）</option>
+            <option value="2">2.0-5.9（2 分）</option>
+            <option value="3">6.0-11.9（3 分）</option>
+            <option value="4">≥12.0（4 分）</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">心血管（MAP / 升壓藥）</label>
+          <select id="sofa-cardio" onchange="calcSOFA()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:0.8rem">
+            <option value="0">MAP ≥70（0 分）</option>
+            <option value="1">MAP &lt;70（1 分）</option>
+            <option value="2">Dopamine ≤5 或 Dobutamine（2 分）</option>
+            <option value="3">Dopamine &gt;5 或 Epi/Norepi ≤0.1（3 分）</option>
+            <option value="4">Dopamine &gt;15 或 Epi/Norepi &gt;0.1（4 分）</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">CNS（GCS）</label>
+          <select id="sofa-cns" onchange="calcSOFA()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:0.8rem">
+            <option value="0">15（0 分）</option>
+            <option value="1">13-14（1 分）</option>
+            <option value="2">10-12（2 分）</option>
+            <option value="3">6-9（3 分）</option>
+            <option value="4">&lt;6（4 分）</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">腎臟（Creatinine / 尿量）</label>
+          <select id="sofa-renal" onchange="calcSOFA()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:0.8rem">
+            <option value="0">&lt;1.2（0 分）</option>
+            <option value="1">1.2-1.9（1 分）</option>
+            <option value="2">2.0-3.4（2 分）</option>
+            <option value="3">3.5-4.9 或 UOP &lt;500 mL/天（3 分）</option>
+            <option value="4">≥5.0 或 UOP &lt;200 mL/天（4 分）</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="score-result" id="sofa-result">
+        <strong>SOFA 總分：<span id="sofa-total">0</span> 分</strong>
+        <div id="sofa-interp" style="margin-top:6px;font-size:0.82rem;color:var(--navy)"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
 <script src="../shared.js"></script>
 <script>
   const SEARCH_INDEX = [
@@ -1605,7 +1732,7 @@
   { id:'vte',                dept:'胸腔科', title:'靜脈血栓栓塞 VTE',          url:'#vte',                text:'', modalIds:[] },
   { id:'pulm-htn',           dept:'胸腔科', title:'肺高壓',                   url:'#pulm-htn',           text:'', modalIds:[] },
   { id:'respiratory-failure',dept:'胸腔科', title:'呼吸衰竭、呼吸器管理與 ARDS', url:'#respiratory-failure', text:'', modalIds:[] },
-  { id:'sepsis',             dept:'胸腔科', title:'敗血症與休克',              url:'#sepsis',             text:'', modalIds:[] },
+  { id:'sepsis',             dept:'胸腔科', title:'敗血症與休克',              url:'#sepsis',             text:'', modalIds:['modal-sofa'] },
 ];
     
     
@@ -1615,6 +1742,25 @@
   } else {
     initSearch(SEARCH_INDEX);
   }
+  function calcSOFA() {
+  const scores = ['sofa-resp','sofa-coag','sofa-liver','sofa-cardio','sofa-cns','sofa-renal']
+    .map(id => parseInt(document.getElementById(id).value));
+  const total = scores.reduce((a,b) => a+b, 0);
+  document.getElementById('sofa-total').textContent = total;
+
+  let interp = '';
+  if (total < 2) {
+    interp = '📗 低風險：ICU 死亡率 &lt;10%';
+  } else if (total <= 5) {
+    interp = '📙 中等風險：ICU 死亡率 ~20-30%';
+  } else if (total <= 9) {
+    interp = '📕 高風險：ICU 死亡率 ~40-50%';
+  } else {
+    interp = '🔴 極高風險：ICU 死亡率 &gt;80%（分數 ≥11）';
+  }
+  document.getElementById('sofa-interp').innerHTML = interp;
+}
+calcSOFA();
 </script>
 </body>
 </html>
