@@ -24,7 +24,7 @@
   .score-modal-overlay.open { display: flex; }
   .score-modal {
     background: var(--white); border-radius: 14px;
-    width: 100%; max-width: 560px;
+    width: 100%; max-width: 780px;
     max-height: 90vh;        /* 最高不超過螢幕 90% */
     overflow-y: auto;        /* 超過才出現捲軸 */
     box-shadow: 0 20px 60px rgba(0,0,0,0.2);
@@ -51,13 +51,15 @@
     width: 100%;               /* 讓表格強行撐滿 modal-body 寬度 */
     border-collapse: collapse;  /* 合併傳統表格的雙重線條 */
     margin-top: 10px;           /* 與上文稍微保持呼吸距離 */
-    font-size: 0.82rem;         /* 配合你的 score-result 簡潔字體 */
+    font-size: 0.8rem;         /* 配合你的 score-result 簡潔字體 */
+    word-break: keep-all;            /* 💡 關鍵：禁止中文字或英文單字隨意斷行 */
   }
 
   .score-modal-body th,
   .score-modal-body td {
-    padding: 10px 12px;        /* 上下 10px 左右 12px 的舒適間距 */
+    padding: 10px 8px;        /* 上下 10px 左右 12px 的舒適間距 */
     text-align: left;
+    vertical-align: middle;
     border-bottom: 1px solid var(--border); /* 使用你系統預設的邊框色 */
   }
 
@@ -303,6 +305,139 @@
         <ul class="k-list">
           <li>PaO₂ &lt;55-60、↑ PaCO₂、↓ pH、↑ RR、呼吸肌疲勞、意識改變或血流動力學不穩定</li>
           <li class="note">出院後追蹤：1 個月內回診；戒菸；疫苗接種；轉介肺復健；評估夜間 NIV 需求</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 氣喘 Asthma -->
+<div class="topic-block" id="asthma">
+  <div class="topic-block-head">
+    <span class="topic-block-title">氣喘 Asthma</span>
+    <div data-bm-id="asthma" data-bm-dept="胸腔科" data-bm-title="氣喘">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    氣喘是慢性氣道發炎 + 氣道高反應性 + 可逆性氣流阻塞，影響 5-10% 人口。診斷靠：症狀（喘鳴、咳嗽、呼吸困難）+ 肺功能（可逆性 FEV1 ↑ ≥12% 且 ≥200 mL）。<strong>慢性管理：ICS-LABA（Budesonide-Formoterol）為首選緩解劑</strong>；急性發作分輕中重度決定處置層級——重度發作 + PEF &lt;40% → ICU + 考慮插管（允許性高碳酸血症）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="asthma-dx" data-bm-dept="胸腔科" data-bm-title="氣喘診斷">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">診斷評估</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>典型三聯症：</strong>喘鳴、咳嗽、呼吸困難；通常慢性 + 發作性加重</li>
+          <li><strong>誘因：</strong>呼吸道刺激物（菸、香水）、過敏原（寵物、塵蟎、花粉）；感染（URI、支氣管炎、鼻竇炎）；藥物（ASA / NSAIDs → 白三烯；β-blocker → 支氣管痙攣；嗎啡 → 組織胺）；情緒壓力；冷空氣；運動</li>
+          <li><strong>身體檢查：</strong>喘鳴 + 呼氣延長；鼻息肉 / 鼻炎 / 皮疹 → 過敏成分；急性發作 → ↑ RR、↑ HR、輔助肌使用、奇異脈（Pulsus paradoxus）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷工具</p>
+        <ul class="k-list">
+          <li><strong>肺量測定（PFTs）：</strong>↓ FEV1；↓ FEV1/FVC；圓頂狀流速容量環</li>
+          <li><strong>⊕ 支氣管擴張試驗：</strong>FEV1 ↑ ≥12% 且 ≥200 mL → 強烈支持氣喘</li>
+          <li><strong>Methacholine 激發試驗：</strong>PFTs 正常但臨床懷疑 → FEV1 ↓ ≥20% 確認；Se &gt;90%</li>
+          <li>若懷疑特應性疾病 → 皮膚點刺試驗；血清 IgE；血 / 痰嗜酸性球；FENO（≥40 ppb 提示 T2 發炎）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">鑑別診斷（「非氣喘的喘鳴」）</p>
+        <ul class="k-list">
+          <li>過度換氣 / 恐慌發作；上呼吸道阻塞或吸入異物；喉部 / 聲帶功能障礙</li>
+          <li>心臟性氣喘（CHF）；COPD；支氣管擴張；ILD（含類肉瘤）；血管炎；PE</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">氣喘 Plus 症候群</p>
+        <ul class="k-list">
+          <li><strong>特應性症候群（Atopy）：</strong>氣喘 + 過敏性鼻炎 + 異位性皮膚炎</li>
+          <li><strong>阿斯匹靈加重性呼吸道疾病（Samter's）：</strong>氣喘 + ASA 過敏 + 鼻息肉</li>
+          <li><strong>ABPA：</strong>氣喘 + 肺浸潤 + 對麴黴菌過敏；↑ IgE（&gt;1000）和麴黴菌特異性 IgE；↑ 嗜酸性球；中央性支氣管擴張；治療：類固醇 ± Itraconazole / Voriconazole（頑固性）</li>
+          <li><strong>EGPA（Churg-Strauss）：</strong>氣喘 + 嗜酸性球增多 + 肉芽腫性血管炎（見風濕科）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="asthma-chronic-tx" data-bm-dept="胸腔科" data-bm-title="氣喘慢性治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">慢性管理（階梯式治療）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li>治療目標：每週症狀 ≤2 天；無夜間症狀；緩解劑 ≤2 次 / 週；正常 PEF 或 FEV1</li>
+          <li>依嚴重度階梯式治療；控制不佳 → 評估吸入器依從性和技巧（含吸藥筒使用）；改善後逐步降階</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">緩解劑（PRN 使用）</p>
+        <ul class="k-list">
+          <li><strong>ICS-LABA（Budesonide-Formoterol，首選緩解劑）：</strong>優於 SABA 單藥（↓ 惡化）；Formoterol 兼具速效 + 長效</li>
+          <li><strong>SABA（Albuterol）：</strong>不應單獨使用（相比 ICS-LABA 單藥 ↑ 惡化率）</li>
+          <li><strong>短效抗膽鹼（SAMA，Ipratropium）：</strong>↑ β2 促效劑效果 → ↑ 支氣管擴張</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">控制劑（每日使用）</p>
+        <ul class="k-list">
+          <li><strong>ICS（首選控制劑）：</strong>若痰嗜酸性球 ≥2% 優於 LAMA；全身性類固醇僅用於嚴重未控制氣喘</li>
+          <li><strong>LABA（Salmeterol、Formoterol）：</strong>加入 ICS → 安全且 ↓ 惡化</li>
+          <li><strong>LAMA（Tiotropium、Umeclidinium）：</strong>ICS+LABA 後仍有症狀時考慮</li>
+          <li><strong>白三烯受體拮抗劑（LTRA）：</strong>部分患者效果佳（尤其 ASA 過敏和運動誘發）；<strong>警告：嚴重神經精神副作用（含自殺念頭）</strong></li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">生物製劑（重度氣喘）</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>藥物</th><th>靶點</th><th>適應症</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Dupilumab</strong></td><td>Anti-IL-4Rα（↓ IL-4 + IL-13）</td><td>重度氣喘；↓ 惡化；↓ 類固醇使用；↑ FEV1</td></tr>
+            <tr><td><strong>Mepolizumab / Reslizumab</strong></td><td>Anti-IL-5</td><td>重度嗜酸性球氣喘；↓ 惡化</td></tr>
+            <tr><td><strong>Benralizumab</strong></td><td>Anti-IL-5Rα</td><td>重度嗜酸性球氣喘；↓ 類固醇使用</td></tr>
+            <tr><td><strong>Omalizumab</strong></td><td>Anti-IgE</td><td>中重度過敏性氣喘（IgE &gt;30）；↓ 惡化</td></tr>
+            <tr><td><strong>Tezepelumab</strong></td><td>Anti-TSLP</td><td>重度氣喘（含非過敏性 / 非嗜酸性球性）；↓ 惡化</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="asthma-exacerbation" data-bm-dept="胸腔科" data-bm-title="氣喘急性惡化">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">急性惡化分級與處置</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>輕至中度</th><th>重度</th><th>生命威脅</th></tr></thead>
+          <tbody>
+            <tr><td><strong>症狀</strong></td><td>以短句說話</td><td>只能說單字；三角架姿勢</td><td>嗜睡；意識混亂</td></tr>
+            <tr><td><strong>生命徵象</strong></td><td>RR ≤30；HR 100-120；SpO₂ 90-95%</td><td>RR &gt;30；HR &gt;120；SpO₂ &lt;90%</td><td>無聲胸；心搏過緩</td></tr>
+            <tr><td><strong>PEF</strong></td><td>&gt;50% 預測值</td><td>≤50% 預測值</td><td>≤40% 預測值</td></tr>
+            <tr><td><strong>PaCO₂</strong></td><td>&lt;40 mmHg</td><td>可變</td><td>&gt;42 mmHg（↑ CO₂ = 疲勞！）</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">初始治療（GINA 2023 指引）</p>
+        <ul class="k-list">
+          <li>O₂ 維持 SpO₂ 93-95%</li>
+          <li>SABA（Albuterol）MDI 4-8 puffs 或霧化 2.5-5 mg，每 20 分鐘一次</li>
+          <li>類固醇：門診 Prednisone 40-60 mg PO × 5-7 天；住院 Methylprednisolone 125 mg IV q6h</li>
+          <li>若重度 → 加 Ipratropium MDI 4-6 puffs 或霧化 0.5 mg q20 分鐘</li>
+          <li>治療 60-90 分鐘後重新評估</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">處置決策（治療 1-3 小時後）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>PEF &gt;60%；正常檢查；無不適</th><th>PEF &lt;60%；輕中度症狀；近期致命風險因素</th><th>PEF &lt;40%</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>出院；吸入 SABA；口服類固醇漸減；開始每日 ICS</td>
+              <td>住院；q1h SABA + Ipratropium；Methylprednisolone 125 mg IV q6h</td>
+              <td>ICU 入住；準備插管；允許性高碳酸血症 + Mg + Ketamine + ? Heliox</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ICU 處置</p>
+        <ul class="k-list">
+          <li><strong>NIV：</strong>改善阻塞（但需注意過度充氣和血流動力學影響）；↓ 機械通氣和死亡率機率</li>
+          <li><strong>插管（大號 ET 管）：</strong>Pplat &lt;30 cmH₂O；最大化 I:E 時間 ↓ 自發 PEEP；限制外源性 PEEP；允許性高碳酸血症</li>
+          <li><strong>額外措施：</strong>IV Ketamine（支氣管擴張效果）；Mg 硫酸鎂；Heliox（60-80% 氦）；肌肉鬆弛劑；吸入性麻醉藥；V/V ECMO（最後手段）</li>
+          <li class="note">生命威脅性氣喘：PaCO₂ 正常或升高 = 疲勞警訊 → 積極準備插管</li>
         </ul>
       </div>
     </div>
