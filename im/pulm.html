@@ -24,8 +24,10 @@
   .score-modal-overlay.open { display: flex; }
   .score-modal {
     background: var(--white); border-radius: 14px;
-    width: 100%; max-width: 560px; max-height: 85vh;
-    overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    width: 100%; max-width: 560px;
+    max-height: 90vh;        /* 最高不超過螢幕 90% */
+    overflow-y: auto;        /* 超過才出現捲軸 */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
   }
   .score-modal-head {
     position: sticky; top: 0; background: var(--white);
