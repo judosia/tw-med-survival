@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>神經科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit; transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 600px; max-height: 90vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+    .score-result {
+      background: var(--light); border-radius: 8px;
+      padding: 14px 16px; margin-top: 8px;
+      font-size: 0.82rem; line-height: 1.65;
+    }
+    .score-result strong { color: var(--navy); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#im" class="nav-back">內科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">神經科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- 書籤面板 -->
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">神經科</div>
+
+    <div class="sidebar-section-title">意識 / 認知</div>
+    <a href="#mental-status" class="sidebar-link">意識改變、譫妄、昏迷</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">發作性疾患</div>
+    <a href="#seizure"       class="sidebar-link">癲癇 + 酒精戒斷</a>
+    <a href="#dizziness"     class="sidebar-link">頭暈</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">腦血管疾病</div>
+    <a href="#stroke"        class="sidebar-link">中風（缺血性 + ICH/SAH）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">神經肌肉</div>
+    <a href="#neuropathy"    class="sidebar-link">周邊神經病變 + GBS</a>
+    <a href="#nmj-myopathy"  class="sidebar-link">重症肌無力 + 肌病變</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">頭痛 / 脫髓鞘</div>
+    <a href="#headache"      class="sidebar-link">頭痛（偏頭痛、叢集性）</a>
+    <a href="#ms"            class="sidebar-link">多發性硬化症（MS）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">脊椎</div>
+    <a href="#spine"         class="sidebar-link">背痛 + 脊髓壓迫 + 神經根</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="onco.html#onc-emergency" class="sidebar-link">轉移性脊髓壓迫 →（腫瘤科）</a>
+    <a href="infect.html#neuro-infxn" class="sidebar-link">神經感染 →（感染科）</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- PAGE HERO -->
+    <div class="page-hero" style="background: linear-gradient(135deg, #f0f5ff 0%, #e8f8f5 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>神經科</h1>
+        <p>意識改變、中風、癲癇、神經肌肉疾病、頭痛與脊椎疾病，依照小麻（Pocket Medicine）內容編排。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/>
+          <path d="M12 8v4l3 3"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#im">分科知識 › 內科</a> › 神經科
+    </div>
+
+    <!-- 內容從這裡開始 -->
+
+  </main>
+</div>
+
+<!-- GCS Modal -->
+<div class="score-modal-overlay" id="modal-gcs">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>Glasgow Coma Scale（GCS）</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-gcs')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <table class="data-table" style="margin-bottom:16px">
+        <thead><tr><th>類別</th><th>反應</th><th>分數</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="4"><strong>眼睛睜開（E）</strong></td><td>自動睜眼</td><td>4</td></tr>
+          <tr><td>呼喚後睜眼</td><td>3</td></tr>
+          <tr><td>疼痛刺激後睜眼</td><td>2</td></tr>
+          <tr><td>無反應</td><td>1</td></tr>
+          <tr><td rowspan="5"><strong>最佳語言反應（V）</strong></td><td>對答清晰</td><td>5</td></tr>
+          <tr><td>對答混淆</td><td>4</td></tr>
+          <tr><td>說出不恰當的字詞</td><td>3</td></tr>
+          <tr><td>無法理解的聲音</td><td>2</td></tr>
+          <tr><td>無反應（插管 = 1T）</td><td>1</td></tr>
+          <tr><td rowspan="6"><strong>最佳運動反應（M）</strong></td><td>遵循指令</td><td>6</td></tr>
+          <tr><td>可定位疼痛位置</td><td>5</td></tr>
+          <tr><td>疼痛時縮退</td><td>4</td></tr>
+          <tr><td>屈曲姿勢（去皮質）</td><td>3</td></tr>
+          <tr><td>伸展姿勢（去大腦）</td><td>2</td></tr>
+          <tr><td>無反應</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">眼睛（E）</label>
+          <select id="gcs-eye" onchange="calcGCS()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:0.8rem">
+            <option value="4">4 — 自動睜眼</option>
+            <option value="3">3 — 呼喚後</option>
+            <option value="2">2 — 疼痛後</option>
+            <option value="1">1 — 無反應</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">語言（V）</label>
+          <select id="gcs-verbal" onchange="calcGCS()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:0.8rem">
+            <option value="5">5 — 對答清晰</option>
+            <option value="4">4 — 混淆</option>
+            <option value="3">3 — 不恰當字詞</option>
+            <option value="2">2 — 無法理解聲音</option>
+            <option value="1">1 — 無反應</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">運動（M）</label>
+          <select id="gcs-motor" onchange="calcGCS()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:0.8rem">
+            <option value="6">6 — 遵循指令</option>
+            <option value="5">5 — 可定位疼痛</option>
+            <option value="4">4 — 縮退</option>
+            <option value="3">3 — 屈曲姿勢</option>
+            <option value="2">2 — 伸展姿勢</option>
+            <option value="1">1 — 無反應</option>
+          </select>
+        </div>
+      </div>
+      <div class="score-result" id="gcs-result">
+        <strong>GCS 總分：<span id="gcs-total">15</span>（E<span id="gcs-e">4</span>V<span id="gcs-v">5</span>M<span id="gcs-m">6</span>）</strong>
+        <div id="gcs-interp" style="margin-top:6px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  function calcGCS() {
+    const e = parseInt(document.getElementById('gcs-eye').value);
+    const v = parseInt(document.getElementById('gcs-verbal').value);
+    const m = parseInt(document.getElementById('gcs-motor').value);
+    const total = e + v + m;
+    document.getElementById('gcs-total').textContent = total;
+    document.getElementById('gcs-e').textContent = e;
+    document.getElementById('gcs-v').textContent = v;
+    document.getElementById('gcs-m').textContent = m;
+    let interp = '';
+    if (total >= 13) interp = '📗 輕度（13-15）：輕度意識障礙';
+    else if (total >= 9) interp = '📙 中度（9-12）：中度意識障礙';
+    else interp = '📕 重度（3-8）：重度意識障礙（昏迷）；≤8 考慮插管保護氣道';
+    document.getElementById('gcs-interp').innerHTML = interp;
+  }
+  calcGCS();
+
+  const SEARCH_INDEX = [
+    { id:'mental-status', dept:'神經科', title:'意識改變、譫妄、昏迷',          url:'#mental-status', text:'', modalIds:['modal-gcs'] },
+    { id:'seizure',       dept:'神經科', title:'癲癇 + 酒精戒斷',              url:'#seizure',       text:'', modalIds:[] },
+    { id:'dizziness',     dept:'神經科', title:'頭暈',                         url:'#dizziness',     text:'', modalIds:[] },
+    { id:'stroke',        dept:'神經科', title:'中風（缺血性 + ICH/SAH）',      url:'#stroke',        text:'', modalIds:[] },
+    { id:'neuropathy',    dept:'神經科', title:'周邊神經病變 + GBS',            url:'#neuropathy',    text:'', modalIds:[] },
+    { id:'nmj-myopathy',  dept:'神經科', title:'重症肌無力（MG）+ 肌病變',      url:'#nmj-myopathy',  text:'', modalIds:[] },
+    { id:'headache',      dept:'神經科', title:'頭痛（偏頭痛、叢集性、緊張型）', url:'#headache',      text:'', modalIds:[] },
+    { id:'ms',            dept:'神經科', title:'多發性硬化症（MS）',            url:'#ms',            text:'', modalIds:[] },
+    { id:'spine',         dept:'神經科', title:'背痛 + 脊髓壓迫 + 神經根壓迫', url:'#spine',         text:'', modalIds:[] },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
