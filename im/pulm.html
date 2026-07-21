@@ -1735,14 +1735,22 @@
   { id:'respiratory-failure',dept:'胸腔科', title:'呼吸衰竭、呼吸器管理與 ARDS', url:'#respiratory-failure', text:'', modalIds:[] },
   { id:'sepsis',             dept:'胸腔科', title:'敗血症與休克',              url:'#sepsis',             text:'', modalIds:['modal-sofa'] },
 ];
-    
-    
-  ];
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
   } else {
     initSearch(SEARCH_INDEX);
   }
+
+  function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+  
   function calcSOFA() {
   const scores = ['sofa-resp','sofa-coag','sofa-liver','sofa-cardio','sofa-cns','sofa-renal']
     .map(id => parseInt(document.getElementById(id).value));
