@@ -47,6 +47,25 @@
     padding: 14px 16px; margin-top: 8px;
     font-size: 0.82rem; line-height: 1.65;
   }
+    .score-modal-body table {
+    width: 100%;               /* 讓表格強行撐滿 modal-body 寬度 */
+    border-collapse: collapse;  /* 合併傳統表格的雙重線條 */
+    margin-top: 10px;           /* 與上文稍微保持呼吸距離 */
+    font-size: 0.82rem;         /* 配合你的 score-result 簡潔字體 */
+  }
+
+  .score-modal-body th,
+  .score-modal-body td {
+    padding: 10px 12px;        /* 上下 10px 左右 12px 的舒適間距 */
+    text-align: left;
+    border-bottom: 1px solid var(--border); /* 使用你系統預設的邊框色 */
+  }
+
+  .score-modal-body th {
+    background-color: var(--light); /* 表頭背景用系統淺灰色 */
+    font-weight: 700;
+    color: var(--text);
+  }
 </style>
 </head>
 <body>
