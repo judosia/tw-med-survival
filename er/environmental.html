@@ -105,7 +105,520 @@
       <a href="../index.html">首頁</a> › <a href="../specialty.html#er">急診</a> › 環境傷害
     </div>
 
-    <!-- 內容從這裡開始 -->
+    <!-- 熱傷害 -->
+<div class="topic-block" id="heat">
+  <div class="topic-block-head">
+    <span class="topic-block-title">熱傷害 Heat Illness</span>
+    <div data-bm-id="heat" data-bm-dept="環境傷害" data-bm-title="熱傷害">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    熱傷害從輕微（熱痙攣）到致命（熱中暑）。<strong>熱中暑（Heat Stroke）= 核心體溫 &gt;40°C + CNS 功能障礙</strong>——死亡率高達 10-80%（未治療）。<strong>立刻降溫</strong>是最重要的治療，每延遲 1 分鐘死亡率和後遺症風險持續增加。降溫目標：30 分鐘內將體溫降至 38-39°C。勞動型熱中暑（Exertional）多見年輕人；傳統型（Classic）多見老年、慢性病患者和熱浪期間。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="heat-spectrum" data-bm-dept="環境傷害" data-bm-title="熱傷害分類">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">熱傷害分類</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>類型</th><th>體溫</th><th>臨床特徵</th><th>處置</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>熱痙攣（Heat Cramps）</strong></td>
+              <td>正常</td>
+              <td>大量出汗後肌肉痛性痙攣（小腿、腹肌）；低鈉血症</td>
+              <td>口服或 IV 生理食鹽水；避免純水（加重低鈉）；休息 + 移至陰涼處</td>
+            </tr>
+            <tr>
+              <td><strong>熱暈厥（Heat Syncope）</strong></td>
+              <td>正常或輕微↑</td>
+              <td>長時間站立或運動後 → 周邊血管擴張 → 靜脈回流↓ → 短暫意識喪失</td>
+              <td>平躺 + 陰涼處 + 補液；排除心臟原因</td>
+            </tr>
+            <tr>
+              <td><strong>熱衰竭（Heat Exhaustion）</strong></td>
+              <td>&lt;40°C</td>
+              <td>大量出汗；頭痛、頭暈、噁心、虛弱；皮膚濕冷；心搏過速；無 CNS 功能障礙（關鍵！）</td>
+              <td>移至陰涼處；脫衣服；冷水擦拭；口服或 IV 補液（NS）；監測進展為熱中暑</td>
+            </tr>
+            <tr>
+              <td><strong>熱中暑（Heat Stroke）</strong></td>
+              <td><strong>&gt;40°C</strong></td>
+              <td><strong>CNS 功能障礙（混亂、激動、昏迷）+ 高體溫</strong>；勞動型：大量出汗；傳統型：皮膚可為乾熱</td>
+              <td><strong>立刻積極降溫</strong>（見下方）；ICU 入住</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li class="note">熱衰竭 vs 熱中暑的關鍵鑑別 = 有無 CNS 功能障礙；兩者體溫可重疊 → 意識狀態是決定因素</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="heat-stroke-tx" data-bm-dept="環境傷害" data-bm-title="熱中暑治療">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">熱中暑緊急處置</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>目標：30 分鐘內將核心體溫降至 38-39°C。降溫優先於其他處置。</span>
+        </div>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">降溫方法（依效率排序）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>方法</th><th>降溫速率</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr><td><strong>冷水浸泡（Cold Water Immersion，CWI）</strong></td><td>最快（0.2°C/分）</td><td>勞動型熱中暑首選；冷水（1-15°C）浸泡至頸部；傳統型老年患者可能耐受差</td></tr>
+            <tr><td><strong>蒸發降溫（Evaporative Cooling）</strong></td><td>快</td><td>溫水（15°C）噴霧 + 持續強力風扇；適合傳統型熱中暑；院前和急診均可</td></tr>
+            <tr><td><strong>冰袋放置（腋下、腹股溝、頸部）</strong></td><td>中等</td><td>輔助性；大血管區域更有效</td></tr>
+            <tr><td><strong>冷鹽水 IV（4°C）</strong></td><td>中等</td><td>輔助；同時達到補液效果</td></tr>
+            <tr><td><strong>體內冷卻（胃 / 膀胱 / 腹膜沖洗）</strong></td><td>有效但侵入性高</td><td>嚴重難治時使用；體外循環（ECMO）= 最後手段</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">其他處置</p>
+        <ul class="k-list">
+          <li><strong>ABC：</strong>意識改變 → 考慮插管（保護氣道 + 防止誤吸）</li>
+          <li><strong>補液：</strong>IVF（NS 或 LR）；避免過度補液（↑ 腦水腫風險）；監測 UOP</li>
+          <li><strong>癲癇：</strong>BZD 首選；降溫通常可控制癲癇</li>
+          <li><strong>退燒藥（Paracetamol / NSAIDs）無效：</strong>熱中暑是體溫調節失常，非發炎性發燒 → 退燒藥無效</li>
+          <li><strong>Dantrolene：</strong>無效（非惡性高體溫 / NMS 機轉）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">併發症監測</p>
+        <ul class="k-list">
+          <li><strong>橫紋肌溶解：</strong>↑ CK；Myoglobinuria（尿液深褐色）→ 積極補液維持 UOP；勞動型熱中暑尤其常見</li>
+          <li><strong>DIC：</strong>熱損傷直接活化凝血；監測 PT / PTT / Fibrinogen / D-dimer</li>
+          <li><strong>急性腎衰竭：</strong>橫紋肌溶解 + 低灌流 → 監測 Cr；嚴重 → 透析</li>
+          <li><strong>肝衰竭：</strong>熱直接損傷肝細胞；24-72 小時後 ALT/AST 峰值</li>
+          <li><strong>電解質：</strong>低鈉血症（大量出汗後大量喝水）；低鉀血症；低磷血症</li>
+          <li class="note">核心體溫需用直腸溫度計（耳溫 / 腋溫 / 口溫不準確）</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 低體溫症 -->
+<div class="topic-block" id="hypothermia">
+  <div class="topic-block-head">
+    <span class="topic-block-title">低體溫症 Hypothermia</span>
+    <div data-bm-id="hypothermia" data-bm-dept="環境傷害" data-bm-title="低體溫症">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    低體溫定義為核心體溫 &lt;35°C。<strong>「不到溫暖就不算死（Not dead until warm and dead）」</strong>——心跳停止的低體溫患者應積極復甦至核心體溫 &gt;32-35°C 才能宣告死亡。低體溫可保護大腦（↓ 代謝需求），已有核心體溫 9°C 存活的案例。心律不整（最危險：VF）在 &lt;28°C 時風險大增，Lidocaine 等抗心律不整藥物在低體溫下效果差且可能有毒。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="hypothermia-classification" data-bm-dept="環境傷害" data-bm-title="低體溫分級">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">低體溫分級與臨床表現</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>分級</th><th>核心體溫</th><th>臨床表現</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>輕度（HT I）</strong></td>
+              <td>32-35°C</td>
+              <td>清醒；顫抖（最大代謝產熱）；心搏過速；高血壓；血管收縮</td>
+            </tr>
+            <tr>
+              <td><strong>中度（HT II）</strong></td>
+              <td>28-32°C</td>
+              <td>意識改變（嗜睡 → 混亂）；顫抖停止（代謝耗竭）；肌肉無力；反射↓；心律不整開始（AF 最常見）</td>
+            </tr>
+            <tr>
+              <td><strong>重度（HT III）</strong></td>
+              <td>24-28°C</td>
+              <td>昏迷；反射消失；肌肉僵硬；Osborn（J）波（ECG）；VF 風險↑；血壓難以測量</td>
+            </tr>
+            <tr>
+              <td><strong>極重度（HT IV）</strong></td>
+              <td>&lt;24°C</td>
+              <td>無脈搏；呼吸停止；VF 或 Asystole；臨床死亡外觀</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ECG 表現</p>
+        <ul class="k-list">
+          <li><strong>Osborn（J）波：</strong>QRS 波群末端和 ST 段起點之間的正向偏折波；低體溫特徵性但非特異性；體溫越低越明顯</li>
+          <li>PR、QRS、QTc 間隔延長；竇性心動過緩；AF；VF（&lt;28°C 時）；Asystole（極重度）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">誘因</p>
+        <ul class="k-list">
+          <li>環境暴露（寒冷 + 濕衣服 + 風）</li>
+          <li>酒精（↑ 周邊血管擴張 + ↓ 顫抖感知）</li>
+          <li>甲狀腺低下；腦下垂體功能低下；腎上腺功能不足</li>
+          <li>脊椎損傷（失去顫抖能力）；燒傷；感染 / 敗血症</li>
+          <li>藥物：β-blocker、BZD、鴉片類、吩噻嗪類</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="hypothermia-tx" data-bm-dept="環境傷害" data-bm-title="低體溫治療">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">復溫治療</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">一般處置</p>
+        <ul class="k-list">
+          <li>移至溫暖環境；移除濕衣服；輕柔搬運（避免誘發 VF）</li>
+          <li><strong>核心體溫測量：</strong>直腸溫度計或食道溫度探針（耳溫 / 腋溫不可靠）</li>
+          <li>心電監護（連續）；IV 建立（溫熱的 NS 或 LR）</li>
+          <li>低血壓：IVF（38-42°C 加溫輸液）；升壓藥效果差（血管對兒茶酚胺反應↓）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">復溫策略</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>方法</th><th>適用</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>被動復溫（Passive）</strong></td>
+              <td>輕度（HT I）</td>
+              <td>移至溫暖環境；毛毯覆蓋；自身產熱（需有顫抖能力）</td>
+            </tr>
+            <tr>
+              <td><strong>主動體外復溫（AEW）</strong></td>
+              <td>中度（HT II）</td>
+              <td>熱毯、加溫墊（放軀幹，非四肢）；熱空氣強制對流毯（Bair Hugger）；溫水浸泡</td>
+            </tr>
+            <tr>
+              <td><strong>主動體內復溫（AIR）</strong></td>
+              <td>重度 / 極重度（HT III-IV）</td>
+              <td>
+                加溫加濕氧氣（40-45°C）<br/>
+                加溫 IV 液（38-42°C）<br/>
+                膀胱 / 胃 / 結腸溫水灌洗<br/>
+                腹膜溫水灌洗（快速有效）<br/>
+                胸腔溫水灌洗（VF 持續時）
+              </td>
+            </tr>
+            <tr>
+              <td><strong>ECMO（體外循環）</strong></td>
+              <td>心跳停止 + 無灌注心律（HT IV）</td>
+              <td>最快復溫方式（1-2°C / 分）；同時維持循環；有 ECMO 的醫院優先轉送</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">心跳停止的低體溫患者</p>
+        <ul class="k-list">
+          <li><strong>「不到溫暖就不算死」</strong>——積極 CPR 直到核心體溫 &gt;32-35°C</li>
+          <li><strong>CPR：</strong>低體溫 → 代謝需求↓ → 大腦耐受缺氧更久；持續 CPR 直到復溫</li>
+          <li><strong>除顫：</strong>&lt;30°C → VF 難以除顫；先復溫到 30°C 再嘗試；每個體溫段最多 1 次電擊（若無效則繼續 CPR + 復溫）</li>
+          <li><strong>藥物：</strong>&lt;30°C 時 Epinephrine 和抗心律不整藥物效果差且蓄積毒性 → 體溫 &gt;30°C 後才給；間隔時間加倍</li>
+          <li><strong>K⁺ &gt;12 mEq/L（低體溫心跳停止）→ 預後極差 → 考慮終止復甦</strong></li>
+          <li class="note">四肢復溫慎用（「復溫後休克」：周邊冷血回流中央 → 心臟溫度再下降 → VF）→ 優先復溫軀幹</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 凍傷 -->
+<div class="topic-block" id="frostbite">
+  <div class="topic-block-head">
+    <span class="topic-block-title">凍傷 Frostbite & Cold Injuries</span>
+    <div data-bm-id="frostbite" data-bm-dept="環境傷害" data-bm-title="凍傷">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    凍傷是寒冷直接導致組織冰晶形成和血管損傷。<strong>最重要的原則：確認患者已離開寒冷環境且不會再暴露後才快速復溫</strong>——「解凍後再冷凍」比持續凍傷更嚴重。快速復溫用 37-40°C 溫水浸泡（非過熱水！）。Ibuprofen 和 Aloe Vera 可減少炎症前列腺素。嚴重凍傷（III-IV 度）合併血管血栓 → tPA 溶栓治療可顯著減少截肢率，需在凍傷後 24 小時內給藥。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="cold-injury-types" data-bm-dept="環境傷害" data-bm-title="凍傷分類">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">寒冷損傷分類</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">非凍傷性寒冷損傷</p>
+        <ul class="k-list">
+          <li><strong>凍瘡（Chilblains / Pernio）：</strong>反覆暴露於寒冷（非冰點）+ 潮濕 → 炎症性皮膚病變；手指、足趾、耳廓出現紅斑、搔癢、疼痛丘疹；通常可逆；治療：保暖、Nifedipine（嚴重）</li>
+          <li><strong>戰壕腳（Trench Foot / Immersion Foot）：</strong>長時間暴露於寒冷（非冰點）+ 潮濕；足部水腫、麻木、水皰；治療：乾燥、復溫、傷口照護</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">凍傷（Frostbite）分度</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>分度</th><th>深度</th><th>外觀</th><th>預後</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>一度（表淺）</strong></td>
+              <td>表皮</td>
+              <td>紅斑、水腫、麻木；無水皰；復溫後感覺異常（燒灼感）</td>
+              <td>完全恢復</td>
+            </tr>
+            <tr>
+              <td><strong>二度（部分皮層）</strong></td>
+              <td>真皮淺層</td>
+              <td>清澈水皰（含漿液）；周圍紅斑水腫；復溫後劇痛</td>
+              <td>通常恢復（可能有感覺過敏）</td>
+            </tr>
+            <tr>
+              <td><strong>三度（全皮層）</strong></td>
+              <td>真皮全層</td>
+              <td>出血性水皰（血皰）；皮膚呈深紅 / 藍紫色；硬如木頭</td>
+              <td>部分組織壞死；可能截肢</td>
+            </tr>
+            <tr>
+              <td><strong>四度（全厚）</strong></td>
+              <td>皮下組織 + 肌肉 + 骨骼</td>
+              <td>完全無感覺；黑色乾性壞疽；皮革樣</td>
+              <td>截肢幾乎必然</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="k-list" style="margin-top:10px">
+          <li class="note">凍傷後立即外觀很難預測最終結果——急性期的「黑色」組織不一定是壞死（可能是血管痙攣）→ 等待數週再做截肢決定（「January frostbite, July amputation」）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="frostbite-tx" data-bm-dept="環境傷害" data-bm-title="凍傷治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">凍傷現場與急診處置</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">現場處理原則</p>
+        <ul class="k-list">
+          <li><strong>確認離開寒冷環境且不會再暴露 → 才進行復溫</strong>（再凍比持續凍傷更壞）</li>
+          <li>移除濕衣物、珠寶；保護凍傷肢體（用輕柔的敷料包裹）</li>
+          <li><strong>不要</strong>：摩擦凍傷部位；在野外打破水皰；用雪摩擦；直接用乾熱（火、電熱器）</li>
+          <li>若必須步行才能脫困 → 不要解凍腳部（凍傷的腳承重比解凍後好）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急診快速復溫</p>
+        <ul class="k-list">
+          <li><strong>溫水浸泡（37-40°C）30-45 分鐘：</strong>直到組織柔軟、紅潤，感覺恢復；可加 Hexachlorophene 或 Povidone-iodine 抗感染；<strong>不要超過 40°C（加重損傷）</strong></li>
+          <li>鎮痛（復溫過程非常痛）：IV Opioid 或 Ketorolac</li>
+          <li>Ibuprofen 400-600 mg q8-12h PO（↓ 花生四烯酸代謝物 → ↓ 炎症和血管痙攣）</li>
+          <li>Aloe Vera 外用（Thromboxane 抑制劑 → ↓ 血管痙攣）</li>
+          <li>保持患肢高舉；輕柔敷料；保護水皰（清澈水皰不要打破；血皰可抽吸液體但保留外皮）</li>
+          <li>破傷風預防；抗生素（若有感染跡象）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">嚴重凍傷（III-IV 度）進階治療</p>
+        <ul class="k-list">
+          <li><strong>tPA 溶栓（凍傷後 &lt;24 小時）：</strong>血管攝影確認血管血栓 → tPA 動脈內或靜脈溶栓；↓ 截肢率高達 50-75%；禁忌：出血風險（同一般 tPA 禁忌）</li>
+          <li><strong>Iloprost（前列腺素 I₂ 類似物）：</strong>靜脈輸注 6 小時 / 天 × 5 天；↓ 血管痙攣 + 血小板凝集；歐洲使用較廣</li>
+          <li><strong>高壓氧（HBO）：</strong>輔助治療，台灣部分醫院可用</li>
+          <li>核子醫學（Tc-99m 掃描）可在 2-5 天後評估組織存活性，幫助決定截肢時機</li>
+          <li class="note">截肢決定應延遲至少 3-6 週（組織最終壞死界線需時間才能確定）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 溺水 -->
+<div class="topic-block" id="drowning">
+  <div class="topic-block-head">
+    <span class="topic-block-title">溺水 Drowning</span>
+    <div data-bm-id="drowning" data-bm-dept="環境傷害" data-bm-title="溺水">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    現代定義：溺水 = 因浸入 / 沉浸於液體中導致呼吸受損。取消「乾性 / 濕性溺水」「近乎溺水」等舊術語。<strong>死亡原因是缺氧，不是水吸入本身</strong>——現場 CPR 是最重要的介入，每延遲 1 分鐘開始 CPR 存活率↓ 10%。「續發性溺水（Secondary Drowning）」= 溺水後 4-6 小時出現肺水腫症狀，所有有症狀的溺水患者需觀察至少 6-8 小時。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="drowning-pathophys" data-bm-dept="環境傷害" data-bm-title="溺水病生理">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">病生理與臨床表現</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">病生理</p>
+        <ul class="k-list">
+          <li><strong>換氣不足 → 低氧血症 → 意識喪失 → 誤吸 → 肺損傷</strong></li>
+          <li><strong>喉頭痙攣（「乾性溺水」，~10-15%）：</strong>聲門痙攣阻止水進入 → 仍死於缺氧</li>
+          <li><strong>水吸入（~85-90%）：</strong>表面張力活性劑（Surfactant）破壞 → 肺泡塌陷 → V/Q 不均 → 肺水腫 → ARDS</li>
+          <li><strong>淡水 vs 鹽水：</strong>臨床差異不大（兩者均導致 Surfactant 損壞和低氧血症）；電解質差異通常無臨床意義（除非吸入量極大）</li>
+          <li><strong>低體溫（冷水溺水）：</strong>保護大腦（↓ 代謝需求）→ 更長復甦視窗；心跳停止 + 冷水溺水 → 積極復甦</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現（依嚴重度）</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>嚴重度</th><th>表現</th><th>處置</th></tr></thead>
+          <tbody>
+            <tr><td><strong>輕微</strong></td><td>清醒；輕微咳嗽；SpO₂ 正常；CXR 正常</td><td>觀察 6-8 小時；若無惡化可出院</td></tr>
+            <tr><td><strong>中度</strong></td><td>清醒但呼吸急促；SpO₂ &lt;95%；濕囉音；輕微低氧</td><td>吸氧；觀察；考慮住院</td></tr>
+            <tr><td><strong>重度</strong></td><td>意識改變；嚴重低氧；肺水腫（CXR 雙側浸潤）</td><td>插管 + 機械通氣（ARDS 策略）；ICU</td></tr>
+            <tr><td><strong>心跳停止</strong></td><td>無脈搏；無呼吸</td><td>立刻 CPR；進階復甦；低體溫 → 積極復甦</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="drowning-tx" data-bm-dept="環境傷害" data-bm-title="溺水處置">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">現場急救與急診處置</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">現場急救</p>
+        <ul class="k-list">
+          <li><strong>將患者移出水中（施救者安全優先）</strong></li>
+          <li><strong>立刻評估呼吸和脈搏 → 無呼吸 → 立刻開始 CPR</strong></li>
+          <li>呼吸急救（口對口或 BVM）優先於胸部按壓（溺水以缺氧為主）</li>
+          <li><strong>不要嘗試「排水」</strong>（Abdominal Thrusts）——無效且浪費時間</li>
+          <li>懷疑脊椎損傷（跳水事故、衝浪）→ 頸椎保護；但不要因此延遲 CPR</li>
+          <li>低體溫患者 → 保暖；CPR 持續至醫院（「不到溫暖就不算死」）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急診處置</p>
+        <ul class="k-list">
+          <li><strong>氧氣：</strong>高流量 O₂（NRM 面罩）；SpO₂ 目標 ≥95%</li>
+          <li><strong>輕中度低氧：</strong>高流量 O₂ → CPAP / BiPAP（↑ 功能殘氣量，改善肺泡通氣）</li>
+          <li><strong>嚴重低氧 / 意識改變：</strong>插管 + 機械通氣；ARDS 保護性通氣策略（TV 6 mL/kg；PEEP 8-12 cmH₂O；Pplat &lt;30 cmH₂O）</li>
+          <li><strong>支氣管痙攣：</strong>霧化 Albuterol</li>
+          <li><strong>補液：</strong>謹慎（肺水腫 → 避免過度補液）；低血壓 → 小量 IVF 試驗</li>
+          <li><strong>低體溫：</strong>依低體溫程度復溫</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">觀察和出院標準</p>
+        <ul class="k-list">
+          <li>所有有症狀患者 → 觀察至少 6-8 小時（「續發性溺水」風險）</li>
+          <li><strong>可出院標準（同時滿足所有）：</strong>清醒 + 定向感完整；SpO₂ &gt;95%（室內空氣）；呼吸功增加無症狀；CXR 正常；6-8 小時觀察期間無惡化</li>
+          <li><strong>住院適應症：</strong>任何低氧血症（需吸氧）；意識改變；CXR 異常；嚴重低體溫；心律不整</li>
+          <li class="note">預防性抗生素：不建議常規使用；污染水域（下水道、農業廢水）→ 考慮廣效抗生素</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">預後預測</p>
+        <ul class="k-list">
+          <li><strong>良好預後因素：</strong>冷水（低體溫保護）；目擊者立刻 CPR；急救反應時間短；年輕患者</li>
+          <li><strong>不良預後因素：</strong>水中時間 &gt;25 分鐘；CPR &gt;25 分鐘（除非低體溫）；到院時仍在 CPR；Glasgow &lt;5；瞳孔固定散大（復溫後評估）</li>
+          <li class="note">不要在急診宣告溺水 + 低體溫心跳停止患者死亡 → 轉至有 ECMO 能力的醫院後才評估</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 高山症 -->
+<div class="topic-block" id="altitude">
+  <div class="topic-block-head">
+    <span class="topic-block-title">高山症 Altitude Illness</span>
+    <div data-bm-id="altitude" data-bm-dept="環境傷害" data-bm-title="高山症">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    高山症三大類：<strong>急性高山症（AMS）→ 高海拔腦水腫（HACE）→ 高海拔肺水腫（HAPE）</strong>，嚴重度遞增。<strong>最重要的治療是下降高度（Descent）</strong>——任何嚴重高山症的首要處置，其他治療是輔助。HAPE 是高山症中最常見的死亡原因（非心因性肺水腫）。台灣玉山（3,952 m）和雪山（3,886 m）是常見發生地點。<strong>Acetazolamide 預防 AMS 的機轉是加速高海拔適應，不是掩蓋症狀。</strong>
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="altitude-spectrum" data-bm-dept="環境傷害" data-bm-title="高山症分類">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">高山症三大症候群</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>AMS（急性高山症）</th><th>HACE（高海拔腦水腫）</th><th>HAPE（高海拔肺水腫）</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>定義</strong></td>
+              <td>上升至 &gt;2500 m 後出現頭痛 + 以下 ≥1 項：疲勞、頭暈、失眠、噁心嘔吐；Lake Louise AMS 評分 ≥3</td>
+              <td>AMS 進展 → 腦水腫；共濟失調（步態不穩）或意識改變（混亂 → 昏迷）</td>
+              <td>通常發生在 &gt;2500 m；上升後 2-4 天；休息時呼吸困難 + 乾咳 → 粉紅泡沫痰；可無 AMS 症狀（50%）</td>
+            </tr>
+            <tr>
+              <td><strong>機轉</strong></td>
+              <td>低氧 → 腦血管擴張 → 輕度腦水腫</td>
+              <td>嚴重腦水腫（血腦屏障破壞 + 腦血管自調失效）</td>
+              <td>低氧性肺血管收縮（不均勻）→ 局部高壓 → 非心因性肺水腫（Exudative）；↑ 肺動脈壓是核心機轉</td>
+            </tr>
+            <tr>
+              <td><strong>危險因素</strong></td>
+              <td>快速上升；之前有 AMS 史；個體敏感性（與體能無關）</td>
+              <td>AMS 未處理進展</td>
+              <td>之前有 HAPE 史（最強危險因子）；快速上升；寒冷；劇烈運動；PFO（卵圓孔未閉）</td>
+            </tr>
+            <tr>
+              <td><strong>身體檢查</strong></td>
+              <td>通常正常</td>
+              <td>步態共濟失調；意識改變；視乳頭水腫（晚期）</td>
+              <td>心搏過速；呼吸急促；肺部濕囉音；發紺；SpO₂ 顯著↓（相對同海拔正常人）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Lake Louise AMS 評分</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>症狀</th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
+          <tbody>
+            <tr><td>頭痛</td><td>無</td><td>輕度</td><td>中度</td><td>嚴重失能</td></tr>
+            <tr><td>腸胃道症狀</td><td>無</td><td>食慾↓ / 噁心</td><td>中度噁心 / 嘔吐</td><td>嚴重嘔吐</td></tr>
+            <tr><td>疲勞 / 虛弱</td><td>無</td><td>輕度</td><td>中度</td><td>嚴重失能</td></tr>
+            <tr><td>頭暈 / 昏沉</td><td>無</td><td>輕度</td><td>中度</td><td>嚴重失能</td></tr>
+            <tr><td>睡眠</td><td>正常</td><td>睡眠稍差</td><td>頻繁醒來</td><td>完全失眠</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list" style="margin-top:8px">
+          <li>總分：輕度 AMS 3-5 分；中度 6-9 分；重度 10-15 分（需立刻下降）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="altitude-tx" data-bm-dept="環境傷害" data-bm-title="高山症治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">治療與預防</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>HACE 或 HAPE → 立刻下降（最少 300-500 m）。下降是最重要的治療，不要等待藥物起效。</span>
+        </div>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>AMS</th><th>HACE</th><th>HAPE</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>首要</strong></td>
+              <td>停止上升；休息；等待適應</td>
+              <td><strong>立刻下降</strong>（最少 300-500 m）</td>
+              <td><strong>立刻下降 + 保持溫暖休息</strong>（避免勞力）</td>
+            </tr>
+            <tr>
+              <td><strong>氧氣</strong></td>
+              <td>若可得，補充 O₂</td>
+              <td>高流量 O₂（4-6 L/min）</td>
+              <td>高流量 O₂（4-8 L/min）= 等同下降效果；SpO₂ 目標 ≥90%</td>
+            </tr>
+            <tr>
+              <td><strong>藥物</strong></td>
+              <td>Acetazolamide 250 mg bid；Ibuprofen（頭痛）；Ondansetron（噁心）</td>
+              <td>Dexamethasone 8 mg IM/IV × 1 → 4 mg q6h；Acetazolamide 250 mg bid</td>
+              <td>Nifedipine 30 mg 緩釋 qd 或 10 mg 立即釋放 q4-6h（↓ 肺動脈壓）；Tadalafil 10 mg bid 或 Sildenafil 50 mg tid（替代）</td>
+            </tr>
+            <tr>
+              <td><strong>加壓袋（Gamow Bag）</strong></td>
+              <td>若無法下降，可模擬下降 1500 m</td>
+              <td>橋接至真正下降</td>
+              <td>橋接至真正下降</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">預防</p>
+        <ul class="k-list">
+          <li><strong>緩慢上升：</strong>2500 m 以上每天上升 &lt;500 m（睡眠高度）；每上升 1000 m 休息 1 天</li>
+          <li><strong>Acetazolamide（預防用）：</strong>125-250 mg bid；上升前 1-2 天開始；磺胺類過敏者禁忌；副作用：多尿、感覺異常（手足）、碳酸飲料味道改變</li>
+          <li><strong>Dexamethasone：</strong>2-4 mg q6-12h；預防 AMS（不建議常規，有 rebound 效應）；緊急撤退或無法使用 Acetazolamide 時</li>
+          <li><strong>HAPE 高危患者（有過去病史）：</strong>Nifedipine 30 mg qd 或 Tadalafil 10 mg bid 預防性使用（上升前 1 天開始）</li>
+          <li class="note">體能和年齡無法預測個體對高山症的敏感性；之前的高山症病史是最佳預測因子</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  </div>
+</div>
 
   </main>
 </div>
