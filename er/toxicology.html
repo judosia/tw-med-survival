@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>毒物學 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit; transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 640px; max-height: 90vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+    .score-result {
+      background: var(--light); border-radius: 8px;
+      padding: 14px 16px; margin-top: 8px;
+      font-size: 0.82rem; line-height: 1.65;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#er" class="nav-back">急診</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">毒物學</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">毒物學</div>
+
+    <div class="sidebar-section-title">總論</div>
+    <a href="#tox-approach"   class="sidebar-link">中毒總論 + Toxidrome</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">常見中毒</div>
+    <a href="#tox-apap"       class="sidebar-link">Acetaminophen 過量</a>
+    <a href="#tox-cardiac"    class="sidebar-link">心臟毒性藥物（TCA、CCB、β-blocker、Digoxin）</a>
+    <a href="#tox-cns"        class="sidebar-link">CNS 抑制劑 + Serotonin syndrome / NMS</a>
+    <a href="#tox-salicylate" class="sidebar-link">水楊酸 + NSAIDs</a>
+    <a href="#tox-alcohols"   class="sidebar-link">毒性酒精（乙二醇、甲醇、異丙醇）</a>
+    <a href="#tox-toxic-gas"  class="sidebar-link">CO + 氰化物 + 有機磷</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">速查</div>
+    <a href="#tox-antidotes"  class="sidebar-link">解毒劑速查表</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="general.html#airway" class="sidebar-link">插管 / RSI →（急診核心）</a>
+    <a href="../im/nephro.html#acid-base" class="sidebar-link">酸鹼判讀 →（腎內科）</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-hero" style="background: linear-gradient(135deg, #fff5f0 0%, #fff0f8 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>毒物學</h1>
+        <p>中毒總論、常見藥物過量與解毒劑，依小麻和 Tintinalli 整合編排。遇到不確定的中毒 → 立刻打毒物諮詢專線。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#er">急診</a> › 毒物學
+    </div>
+
+    <!-- 中毒總論 -->
+<div class="topic-block" id="tox-approach">
+  <div class="topic-block-head">
+    <span class="topic-block-title">中毒總論 Approach to Poisoning</span>
+    <div data-bm-id="tox-approach" data-bm-dept="毒物學" data-bm-title="中毒總論">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    中毒患者的處置核心：<strong>ABCDE 優先，毒物診斷其次</strong>。Toxidrome（毒物症候群）= 特定毒物的臨床特徵組合，幫助快速縮窄診斷和決定初始治療。台灣毒物諮詢專線：<strong>1985（24小時）</strong>或衛福部毒物及化學物質局（02-8590-6610）。不確定毒物類型時先做支持性治療，同時送尿液毒物篩查。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="tox-initial" data-bm-dept="毒物學" data-bm-title="中毒初始處置">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">初始評估與處置</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">立刻處置（所有中毒患者）</p>
+        <ul class="k-list">
+          <li><strong>ABCDE：</strong>氣道（意識改變 → 考慮插管）；呼吸（SpO₂ + 呼吸型態）；循環（12 導程心電圖 → 找 QRS 寬化、QTc 延長）</li>
+          <li><strong>床邊血糖：</strong>所有意識改變患者；低血糖 → D50W 25-50 g IV</li>
+          <li><strong>Thiamine 100 mg IV（先給，再給葡萄糖）：</strong>酒精中毒 / 營養不良患者</li>
+          <li><strong>Naloxone（Narcan）：</strong>懷疑鴉片類 → 0.4-2 mg IV/IM/IN；可重複給藥；小心戒斷症狀</li>
+          <li>全程心電監護 + 連續 SpO₂ 監測</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">病史收集（患者 / 目擊者 / EMS）</p>
+        <ul class="k-list">
+          <li>毒物種類、劑量、暴露途徑（口服 / 吸入 / 皮膚 / 注射）、時間</li>
+          <li>故意 vs 意外；是否合併其他藥物或酒精</li>
+          <li>既往史（精神科病史、用藥清單、過敏）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">檢查</p>
+        <ul class="k-list">
+          <li>血液：CBC、BMP（電解質、BUN、Cr、血糖）、LFT、凝血、Lactate、動脈血氣分析（ABG）</li>
+          <li><strong>陰離子間隙（AG）= Na − (Cl + HCO₃)，正常 8-12；↑ AG → MUDPILES</strong>（Methanol、Uremia、DKA、Paraldehyde、Isoniazid / Iron、Lactic acidosis、Ethylene glycol、Salicylates）</li>
+          <li><strong>滲透壓間隙（OG）= 測量滲透壓 − 計算滲透壓（2×Na + 血糖/18 + BUN/2.8）；正常 &lt;10；↑ OG → 毒性酒精</strong></li>
+          <li>尿液毒物篩查（免疫分析法，假陽性 / 假陰性常見）；乙醯胺酚濃度（所有不明意識改變）；水楊酸濃度；酒精濃度</li>
+          <li>心電圖（12 導程）；CXR；腹部 X 光（含金屬異物）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">去污（Decontamination）</p>
+        <ul class="k-list">
+          <li><strong>活性炭（Activated Charcoal）1 g/kg PO（最多 50 g）：</strong>攝入後 1-2 小時內；意識清醒且氣道保護完整；禁忌：腐蝕性物質、烴類、金屬（Fe、Li）、酒精</li>
+          <li><strong>胃洗（Gastric Lavage）：</strong>攝入後 &lt;1 小時 + 高毒性物質；現在很少用；需保護氣道</li>
+          <li><strong>全腸洗（Whole Bowel Irrigation，WBI）：</strong>聚乙二醇（PEG）口服；鐵劑、鋰、緩釋劑型、body packer</li>
+          <li>皮膚接觸 → 脫衣服 + 大量清水沖洗</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="toxidrome" data-bm-dept="毒物學" data-bm-title="Toxidrome 毒物症候群">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">Toxidrome（毒物症候群）速查</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>Toxidrome</th><th>心率</th><th>血壓</th><th>體溫</th><th>瞳孔</th><th>皮膚</th><th>腸蠕動</th><th>意識</th><th>常見毒物</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>擬交感（Sympathomimetic）</strong></td>
+              <td>↑↑</td><td>↑↑</td><td>↑</td><td>散大</td><td>乾熱</td><td>↓</td><td>激動 / 躁動</td>
+              <td>古柯鹼、安非他命、偽麻黃鹼</td>
+            </tr>
+            <tr>
+              <td><strong>抗膽鹼（Anticholinergic）</strong></td>
+              <td>↑</td><td>↑</td><td>↑↑</td><td>散大</td><td>乾熱紅</td><td>↓↓</td><td>激動 / 譫妄</td>
+              <td>抗組織胺、TCA、Atropine、顛茄</td>
+            </tr>
+            <tr>
+              <td><strong>擬膽鹼（Cholinergic）</strong></td>
+              <td>↓</td><td>↓</td><td>↓</td><td>縮小</td><td>濕</td><td>↑↑</td><td>昏迷 / 癲癇</td>
+              <td>有機磷、氨基甲酸酯、神經毒劑</td>
+            </tr>
+            <tr>
+              <td><strong>鴉片類（Opioid）</strong></td>
+              <td>↓</td><td>↓</td><td>↓</td><td>針尖縮小</td><td>正常</td><td>↓</td><td>昏迷</td>
+              <td>嗎啡、海洛因、Fentanyl、美沙冬</td>
+            </tr>
+            <tr>
+              <td><strong>鎮靜安眠（Sedative-Hypnotic）</strong></td>
+              <td>↓</td><td>↓</td><td>↓</td><td>正常</td><td>正常</td><td>↓</td><td>嗜睡 / 昏迷</td>
+              <td>BZD、巴比妥酸鹽、酒精、GHB</td>
+            </tr>
+            <tr>
+              <td><strong>血清素（Serotonin Syndrome）</strong></td>
+              <td>↑↑</td><td>↑</td><td>↑↑</td><td>散大</td><td>濕</td><td>↑</td><td>激動</td>
+              <td>SSRI、SNRI、MAOI、Tramadol、Linezolid</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">擬膽鹼 vs 抗膽鹼記憶口訣</p>
+        <ul class="k-list">
+          <li><strong>SLUDGE（擬膽鹼症狀）：</strong>Salivation 流涎；Lacrimation 流淚；Urination 排尿；Defecation 腹瀉；GI 腸絞痛；Emesis 嘔吐</li>
+          <li><strong>DUMBELS（擬膽鹼）：</strong>Diarrhea、Urination、Miosis（縮瞳）、Bradycardia / Bronchospasm / Bronchorrhea、Emesis、Lacrimation、Salivation</li>
+          <li><strong>抗膽鹼（Mad as a hatter, Blind as a bat, Red as a beet, Hot as a hare, Dry as a bone）：</strong>譫妄、散瞳、皮膚潮紅、高體溫、皮膚黏膜乾燥</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- Acetaminophen 過量 -->
+<div class="topic-block" id="tox-apap">
+  <div class="topic-block-head">
+    <span class="topic-block-title">Acetaminophen 過量 Acetaminophen Overdose</span>
+    <div data-bm-id="tox-apap" data-bm-dept="毒物學" data-bm-title="Acetaminophen 過量">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    Acetaminophen（APAP）過量是急診最常見的藥物過量，也是西方國家急性肝衰竭最主要原因。<strong>關鍵：攝入後 4 小時測血中濃度，對照 Rumack-Matthew nomogram 決定是否給 NAC（N-acetylcysteine）</strong>。症狀輕微不代表安全——肝毒性在 24-72 小時後才出現。慢性大量飲酒者和已有肝病患者毒性閾值更低。<strong>不確定攝入量或時間 → 先給 NAC，等濃度結果</strong>。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="apap-pathophys" data-bm-dept="毒物學" data-bm-title="APAP 病生理">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">病生理與臨床分期</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">病生理</p>
+        <ul class="k-list">
+          <li>正常：90% APAP 由葡萄糖醛酸化 / 硫酸化代謝 → 無毒；5% 由 CYP2E1 代謝 → 毒性代謝物 NAPQI</li>
+          <li>過量：NAPQI 產生過多 → 耗竭肝臟 Glutathione → NAPQI 與肝細胞蛋白共價結合 → 肝細胞壞死（以小葉中心 Zone 3 為主）</li>
+          <li>NAC 提供 Glutathione 前驅物 → 中和 NAPQI</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床四期</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>期</th><th>時間</th><th>症狀</th><th>實驗室</th></tr></thead>
+          <tbody>
+            <tr><td><strong>I</strong></td><td>0-24 小時</td><td>無症狀 or N/V、不適、蒼白</td><td>通常正常</td></tr>
+            <tr><td><strong>II</strong></td><td>24-72 小時</td><td>RUQ 痛、噁心改善</td><td>↑ ALT/AST 開始；↑ PT</td></tr>
+            <tr><td><strong>III</strong></td><td>72-96 小時</td><td>最嚴重肝壞死期；黃疸；凝血障礙；腎衰竭；可能死亡</td><td>ALT/AST 峰值（可 &gt;10,000）；↑↑ PT；↑ Cr；低血糖</td></tr>
+            <tr><td><strong>IV</strong></td><td>4 天-2 週</td><td>恢復期（若存活）</td><td>肝功能逐漸恢復</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="apap-nomogram" data-bm-dept="毒物學" data-bm-title="Rumack-Matthew nomogram">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">Rumack-Matthew Nomogram + NAC 適應症</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">使用時機</p>
+        <ul class="k-list">
+          <li>急性單次攝入（非慢性）；<strong>攝入後 4-24 小時內測量血中 APAP 濃度</strong></li>
+          <li>&lt;4 小時測的濃度不可靠（吸收尚未完全）</li>
+          <li>&gt;24 小時 nomogram 不適用 → 若有任何 ↑ APAP 濃度或 ↑ ALT → 給 NAC</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療線（Treatment Line）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>攝入後時間</th><th>需要 NAC 的濃度閾值（μg/mL）</th></tr></thead>
+          <tbody>
+            <tr><td>4 小時</td><td>≥150</td></tr>
+            <tr><td>8 小時</td><td>≥75</td></tr>
+            <tr><td>12 小時</td><td>≥37.5</td></tr>
+            <tr><td>16 小時</td><td>≈19</td></tr>
+            <tr><td>24 小時</td><td>≈10</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>高風險因素（降低閾值考慮）：</strong>慢性大量飲酒（↑ CYP2E1）；長期 Isoniazid / 抗癲癇藥（↑ CYP2E1）；營養不良 / 禁食（↓ Glutathione）；已有肝病</li>
+          <li class="note">不確定時機或劑量 → 先給 NAC，等安全了再停；NAC 副作用小（主要是過敏反應），給錯代價遠低於漏給</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="apap-nac" data-bm-dept="毒物學" data-bm-title="NAC 給藥方案">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">NAC（N-Acetylcysteine）給藥方案</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>口服（PO）方案</th><th>靜脈（IV）方案（首選）</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>負荷劑量</strong></td>
+              <td>140 mg/kg PO × 1</td>
+              <td>150 mg/kg IV（溶於 D5W 200 mL）× 1 小時</td>
+            </tr>
+            <tr>
+              <td><strong>維持劑量</strong></td>
+              <td>70 mg/kg PO q4h × 17 劑（共 72 小時）</td>
+              <td>50 mg/kg IV（D5W 500 mL）× 4 小時 → 100 mg/kg（D5W 1000 mL）× 16 小時</td>
+            </tr>
+            <tr>
+              <td><strong>總療程</strong></td>
+              <td>72 小時（68 小時 + 負荷）</td>
+              <td>21 小時（標準方案）；若肝功能異常 → 延長至恢復</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">IV NAC 副作用</p>
+        <ul class="k-list">
+          <li><strong>類過敏反應（最常見，10-20%）：</strong>臉部潮紅、蕁麻疹、支氣管痙攣、低血壓；通常在負荷劑量時發生</li>
+          <li>處置：暫停輸注 → 抗組織胺（Diphenhydramine）± Epinephrine（嚴重時）→ 症狀緩解後以較慢速度重新開始</li>
+          <li>真正的 IgE 介導過敏極少見；幾乎所有患者都可以重新開始</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">停止 NAC 標準</p>
+        <ul class="k-list">
+          <li>完成 21 小時標準方案 + APAP 濃度測不到 + ALT 正常或下降中 + INR &lt;2 → 可停止</li>
+          <li>若 ALT ↑ 或 INR ↑ → 延長直到臨床改善</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性肝衰竭處置（出現者）</p>
+        <ul class="k-list">
+          <li>繼續 NAC；密切監測 INR、血糖、血氨、Cr</li>
+          <li>King's College Criteria（肝臟移植適應症）：pH &lt;7.3（液體復甦後）；或同時具備 INR &gt;6.5 + Cr &gt;3.4 + Grade III-IV 肝性腦病</li>
+          <li>考慮肝臟移植評估；透析（急性腎衰竭）；血漿置換（橋接）</li>
+          <li class="note">APAP 過量後大量血液透析：可清除 APAP 和 NAC → 需補充 NAC 劑量</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 心臟毒性藥物 -->
+<div class="topic-block" id="tox-cardiac">
+  <div class="topic-block-head">
+    <span class="topic-block-title">心臟毒性藥物 Cardiotoxic Drug Overdose</span>
+    <div data-bm-id="tox-cardiac" data-bm-dept="毒物學" data-bm-title="心臟毒性藥物">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    心臟毒性藥物過量可快速致命——<strong>持續心電監護是關鍵</strong>。TCA 過量：QRS &gt;100 ms → 立刻 NaHCO₃；CCB / β-blocker：高劑量胰島素治療（HIE）是現代核心；Digoxin 毒性：高鉀 → Digibind（Fab 片段）是解毒劑，<strong>不要用 CaCl₂（↑ 心臟毒性）、不要用 Cardioversion（可能引發心室顫動）</strong>。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="tca-overdose" data-bm-dept="毒物學" data-bm-title="TCA 三環抗鬱劑過量">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">三環抗鬱劑（TCA）過量</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>常見 TCA：</strong>Amitriptyline、Imipramine、Nortriptyline、Clomipramine、Doxepin</li>
+          <li><strong>毒性機轉：</strong>阻斷 Na⁺ 通道（↑ QRS）；阻斷 α1 腎上腺素受體（低血壓）；抗膽鹼（心搏過速、散瞳、乾燥）；阻斷 GABA-A（癲癇）；阻斷 K⁺ 通道（↑ QTc）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+        <ul class="k-list">
+          <li><strong>神經：</strong>嗜睡 → 昏迷；癲癇發作（通常 &lt;6 小時內）</li>
+          <li><strong>心臟：</strong>心搏過速；低血壓；QRS 寬化（&gt;100 ms = 毒性；&gt;160 ms = 心室心律不整高風險）；aVR 出現高 R 波（&gt;3 mm 或 R/S &gt;0.7 = 毒性）；QTc 延長</li>
+          <li><strong>抗膽鹼：</strong>口乾、皮膚乾熱、散瞳、尿滯留、腸蠕動↓</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <div class="alert alert-red" style="margin-bottom:10px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>QRS &gt;100 ms 或低血壓或癲癇 → 立刻 NaHCO₃ 1-2 mEq/kg IV bolus，目標 pH 7.45-7.55。</span>
+        </div>
+        <ul class="k-list">
+          <li><strong>NaHCO₃（一線）：</strong>1-2 mEq/kg IV bolus → 持續輸注（150 mEq 加入 D5W 1L）維持 pH 7.45-7.55；↑ Na⁺ 逆轉 Na⁺ 通道阻斷；鹼化 ↑ 藥物蛋白結合 ↓ 游離毒物</li>
+          <li><strong>癲癇：</strong>BZD（首選）；Phenytoin 禁忌（可能惡化心臟毒性）；持續 → Barbiturate 或 Propofol</li>
+          <li><strong>低血壓：</strong>IVF + NaHCO₃ + 升壓藥（Norepinephrine 首選）；避免 Physostigmine（可能誘發心動過緩）</li>
+          <li><strong>心室心律不整：</strong>NaHCO₃；Lidocaine 替代；避免 Class Ia / Ic（奎尼丁類）、β-blocker</li>
+          <li>活性炭（攝入後 &lt;1 小時 + 氣道保護）；插管（意識改變時早期考慮）</li>
+          <li class="note">症狀通常在 6 小時內出現；若 6 小時後仍無症狀且心電圖正常 → 低風險；但持續心電監護至少 6 小時</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="ccb-bb-overdose" data-bm-dept="毒物學" data-bm-title="CCB + β-blocker 過量">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">鈣離子通道阻斷劑（CCB）+ β-blocker 過量</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>CCB 過量</th><th>β-blocker 過量</th></tr></thead>
+          <tbody>
+            <tr><td><strong>機轉</strong></td><td>阻斷 L 型 Ca²⁺ 通道 → ↓ 心肌收縮力、竇房結和 AV 結傳導</td><td>阻斷 β1/β2 → ↓ 心率、心肌收縮力、腎素</td></tr>
+            <tr><td><strong>臨床</strong></td><td>心動過緩；AV 傳導阻滯；低血壓；Dihydropyridine（Nifedipine）→ 反射性心動過速；<strong>高血糖</strong>（特徵性）</td><td>心動過緩；AV 傳導阻滯；低血壓；支氣管痙攣；<strong>低血糖</strong>（特別是兒童）</td></tr>
+            <tr><td><strong>ECG</strong></td><td>↑ PR 間期；房室傳導阻滯；竇性心動過緩</td><td>同左；Propranolol 可使 QRS 寬化（膜穩定效果）</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療（CCB 和 β-blocker 大致相同）</p>
+        <ul class="k-list">
+          <li><strong>Ca²⁺（CCB 首選）：</strong>CaCl₂ 1 g（10 mL 10%）IV 緩慢推注 × 1-3 次；或 Ca-Gluconate 3 g IV；可重複給藥或持續輸注；β-blocker 效果有限但仍可試</li>
+          <li><strong>Atropine：</strong>0.5-1 mg IV；對 CCB 效果有限（交感補充不足以對抗 Ca²⁺ 通道阻斷）；可先試</li>
+          <li><strong>高劑量胰島素治療（HIE，High-dose Insulin Euglycemia）：</strong>Regular Insulin 1 U/kg IV bolus → 0.5-1 U/kg/h 持續輸注；同時給 D50W 維持血糖 &gt;100 mg/dL；補 K⁺（胰島素 → ↓ K⁺）；現代核心治療，↑ 心肌葡萄糖利用率</li>
+          <li><strong>Glucagon（β-blocker 首選）：</strong>3-10 mg IV bolus → 持續 3-5 mg/h 輸注；繞過 β 受體直接活化 Gs 蛋白 → ↑ cAMP；常引起嘔吐（準備吸痰）</li>
+          <li><strong>升壓藥：</strong>Norepinephrine 或 Epinephrine（若 HIE + Ca²⁺ 不足時）</li>
+          <li><strong>Intralipid（脂質乳劑）20%：</strong>1.5 mL/kg IV bolus → 0.25 mL/kg/min × 30-60 分鐘；脂溶性藥物（Verapamil、Diltiazem、Propranolol）的最後手段；機轉：「脂肪槽」效應吸附毒物</li>
+          <li><strong>心臟電氣起搏：</strong>藥物無效時的橋接；體外心肺循環（ECMO / ECLS）可作為最後手段</li>
+          <li>緩釋劑型 → 考慮全腸洗（WBI）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="digoxin-overdose" data-bm-dept="毒物學" data-bm-title="Digoxin 毒性">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">Digoxin 毒性</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:10px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>Digoxin 毒性禁忌：CaCl₂（↑ 心臟毒性）和 DC Cardioversion（可能誘發 VF）。高鉀血症是急性毒性指標，不要積極補鈣矯正。</span>
+        </div>
+        <ul class="k-list">
+          <li><strong>機轉：</strong>抑制 Na⁺/K⁺-ATPase → 細胞內 Na⁺↑、Ca²⁺↑ → ↑ 心肌收縮力；同時 ↑ 迷走神經張力 → ↓ 傳導</li>
+          <li><strong>毒性誘因：</strong>腎功能惡化（↓ 清除）；低鉀血症（↑ Na⁺/K⁺-ATPase 抑制）；低鎂血症；甲狀腺低下；心肌缺血；藥物交互作用（Amiodarone、Verapamil、Quinidine 均 ↑ Digoxin 濃度）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+        <ul class="k-list">
+          <li><strong>胃腸道（早期）：</strong>N/V、腹痛、食慾不振</li>
+          <li><strong>神經：</strong>視覺改變（黃視、綠視、光暈）；頭痛；疲勞；混亂</li>
+          <li><strong>心臟：</strong>幾乎任何心律不整；最特徵性 = 房性心搏過速 + AV 傳導阻滯；VT / VF（急性大量攝入）；雙向性 VT（Bidirectional VT）= Digoxin 毒性高度特異性</li>
+          <li><strong>電解質：</strong>高鉀血症（急性攝入）= 嚴重毒性指標；低鉀血症（誘發慢性毒性）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li><strong>Digoxin-specific Fab（Digibind / DigiFab，解毒劑）適應症：</strong>心室心律不整（VT / VF）；血流動力學不穩定的心動過緩或 AV 傳導阻滯；高鉀血症（&gt;5.5 mEq/L）；急性攝入 &gt;10 mg（成人）或 &gt;4 mg（兒童）</li>
+          <li><strong>Fab 劑量：</strong>已知 Digoxin 攝入量 → [攝入 mg × 0.8 / 0.5] 瓶；已知血中濃度 → [Dig（ng/mL）× 體重（kg）/ 100] 瓶；不明 → 10-20 瓶（急性攝入）or 6 瓶（慢性毒性）</li>
+          <li><strong>心動過緩 / AV 傳導阻滯：</strong>Atropine 0.5-1 mg IV；暫時電氣起搏（若 Atropine 和 Fab 無效）</li>
+          <li><strong>高鉀血症處置：</strong>葡萄糖 + 胰島素；NaHCO₃；Kayexalate；不要給 Ca²⁺（↑ 心臟毒性！）</li>
+          <li><strong>注意：</strong>給 Fab 後 Digoxin 血中濃度測定不可靠（抗體干擾）；腎衰竭患者 Fab-Digoxin 複合物清除延遲 → 可能需重複給藥</li>
+          <li>活性炭（急性攝入 &lt;1 小時）；Cholestyramine 或 Colestipol（↓ 腸肝循環）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- CNS 抑制劑 + Serotonin Syndrome / NMS -->
+<div class="topic-block" id="tox-cns">
+  <div class="topic-block-head">
+    <span class="topic-block-title">CNS 抑制劑 + Serotonin Syndrome / NMS</span>
+    <div data-bm-id="tox-cns" data-bm-dept="毒物學" data-bm-title="CNS 抑制劑 + Serotonin Syndrome">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    CNS 抑制劑過量以支持性治療為主——<strong>鴉片類給 Naloxone；BZD 不常規給 Flumazenil（↑ 癲癇風險）</strong>。Serotonin Syndrome（SS）vs 惡性抗精神病藥症候群（NMS）是臨床重要鑑別：SS 發作快（小時）、肌肉陣攣 + 反射亢進；NMS 發作慢（數天）、鉛管樣肌張力增高。兩者均可致命，高體溫 &gt;41.1°C → 緊急降溫 + 考慮插管。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="opioid-overdose" data-bm-dept="毒物學" data-bm-title="鴉片類過量">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">鴉片類（Opioid）過量</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>三聯症：</strong>意識改變（昏迷）+ 針尖縮瞳 + 呼吸抑制（RR &lt;12）</li>
+          <li><strong>注意：</strong>Meperidine → 散瞳（抗膽鹼作用）；Tramadol → 癲癇（降低癲癇閾值）；Fentanyl 貼片 → 持續釋放；美沙冬（Methadone）→ QTc 延長 + 長效（t½ 24-36 h）→ 需長時間監測</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Naloxone 給藥</p>
+        <ul class="k-list">
+          <li><strong>急性呼吸抑制：</strong>0.4-2 mg IV / IM / IN（鼻內）；每 2-3 分鐘重複；目標恢復足夠呼吸驅動（不必完全清醒）</li>
+          <li><strong>依賴患者：</strong>從低劑量開始（0.04-0.1 mg IV）→ 避免急性戒斷（嘔吐 + 激動 + 心搏過速）</li>
+          <li><strong>持續輸注：</strong>長效鴉片類（Methadone）→ 2/3 有效逆轉劑量 / 小時持續輸注；Naloxone t½ 30-90 分鐘，常短於鴉片類</li>
+          <li><strong>Naloxone 無效 → 重新考慮診斷：</strong>混合中毒；非鴉片類 CNS 抑制劑；器質性腦病變</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">處置</p>
+        <ul class="k-list">
+          <li>氣道保護（BVM 通氣 → 氣管插管若 Naloxone 無效或不足）</li>
+          <li>Naloxone 後觀察至少 4-6 小時（短效鴉片類）；長效鴉片類 &gt;12-24 小時</li>
+          <li>Fentanyl 貼片 → 移除貼片；若已吸收 → 持續 Naloxone 輸注</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="bzd-sedative-overdose" data-bm-dept="毒物學" data-bm-title="BZD + 鎮靜安眠藥過量">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">BZD + 鎮靜安眠藥過量</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>BZD：</strong>增強 GABA-A → CNS 廣泛抑制；相對安全（單獨過量極少致死）；合併酒精 / 鴉片類 → ↑↑ 危險</li>
+          <li><strong>巴比妥酸鹽（Barbiturate）：</strong>直接開啟 GABA-A Cl⁻ 通道（不同於 BZD）→ 更強 CNS 抑制；治療指數窄；可能致死</li>
+          <li><strong>GHB：</strong>快速 CNS 抑制；t½ 短（&lt;6 小時）；戒斷類 BZD 戒斷（嚴重）</li>
+          <li><strong>Z-drugs（Zolpidem、Zaleplon）：</strong>臨床類 BZD；Zolpidem → 夢遊 / 夢食 / 驅車</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Flumazenil（BZD 拮抗劑）</p>
+        <ul class="k-list">
+          <li><strong>劑量：</strong>0.2 mg IV × 1 → 每分鐘重複 0.2 mg 到最大 1 mg</li>
+          <li><strong>禁忌（相對）：</strong>已知 BZD 依賴患者（→ 急性戒斷 + 癲癇）；合併 TCA 過量（→ 去除 BZD 保護作用 → 癲癇 + 心律不整）；長期使用 BZD 的癲癇患者</li>
+          <li><strong>適合情境：</strong>診斷性（短暫逆轉確認 BZD 中毒）；醫源性 BZD 鎮靜過量（非中毒性）</li>
+          <li class="note">大多數急診毒物學專家不建議常規使用 Flumazenil → 氣道管理和支持性治療更安全</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">處置</p>
+        <ul class="k-list">
+          <li>支持性治療（氣道、呼吸、循環）為主</li>
+          <li>BZD 戒斷 → 逐步漸減（住院期間 Diazepam 或 Phenobarbital 替代）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="serotonin-nms" data-bm-dept="毒物學" data-bm-title="Serotonin Syndrome vs NMS">
+      <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+      <div class="k-card-head"><span class="k-card-title">Serotonin Syndrome vs 惡性抗精神病藥症候群（NMS）</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>Serotonin Syndrome（SS）</th><th>NMS（Neuroleptic Malignant Syndrome）</th></tr></thead>
+          <tbody>
+            <tr><td><strong>機轉</strong></td><td>↑ 5-HT 活性（5-HT1A + 5-HT2A）</td><td>↓ Dopamine 活性（D2 阻斷）</td></tr>
+            <tr><td><strong>誘發藥物</strong></td><td>SSRI、SNRI、MAOI、Tramadol、Linezolid、Dextromethorphan、Triptans、St. John's Wort；<strong>常因藥物組合</strong></td><td>抗精神病藥（Haloperidol、Chlorpromazine）；也見於 Metoclopramide；突然停 Levodopa / 多巴胺促效劑</td></tr>
+            <tr><td><strong>發作</strong></td><td><strong>快速（&lt;24 小時，通常數小時）</strong></td><td><strong>緩慢（數天至數週）</strong></td></tr>
+            <tr><td><strong>肌肉張力</strong></td><td>肌肉陣攣（Clonus，尤其膝 / 踝）；反射亢進；震顫</td><td>鉛管樣肌張力增高（Lead-pipe rigidity）</td></tr>
+            <tr><td><strong>體溫</strong></td><td>↑（可極高）</td><td>↑（可極高）</td></tr>
+            <tr><td><strong>自律神經</strong></td><td>↑↑（出汗、心搏過速、血壓不穩）</td><td>↑（出汗、心搏過速）</td></tr>
+            <tr><td><strong>意識</strong></td><td>激動、混亂</td><td>混亂、意識改變</td></tr>
+            <tr><td><strong>實驗室</strong></td><td>通常無特異性</td><td>↑ CK（橫紋肌溶解）；白血球增多</td></tr>
+            <tr><td><strong>Hunter 標準（SS）</strong></td><td>用 Serotonergic 藥物 + 以下任一：自發性 Clonus；誘發 Clonus + 激動或出汗；眼球震顫 + 激動或出汗；震顫 + 反射亢進；高張力 + 體溫 &gt;38°C + 眼球震顫或 Clonus</td><td>—</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>SS 治療</th><th>NMS 治療</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>首要</strong></td>
+              <td>停所有 Serotonergic 藥物</td>
+              <td>停抗精神病藥（或重新給 Levodopa）</td>
+            </tr>
+            <tr>
+              <td><strong>降溫</strong></td>
+              <td>物理降溫（&gt;41.1°C → 積極降溫）</td>
+              <td>同左</td>
+            </tr>
+            <tr>
+              <td><strong>鎮靜</strong></td>
+              <td>BZD（Lorazepam / Diazepam）↓ 激動和肌肉活動</td>
+              <td>BZD；嚴重時插管 + 神經肌肉阻斷</td>
+            </tr>
+            <tr>
+              <td><strong>特異性解毒</strong></td>
+              <td>Cyproheptadine（5-HT2A 拮抗劑）4-8 mg PO/NG q4-6h（最多 32 mg/天）；中重度 SS</td>
+              <td>Bromocriptine（Dopamine 促效劑）2.5 mg bid-tid PO；Amantadine；Dantrolene（肌肉鬆弛）</td>
+            </tr>
+            <tr>
+              <td><strong>嚴重（&gt;41.1°C）</strong></td>
+              <td>插管 + 神經肌肉阻斷（Vecuronium）+ 積極降溫；Succinylcholine 禁忌（↑ K⁺）</td>
+              <td>同左；Dantrolene 1-2.5 mg/kg IV</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li class="note">SS 通常在停藥後 24 小時內緩解；NMS 可持續 2-14 天甚至更長（高效抗精神病藥儲積）；兩者死亡率均可達 10-30%（嚴重未治療時）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 水楊酸 + NSAIDs -->
+<div class="topic-block" id="tox-salicylate">
+  <div class="topic-block-head">
+    <span class="topic-block-title">水楊酸 + NSAIDs Salicylate & NSAID Toxicity</span>
+    <div data-bm-id="tox-salicylate" data-bm-dept="毒物學" data-bm-title="水楊酸 + NSAIDs">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    水楊酸（Salicylate）中毒的酸鹼表現很特殊：<strong>早期呼吸性鹼中毒（刺激呼吸中樞）+ 晚期代謝性酸中毒（↑ AG）</strong>，是臨床上少數同時出現兩種酸鹼異常的情況。關鍵治療：<strong>鹼化尿液（目標 pH 7.5-8.0）促進水楊酸離子化 → ↑ 腎排除</strong>。血液透析適應症：血中濃度 &gt;100 mg/dL、腎衰竭、嚴重神經毒性、難以糾正的酸中毒。NSAIDs 過量相對安全，主要支持性治療。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="salicylate-tox" data-bm-dept="毒物學" data-bm-title="水楊酸毒性">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">水楊酸（Salicylate）中毒</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">毒性機轉</p>
+        <ul class="k-list">
+          <li>直接刺激延腦呼吸中樞 → 過度換氣 → <strong>早期呼吸性鹼中毒</strong></li>
+          <li>解偶聯氧化磷酸化 → ↑ 無氧代謝 → Lactic acidosis + Ketoacidosis → <strong>晚期代謝性酸中毒（↑ AG）</strong></li>
+          <li>酸血症 → 水楊酸轉為非離子化形式 → 更易跨越血腦屏障 → CNS 毒性（惡性循環）</li>
+          <li>↑ 體溫（解偶聯 → ↑ 熱產生）；肺水腫（非心因性）；凝血障礙（抑制凝血酶原生成）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+        <ul class="k-list">
+          <li><strong>早期（血中濃度 30-50 mg/dL）：</strong>耳鳴（最早）；頭痛；噁心嘔吐；過度換氣；腹痛</li>
+          <li><strong>中期（50-80 mg/dL）：</strong>發燒；出汗；激動；混亂；低血糖</li>
+          <li><strong>重度（&gt;80-100 mg/dL）：</strong>昏迷；癲癇；肺水腫；腦水腫；心律不整；死亡</li>
+          <li><strong>慢性水楊酸中毒：</strong>老年患者；症狀不典型（混亂、聽力喪失）；血中濃度可能"正常"但仍有毒性</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷</p>
+        <ul class="k-list">
+          <li>血清水楊酸濃度（Done nomogram 已不再使用，因慢性中毒不適用）</li>
+          <li>ABG（混合酸鹼異常：呼吸性鹼 + 代謝性酸）；電解質 + AG；血糖；PT</li>
+          <li>尿液 pH（監測鹼化治療效果）；目標尿 pH 7.5-8.0</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li><strong>活性炭：</strong>攝入後 1-2 小時內；腸衣錠 / 大量攝入 → 考慮多劑活性炭</li>
+          <li><strong>靜脈補液：</strong>充足 IVF（維持 UOP 1-2 mL/kg/h）；同時監測肺水腫</li>
+          <li><strong>尿液鹼化（核心治療）：</strong>NaHCO₃ 1-2 mEq/kg IV bolus → 持續輸注（150 mEq NaHCO₃ + D5W 1L）；目標：尿 pH 7.5-8.0；血 pH 7.45-7.55；<strong>避免讓血 pH 下降</strong>（↑ CNS 水楊酸 → 更毒）</li>
+          <li><strong>補鉀：</strong>低鉀血症 → 腎臟排 H⁺ 而保 K⁺ → 難以鹼化尿液；必須補 K⁺ 才能有效鹼化</li>
+          <li><strong>避免插管（若可能）：</strong>插管和機械通氣 → 失去代償性過度換氣 → ↓ 血 pH → 更多水楊酸進入 CNS；若需插管 → 高 RR 設定維持過度換氣</li>
+          <li><strong>血液透析適應症：</strong>血中濃度 &gt;100 mg/dL（急性）或 &gt;60-80 mg/dL（慢性）；嚴重 CNS 毒性（混亂、昏迷、癲癇）；腎衰竭；難以糾正的酸中毒；肺水腫</li>
+          <li class="note">血中濃度和症狀嚴重度不總是相關（慢性中毒者低濃度也可重症）→ 臨床評估比數值更重要</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="nsaid-tox" data-bm-dept="毒物學" data-bm-title="NSAIDs 過量">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">NSAIDs 過量</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>常見 NSAIDs：</strong>Ibuprofen、Naproxen、Indomethacin、Diclofenac、Piroxicam、Ketorolac</li>
+          <li><strong>機轉：</strong>COX-1 / COX-2 抑制 → ↓ PG 合成 → 胃腸道、腎臟、血小板效應</li>
+          <li><strong>毒性閾值：</strong>Ibuprofen &gt;100 mg/kg → 症狀；&gt;400 mg/kg → 重度毒性</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+        <ul class="k-list">
+          <li><strong>輕度（最常見）：</strong>N/V、腹痛、胃腸道出血</li>
+          <li><strong>中度：</strong>嗜睡、頭痛、耳鳴（類水楊酸但少見）</li>
+          <li><strong>重度（大量攝入）：</strong>代謝性酸中毒（↑ AG）；急性腎衰竭；電解質異常（↑ K⁺、↓ Na⁺）；CNS 症狀（昏迷、癲癇）；心律不整（罕見）</li>
+          <li><strong>Mefenamic acid 特殊：</strong>癲癇發作較常見（即使一般劑量的 3-4 倍）</li>
+          <li><strong>COX-2 抑制劑（Celecoxib）：</strong>胃腸道毒性較少；↑ 心血管毒性（大量時）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li>大多數 NSAIDs 過量僅需支持性治療 + 觀察</li>
+          <li>活性炭（攝入 1-2 小時內 + 無禁忌）</li>
+          <li>GI 保護（PPI）；充足補液（↓ 腎毒性）</li>
+          <li>監測：腎功能、電解質、CBC（出血評估）</li>
+          <li>癲癇 → BZD；腎衰竭 → 透析</li>
+          <li class="note">NSAIDs 單獨過量很少致死；合併酒精或其他藥物時風險增加</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 毒性酒精 -->
+<div class="topic-block" id="tox-alcohols">
+  <div class="topic-block-head">
+    <span class="topic-block-title">毒性酒精 Toxic Alcohols</span>
+    <div data-bm-id="tox-alcohols" data-bm-dept="毒物學" data-bm-title="毒性酒精">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    毒性酒精（乙二醇、甲醇）本身毒性低，但代謝物劇毒。<strong>關鍵線索：↑↑ AG 代謝性酸中毒 + ↑ 滲透壓間隙（OG）</strong>——早期 OG ↑（原型藥物）→ 晚期 AG ↑ OG 正常（代謝物積累）。解毒劑：<strong>Fomepizole（首選）或 Ethanol</strong>（競爭 ADH），阻斷毒性代謝物生成；嚴重者需透析。異丙醇（IPA）代謝為 Acetone，無毒性代謝物，不需 Fomepizole。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="toxic-alcohol-compare" data-bm-dept="毒物學" data-bm-title="毒性酒精比較">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">三種毒性酒精比較</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>乙二醇（Ethylene Glycol）</th><th>甲醇（Methanol）</th><th>異丙醇（Isopropanol / IPA）</th></tr></thead>
+          <tbody>
+            <tr><td><strong>來源</strong></td><td>防凍劑（Antifreeze）；工業溶劑</td><td>甲醇燃料；假酒；洗手液</td><td>消毒酒精（70% IPA）；洗手液</td></tr>
+            <tr><td><strong>代謝路徑</strong></td><td>ADH → 乙醛酸 → 草酸（草酸鈣晶體 → 腎損傷）</td><td>ADH → 甲醛 → 甲酸（視神經毒性）</td><td>ADH → Acetone（無毒）</td></tr>
+            <tr><td><strong>AG 代謝性酸中毒</strong></td><td>↑↑（草酸 + 乙醛酸）</td><td>↑↑（甲酸）</td><td>無（Acetone 不酸）</td></tr>
+            <tr><td><strong>滲透壓間隙（OG）</strong></td><td>↑（早期）</td><td>↑（早期）</td><td>↑↑（全程）</td></tr>
+            <tr><td><strong>特徵性表現</strong></td><td>尿液草酸鈣晶體；AKI；低鈣血症；假性螢光尿（Wood 燈下）</td><td>視覺改變（「看雪花」）；視神經萎縮；腦基底核出血</td><td>強烈酮臭（丙酮味）；無酸中毒</td></tr>
+            <tr><td><strong>致死劑量</strong></td><td>~1 mL/kg</td><td>~0.1 mL/kg（極低！）</td><td>~3 mL/kg（相對安全）</td></tr>
+            <tr><td><strong>解毒劑</strong></td><td>Fomepizole 或 Ethanol + 透析</td><td>Fomepizole 或 Ethanol + Folate（促甲酸代謝）+ 透析</td><td>支持性治療（不需 Fomepizole）</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">時序判讀</p>
+        <ul class="k-list">
+          <li><strong>早期（原型藥物未代謝）：</strong>OG ↑↑；AG 正常；CNS 抑制（類乙醇）</li>
+          <li><strong>晚期（代謝物積累）：</strong>AG ↑↑；OG 可能下降；器官毒性（腎、眼、CNS）</li>
+          <li><strong>同時 OG ↑ + AG ↑ = 中間期</strong>（兩者同時在血中）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="toxic-alcohol-tx" data-bm-dept="毒物學" data-bm-title="毒性酒精治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">毒性酒精治療</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ADH 阻斷劑（乙二醇 + 甲醇適應症）</p>
+        <ul class="k-list">
+          <li><strong>適應症：</strong>確認或高度懷疑乙二醇 / 甲醇中毒；血中濃度 &gt;20 mg/dL；OG &gt;10 且有酸中毒 + 暴露史；尿液有草酸鈣晶體（乙二醇）</li>
+        </ul>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>Fomepizole（首選）</th><th>Ethanol（替代）</th></tr></thead>
+          <tbody>
+            <tr><td><strong>機轉</strong></td><td>競爭性 ADH 抑制劑（比 Ethanol 親和力高 8000 倍）</td><td>競爭 ADH（優先代謝 Ethanol）</td></tr>
+            <tr><td><strong>劑量</strong></td><td>15 mg/kg IV 負荷 → 10 mg/kg IV q12h × 4 劑 → 15 mg/kg IV q12h（透析時 q4h）</td><td>目標血中 Ethanol 濃度 100-150 mg/dL；靜脈給藥更容易維持濃度</td></tr>
+            <tr><td><strong>優點</strong></td><td>不需頻繁監測；不引起 CNS 抑制；副作用少</td><td>普遍可得；廉價</td></tr>
+            <tr><td><strong>缺點</strong></td><td>價格較高（台灣可向毒藥物防治諮詢中心申請）</td><td>↑ CNS 抑制；需頻繁監測血中濃度；低血糖；急性胰臟炎</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">輔助治療</p>
+        <ul class="k-list">
+          <li><strong>甲醇中毒 + Folate（Leucovorin 50 mg IV q4h 或 Folic acid 50 mg IV q4h）：</strong>促進甲酸轉化為 CO₂ + H₂O（四氫葉酸途徑）</li>
+          <li><strong>乙二醇中毒 + Thiamine 100 mg IV + Pyridoxine 50 mg IV：</strong>促進草酸前驅物轉向無毒代謝路徑</li>
+          <li><strong>NaHCO₃：</strong>嚴重代謝性酸中毒（pH &lt;7.1）暫時補充；不能取代透析</li>
+          <li><strong>補 Ca²⁺（乙二醇）：</strong>僅有症狀性低鈣血症時（手足搐搦、癲癇）→ 給 Ca-gluconate；無症狀不補（補 Ca²⁺ 可能促進草酸鈣晶體沉積）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">血液透析適應症</p>
+        <ul class="k-list">
+          <li>嚴重酸中毒（pH &lt;7.25）</li>
+          <li>血中濃度：甲醇 &gt;25 mg/dL；乙二醇 &gt;50 mg/dL（若已開始 ADH 阻斷且無器官毒性，可觀察）</li>
+          <li>視覺改變（甲醇）或腎衰竭（乙二醇）</li>
+          <li>電解質異常難以糾正</li>
+          <li class="note">透析期間繼續 Fomepizole（每 4 小時給藥，因透析清除 Fomepizole）</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CO + 氰化物 + 有機磷 -->
+<div class="topic-block" id="tox-toxic-gas">
+  <div class="topic-block-head">
+    <span class="topic-block-title">CO + 氰化物 + 有機磷 Carbon Monoxide, Cyanide & Organophosphates</span>
+    <div data-bm-id="tox-toxic-gas" data-bm-dept="毒物學" data-bm-title="CO + 氰化物 + 有機磷">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    這三種中毒均可快速致命，但各有特異性解毒劑。<strong>CO 中毒</strong>：脈搏血氧儀不可靠（誤判為正常）→ 需 CO-oximetry；100% O₂ 是基礎治療。<strong>氰化物</strong>：細胞毒性缺氧（↑↑ Lactate）+ 苦杏仁味；Hydroxocobalamin 是現代首選解毒劑。<strong>有機磷</strong>：SLUDGE 症候群 + Nicotinic 症狀（肌肉顫搐 → 無力 → 麻痺）→ Atropine 大量給直到分泌物乾燥，Pralidoxime（2-PAM）需在磷酸化不可逆前給藥（「老化」前）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="co-poisoning" data-bm-dept="毒物學" data-bm-title="CO 中毒">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">一氧化碳（CO）中毒</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>來源：</strong>不完全燃燒（瓦斯、木炭、引擎廢氣、火災煙霧）；密閉空間高風險</li>
+          <li><strong>機轉：</strong>CO 與 Hb 親和力為 O₂ 的 250 倍 → COHb（不攜 O₂）；CO 也結合肌紅蛋白和細胞色素 c 氧化酶 → 細胞毒性缺氧</li>
+          <li><strong>陷阱：</strong>脈搏血氧儀（SpO₂）將 COHb 誤判為 OxyHb → 假性正常讀數；<strong>必須用 CO-oximetry</strong></li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現（依 COHb 濃度）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>COHb（%）</th><th>症狀</th></tr></thead>
+          <tbody>
+            <tr><td>&lt;10%</td><td>通常無症狀（吸菸者基礎值可達 5-10%）</td></tr>
+            <tr><td>10-20%</td><td>頭痛、頭暈、噁心（常被誤診為病毒感染）</td></tr>
+            <tr><td>20-40%</td><td>嚴重頭痛、虛弱、判斷力 ↓、視覺改變</td></tr>
+            <tr><td>40-60%</td><td>混亂、昏迷、癲癇、心肌缺血、低血壓</td></tr>
+            <tr><td>&gt;60%</td><td>死亡（可能）</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>「Cherry red skin」：</strong>教科書經典但臨床罕見且不可靠</li>
+          <li><strong>遲發性神經毒性（DNS）：</strong>初始恢復後 2-40 天出現認知改變、帕金森樣症狀、人格改變；高危：COHb &gt;25%、年齡 &gt;30 歲、意識喪失</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li><strong>立刻移離暴露源</strong></li>
+          <li><strong>100% O₂（NRM 面罩）：</strong>COHb 半衰期：室內空氣 5 小時 → 100% O₂ 縮短至 60-90 分鐘；持續至 COHb &lt;5% 且無症狀</li>
+          <li><strong>高壓氧（HBO）適應症：</strong>意識喪失（任何時間長度）；神經症狀持續（混亂、局灶缺損）；心肌缺血；COHb &gt;25%；妊娠（COHb &gt;15-20%，胎兒 HbF 對 CO 更敏感）；症狀對 NBO 無法快速緩解；↓ 遲發性神經毒性</li>
+          <li>支持性：心電監護；補液；抗癲癇藥（BZD）；低血壓 → IVF + 升壓藥</li>
+          <li class="note">同一密閉空間的其他人均需評估（群聚 CO 中毒）；排查來源（瓦斯漏氣、通風不良）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="cyanide-poisoning" data-bm-dept="毒物學" data-bm-title="氰化物中毒">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">氰化物（Cyanide）中毒</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>來源：</strong>火災煙霧（含氰化氫）；工業（電鍍、採礦）；Nitroprusside 長期使用（Thiocyanate 毒性）；苦杏仁 / 木薯</li>
+          <li><strong>機轉：</strong>CN⁻ 抑制細胞色素 c 氧化酶（Complex IV）→ 細胞無法利用 O₂ → 細胞毒性缺氧 → ↑↑ Lactate（無氧代謝）</li>
+          <li><strong>關鍵線索：</strong>↑↑ Lactate（&gt;8-10 mmol/L）+ 混合靜脈血氧飽和度 ↑（細胞無法利用 O₂）+ 苦杏仁味（非所有人能聞到）；SpO₂ 正常但嚴重代謝性酸中毒</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+        <ul class="k-list">
+          <li>初期：頭痛、焦慮、心搏過速、高血壓</li>
+          <li>惡化：↓ 意識、癲癇、心動過緩、低血壓、心臟停止</li>
+          <li><strong>速度極快：</strong>大量吸入 → 數秒內失去意識</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <ul class="k-list">
+          <li><strong>立刻移離暴露源；100% O₂</strong></li>
+          <li><strong>Hydroxocobalamin（Cyanokit，首選解毒劑）：</strong>5 g IV × 15 分鐘（兒童 70 mg/kg）；CN⁻ 與 Cobalt 結合 → Cyanocobalamin（Vit B12）由腎排除；副作用：皮膚 / 尿液 / 黏膜暫時性紅色染色（不危險）；血壓 ↑；干擾 CO-oximetry 和血液顏色判讀</li>
+          <li><strong>替代方案（Hydroxocobalamin 不可得時）：</strong>亞硝酸鈉（Sodium Nitrite）300 mg（10 mL 3%）IV × 5-10 分鐘 → 形成 MetHb 競爭 CN⁻；接著 Na Thiosulfate 12.5 g IV → 促進 CN⁻ 轉換為 Thiocyanate 排除；<strong>注意：MetHb 降低攜氧能力 → 合併 CO 中毒（火災）時禁用 Nitrite</strong></li>
+          <li>BZD（癲癇）；支持性（血流動力學）</li>
+          <li class="note">火災受難者：同時考慮 CO + 氰化物雙重中毒 → Hydroxocobalamin 是最安全選擇（不影響 COHb 攜氧）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="organophosphate" data-bm-dept="毒物學" data-bm-title="有機磷中毒">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">有機磷（Organophosphate）+ 氨基甲酸酯（Carbamate）中毒</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>來源：</strong>農藥（Parathion、Malathion、Chlorpyrifos）；神經毒劑（Sarin、VX）；氨基甲酸酯（Carbaryl、Aldicarb）</li>
+          <li><strong>機轉：</strong>抑制乙醯膽鹼酯酶（AChE）→ ACh 堆積 → 過度 Muscarinic + Nicotinic + CNS 刺激</li>
+          <li><strong>「老化（Aging）」：</strong>有機磷與 AChE 的磷酸化鍵隨時間增強成不可逆鍵（數小時至數天）→ Pralidoxime 只在老化前有效</li>
+          <li><strong>氨基甲酸酯 vs 有機磷：</strong>氨基甲酸酯抑制可自發性逆轉（不老化）→ 症狀通常較輕較短；Pralidoxime 效益不確定，但 Atropine 同樣適用</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+        <ul class="k-list">
+          <li><strong>Muscarinic（SLUDGE / DUMBELS）：</strong>流涎、流淚、排尿、腹瀉、GI 絞痛、嘔吐；支氣管分泌物↑、支氣管痙攣；心動過緩；縮瞳</li>
+          <li><strong>Nicotinic（NMJ + 腎上腺髓質）：</strong>肌肉顫搐（Fasciculations）→ 無力 → 麻痺（包含呼吸肌）；心搏過速（早期）；高血壓；散瞳（Nicotinic 作用可對抗 Muscarinic）</li>
+          <li><strong>CNS：</strong>焦慮、癲癇、昏迷</li>
+          <li><strong>死亡原因：</strong>呼吸衰竭（支氣管痙攣 + 分泌物 + 呼吸肌麻痺）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+        <div class="alert alert-red" style="margin-bottom:10px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>去污優先（脫衣服 + 大量清水沖洗皮膚）；穿防護裝備避免施救者暴露。</span>
+        </div>
+        <ul class="k-list">
+          <li><strong>Atropine（Muscarinic 症狀的解毒劑）：</strong>2-4 mg IV q5-10 分鐘；<strong>目標：分泌物乾燥、支氣管痙攣解除（不是瞳孔散大或心率）</strong>；嚴重中毒可能需要數百毫克；不要因為「超出正常劑量」而猶豫</li>
+          <li><strong>Pralidoxime（2-PAM，AChE 再活化劑）：</strong>1-2 g IV × 15-30 分鐘 → 200-400 mg/h 持續輸注；<strong>在「老化」前盡早給藥</strong>（有機磷暴露後盡快，最好 &lt;24-48 小時）；對 Nicotinic 症狀有效（Atropine 對 Nicotinic 無效）；氨基甲酸酯毒性效益不確定但通常仍給</li>
+          <li><strong>BZD：</strong>癲癇發作；也可降低焦慮和 CNS 過度興奮</li>
+          <li><strong>早期插管：</strong>呼吸窘迫；分泌物無法控制；肌肉無力；<strong>使用 Succinylcholine 時謹慎（AChE 被抑制 → Succinylcholine 代謝↓ → 延長神經肌肉阻斷）</strong>；優先選 Rocuronium</li>
+          <li><strong>監測 RBC AChE 活性：</strong>治療反應指標（正常值 &gt;70% 活性）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 解毒劑速查表 -->
+<div class="topic-block" id="tox-antidotes">
+  <div class="topic-block-head">
+    <span class="topic-block-title">解毒劑速查表 Antidote Quick Reference</span>
+    <div data-bm-id="tox-antidotes" data-bm-dept="毒物學" data-bm-title="解毒劑速查表">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    解毒劑速查——毒物諮詢專線：<strong>1985（24 小時）</strong>。台灣部分解毒劑需向衛福部毒物及化學物質局申請（如 Fomepizole、Pralidoxime、Hydroxocobalamin）。不確定時先做支持性治療並諮詢毒物科。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="antidote-table" data-bm-dept="毒物學" data-bm-title="解毒劑速查">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">主要解毒劑整理</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>毒物 / 藥物</th><th>解毒劑</th><th>劑量 / 給藥方式</th><th>注意事項</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Acetaminophen</strong></td>
+              <td>N-Acetylcysteine（NAC）</td>
+              <td>IV：150 mg/kg × 1h → 50 mg/kg × 4h → 100 mg/kg × 16h；PO：140 mg/kg → 70 mg/kg q4h × 17 劑</td>
+              <td>類過敏反應（減慢輸注速率）；攝入 8 小時內給藥效果最佳</td>
+            </tr>
+            <tr>
+              <td><strong>鴉片類（Opioids）</strong></td>
+              <td>Naloxone（Narcan）</td>
+              <td>0.4-2 mg IV / IM / IN；重複直到呼吸恢復；長效鴉片 → 持續輸注（2/3 有效逆轉劑量 / 小時）</td>
+              <td>t½ 30-90 分鐘（短於多數鴉片類）→ 可能需重複給藥；依賴患者從低劑量開始</td>
+            </tr>
+            <tr>
+              <td><strong>BZD</strong></td>
+              <td>Flumazenil</td>
+              <td>0.2 mg IV × 1 → 每分鐘重複 0.2 mg，最多 1 mg</td>
+              <td>BZD 依賴者 / 合併 TCA / 癲癇患者禁忌；不常規使用</td>
+            </tr>
+            <tr>
+              <td><strong>三環抗鬱劑（TCA）</strong></td>
+              <td>NaHCO₃</td>
+              <td>1-2 mEq/kg IV bolus → 持續輸注；目標血 pH 7.45-7.55</td>
+              <td>QRS &gt;100 ms 或低血壓或癲癇時給；持續心電監護</td>
+            </tr>
+            <tr>
+              <td><strong>CCB</strong></td>
+              <td>CaCl₂ + 高劑量胰島素（HIE）</td>
+              <td>CaCl₂ 1 g IV × 1-3；Insulin 1 U/kg bolus → 0.5-1 U/kg/h + D50W 維持血糖</td>
+              <td>監測 Ca²⁺、血糖、K⁺；Intralipid 為最後手段</td>
+            </tr>
+            <tr>
+              <td><strong>β-blocker</strong></td>
+              <td>Glucagon + HIE</td>
+              <td>Glucagon 3-10 mg IV → 3-5 mg/h；HIE 同上</td>
+              <td>Glucagon 常引起嘔吐；準備吸痰</td>
+            </tr>
+            <tr>
+              <td><strong>Digoxin</strong></td>
+              <td>Digoxin-specific Fab（Digibind）</td>
+              <td>急性攝入不明：10-20 瓶；慢性毒性：6 瓶；依濃度計算：[Dig(ng/mL) × 體重(kg) / 100] 瓶</td>
+              <td>禁忌 CaCl₂；給 Fab 後濃度測定不可靠；腎衰竭 → 可能需重複</td>
+            </tr>
+            <tr>
+              <td><strong>CO 中毒</strong></td>
+              <td>100% O₂ ± 高壓氧（HBO）</td>
+              <td>NRM 100% O₂ 直到 COHb &lt;5%；HBO 適應症：意識喪失、COHb &gt;25%、妊娠、持續神經症狀</td>
+              <td>SpO₂ 不可靠 → 需 CO-oximetry；群聚中毒排查來源</td>
+            </tr>
+            <tr>
+              <td><strong>氰化物</strong></td>
+              <td>Hydroxocobalamin（Cyanokit）</td>
+              <td>5 g IV × 15 分鐘；可重複 1-2 次</td>
+              <td>皮膚 / 尿液暫時紅色染色；替代：Na Nitrite + Na Thiosulfate（CO 中毒時禁 Nitrite）</td>
+            </tr>
+            <tr>
+              <td><strong>有機磷 / 神經毒劑</strong></td>
+              <td>Atropine + Pralidoxime（2-PAM）</td>
+              <td>Atropine 2-4 mg IV q5-10 分鐘（目標：分泌物乾燥）；2-PAM 1-2 g IV → 200-400 mg/h</td>
+              <td>Pralidoxime 需在「老化」前給（&lt;24-48 小時）；Succinylcholine 避免用（延長神經阻斷）</td>
+            </tr>
+            <tr>
+              <td><strong>甲醇 / 乙二醇</strong></td>
+              <td>Fomepizole（首選）或 Ethanol</td>
+              <td>Fomepizole 15 mg/kg IV → 10 mg/kg q12h；甲醇另加 Folate；乙二醇另加 Thiamine + Pyridoxine</td>
+              <td>透析期間 Fomepizole q4h；IPA 不需 Fomepizole</td>
+            </tr>
+            <tr>
+              <td><strong>水楊酸</strong></td>
+              <td>NaHCO₃（尿液鹼化）</td>
+              <td>目標尿 pH 7.5-8.0；先補 K⁺（低鉀 → 難以鹼化尿液）；嚴重 → 血液透析</td>
+              <td>避免讓血 pH ↓；避免插管（失去過度換氣補償）</td>
+            </tr>
+            <tr>
+              <td><strong>Heparin / LMWH</strong></td>
+              <td>Protamine Sulfate</td>
+              <td>UFH：1 mg / 100 U UFH（最多 50 mg）；LMWH：逆轉約 60%（1 mg / 1 mg Enoxaparin）</td>
+              <td>過敏反應（含魚精蛋白過敏）；魚精過敏者替代：PCC 或 FFP</td>
+            </tr>
+            <tr>
+              <td><strong>Warfarin</strong></td>
+              <td>Vitamin K + 4F-PCC / FFP</td>
+              <td>Vit K 10 mg IV（緊急）或 PO；4F-PCC 依 INR 給藥（25-50 U/kg）；FFP 2-4 U IV（緊急但需大量）</td>
+              <td>Vit K 起效慢（6-12 小時）；需快速逆轉 → PCC 或 FFP</td>
+            </tr>
+            <tr>
+              <td><strong>Dabigatran</strong></td>
+              <td>Idarucizumab（Praxbind）</td>
+              <td>5 g IV（2.5 g × 2 次，間隔 15 分鐘）</td>
+              <td>活動性出血或急診手術時使用</td>
+            </tr>
+            <tr>
+              <td><strong>Rivaroxaban / Apixaban / Edoxaban</strong></td>
+              <td>Andexanet alfa</td>
+              <td>800 mg IV bolus → 8 mg/min × 2 小時；無 Andexanet → 4F-PCC 替代</td>
+              <td>價格昂貴；台灣可得性需確認</td>
+            </tr>
+            <tr>
+              <td><strong>鐵劑（Iron）過量</strong></td>
+              <td>Deferoxamine</td>
+              <td>15 mg/kg/h IV（最高 6 g/天）持續至尿液「玫瑰酒紅色」消失</td>
+              <td>低血壓（輸注速度不超過 15 mg/kg/h）；ARDS（長期使用）</td>
+            </tr>
+            <tr>
+              <td><strong>MetHb（Methemoglobin）</strong></td>
+              <td>Methylene Blue</td>
+              <td>1-2 mg/kg IV × 5-10 分鐘；可重複（最多 7 mg/kg）</td>
+              <td>G6PD 缺乏禁忌（→ 改用 Ascorbic acid）；SSRI / Linezolid 合併 → 血清素症候群風險</td>
+            </tr>
+            <tr>
+              <td><strong>Ifosfamide 腦病</strong></td>
+              <td>Methylene Blue</td>
+              <td>50 mg PO tid 或 50 mg IV tid</td>
+              <td>預防和治療 Ifosfamide 誘導腦病；機轉：抑制 chloroacetaldehyde 形成</td>
+            </tr>
+            <tr>
+              <td><strong>Serotonin Syndrome</strong></td>
+              <td>Cyproheptadine</td>
+              <td>4-8 mg PO / NG q4-6h（最多 32 mg/天）</td>
+              <td>5-HT2A 拮抗劑；輔助 BZD 使用；重度 → 插管 + NMB</td>
+            </tr>
+            <tr>
+              <td><strong>NMS</strong></td>
+              <td>Bromocriptine + Dantrolene</td>
+              <td>Bromocriptine 2.5-5 mg PO tid；Dantrolene 1-2.5 mg/kg IV（高體溫 + 嚴重肌肉僵硬）</td>
+              <td>停抗精神病藥是最重要的第一步</td>
+            </tr>
+            <tr>
+              <td><strong>低血糖（Insulin / 磺醯脲類）</strong></td>
+              <td>D50W + Octreotide（磺醯脲類）</td>
+              <td>D50W 25-50 g IV；Octreotide 50 μg SC/IV q6-8h（↓ 胰島素分泌）</td>
+              <td>磺醯脲類低血糖持久 → 持續 D10W 輸注 + Octreotide；需延長觀察</td>
+            </tr>
+            <tr>
+              <td><strong>Isoniazid（INH）</strong></td>
+              <td>Pyridoxine（Vitamin B6）</td>
+              <td>等劑量 Pyridoxine（已知 INH 劑量）；不明劑量 → 5 g IV</td>
+              <td>INH 過量引起難治性癲癇；Pyridoxine 是特異性治療</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="decontamination-quick" data-bm-dept="毒物學" data-bm-title="去污速查">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">去污方式速查 + 透析適應症</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">去污選擇</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>方式</th><th>適用時機</th><th>禁忌</th></tr></thead>
+          <tbody>
+            <tr><td><strong>活性炭（1 g/kg）</strong></td><td>攝入後 1-2 小時內；大多數藥物</td><td>腐蝕性物質；碳氫化合物；金屬（Fe、Li）；酒精；意識改變（氣道未保護）</td></tr>
+            <tr><td><strong>全腸洗（WBI）</strong></td><td>緩釋劑型；鐵劑；鋰；Body packer（毒品走私）</td><td>腸阻塞；穿孔；血流動力學不穩定</td></tr>
+            <tr><td><strong>皮膚去污</strong></td><td>皮膚接觸毒物（有機磷、腐蝕劑）</td><td>—（施救者需防護）</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">血液透析適應症（AEIOU）</p>
+        <ul class="k-list">
+          <li><strong>A — Acidosis：</strong>難以糾正的嚴重酸中毒（pH &lt;7.1-7.2）</li>
+          <li><strong>E — Electrolytes：</strong>危及生命的電解質異常（高鉀、低鈉）</li>
+          <li><strong>I — Ingestion / Intoxication：</strong>可透析的毒物（水楊酸、甲醇、乙二醇、Lithium）且達透析閾值</li>
+          <li><strong>O — Overload：</strong>液體過載（容積過多）</li>
+          <li><strong>U — Uremia：</strong>尿毒症</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">可透析毒物（高水溶性 + 低蛋白結合 + 低 Vd）</p>
+        <ul class="k-list">
+          <li>水楊酸（&gt;100 mg/dL 急性 or &gt;60-80 mg/dL 慢性）</li>
+          <li>甲醇（&gt;25 mg/dL 或嚴重酸中毒）</li>
+          <li>乙二醇（&gt;50 mg/dL 或腎衰竭或嚴重酸中毒）</li>
+          <li>Lithium（&gt;4 mEq/L 急性 or &gt;2.5 mEq/L 有症狀）</li>
+          <li>APAP（大量過量 + 腎衰竭）</li>
+          <li class="note">蛋白結合率高的藥物（TCA、Digoxin、CCB）不易透析 → 依賴特異性解毒劑</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+
+    
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  const SEARCH_INDEX = [
+    { id:'tox-approach',   dept:'毒物學', title:'中毒總論 + Toxidrome',                    url:'#tox-approach',   text:'', modalIds:[] },
+    { id:'tox-apap',       dept:'毒物學', title:'Acetaminophen 過量',                      url:'#tox-apap',       text:'', modalIds:[] },
+    { id:'tox-cardiac',    dept:'毒物學', title:'心臟毒性藥物（TCA、CCB、β-blocker、Digoxin）', url:'#tox-cardiac',    text:'', modalIds:[] },
+    { id:'tox-cns',        dept:'毒物學', title:'CNS 抑制劑 + Serotonin syndrome / NMS',   url:'#tox-cns',        text:'', modalIds:[] },
+    { id:'tox-salicylate', dept:'毒物學', title:'水楊酸 + NSAIDs',                         url:'#tox-salicylate', text:'', modalIds:[] },
+    { id:'tox-alcohols',   dept:'毒物學', title:'毒性酒精（乙二醇、甲醇、異丙醇）',           url:'#tox-alcohols',   text:'', modalIds:[] },
+    { id:'tox-toxic-gas',  dept:'毒物學', title:'CO + 氰化物 + 有機磷',                     url:'#tox-toxic-gas',  text:'', modalIds:[] },
+    { id:'tox-antidotes',  dept:'毒物學', title:'解毒劑速查表',                             url:'#tox-antidotes',  text:'', modalIds:[] },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
