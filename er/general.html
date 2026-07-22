@@ -121,6 +121,8 @@
     <a href="#stroke-er" class="sidebar-link">中風</a>
     <a href="#anaphylax" class="sidebar-link">過敏性休克</a>
     <a href="#dispo"     class="sidebar-link">收住院 vs 回家</a>
+    <a href="#airway"    class="sidebar-link">插管 / RSI </a>
+    <a href="#proc-sed"  class="sidebar-link">程序性鎮靜</a>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">外傷</div>
     <a href="trauma.html" class="sidebar-link">外傷頁面 →</a>
@@ -713,6 +715,326 @@
       </div>
     </div>
 
+    <!-- 插管 / RSI -->
+<div class="topic-block" id="airway">
+  <div class="topic-block-head">
+    <span class="topic-block-title">插管 + RSI Intubation & Rapid Sequence Intubation</span>
+    <div data-bm-id="airway" data-bm-dept="急診" data-bm-title="插管 + RSI">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    急診插管首選方式是<strong>快速序列插管（RSI）</strong>——預充氧 + 誘導麻醉劑 + 神經肌肉阻斷劑同時給藥，在最短時間內達到插管條件，最小化誤吸風險。<strong>預充氧是最重要的步驟</strong>：目標 SpO₂ &gt;95%（高危患者 &gt;99%），增加無呼吸安全時間。插管失敗 + 無法通氣（CICO）= 外科氣道，不要無限重試喉頭鏡。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="airway-assessment" data-bm-dept="急診" data-bm-title="困難氣道評估">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">困難氣道評估（LEMON）+ 術前準備</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">LEMON 困難氣道評估</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>字母</th><th>評估項目</th><th>困難氣道線索</th></tr></thead>
+          <tbody>
+            <tr><td><strong>L</strong></td><td>Look externally</td><td>肥胖、頸短粗、巨舌、外傷變形、頸部腫塊、燒傷 / 吸入性損傷</td></tr>
+            <tr><td><strong>E</strong></td><td>Evaluate 3-3-2</td><td>開口 &lt;3 指；舌骨頦距 &lt;3 指；舌骨甲狀軟骨距 &lt;2 指 → 困難</td></tr>
+            <tr><td><strong>M</strong></td><td>Mallampati</td><td>Class III-IV（懸雍垂不可見）→ 困難插管</td></tr>
+            <tr><td><strong>O</strong></td><td>Obstruction</td><td>氣道阻塞跡象：聲音嘶啞、喘鳴、流涎、呼吸費力</td></tr>
+            <tr><td><strong>N</strong></td><td>Neck mobility</td><td>頸部活動受限：強直性脊椎炎、頸椎損傷、頸部放射線治療後</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">插管前準備（STOP MAID）</p>
+        <ul class="k-list">
+          <li><strong>S — Suction：</strong>吸痰管備妥開機</li>
+          <li><strong>T — Team：</strong>角色分配（插管者、給藥者、監護記錄者）</li>
+          <li><strong>O — Oxygen：</strong>預充氧（見下方）</li>
+          <li><strong>P — Position：</strong>嗅聞姿勢（Sniffing position）；肥胖 → 斜坡位（Ramp position）</li>
+          <li><strong>M — Monitors：</strong>SpO₂、ETCO₂ 波形 capnography、ECG、BP</li>
+          <li><strong>A — Airway equipment：</strong>喉頭鏡（直接 / 視頻 VL）；ETT（成人 7.0-8.0 mm）；探針（Stylet）；10 mL 注射器；固定膠帶；困難氣道備用設備（LMA、Bougie）</li>
+          <li><strong>I — IV access：</strong>至少一條通暢靜脈通路</li>
+          <li><strong>D — Drugs：</strong>RSI 藥物備妥（含拮抗劑）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">預充氧策略</p>
+        <ul class="k-list">
+          <li><strong>標準：</strong>NRM 面罩 100% O₂ × 3-5 分鐘；目標 SpO₂ &gt;95%</li>
+          <li><strong>高危（肥胖、孕婦、兒童、重症）：</strong>HFNO（60-70 L/min）+ NRM；或輕柔 BVM 通氣</li>
+          <li><strong>無呼吸氧合（Apneic Oxygenation）：</strong>插管過程中持續 15 L/min 鼻導管 O₂ → ↑ 安全無呼吸時間</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="rsi-drugs" data-bm-dept="急診" data-bm-title="RSI 藥物">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">RSI 藥物（依 Tintinalli Table 29A-6 ~ 29A-10）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">前驅藥物（Pretreatment，插管前 3 分鐘，選用）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>藥物</th><th>劑量</th><th>適應症</th><th>注意</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Lidocaine</strong></td><td>1.5 mg/kg IV / topically</td><td>↑ ICP；支氣管痙攣；氣喘</td><td>無明確實證優於安慰劑；ICP 效益不確定</td></tr>
+            <tr><td><strong>Fentanyl</strong></td><td>3 μg/kg IV slow push</td><td>↑ ICP；心臟缺血；主動脈剝離</td><td>呼吸抑制；低血壓；胸壁僵直（快速給藥）</td></tr>
+            <tr><td><strong>Atropine</strong></td><td>0.02 mg/kg IV（最低 0.1 mg）</td><td>兒童 &lt;1 歲（Succinylcholine → 心動過緩）</td><td>兒童常規；成人不需要</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">誘導麻醉劑（Induction Agent，依 Table 29A-8）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>藥物</th><th>劑量</th><th>起效 / 持續</th><th>優點</th><th>禁忌 / 注意</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Ketamine（首選）</strong></td>
+              <td>1-2 mg/kg IV</td>
+              <td>1 分鐘 / 10-20 分</td>
+              <td>↑ BP；支氣管擴張；鎮痛；保留呼吸驅動；血流動力學不穩定首選；↓ ICP 疑慮（現已不再禁忌於頭部外傷）</td>
+              <td>↑ 分泌物（+ Atropine）；精神科病史相對禁忌；↑ BP / HR（心臟缺血謹慎）；幻覺（成人恢復期）</td>
+            </tr>
+            <tr>
+              <td><strong>Etomidate</strong></td>
+              <td>0.3-0.5 mg/kg IV</td>
+              <td>&lt;1 分鐘 / 10-20 分</td>
+              <td>心血管最穩定；↓ ICP；↓ 眼壓；無過敏原釋放</td>
+              <td>肌陣攣；無鎮痛；↓ 皮質醇（單次劑量臨床意義有限）；不建議膿毒症</td>
+            </tr>
+            <tr>
+              <td><strong>Propofol</strong></td>
+              <td>0.5-1.5 mg/kg IV</td>
+              <td>20-40 秒 / 8-15 分</td>
+              <td>快速起效 + 恢復；止吐；↓ ICP；抗驚厥</td>
+              <td>↓↓ BP（禁血流動力學不穩定）；呼吸抑制；無鎮痛；注射痛</td>
+            </tr>
+            <tr>
+              <td><strong>Midazolam</strong></td>
+              <td>0.2-0.3 mg/kg IV</td>
+              <td>2-3 分 / 30-60 分</td>
+              <td>廣泛可得；遺忘效果</td>
+              <td>起效慢；↓ BP；其他藥物不可得時使用</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">神經肌肉阻斷劑（NMBA，依 Table 29A-9）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>藥物</th><th>劑量</th><th>起效 / 持續</th><th>優缺點</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Succinylcholine（去極化）</strong></td>
+              <td>1.5 mg/kg IV</td>
+              <td>45-60 秒 / 5-9 分</td>
+              <td>最快起效、最短效；<strong>禁忌：高鉀血症；燒傷 &gt;5 天；去神經損傷 &gt;5 天；嚴重壓傷 &gt;5 天；嚴重感染 &gt;5 天；已知肌肉病變；惡性高體溫病史</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Rocuronium（非去極化，首選替代）</strong></td>
+              <td>1 mg/kg IV（標準）；1.2 mg/kg（高劑量 RSI）</td>
+              <td>1-3 分 / 30-45 分</td>
+              <td>無 Succinylcholine 禁忌；1.2 mg/kg 起效速度接近 Succinylcholine；<strong>可用 Sugammadex 16 mg/kg 立刻逆轉（CICO 緊急逆轉）</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Vecuronium</strong></td>
+              <td>0.08-0.15 mg/kg IV；0.15-0.28 mg/kg（高劑量）</td>
+              <td>2-4 分 / 25-40 分（標準）；60-120 分（高劑量）</td>
+              <td>心血管穩定；肥胖 / 老年或肝腎功能不全時恢復時間延長</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="rsi-procedure" data-bm-dept="急診" data-bm-title="RSI 流程與困難氣道">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">RSI 流程 + 插管確認 + 困難氣道（CICO）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">RSI 步驟（依 Tintinalli Table 29A-6）</p>
+        <ul class="k-list">
+          <li>與團隊討論氣道管理策略；角色分配</li>
+          <li>建立 IV 通路；連接心電監護、SpO₂、ETCO₂</li>
+          <li>評估生命徵象和氣道困難度</li>
+          <li>準備設備、吸痰和備用救援設備</li>
+          <li><strong>預充氧</strong></li>
+          <li>考慮前驅藥物</li>
+          <li><strong>立刻給誘導麻醉劑，緊接著神經肌肉阻斷劑</strong></li>
+          <li>插管</li>
+          <li><strong>確認管位（ETCO₂ 波形為金標準）</strong></li>
+          <li>固定 ETT；調整機械通氣；給予插管後鎮靜</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">插管確認方法</p>
+        <ul class="k-list">
+          <li><strong>ETCO₂ 波形 capnography（金標準）：</strong>持續監測；食道插管 → ETCO₂ 迅速降至 0；心跳停止時 ETCO₂ 可能很低（不可靠）</li>
+          <li><strong>超音波（即時）：</strong>直視 ETT 通過聲帶（最即時）；或氣管超音波（圖 29A-12）：氣管內見 ETT 為「彗星尾」影像；食道插管見「雙軌徵」</li>
+          <li>胸部起伏對稱；聽診（雙側肺部呼吸音 + 胃部無氣聲）</li>
+          <li>CXR 確認位置（龍骨上 2-4 cm）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">插管後管理</p>
+        <ul class="k-list">
+          <li><strong>鎮靜維持：</strong>Propofol 5-50 μg/kg/min 或 Midazolam；+ Fentanyl / Morphine 鎮痛</li>
+          <li><strong>初始呼吸器設置：</strong>TV 6-8 mL/kg 理想體重；RR 12-16 次 / 分；FiO₂ 100%（依 SpO₂ 調降）；PEEP 5 cmH₂O</li>
+          <li><strong>插管後低血壓（Peri-intubation Hypotension，23%）：</strong>補液；升壓藥（Norepinephrine 或 Epinephrine 推注劑量 Phenylephrine 40-100 μg IV）；注意 Auto-PEEP（氣喘 / COPD）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <div class="alert alert-red" style="margin-bottom:10px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>CICO（插管失敗 + 無法通氣）= 立刻外科氣道。不要超過 3 次嘗試。</span>
+        </div>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">困難氣道流程</p>
+        <ul class="k-list">
+          <li><strong>插管失敗（可通氣）：</strong>BVM 維持氧合 → 視頻喉頭鏡（VL）→ LMA / i-gel → Bougie + 盲插 → 纖維支氣管鏡清醒插管</li>
+          <li><strong>CICO → 立刻外科氣道：</strong>環甲膜切開術（Scalpel-Finger-Bougie 技術）= 首選；環甲膜穿刺（Needle Cricothyrotomy）= 橋接</li>
+          <li><strong>Sugammadex 逆轉（Rocuronium 後）：</strong>16 mg/kg IV → 立刻逆轉深度阻斷；為困難氣道時的安全網</li>
+          <li class="note">視頻喉頭鏡（VL）= 困難氣道首選輔助工具；避免在有嘔吐物時使用（攝影機視野被遮擋）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 程序性鎮靜 -->
+<div class="topic-block" id="proc-sed">
+  <div class="topic-block-head">
+    <span class="topic-block-title">程序性鎮靜 Procedural Sedation & Analgesia（PSA）</span>
+    <div data-bm-id="proc-sed" data-bm-dept="急診" data-bm-title="程序性鎮靜">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    程序性鎮靜（PSA）= 使用藥物讓患者在不完全意識喪失的情況下耐受疼痛性操作，同時維持心肺功能穩定。<strong>急診 PSA 不需要固定禁食等候時間</strong>（對時間敏感的操作不需延遲）。所有 PSA 需連續監測 SpO₂ 和 ETCO₂ 波形 capnography。<strong>Capnography 可在 SpO₂ 下降前偵測呼吸抑制</strong>——因為補充氧氣可維持 SpO₂ 但不能防止 CO₂ 積累。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="psa-prep" data-bm-dept="急診" data-bm-title="PSA 術前評估">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">術前評估 + 鎮靜深度分級</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ASA 分級（依 Tintinalli Table 37-2）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>ASA Class</th><th>描述</th><th>例子</th></tr></thead>
+          <tbody>
+            <tr><td><strong>I</strong></td><td>健康</td><td>—</td></tr>
+            <tr><td><strong>II</strong></td><td>輕度全身疾病</td><td>輕度氣喘、懷孕、肥胖、控制良好的 DM</td></tr>
+            <tr><td><strong>III</strong></td><td>重度全身疾病</td><td>肺炎、中重度氣喘、早產兒、末期腎病</td></tr>
+            <tr><td><strong>IV</strong></td><td>嚴重威脅生命的疾病</td><td>敗血症、嚴重心功能障礙、DIC</td></tr>
+            <tr><td><strong>V</strong></td><td>不手術無法存活</td><td>嚴重外傷、顱內出血伴腦疝</td></tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li>ASA I-II → 適合急診 PSA；ASA III → 謹慎評估；ASA IV → 諮詢麻醉科</li>
+          <li><strong>禁食：</strong>急診 PSA 不需要固定等候時間；風險 / 效益評估（操作緊急性 vs 誤吸風險）</li>
+          <li>注意：醉酒 / 意識改變 → 延遲 PSA 直到意識改善；藥物 / 酒精 → ↑ 低氧和過度鎮靜風險</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">鎮靜深度分級（依 Tintinalli Table 37-1）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>深度</th><th>反應性</th><th>氣道</th><th>呼吸</th><th>循環</th></tr></thead>
+          <tbody>
+            <tr><td><strong>輕度（Anxiolysis）</strong></td><td>語言刺激正常但稍遲</td><td>不受影響</td><td>不受影響</td><td>不受影響</td></tr>
+            <tr><td><strong>中度（清醒鎮靜）</strong></td><td>語言 / 觸碰有目的性反應</td><td>通常維持</td><td>通常足夠</td><td>通常維持</td></tr>
+            <tr><td><strong>解離性（Dissociative）</strong></td><td>遊離狀態，反應性不定</td><td>通常維持</td><td>通常維持</td><td>通常維持</td></tr>
+            <tr><td><strong>深度</strong></td><td>重複或疼痛刺激才有反應</td><td>可能受損</td><td>可能受抑制</td><td>通常維持</td></tr>
+            <tr><td><strong>全身麻醉</strong></td><td>無反應</td><td>需要協助</td><td>常受損</td><td>可能受損</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">監測要求（依 Tintinalli Table 37-3）</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>鎮靜深度</th><th>意識監測</th><th>心率</th><th>血壓</th><th>SpO₂</th><th>ETCO₂</th></tr></thead>
+          <tbody>
+            <tr><td><strong>輕度</strong></td><td>頻繁觀察</td><td>每 15 分</td><td>每 15 分</td><td>連續</td><td>不需要</td></tr>
+            <tr><td><strong>解離性</strong></td><td>持續觀察</td><td>連續</td><td>初始記錄</td><td>連續</td><td>建議連續</td></tr>
+            <tr><td><strong>中度</strong></td><td>持續觀察</td><td>連續</td><td>每 5 分 + 每次給藥後</td><td>連續</td><td>建議連續</td></tr>
+            <tr><td><strong>深度</strong></td><td>持續觀察</td><td>連續</td><td>每 5 分 + 每次給藥後</td><td>連續</td><td>建議連續</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="psa-drugs" data-bm-dept="急診" data-bm-title="PSA 藥物">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">PSA 藥物（依 Tintinalli Table 37-4）</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>藥物</th><th>IV 劑量</th><th>起效 / 持續</th><th>優點 / 適用操作</th><th>缺點 / 注意</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Propofol</strong></td>
+              <td>0.5-1 mg/kg（老年 0.25-0.5 mg/kg）；追加 0.25-0.5 mg/kg</td>
+              <td>10-50 秒 / &lt;10 分</td>
+              <td>快速起效 + 恢復；骨科復位首選；止吐；短小操作</td>
+              <td>↓ BP；呼吸抑制（老年 ↑）；注射痛（+ Lidocaine）；無鎮痛</td>
+            </tr>
+            <tr>
+              <td><strong>Ketamine</strong></td>
+              <td>1-1.5 mg/kg IV over 30-60 秒；追加 0.5-1 mg/kg（每 10 分）；IM：4 mg/kg</td>
+              <td>30-40 秒 / 5-10 分</td>
+              <td>鎮靜 + 鎮痛 + 遺忘；心肺穩定；支氣管擴張；共病患者；長時間操作；兒童首選</td>
+              <td>幻覺（成人恢復期，+ Midazolam 預防）；↑ 分泌物；↑ BP / HR；精神科病史相對禁忌；慎用老年</td>
+            </tr>
+            <tr>
+              <td><strong>Ketofol（Ketamine + Propofol 1:1）</strong></td>
+              <td>0.5 mg/kg Ketamine + 0.5 mg/kg Propofol（同時或單針筒）</td>
+              <td>&lt;1 分 / &lt;10 分</td>
+              <td>互補：Ketamine ↑ BP 和鎮痛；Propofol ↓ 幻覺和分泌物；長時間操作效果佳</td>
+              <td>較高 Ketamine/Propofol 比例 → 恢復時間延長；效益實證仍有限</td>
+            </tr>
+            <tr>
+              <td><strong>Etomidate</strong></td>
+              <td>0.1-0.2 mg/kg IV；追加 0.05 mg/kg</td>
+              <td>10-20 秒 / 2-3 分（0.15 mg/kg）</td>
+              <td>心血管最穩定；短時間操作；電氣復律</td>
+              <td>肌陣攣；腎上腺抑制（重症患者謹慎）；無鎮痛</td>
+            </tr>
+            <tr>
+              <td><strong>Midazolam</strong></td>
+              <td>1-2.5 mg IV；老年 0.5 mg；追加 0.5-2.5 mg（q2-3 分）</td>
+              <td>3-5 分 / 30-80 分</td>
+              <td>遺忘效果佳；長時間需深度鎮靜的操作；+ Fentanyl（輕中度鎮靜）</td>
+              <td>無鎮痛；↑ 心血管 / 呼吸抑制（+ 鴉片類時）；起效慢；拮抗劑：Flumazenil（謹慎）</td>
+            </tr>
+            <tr>
+              <td><strong>Fentanyl</strong></td>
+              <td>0.5-1.5 μg/kg IV；老年 0.25 μg/kg；追加 0.5-1.5 μg/kg（每 1-3 分）</td>
+              <td>1-2 分 / 30-60 分</td>
+              <td>強效鎮痛；合併鎮靜劑使用；輕度鎮靜操作</td>
+              <td>呼吸抑制；噁心；單藥無遺忘效果；拮抗劑：Naloxone</td>
+            </tr>
+            <tr>
+              <td><strong>Dexmedetomidine</strong></td>
+              <td>1 μg/kg over 10 分 → 維持 0.6 μg/kg/h（0.2-1.0 μg/kg/h）</td>
+              <td>4-5 分 / 45-90 分</td>
+              <td>需要患者合作的操作；合併鴉片類 → ↓ 呼吸抑制</td>
+              <td>低血壓（常見）；急診環境放電時間較長；台灣 ICU 常用但急診 PSA 實證有限</td>
+            </tr>
+            <tr>
+              <td><strong>N₂O（笑氣，50% 濃度）</strong></td>
+              <td>50% N₂O + 50% O₂（自我給藥面罩）；重複吸入直到達到效果</td>
+              <td>即刻 / 數秒</td>
+              <td>輕度鎮靜 + 鎮痛；傷口換藥、靜脈穿刺、腰穿；快速恢復；無需 IV</td>
+              <td>需特殊設備和廢氣排除；氣胸 / 腸梗阻 / 中耳炎禁忌；妊娠前 3 個月避免</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">術前鎮痛（Pre-procedural Analgesia）</p>
+        <ul class="k-list">
+          <li>短效鴉片類（Fentanyl 1-2 μg/kg IV）在 PSA 開始前給予鎮痛，在達到峰值效果後（2-3 分鐘）再開始操作，最小化呼吸抑制風險</li>
+          <li>若使用 Ketamine → 已有內建鎮痛，不需額外鴉片類</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">恢復與出院標準</p>
+        <ul class="k-list">
+          <li>監測直到回到基礎意識和心肺功能</li>
+          <li>重大不良事件通常發生在鎮靜完成後 5 分鐘內（&lt;1%）；鎮靜後出院的患者幾乎沒有延遲性嚴重事件</li>
+          <li><strong>出院標準：</strong>清醒且定向感完整（回到術前基礎）；SpO₂ ≥95% 室內空氣；生命徵象穩定；無噁心嘔吐；有人陪同</li>
+          <li><strong>告知：</strong>24 小時內不得駕車；有人陪同；需回診情境（噁心、呼吸困難）</li>
+          <li class="note">Capnography 提示的呼吸抑制比 SpO₂ 下降早 60-240 秒 → 更早介入（調整姿勢、托下巴、BVM）；SpO₂ 下降時間點可因補充氧氣而延後</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
   </main>
 </div>
 
@@ -879,17 +1201,19 @@
 <script src="../shared.js"></script>
 <script>
   const SEARCH_INDEX = [
-    { id:'triage',    dept:'急診', title:'檢傷分類 TTAS',    url:'#triage',    text:'第一級 第二級 第三級 第四級 第五級 復甦 危急 緊急 次緊急 STEMI 敗血症 GCS' },
-    { id:'abcde',     dept:'急診', title:'ABCDE 評估',       url:'#abcde',     text:'Airway Breathing Circulation Disability Exposure 氣道 呼吸 循環 意識 血糖 瞳孔 GCS Stridor SpO2' },
-    { id:'cp-er',     dept:'急診', title:'急診胸痛',         url:'#cp-er',     text:'STEMI ECG Troponin Cath lab 主動脈剝離 Labetalol Esmolol Wells PE CTPA D-dimer Aspirin Ticagrelor' },
-    { id:'dysp-er',   dept:'急診', title:'急診呼吸困難',     url:'#dysp-er',   text:'張力性氣胸 針刺減壓 胸管 肺水腫 CPAP BiPAP Furosemide 氣喘 Salbutamol MgSO4 AECOPD 88 92' },
-    { id:'ams-er',    dept:'急診', title:'急診意識改變',     url:'#ams-er',    text:'血糖 Thiamine Naloxone GCS 插管 AEIOU TIPS 癲癇 Status epilepticus Lorazepam 低血糖 尿毒 中風 感染' },
-    { id:'htn-emergency', dept:'急診', title:'高血壓急症',   url:'#htn-emergency', text:'BP 180 120 器官損傷 Nicardipine Labetalol 腦病變 主動脈剝離 子癲前症 MgSO4 次急症 25%' },
-    { id:'abd-er',    dept:'急診', title:'急診腹痛',         url:'#abd-er',    text:'腹膜炎 腸穿孔 腸阻塞 腸缺血 AAA hCG Lactate 超音波 CT Lipase 外科會診' },
-    { id:'shock',     dept:'急診', title:'休克',             url:'#shock',     text:'低血容 分布性 心因性 阻塞性 Septic Norepinephrine Dobutamine 心包填塞 Beck Tamponade POCUS Lactate' },
-    { id:'stroke-er', dept:'急診', title:'急診中風',         url:'#stroke-er', text:'tPA 溶栓 NIHSS CT 取栓 LVO 4.5h 血壓 185 110 禁忌症 INR DOAC Permissive hypertension' },
-    { id:'anaphylax', dept:'急診', title:'過敏性休克',       url:'#anaphylax', text:'Epinephrine IM 大腿 Diphenhydramine Methylprednisolone 雙相反應 喉頭水腫 蕁麻疹 支氣管痙攣' },
-    { id:'dispo',     dept:'急診', title:'收住院 vs 回家',   url:'#dispo',     text:'住院 出院 生命徵象 診斷 靜脈藥物 社會因素 衛教 返診 後續追蹤' },
+    { id:'triage',    dept:'急診', title:'檢傷分類 TTAS',    url:'#triage',    text:'', modalIds:[] },
+    { id:'abcde',     dept:'急診', title:'ABCDE 評估',       url:'#abcde',     text:'', modalIds:[] },
+    { id:'cp-er',     dept:'急診', title:'急診胸痛',         url:'#cp-er',     text:'', modalIds:[] },
+    { id:'dysp-er',   dept:'急診', title:'急診呼吸困難',     url:'#dysp-er',   text:'', modalIds:[] },
+    { id:'ams-er',    dept:'急診', title:'急診意識改變',     url:'#ams-er',    text:'', modalIds:[]},
+    { id:'htn-emergency', dept:'急診', title:'高血壓急症',   url:'#htn-emergency', text:'', modalIds:[] },
+    { id:'abd-er',    dept:'急診', title:'急診腹痛',         url:'#abd-er',    text:'', modalIds:[] },
+    { id:'shock',     dept:'急診', title:'休克',             url:'#shock',     text:text:'', modalIds:[]},
+    { id:'stroke-er', dept:'急診', title:'急診中風',         url:'#stroke-er', text:'', modalIds:[] },
+    { id:'anaphylax', dept:'急診', title:'過敏性休克',       url:'#anaphylax', text:'', modalIds:[] },
+    { id:'dispo',     dept:'急診', title:'收住院 vs 回家',   url:'#dispo',     text:'', modalIds:[] },
+    { id:'airway',   dept:'急診', title:'插管 + RSI',    url:'#airway',   text:'', modalIds:[] },
+    { id:'proc-sed', dept:'急診', title:'程序性鎮靜 PSA', url:'#proc-sed', text:'', modalIds:[] },
   ];
 
   // Modal 開關（全域函數，供 onclick 使用）
