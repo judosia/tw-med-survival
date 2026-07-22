@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>眼科急症 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 600px; max-height: 90vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#er" class="nav-back">急診</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">眼科急症</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">眼科急症</div>
+
+    <div class="sidebar-section-title">視力威脅（立刻處置）</div>
+    <a href="#eye-chemical"   class="sidebar-link">化學灼傷</a>
+    <a href="#acute-glaucoma" class="sidebar-link">急性閉角型青光眼</a>
+    <a href="#retinal"        class="sidebar-link">視網膜剝離 + 視網膜動脈阻塞</a>
+    <a href="#eye-trauma"     class="sidebar-link">眼球外傷（破裂 + 異物）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">感染 / 發炎</div>
+    <a href="#orbital-cellulitis" class="sidebar-link">眼眶蜂窩組織炎</a>
+    <a href="#uveitis"            class="sidebar-link">葡萄膜炎 + 鞏膜炎</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他常見</div>
+    <a href="#red-eye"        class="sidebar-link">紅眼鑑別診斷</a>
+    <a href="#visual-loss"    class="sidebar-link">急性視力喪失</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="../im/neuro.html#stroke" class="sidebar-link">視野缺損（中風）→（神經科）</a>
+    <a href="../im/neuro.html#ms"     class="sidebar-link">視神經炎（MS）→（神經科）</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-hero" style="background: linear-gradient(135deg, #f0f5ff 0%, #f5f0ff 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>眼科急症</h1>
+        <p>視力威脅性急症、眼眶感染與常見紅眼鑑別。化學灼傷 → 立刻大量沖洗優先於一切評估。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#er">急診</a> › 眼科急症
+    </div>
+
+    <!-- 內容從這裡開始 -->
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  const SEARCH_INDEX = [
+    { id:'eye-chemical',       dept:'眼科急症', title:'眼部化學灼傷',                    url:'#eye-chemical',       text:'', modalIds:[] },
+    { id:'acute-glaucoma',     dept:'眼科急症', title:'急性閉角型青光眼',                 url:'#acute-glaucoma',     text:'', modalIds:[] },
+    { id:'retinal',            dept:'眼科急症', title:'視網膜剝離 + 視網膜動脈阻塞',      url:'#retinal',            text:'', modalIds:[] },
+    { id:'eye-trauma',         dept:'眼科急症', title:'眼球外傷（破裂 + 異物）',          url:'#eye-trauma',         text:'', modalIds:[] },
+    { id:'orbital-cellulitis', dept:'眼科急症', title:'眼眶蜂窩組織炎',                  url:'#orbital-cellulitis', text:'', modalIds:[] },
+    { id:'uveitis',            dept:'眼科急症', title:'葡萄膜炎 + 鞏膜炎',              url:'#uveitis',            text:'', modalIds:[] },
+    { id:'red-eye',            dept:'眼科急症', title:'紅眼鑑別診斷',                   url:'#red-eye',            text:'', modalIds:[] },
+    { id:'visual-loss',        dept:'眼科急症', title:'急性視力喪失',                   url:'#visual-loss',        text:'', modalIds:[] },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
