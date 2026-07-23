@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>婦產科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit; transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 640px; max-height: 90vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+    .score-result {
+      background: var(--light); border-radius: 8px;
+      padding: 14px 16px; margin-top: 8px;
+      font-size: 0.82rem; line-height: 1.65;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#obgyn" class="nav-back">婦產科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">婦產科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">婦產科</div>
+
+    <div class="sidebar-section-title">產科急症</div>
+    <a href="#ob-emergency"   class="sidebar-link">產科急症（子癲前症 + 產後出血）</a>
+    <a href="#ectopic"        class="sidebar-link">異位妊娠</a>
+    <a href="#miscarriage"    class="sidebar-link">流產分類與處置</a>
+    <a href="#preterm"        class="sidebar-link">早產 + 胎膜早破</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">婦科</div>
+    <a href="#pelvic-pain"    class="sidebar-link">急性骨盆腔疼痛鑑別</a>
+    <a href="#aub"            class="sidebar-link">異常子宮出血（AUB）</a>
+    <a href="#hyperemesis"    class="sidebar-link">妊娠劇吐</a>
+    <a href="#contraception"  class="sidebar-link">避孕 + 緊急避孕</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="../er/trauma.html#special-trauma" class="sidebar-link">孕婦外傷 →（急診外傷）</a>
+    <a href="../im/infect.html#sti"            class="sidebar-link">PID / STI →（感染科）</a>
+    <a href="../im/onco.html#ovarian-cancer"   class="sidebar-link">卵巢癌 →（腫瘤科）</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-hero" style="background: linear-gradient(135deg, #fff0f8 0%, #f5f0ff 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>婦產科</h1>
+        <p>產科急症、異位妊娠、流產、早產與婦科常見問題，PGY rotation 和急診必備。育齡期女性腹痛 → 先查 hCG。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+          <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+          <line x1="9" y1="9" x2="9.01" y2="9"/>
+          <line x1="15" y1="9" x2="15.01" y2="9"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#obgyn">婦產科</a> › 婦產科
+    </div>
+
+    <!-- 產科急症 -->
+<div class="topic-block" id="ob-emergency">
+  <div class="topic-block-head">
+    <span class="topic-block-title">產科急症 Obstetric Emergencies</span>
+    <div data-bm-id="ob-emergency" data-bm-dept="婦產科" data-bm-title="產科急症">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    產科急症需要快速辨識和處置。<strong>子癲前症（Pre-eclampsia）</strong>= 妊娠 20 週後高血壓（≥140/90）+ 蛋白尿或器官功能障礙；<strong>子癲症（Eclampsia）</strong>= 子癲前症 + 癲癇；唯一根治方法是終止妊娠。<strong>Magnesium Sulfate 是子癲症預防和治療的核心藥物</strong>（不是降壓，是預防癲癇）。<strong>產後出血（PPH）</strong>= 陰道分娩後失血 &gt;500 mL 或剖腹產後 &gt;1000 mL，最常見原因是子宮弛緩（Uterine Atony，70%）——立刻子宮按摩 + 宮縮素。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="preeclampsia" data-bm-dept="婦產科" data-bm-title="子癲前症 + 子癲症">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">子癲前症 + 子癲症（Pre-eclampsia / Eclampsia）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷標準</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>標準</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>子癲前症</strong></td>
+              <td>
+                妊娠 ≥20 週；收縮壓 ≥140 或舒張壓 ≥90 mmHg（間隔 4 小時測量 2 次）<br/>
+                + 以下任一：蛋白尿（&gt;300 mg/24h 或 PCR &gt;0.3）；血小板 &lt;100k；肌酸酐 &gt;1.1 mg/dL；肝功能異常（ALT/AST ↑ &gt;2× ULN）；肺水腫；新發頭痛 / 視覺症狀
+              </td>
+            </tr>
+            <tr>
+              <td><strong>重度特徵（Severe features）</strong></td>
+              <td>
+                SBP ≥160 或 DBP ≥110 mmHg（臥床休息 4 小時內兩次）；血小板 &lt;100k；肝功能異常 ≥2× ULN 或 RUQ / 上腹痛；進行性腎衰竭（Cr &gt;1.1 mg/dL）；肺水腫；新發頭痛（難以藥物控制）；視覺障礙
+              </td>
+            </tr>
+            <tr>
+              <td><strong>HELLP 症候群</strong></td>
+              <td>Hemolysis（微血管病溶血）+ Elevated Liver enzymes + Low Platelets；子癲前症重度特徵的嚴重表現；死亡率 1-3%</td>
+            </tr>
+            <tr>
+              <td><strong>子癲症</strong></td>
+              <td>子癲前症 + 癲癇發作（排除其他原因）；30% 在產前、50% 分娩時、20% 產後（可晚至產後 4 週）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">處置</p>
+        <div class="alert alert-red" style="margin-bottom:10px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>子癲症癲癇發作 → 側躺 + MgSO₄ 4 g IV × 15-20 分 → 維持 1-2 g/h；嚴重高血壓 → 立刻降壓（Labetalol / Hydralazine / Nifedipine）。</span>
+        </div>
+        <ul class="k-list">
+          <li><strong>終止妊娠（唯一根治）：</strong>≥37 週子癲前症 → 立刻分娩；34-37 週有重度特徵 → 考慮分娩；&lt;34 週無重度特徵 → 保守管理（監測）；HELLP → 穩定後 24-48 小時分娩</li>
+          <li><strong>MgSO₄（預防 / 治療癲癇）：</strong>負荷 4-6 g IV × 15-20 分 → 維持 1-2 g/h；目標 Mg 濃度 4-7 mEq/L；監測：呼吸（RR &gt;12）、膝腱反射（消失 = 毒性早期警示）、UOP &gt;25 mL/h；過量 → Calcium Gluconate 1 g IV 逆轉</li>
+          <li><strong>降壓（重度高血壓，SBP ≥160 或 DBP ≥110）：</strong>Hydralazine 5-10 mg IV q20 分；或 Labetalol 20 mg IV → 40 mg → 80 mg（q10 分）；或 Nifedipine 10-20 mg PO（即釋）；目標 SBP 140-155、DBP 90-105（不要過度快速降壓）</li>
+          <li><strong>類固醇（&lt;34 週分娩前）：</strong>Betamethasone 12 mg IM q24h × 2 劑（促肺成熟）</li>
+          <li><strong>產後監測：</strong>子癲症可在產後出現（最晚 4 週）；MgSO₄ 維持 24-48 小時；降壓藥可能需持續數週</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="pph" data-bm-dept="婦產科" data-bm-title="產後出血">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">產後出血（Postpartum Hemorrhage，PPH）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">4T 病因</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>T</th><th>病因</th><th>比例</th><th>臨床線索</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tone（張力）</strong></td><td>子宮弛緩（Uterine Atony）</td><td>70%</td><td>子宮柔軟、鬆弛；觸診無法收縮</td></tr>
+            <tr><td><strong>Trauma（創傷）</strong></td><td>產道裂傷；子宮破裂；子宮內翻</td><td>20%</td><td>子宮收縮但仍持續出血；可見裂傷</td></tr>
+            <tr><td><strong>Tissue（組織）</strong></td><td>胎盤殘留；胎盤植入</td><td>10%</td><td>胎盤不完整；超音波見殘留組織</td></tr>
+            <tr><td><strong>Thrombin（凝血）</strong></td><td>DIC；子癲前症；羊水栓塞</td><td>1%</td><td>廣泛出血；凝血異常（PT/PTT ↑、Fibrinogen ↓）</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">子宮弛緩處置（依序升階）</p>
+        <ul class="k-list">
+          <li><strong>1. 雙手子宮按摩：</strong>一手壓腹部、一手伸入陰道按摩子宮後壁；同時排空膀胱（↑ 子宮收縮）</li>
+          <li><strong>2. 宮縮素（Oxytocin，首選）：</strong>20-40 單位溶入 1000 mL NS IV 輸注；不要 IV push（↓ BP）；也可 IM 10 單位</li>
+          <li><strong>3. Methylergonovine（Methergine）0.2 mg IM：</strong>↑ 子宮張力；<strong>禁忌：高血壓（↑ 血管收縮）</strong></li>
+          <li><strong>4. Carboprost（PGF2α）0.25 mg IM（每 15 分，最多 8 劑）：</strong>強效宮縮；禁忌：氣喘</li>
+          <li><strong>5. Misoprostol 600-1000 μg 舌下 / 直腸：</strong>耐熱穩定；基層 / 資源不足場域適用</li>
+          <li><strong>6. Tranexamic acid（TXA）1 g IV（3 分鐘內）：</strong>出血後 3 小時內給予 ↓ 死亡率；可重複 1 g（30 分後）</li>
+          <li><strong>7. 子宮填塞（Bakri balloon）：</strong>球囊填入子宮腔充水 → 填塞效應止血</li>
+          <li><strong>8. 手術（子宮動脈結紮、B-Lynch 縫合、子宮切除術）：</strong>最後手段</li>
+          <li><strong>大量輸血協議（MTP）：</strong>pRBC : FFP : Platelet = 1:1:1；目標 Fibrinogen &gt;200 mg/dL；Hgb &gt;8；PLT &gt;50k</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">羊水栓塞（Amniotic Fluid Embolism，AFE）</p>
+        <ul class="k-list">
+          <li>羊水進入母體循環 → 類過敏反應 + DIC；分娩時或產後立刻；死亡率 20-60%</li>
+          <li><strong>表現：</strong>突發呼吸困難 + 低血壓 + 意識改變 → DIC + 大量出血；胎兒窘迫</li>
+          <li><strong>治療：</strong>純支持性；氧氣 / 插管；升壓藥（Norepinephrine）；DIC 處置（FFP + 冷沉澱 + 血小板）；ECMO（嚴重）</li>
+          <li class="note">胎盤前置（Placenta Previa）= 胎盤覆蓋子宮頸內口 → 無痛性鮮紅色陰道出血；剖腹產；不做陰道指診</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 異位妊娠 -->
+<div class="topic-block" id="ectopic">
+  <div class="topic-block-head">
+    <span class="topic-block-title">異位妊娠 Ectopic Pregnancy</span>
+    <div data-bm-id="ectopic" data-bm-dept="婦產科" data-bm-title="異位妊娠">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    異位妊娠是育齡期女性急診最不能漏診的外科急症之一，破裂後可在數分鐘內造成死亡。<strong>輸卵管是最常見位置（95%）</strong>，但也可在卵巢、宮頸、腹腔、剖腹產疤痕。<strong>三聯症：停經 + 陰道出血 + 骨盆腔疼痛</strong>——但三者同時出現率不高，任何育齡期女性腹痛或出血 → 必查 β-hCG。<strong>鑑別性 hCG 閾值（Discriminatory Zone）</strong>：β-hCG &gt;1500-2000 mIU/mL 但超音波無宮內妊娠 = 高度懷疑異位妊娠。MTX 適用於未破裂穩定患者；破裂 → 立刻手術。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="ectopic-dx" data-bm-dept="婦產科" data-bm-title="異位妊娠診斷">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">危險因素 + 臨床評估 + 診斷</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">危險因素</p>
+        <ul class="k-list">
+          <li>既往異位妊娠史（最強危險因素，復發率 10-25%）</li>
+          <li>輸卵管手術 / 結紮；輸卵管感染（沙眼披衣菌 / 淋病）→ 輸卵管黏連</li>
+          <li>IUD 使用（↓ 宮內妊娠但不能完全防止異位妊娠）</li>
+          <li>輔助生殖技術（IVF）；子宮內膜異位症；吸菸</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+        <ul class="k-list">
+          <li><strong>未破裂：</strong>停經（6-8 週）；輕至中度單側骨盆腔疼痛；不規則陰道出血（褐色或鮮紅）；子宮頸蠕動痛（附件壓痛）；附件腫塊（50%）</li>
+          <li><strong>破裂：</strong>突發劇烈腹痛；肩峰疼痛（Kehr 徵，橫膈受血液刺激）；血流動力學不穩定（心搏過速、低血壓）；腹膜炎徵象；休克</li>
+          <li><strong>疤痕異位妊娠：</strong>剖腹產疤痕 → 大量出血 + 胎盤植入風險</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷流程（依 Williams 26th Ch.12）</p>
+          <ul class="k-list">
+            <li><strong>β-hCG（尿液快篩 → 血清定量）：</strong>陽性確認妊娠；陰性（高敏感度）基本排除</li>
+            <li><strong>經陰道超音波（TVS）：</strong>首選影像；宮內見妊娠囊（有卵黃囊或胚胎）= 排除異位妊娠（異宮同時妊娠 Heterotopic 極罕見，除非 IVF）</li>
+            <li><strong>妊娠位置不明（PUL）：</strong>TVS 未見宮內或宮外妊娠位置 → 48 小時後追蹤 β-hCG；多數 PUL 是早期宮內妊娠、近完全流產或早期異位妊娠</li>
+            <li><strong>鑑別性 hCG（Discriminatory Zone）：</strong>β-hCG ≥1500-2000 mIU/mL（各機構設定不同，部分用 ≥3510）但超音波未見宮內妊娠囊 → 高度懷疑異位妊娠；<strong>低於閾值不能排除異位妊娠</strong></li>
+            <li><strong>β-hCG 連續監測：</strong>正常宮內妊娠 → 48 小時最低上升 35-53%；但約 1/3 異位妊娠也可有相似上升幅度 → <strong>不能單靠倍增速率確診或排除</strong>；下降速率見 Table 11-1（完全流產預期）</li>
+            <li><strong>超音波附件發現（Williams 26th）：</strong>60% 異位妊娠呈複雜附件腫塊；20% 為高回音環（Tubal ring）；13% 可見卵黃囊 or 胚胎；「Ring of fire」= 色彩都卜勒血流環（但黃體也可類似）</li>
+            <li><strong>血清 Progesterone（輔助）：</strong>&lt;6 ng/mL = 非存活妊娠（特異性 98%）；&gt;25 ng/mL = 傾向正常宮內妊娠；10-25 ng/mL = 診斷意義有限</li>
+          </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="ectopic-tx" data-bm-dept="婦產科" data-bm-title="異位妊娠治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">異位妊娠治療（MTX vs 手術）</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>血流動力學不穩定 / 破裂 → 立刻手術。不要浪費時間嘗試 MTX。</span>
+        </div>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>MTX（藥物治療）</th><th>手術</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>適應症</strong></td>
+              <td>
+                血流動力學穩定；無破裂跡象<br/>
+                β-hCG &lt;5000 mIU/mL（部分指引 &lt;10000）<br/>
+                無胎心跳（FHR）<br/>
+                輸卵管直徑 &lt;3.5 cm<br/>
+                無腹腔內出血<br/>
+                患者可配合追蹤
+              </td>
+              <td>
+                血流動力學不穩定 / 破裂<br/>
+                MTX 禁忌（見下方）<br/>
+                β-hCG &gt;5000 mIU/mL<br/>
+                有胎心跳<br/>
+                腹腔鏡首選；開腹（血流不穩定 / 腹腔鏡失敗）
+              </td>
+            </tr>
+            <tr>
+              <td><strong>禁忌</strong></td>
+              <td>
+                腎衰竭（↑ MTX 毒性）；肝功能異常；血液疾病（WBC &lt;3000、PLT &lt;100k）；肺病；免疫缺陷；宮內妊娠；哺乳；MTX 過敏
+              </td>
+              <td>不適合全身麻醉（罕見禁忌）</td>
+            </tr>
+            <tr>
+              <td><strong>MTX 期間避免（Williams 26th）：</strong></td>
+              <td>
+                <li>含葉酸（Folic acid）補充劑（拮抗 MTX 作用）</li>
+                <li>NSAIDs（↓ 腎血流 → ↓ MTX 排除）</li>
+                <li>酒精（↑ 肝毒性）</li>
+                <li>陽光暴露（MTX 相關皮膚炎）</li>
+                <li>性行為（↑ 輸卵管破裂風險）</li>
+              </td>
+
+            <!-- MTX 成功率（依 hCG 濃度）-->
+            <li><strong>單劑 MTX 失敗率（依初始 β-hCG）：</strong>
+              &lt;1000 mIU/mL = 1.5%；1000-2000 = 5.6%；2000-5000 = 3.8%；5000-10000 = 14.3%
+            </li>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">MTX 方案</p>
+        <ul class="k-list">
+          <li><strong>單劑方案（最常用）：</strong>50 mg/m² IM × 1；第 4 天和第 7 天測 β-hCG；若第 4-7 天下降 &lt;15% → 第二劑；3 次 MTX 後無效 → 手術</li>
+          <li><strong>多劑方案：</strong>MTX 1 mg/kg IM（Day 1、3、5、7）交替 Leucovorin（解救）；效果較單劑好但副作用更多</li>
+          <li><strong>MTX 副作用：</strong>噁心嘔吐；口腔炎；腹痛（治療後第 2-3 天常見「分離痛」= 正常 MTX 作用）；肝毒性；骨髓抑制</li>
+          <li><strong>MTX 期間禁忌：</strong>避免含葉酸食物（豆類、綠色蔬菜）；避免 NSAIDs（↑ 毒性）；避免酒精；避免 UVA 暴露；禁止性行為（輸卵管破裂風險）</li>
+          <li><strong>追蹤：</strong>β-hCG 每週監測直到 &lt;5 mIU/mL；MTX 後 3 個月內避孕</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">手術方式</p>
+        <ul class="k-list">
+          <li><strong>輸卵管切除術（Salpingectomy）：</strong>標準術式；若對側輸卵管正常 → 切除患側（↓ 異位妊娠復發）</li>
+          <li><strong>輸卵管切開術（Salpingostomy）：</strong>保留輸卵管（僅一側輸卵管時考慮）；持續性異位妊娠風險 8%（需術後監測 hCG）</li>
+          <li><strong>Rh 陰性血型患者：</strong>Anti-D 免疫球蛋白（Rho-GAM）50 μg IM（妊娠 &lt;12 週）或 300 μg IM（&gt;12 週）</li>
+          <li class="note">診斷不確定（hCG 低 + 超音波不確定）→「妊娠位置不明（PUL）」→ 密切追蹤（β-hCG 48 小時後）→ 若 hCG 不下降 → 診斷性腹腔鏡</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 流產分類與處置 -->
+<div class="topic-block" id="miscarriage">
+  <div class="topic-block-head">
+    <span class="topic-block-title">流產 Spontaneous Abortion / Miscarriage</span>
+    <div data-bm-id="miscarriage" data-bm-dept="婦產科" data-bm-title="流產">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    自然流產是妊娠 20 週前的胎兒喪失，發生率約 10-20%（已知妊娠）。<strong>最常見原因是染色體異常（~50%）</strong>——多數為母體配子形成錯誤（95%），隨母親年齡增加風險升高。流產分類依臨床表現和超音波：先兆 → 難免 → 不完全 → 完全 → 稽留流產。<strong>所有育齡期陰道出血必查 β-hCG 排除異位妊娠；Rh 陰性患者需給 Anti-D 免疫球蛋白</strong>。依 Williams Obstetrics 26th Edition（Ch.11）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="miscarriage-classification" data-bm-dept="婦產科" data-bm-title="流產分類">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">流產臨床分類（依 Williams Obstetrics 26th Ch.11）</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>類型</th><th>臨床特徵</th><th>超音波</th><th>子宮頸口</th><th>處置</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>先兆流產（Threatened AB）</strong></td>
+              <td>陰道出血（± 輕度腹痛）；妊娠持續；出血為最重要預測因子</td>
+              <td>宮內妊娠 + 胎心跳存在；可見胎盤下血腫（Subchorionic hematoma，通常不影響預後）</td>
+              <td>關閉</td>
+              <td>觀察為主；Acetaminophen 緩解疼痛；避免性行為直到出血停止；<strong>黃體素補充不能降低流產率（PRISM trial）；臥床休息無效且可能有害</strong></td>
+            </tr>
+            <tr>
+              <td><strong>難免流產（Inevitable AB）</strong></td>
+              <td>出血加重 + 子宮頸擴張；胎兒尚未排出</td>
+              <td>宮內妊娠存在但預後極差</td>
+              <td>開放</td>
+              <td>流產過程不可逆 → 待完全排出 or 子宮搔刮術（Curettage）</td>
+            </tr>
+            <tr>
+              <td><strong>不完全流產（Incomplete AB）</strong></td>
+              <td>部分妊娠組織已排出；持續出血</td>
+              <td>子宮內見殘留組織</td>
+              <td>開放</td>
+              <td>三選一：Misoprostol（800 μg 陰道 or 400 μg 舌下）；期待療法（失敗率 ~25%）；子宮搔刮術（最快確實，成功率 95-100%）</td>
+            </tr>
+            <tr>
+              <td><strong>完全流產（Complete AB）</strong></td>
+              <td>所有妊娠組織已完全排出；出血減少</td>
+              <td>子宮空虛；子宮內膜薄（&lt;15 mm）；但需確認曾有宮內妊娠才能診斷</td>
+              <td>關閉</td>
+              <td>確認完全排出後觀察；監測 β-hCG 下降（Table 11-1）；若不確定 → 排除異位妊娠</td>
+            </tr>
+            <tr>
+              <td><strong>稽留流產（Missed AB）</strong></td>
+              <td>胚胎或胎兒已死但留在子宮內；可無症狀；子宮頸關閉；孕吐可能消失</td>
+              <td>
+                超音波診斷標準（Table 11-2）：<br/>
+                CRL ≥7 mm 但無心跳；或<br/>
+                平均孕囊徑（MSD）≥25 mm 但無胚胎；或<br/>
+                初次見孕囊 + 卵黃囊，≥11 天後無心跳；或<br/>
+                初次見孕囊無卵黃囊，≥2 週後無心跳
+              </td>
+              <td>關閉</td>
+              <td>Misoprostol（800 μg 陰道）× 1-2 劑；或子宮搔刮術；期待療法（數週，患者可接受的情況下）；DIC 風險（稽留 &gt;4 週）→ 監測凝血</td>
+            </tr>
+            <tr>
+              <td><strong>敗血性流產（Septic AB）</strong></td>
+              <td>任何流產類型 + 感染（發燒、子宮壓痛、惡臭分泌物）</td>
+              <td>可見殘留組織 + 氣體</td>
+              <td>可開放或關閉</td>
+              <td><strong>立刻廣效抗生素（Pip/Tazo or Ampicillin-sulbactam + Doxycycline）+ 子宮搔刮術；必要時 ICU</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">β-hCG 追蹤（完全流產後）</p>
+        <ul class="k-list">
+          <li>完全流產後 β-hCG 應快速下降；若下降不足 → 殘留組織 or 異位妊娠</li>
+          <li>初始 hCG 1000 mIU/mL → 預期第 2 天下降 ~72%，第 7 天下降 ~95%</li>
+          <li>下降速度低於最低預期值（Table 11-1）→ 懷疑殘留宮內或異位妊娠</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="miscarriage-etiology" data-bm-dept="婦產科" data-bm-title="流產病因與反覆流產">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">病因 + 反覆流產（RPL）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常見病因</p>
+        <ul class="k-list">
+          <li><strong>染色體異常（50%）：</strong>三染色體（50-60%）；單體 X（9-13%）；三倍體（11-12%）；多數為母體配子形成錯誤（95%）；隨母親年齡增加</li>
+          <li><strong>母體因素：</strong>控制不佳的 DM；肥胖；甲狀腺疾病；SLE；子宮解剖異常（子宮縱膈、黏連、肌瘤）</li>
+          <li><strong>感染（少見）：</strong>多數感染不直接造成早期流產</li>
+          <li><strong>血栓性疾病：</strong>APS（抗磷脂抗體症候群）→ 反覆流產；<strong>一般血栓性疾病已不再認為是流產原因（ACOG 2020）</strong></li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">反覆流產（Recurrent Pregnancy Loss，RPL）</p>
+        <ul class="k-list">
+          <li>定義：≥2-3 次妊娠喪失（依機構定義不同）</li>
+          <li><strong>評估：</strong>父母雙方核型（染色體）；子宮解剖（子宮鏡 / MRI）；抗磷脂抗體（LA、ACL、Anti-β2GP1）；TSH；血糖；考慮夫妻雙方 ANA</li>
+          <li><strong>APS 治療：</strong>低劑量 ASA + LMWH（↑ 活產率）</li>
+          <li>50% RPL 無可找到原因 → 給予支持照護 + 樂觀預後（~65% 下次妊娠成功）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Rh 血型考量</p>
+        <ul class="k-list">
+          <li>Rh 陰性患者（任何類型流產 or 宮外孕）→ Anti-D 免疫球蛋白（Rho-GAM）</li>
+          <li>妊娠 &lt;12 週：50 μg IM；≥12 週：300 μg IM</li>
+          <li>Misoprostol 或手術後均需給予</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="cervical-insufficiency" data-bm-dept="婦產科" data-bm-title="子宮頸閉鎖不全">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">子宮頸閉鎖不全（Cervical Insufficiency）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>定義：</strong>子宮頸無痛性擴張（第二妊娠期中期）→ 妊娠喪失或極早產</li>
+          <li><strong>危險因素：</strong>既往宮頸手術（LEEP、錐形切除）；創傷性擴張；先天性子宮頸短</li>
+          <li><strong>診斷：</strong>超音波子宮頸長度（CL）&lt;25 mm（妊娠 16-24 週）；漏斗形（Funneling）；反覆無痛性中期流產史</li>
+          <li><strong>治療：</strong>子宮頸環扎（Cerclage）= 縫合子宮頸加強；指徵：≥3 次第二妊娠期喪失、或 CL &lt;25 mm + 有早產史</li>
+          <li>Progesterone（17-OHPC IM 每週 or 陰道黃體素）↓ 早產（CL 短患者）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 早產 + 胎膜早破 -->
+<div class="topic-block" id="preterm">
+  <div class="topic-block-head">
+    <span class="topic-block-title">早產 + 胎膜早破 Preterm Birth & PPROM</span>
+    <div data-bm-id="preterm" data-bm-dept="婦產科" data-bm-title="早產 + 胎膜早破">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    早產（Preterm Birth）= 妊娠未滿 37 週分娩，是新生兒死亡和殘障的主要原因。<strong>晚期早產（34-36⁶/₇ 週）</strong>佔早產最大比例，看似接近足月但新生兒風險仍顯著。<strong>胎膜早破（PPROM）</strong>= 妊娠 37 週前胎膜破裂；感染是最主要的觸發因素。核心處置：<strong>類固醇促肺成熟（&lt;34 週）+ 硫酸鎂（神經保護，&lt;32 週）+ 子宮收縮抑制劑（48 小時橋接類固醇）+ 抗生素（PPROM）</strong>。依 Williams Obstetrics 26th（Ch.45）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="preterm-definition" data-bm-dept="婦產科" data-bm-title="早產分類">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">早產分類 + 存活率 + 危險因素</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">早產分類（依 Williams 26th）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>類別</th><th>週數</th><th>新生兒存活率</th></tr></thead>
+          <tbody>
+            <tr><td><strong>極早產（Extremely Preterm）</strong></td><td>&lt;28 週</td><td>存活率極低（22-23 週 ~5-10%；24-25 週 ~35-84%；視機構而定）</td></tr>
+            <tr><td><strong>非常早產（Very Preterm）</strong></td><td>28-32 週</td><td>存活率高但長期神經發育問題顯著</td></tr>
+            <tr><td><strong>中至晚期早產（Moderate to Late Preterm）</strong></td><td>32-36⁶/₇ 週</td><td>大多數存活，仍有呼吸、餵食、感染風險</td></tr>
+            <tr><td><strong>晚期早產（Late Preterm）</strong></td><td>34-36⁶/₇ 週</td><td>存活率高，但新生兒風險仍顯著高於足月兒</td></tr>
+            <tr><td><strong>生存可行性邊緣（Periviable）</strong></td><td>20-25⁶/₇ 週</td><td>22 週幾乎無存活；24 週 ~50-70%（積極處置下）；25 週 ~75-85%</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">危險因素</p>
+        <ul class="k-list">
+          <li><strong>最強：</strong>既往早產史（復發率 15-50%，依週數而定）</li>
+          <li>子宮頸長度 &lt;25 mm（妊娠 16-24 週）；多胎妊娠；宮頸手術史（LEEP、錐形切除）；子宮異常（縱膈、雙角）</li>
+          <li>感染（細菌性陰道炎、UTI、羊膜腔感染）；胎盤異常（前置胎盤、胎盤早剝）</li>
+          <li>PPROM；母體疾病（DM、HTN、自體免疫）；社會經濟因素；吸菸；非裔族群（美國資料）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">早產診斷</p>
+        <ul class="k-list">
+          <li><strong>規律子宮收縮：</strong>≥4 次 / 20 分或 ≥8 次 / 小時；合併子宮頸變化（擴張 ≥2 cm 或消退 ≥80%）</li>
+          <li><strong>胎兒纖維接合素（fFN）：</strong>宮頸陰道分泌物測定；陰性預測值 &gt;99%（&lt;34 週）；用於排除早產而非確認</li>
+          <li><strong>子宮頸長度（TVS）：</strong>&lt;20 mm = 高風險；20-30 mm = 中風險；&gt;30 mm = 低風險</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="preterm-management" data-bm-dept="婦產科" data-bm-title="早產處置">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">早產急性處置（早產陣痛 + PPROM）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">類固醇促肺成熟（Antenatal Corticosteroids，ACS）</p>
+        <ul class="k-list">
+          <li><strong>適應症：</strong>24⁰/₇ - 33⁶/₇ 週有早產風險（7 天內）；34⁰/₇ - 36⁶/₇ 週也可考慮（晚期早產）</li>
+          <li><strong>Betamethasone 12 mg IM q24h × 2 劑（首選）；</strong>或 Dexamethasone 6 mg IM q12h × 4 劑</li>
+          <li><strong>效益：</strong>↓ 呼吸窘迫症候群（RDS）；↓ 腦室內出血（IVH）；↓ 壞死性腸炎（NEC）；↓ 新生兒死亡率</li>
+          <li>單療程即可；常規重複療程不建議（可能影響胎兒腦部發育）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">硫酸鎂（胎兒神經保護）</p>
+        <ul class="k-list">
+          <li><strong>適應症：</strong>&lt;32 週早產（有分娩可能性）→↓ 腦性麻痺風險</li>
+          <li><strong>劑量：</strong>4-6 g IV 負荷 → 1-2 g/h 維持（直到分娩或 24 小時）</li>
+          <li>監測：呼吸（&gt;12 次 / 分）；膝腱反射（消失 = 毒性）；UOP；過量 → Calcium Gluconate 1 g IV</li>
+          <li class="note">注意：此處 MgSO₄ 是用於胎兒神經保護，和子癲前症預防癲癇是不同適應症但相同藥物和監測原則</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">子宮收縮抑制劑（Tocolytics）</p>
+        <ul class="k-list">
+          <li><strong>目的：</strong>延長妊娠 48 小時（讓 ACS 完整起效）；不能長期預防早產</li>
+          <li><strong>一線選擇：</strong></li>
+          <li>Nifedipine（CCB）10-20 mg PO q6h（最常用）；副作用：低血壓、潮紅；禁忌：低血壓</li>
+          <li>Indomethacin（NSAIDs）50 mg PO / 直腸 → 25-50 mg q6h；&lt;32 週短期使用；&gt;32 週禁忌（↑ 動脈導管早期閉合風險）</li>
+          <li>Atosiban（Oxytocin 拮抗劑）6.75 mg IV bolus → 維持輸注；台灣較少使用</li>
+          <li><strong>禁忌症（一般）：</strong>宮內感染；胎盤早剝；嚴重子癲前症；胎兒窘迫</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">早產預防（高風險患者）</p>
+        <ul class="k-list">
+          <li><strong>黃體素（Progesterone）：</strong>既往早產史 + 單胎 → 17-OHPC（Hydroxyprogesterone caproate）250 mg IM 每週（16-36 週）；子宮頸 &lt;25 mm + 單胎 → 陰道黃體素 200 mg qd（ACOG 2021 後效益有爭議）</li>
+          <li><strong>子宮頸環扎：</strong>子宮頸閉鎖不全 or CL &lt;25 mm + 既往早產史</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="pprom" data-bm-dept="婦產科" data-bm-title="胎膜早破 PPROM">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">妊娠前期胎膜早破（PPROM）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷</p>
+        <ul class="k-list">
+          <li><strong>病史：</strong>突然大量陰道流液（有別於分泌物）；持續滴液</li>
+          <li><strong>窺鏡檢查：</strong>見陰道後穹窿積液 or 宮頸口流出液體（不做子宮頸指診，↑ 感染風險）</li>
+          <li><strong>確認試驗：</strong>Nitrazine 試驗（羊水呈鹼性 pH &gt;7.1 → 試紙變藍）；蕨類試驗（羊水玻片乾燥後呈蕨葉狀）；IGFBP-1 或 PAMG-1 試驗（AmniSure，高敏感度和特異性）</li>
+          <li><strong>超音波：</strong>羊水量減少（AFI 或 MVP）輔助診斷；不能單靠超音波確認</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">處置（依妊娠週數）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>週數</th><th>處置策略</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>&lt;24 週</strong></td>
+              <td>諮詢（新生兒存活率極低）；個別化處置；感染 / 胎盤早剝 → 終止妊娠；期待處置風險極高（臍帶脫垂、感染、骨骼肌肉壓迫、肺發育不全）</td>
+            </tr>
+            <tr>
+              <td><strong>24-33⁶/₇ 週</strong></td>
+              <td>
+                期待療法（延長妊娠）<br/>
+                ACS（Betamethasone × 2 劑）<br/>
+                MgSO₄（&lt;32 週，神經保護）<br/>
+                <strong>抗生素：</strong>Ampicillin 2 g IV q6h × 48 小時 → Amoxicillin 250 mg PO q8h × 5 天 + Erythromycin 250 mg PO q6h × 10 天（避免 Amoxicillin-clavulanate → ↑ NEC 風險）<br/>
+                監測感染徵象（母體發燒、心搏過速、子宮壓痛、WBC ↑、CRP ↑、羊水混濁）
+              </td>
+            </tr>
+            <tr>
+              <td><strong>34-36⁶/₇ 週</strong></td>
+              <td>通常建議分娩（風險效益考量）；GBS 篩查或預防性抗生素；ACS 可考慮</td>
+            </tr>
+            <tr>
+              <td><strong>≥37 週（PROM）</strong></td>
+              <td>引產（感染風險 ↑ 隨破水時間延長）；GBS ⊕ 或未知 → 抗生素預防（Penicillin G 首選）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">宮內感染（絨毛膜羊膜炎）的徵象</p>
+        <ul class="k-list">
+          <li>母體發燒（≥38°C）= 主要標準；加以下任一：胎兒心搏過速（&gt;160 bpm）；母體心搏過速；子宮壓痛；羊水惡臭；WBC &gt;15,000（無類固醇效應）</li>
+          <li>確認感染 → 不再延遲分娩；廣效抗生素（Ampicillin + Gentamicin；剖腹加 Clindamycin）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 急性骨盆腔疼痛 -->
+<div class="topic-block" id="pelvic-pain">
+  <div class="topic-block-head">
+    <span class="topic-block-title">急性骨盆腔疼痛鑑別 Acute Pelvic Pain</span>
+    <div data-bm-id="pelvic-pain" data-bm-dept="婦產科" data-bm-title="急性骨盆腔疼痛">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    育齡期女性急性骨盆腔疼痛的鑑別診斷廣，但有幾個不能漏診的急症：<strong>異位妊娠破裂（立刻手術）、卵巢囊腫扭轉（6 小時內手術）、PID（立刻抗生素）</strong>。關鍵第一步：<strong>β-hCG 排除妊娠相關問題</strong>。超音波（陰道探頭）是最重要的診斷工具。「突發劇烈疼痛 + 噁心嘔吐 + 附件腫塊 + 無血流訊號」= 卵巢扭轉直到證明不是為止。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="pelvic-pain-ddx" data-bm-dept="婦產科" data-bm-title="骨盆腔疼痛鑑別">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">骨盆腔疼痛鑑別診斷速查</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>診斷</th><th>特徵</th><th>β-hCG</th><th>超音波</th><th>處置</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>異位妊娠</strong></td>
+              <td>停經 + 不規則出血 + 單側骨盆痛；破裂 → 突發劇烈痛 + 休克 + 肩峰痛</td>
+              <td>陽性（但可能低）</td>
+              <td>無宮內妊娠囊；附件腫塊；腹腔游離液</td>
+              <td>未破裂→MTX or 手術；破裂→立刻手術</td>
+            </tr>
+            <tr>
+              <td><strong>卵巢囊腫扭轉（最緊急）</strong></td>
+              <td>突發單側劇烈骨盆痛 + 噁心嘔吐；間歇性（扭轉自發解除）；附件腫塊史</td>
+              <td>陰性（除非合併妊娠）</td>
+              <td>附件腫塊 + 血流↓ or 無血流；但有血流不能排除扭轉（間歇性）</td>
+              <td>立刻手術（6 小時內）；復位 + 囊腫切除；卵巢固定</td>
+            </tr>
+            <tr>
+              <td><strong>PID（骨盆腔炎）</strong></td>
+              <td>雙側骨盆痛 + 發燒 + 陰道分泌物異常；子宮頸蠕動痛；附件壓痛；性行為活躍</td>
+              <td>陰性</td>
+              <td>輸卵管卵巢膿瘍（TOA）時可見附件腫塊；積液</td>
+              <td>見感染科 STI block；抗生素；TOA → 引流或手術</td>
+            </tr>
+            <tr>
+              <td><strong>子宮內膜異位症 / 卵巢巧克力囊腫</strong></td>
+              <td>慢性骨盆痛 + 月經前後加重；性交疼痛；不孕；可急性發作（囊腫破裂）</td>
+              <td>陰性</td>
+              <td>卵巢巧克力囊腫（均勻低回音）；盆腔黏連；子宮後屈固定</td>
+              <td>急性破裂 → 止痛 ± 腹腔鏡；慢性 → OCP 或 GnRH 促效劑；手術</td>
+            </tr>
+            <tr>
+              <td><strong>子宮肌瘤變性 / 梗塞</strong></td>
+              <td>已知肌瘤 + 急性局部疼痛 + 發燒；妊娠中期較常見（紅色變性）</td>
+              <td>陰性（或陽性若妊娠中）</td>
+              <td>肌瘤 + 中央低回音 or 不均質</td>
+              <td>止痛（NSAIDs、嗎啡）；支持性；手術（罕見）</td>
+            </tr>
+            <tr>
+              <td><strong>功能性卵巢囊腫破裂</strong></td>
+              <td>月經週期中 or 後 + 突發單側疼痛；通常可自然緩解；排卵痛（Mittelschmerz）較輕</td>
+              <td>陰性</td>
+              <td>Douglas 窩少量游離液；正常卵巢或小量出血</td>
+              <td>多數保守（止痛）；出血多 or 血流動力學不穩定 → 手術</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">評估流程</p>
+        <ul class="k-list">
+          <li><strong>Step 1：β-hCG（所有育齡期女性）</strong>→ 陽性 = 妊娠相關（異位妊娠、流產）；陰性 = 繼續下一步</li>
+          <li><strong>Step 2：生命徵象評估</strong>→ 血流動力學不穩定 = 外科急症（異位妊娠破裂、卵巢扭轉 + 出血）</li>
+          <li><strong>Step 3：骨盆腔超音波（陰道探頭首選）</strong>→ 最重要診斷工具</li>
+          <li><strong>Step 4：子宮頸拭子（淋病 + 披衣菌 NAAT）+ 骨盆腔診察</strong></li>
+          <li>若超音波不確定 → CT 腹盆腔（尤其非婦科原因考慮時：闌尾炎、憩室炎）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="ovarian-torsion" data-bm-dept="婦產科" data-bm-title="卵巢扭轉">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">卵巢囊腫扭轉（Adnexal / Ovarian Torsion）</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>超音波有血流不能排除扭轉！臨床懷疑度高 → 診斷性腹腔鏡。6 小時內手術復位可保留卵巢。</span>
+        </div>
+        <ul class="k-list">
+          <li><strong>危險因素：</strong>卵巢囊腫（&gt;5 cm 風險最高）；排卵誘導（多顆大卵泡）；妊娠（子宮增大改變解剖）；既往扭轉史</li>
+          <li><strong>典型表現：</strong>突發嚴重單側骨盆痛（右側 &gt; 左側，因乙狀結腸保護左側）+ 噁心嘔吐（70%）；可間歇性（部分扭轉 / 自發復位）</li>
+          <li><strong>超音波：</strong>附件腫塊（幾乎所有扭轉都有）；「漩渦徵（Whirlpool sign）」= 血管蒂扭轉；多普勒無血流（敏感度僅 44-75%，有血流不能排除扭轉）</li>
+          <li><strong>處置：</strong>立刻婦科會診；腹腔鏡手術首選（&lt;6 小時 → 復位 + 囊腫切除；&gt;6 小時或壞死明顯 → 附件切除）；即使外觀發紺的卵巢復位後仍可能恢復功能（不要輕易切除）</li>
+          <li><strong>術後：</strong>卵巢固定術（Oophoropexy）預防復發（爭議中）；OCP 抑制排卵 ↓ 新囊腫形成</li>
+          <li class="note">妊娠合併卵巢扭轉：任何週數均可手術（妊娠不是手術禁忌）；腹腔鏡安全至約 28 週；最佳時機妊娠 14-23 週（子宮不太大）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 異常子宮出血 -->
+<div class="topic-block" id="aub">
+  <div class="topic-block-head">
+    <span class="topic-block-title">異常子宮出血 Abnormal Uterine Bleeding（AUB）</span>
+    <div data-bm-id="aub" data-bm-dept="婦產科" data-bm-title="異常子宮出血">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    異常子宮出血（AUB）是婦科最常見主訴之一，FIGO 採用<strong>PALM-COEIN 分類系統</strong>——PALM（結構性：息肉、腺肌症、肌瘤、惡性）vs COEIN（非結構性：凝血障礙、排卵功能障礙、子宮內膜、醫源性、未分類）。<strong>評估第一步：排除妊娠；排除惡性（子宮內膜癌，尤其停經後出血或高危因素）</strong>。急性大量出血 → 血流動力學評估 + IV 雌激素（Premarin）或高劑量 OCP 止血。青少年 AUB 考慮凝血障礙（vWD 盛行率高）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="aub-classification" data-bm-dept="婦產科" data-bm-title="AUB 分類">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">PALM-COEIN 分類 + 評估</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">PALM-COEIN 分類系統（FIGO 2011）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>縮寫</th><th>病因</th><th>特徵</th></tr></thead>
+          <tbody>
+            <tr><td><strong>P — Polyp（息肉）</strong></td><td>子宮頸 / 子宮內膜息肉</td><td>不規則點狀出血；超音波或子宮鏡診斷；切除治療</td></tr>
+            <tr><td><strong>A — Adenomyosis（腺肌症）</strong></td><td>子宮內膜腺體和基質侵入子宮肌層</td><td>月經過多 + 月經前後疼痛；子宮均勻增大；MRI 診斷最準；OCP 或 LNG-IUS 治療</td></tr>
+            <tr><td><strong>L — Leiomyoma（肌瘤）</strong></td><td>子宮平滑肌瘤（最常見婦科腫瘤）</td><td>黏膜下肌瘤（影響子宮腔）→ 最易引起出血；LNG-IUS、手術切除、UAE</td></tr>
+            <tr><td><strong>M — Malignancy（惡性）</strong></td><td>子宮內膜癌；子宮頸癌；卵巢癌</td><td>停經後出血（5-10% 是子宮內膜癌）；高危：肥胖、DM、PCOS、未孕、雌激素暴露；子宮內膜切片確診</td></tr>
+            <tr><td><strong>C — Coagulopathy（凝血障礙）</strong></td><td>vWD（最常見）；血小板低下；肝衰竭；抗凝藥</td><td>初潮即月經過多；青少年 AUB 考慮；vWD 篩查（vWF Ag、活性、FVIII）</td></tr>
+            <tr><td><strong>O — Ovulatory dysfunction（排卵障礙）</strong></td><td>PCOS（最常見）；甲狀腺疾病；高泌乳素血症；下視丘功能障礙</td><td>不規則週期；無排卵性出血（月經週期 &lt;21 or &gt;35 天）；TSH；PRL；查 PCOS</td></tr>
+            <tr><td><strong>E — Endometrial（子宮內膜因素）</strong></td><td>局部子宮內膜出血調控異常；慢性子宮內膜炎</td><td>規律排卵但月經過多；排除其他原因後</td></tr>
+            <tr><td><strong>I — Iatrogenic（醫源性）</strong></td><td>OCP / HRT；抗凝藥；抗精神病藥（↑ PRL）；IUD</td><td>藥物使用史很重要</td></tr>
+            <tr><td><strong>N — Not classified（未分類）</strong></td><td>動靜脈畸形（AVM）；子宮頸傷口；子宮憩室（Niche）</td><td>罕見；影像診斷</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">評估（依年齡分層）</p>
+        <ul class="k-list">
+          <li><strong>所有患者：</strong>β-hCG；CBC；TSH；PRL；凝血（若懷疑凝血障礙）；子宮頸抹片（若未做）</li>
+          <li><strong>育齡期：</strong>骨盆腔超音波；子宮內膜切片（&gt;35 歲或有高危因素）；排卵評估（BBT、黃體素第 21 天）</li>
+          <li><strong>停經後任何出血：</strong>子宮內膜切片（經辦 or 子宮鏡）排除惡性；子宮內膜厚度 &gt;4 mm → 切片</li>
+          <li><strong>青少年：</strong>凝血篩查（vWF Ag + 活性 + FVIII）；PRL；PCOS 評估</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="aub-tx" data-bm-dept="婦產科" data-bm-title="AUB 治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">AUB 治療（急性止血 + 慢性管理）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性大量出血處置（血流動力學穩定）</p>
+        <ul class="k-list">
+          <li><strong>靜脈雌激素（Conjugated Estrogen，Premarin）：</strong>25 mg IV q4-6h（最多 24 小時）→ 快速止血（60-70% 有效）；之後轉口服 OCP 維持</li>
+          <li><strong>高劑量 OCP：</strong>Monophasic OCP（35 μg EE）tid × 7 天 → qd × 21 天；或 Norethindrone acetate 5-10 mg tid × 7 天</li>
+          <li><strong>Tranexamic acid（TXA）：</strong>1.3 g PO tid（月經期間）或 1 g IV；抗纖維蛋白溶解 → ↓ 出血量 ~40%</li>
+          <li><strong>NSAIDs：</strong>Mefenamic acid 500 mg tid；↓ 月經血量 ~20-40%；輕中度月經過多首選</li>
+          <li>必要時輸血；Foley 球囊（子宮腔填塞，暫時止血）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">長期 / 慢性管理（依病因）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>目標</th><th>選擇</th><th>適合族群</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>月經週期規律化 + 減少出血量</strong></td>
+              <td>
+                LNG-IUS（Mirena）= 最有效的非手術長期治療（↓ 血量 ~90%）<br/>
+                OCP（月經週期調控）<br/>
+                Progestin-only（Norethindrone、Medroxyprogesterone）<br/>
+                GnRH 促效劑（短期，術前縮小肌瘤）
+              </td>
+              <td>有避孕需求；無手術意願</td>
+            </tr>
+            <tr>
+              <td><strong>手術</strong></td>
+              <td>
+                子宮鏡息肉切除 / 黏膜下肌瘤切除<br/>
+                子宮內膜消融術（Endometrial Ablation）<br/>
+                子宮肌瘤切除術（Myomectomy）<br/>
+                子宮動脈栓塞（UAE，肌瘤適用）<br/>
+                子宮切除術（最終解決方案）
+              </td>
+              <td>藥物無效；不需保留生育功能（子宮切除）；有手術意願</td>
+            </tr>
+            <tr>
+              <td><strong>PCOS 相關 AUB</strong></td>
+              <td>OCP（第一線）；Metformin（改善胰島素抵抗 + 誘導排卵）；Clomiphene / Letrozole（想懷孕時）</td>
+              <td>PCOS 確診</td>
+            </tr>
+            <tr>
+              <td><strong>凝血障礙（vWD）</strong></td>
+              <td>DDAVP（Desmopressin，Type I vWD）；vWF 濃縮物；OCP（↑ vWF 水平）；TXA；LNG-IUS</td>
+              <td>血液科共同照護</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">子宮內膜癌篩查適應症（切片）</p>
+        <ul class="k-list">
+          <li>停經後任何出血（即使少量點狀）</li>
+          <li>年齡 &gt;45 歲 + AUB</li>
+          <li>&lt;45 歲但有高危因素：肥胖（BMI &gt;30）；PCOS；長期無排卵；雌激素暴露（未對抗）；Lynch 症候群；Tamoxifen 使用</li>
+          <li class="note">子宮內膜厚度 ≤4 mm（停經後）= 子宮內膜癌風險極低（陰性預測值 &gt;99%）→ 可密切觀察；&gt;4 mm → 切片</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 妊娠劇吐 -->
+<div class="topic-block" id="hyperemesis">
+  <div class="topic-block-head">
+    <span class="topic-block-title">妊娠劇吐 Hyperemesis Gravidarum</span>
+    <div data-bm-id="hyperemesis" data-bm-dept="婦產科" data-bm-title="妊娠劇吐">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    妊娠噁心嘔吐（NVP）影響約 70-80% 孕婦，多數輕微可門診處置。<strong>妊娠劇吐（HG）</strong>= 嚴重持續嘔吐 + 脫水 + 體重下降 &gt;5% + 酮尿症，需住院 IV 補液和止吐治療。病因與高 hCG 和 GDF15（生長分化因子 15）相關。<strong>最重要：給止吐藥前先給 Thiamine（Vitamin B1）預防 Wernicke 腦病</strong>——長期嘔吐 + 靜脈補液前未補充 Thiamine 是 Wernicke 發生的危險情境。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="hg-dx" data-bm-dept="婦產科" data-bm-title="妊娠劇吐診斷">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">診斷 + 評估 + 鑑別</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">NVP vs HG 鑑別</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>妊娠噁心嘔吐（NVP）</th><th>妊娠劇吐（HG）</th></tr></thead>
+          <tbody>
+            <tr><td><strong>嚴重度</strong></td><td>輕中度；可進食</td><td>嚴重；無法進食 / 喝水</td></tr>
+            <tr><td><strong>體重</strong></td><td>無或輕微下降</td><td>下降 &gt;5% 孕前體重</td></tr>
+            <tr><td><strong>脫水</strong></td><td>無或輕微</td><td>明顯（↑ BUN/Cr、尿液濃縮、酮尿）</td></tr>
+            <tr><td><strong>電解質</strong></td><td>通常正常</td><td>低鉀、低鈉、低氯、低鎂；代謝性鹼中毒</td></tr>
+            <tr><td><strong>處置</strong></td><td>口服止吐藥；飲食調整</td><td>住院；IV 補液；IV 止吐藥；Thiamine</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">危險因素</p>
+        <ul class="k-list">
+          <li>多胎妊娠（hCG ↑↑）；葡萄胎（hCG ↑↑）；既往 HG 史（最強）；女性胎兒；初孕；年齡 &lt;30；家族史；偏頭痛史；GI 蠕動疾病</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">評估（排除其他原因）</p>
+        <ul class="k-list">
+          <li>β-hCG + 超音波（排除多胎 / 葡萄胎）</li>
+          <li>電解質、BUN/Cr、LFT（HG 可有輕度 ↑ ALT/AST）；UA（酮體）</li>
+          <li>TSH（HG 可有短暫甲狀腺功能亢進，不需治療）</li>
+          <li><strong>鑑別診斷：</strong>闌尾炎；膽囊炎；消化性潰瘍；胰臟炎；腎結石；肝炎；腦膜炎；糖尿病酮酸中毒；甲狀腺風暴；腸阻塞</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="hg-tx" data-bm-dept="婦產科" data-bm-title="妊娠劇吐治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">治療（依嚴重度分層）</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>給任何含糖輸液前先給 Thiamine 100 mg IV（預防 Wernicke 腦病）。</span>
+        </div>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">非藥物處置</p>
+        <ul class="k-list">
+          <li>少量多餐；避免油膩 / 辛辣 / 氣味重的食物；生薑（Ginger）↓ 噁心</li>
+          <li>Acupressure（P6 穴位手環）；心理支持</li>
+          <li>避免空腹（晨起前先吃餅乾）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">止吐藥（門診 → 住院依序升階）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>層級</th><th>藥物</th><th>劑量</th><th>安全性</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>一線（門診）</strong></td>
+              <td>Pyridoxine（Vitamin B6）± Doxylamine</td>
+              <td>Pyridoxine 10-25 mg PO tid；Doxylamine 12.5 mg PO bid-tid（可合併）</td>
+              <td>最安全；FDA Category A；Diclegis = Pyridoxine + Doxylamine 複方</td>
+            </tr>
+            <tr>
+              <td><strong>二線</strong></td>
+              <td>Antihistamine（H1 拮抗劑）</td>
+              <td>Dimenhydrinate 50-100 mg PO/IV q4-6h；Diphenhydramine 25-50 mg PO/IV q4-6h</td>
+              <td>孕婦可用；嗜睡</td>
+            </tr>
+            <tr>
+              <td><strong>三線</strong></td>
+              <td>Phenothiazine 類</td>
+              <td>Prochlorperazine 10 mg PO/IM q6h；Promethazine 12.5-25 mg PO/IV/IM q4-6h</td>
+              <td>孕婦可用；嗜睡；低血壓；錐體外症狀</td>
+            </tr>
+            <tr>
+              <td><strong>四線</strong></td>
+              <td>5-HT3 拮抗劑（Serotonin 拮抗劑）</td>
+              <td>Ondansetron 4-8 mg IV/PO q8h</td>
+              <td>最有效；早孕期使用有輕微唇裂風險爭議（2012 年後數據不一致）；權衡後可用</td>
+            </tr>
+            <tr>
+              <td><strong>五線（頑固性）</strong></td>
+              <td>類固醇</td>
+              <td>Methylprednisolone 16 mg PO/IV tid × 3 天 → 漸減 × 2 週</td>
+              <td>妊娠 10 週後使用（早孕期 ↑ 唇顎裂風險）；頑固性 HG 最後手段</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">住院 IV 補液方案</p>
+        <ul class="k-list">
+          <li><strong>Thiamine（必須先給）：</strong>100 mg IV 溶入 NS 100 mL × 30 分（先給，再給含糖液）</li>
+          <li><strong>補液：</strong>NS 或 LR（避免含葡萄糖液先給，Wernicke 風險）；1-2 L 快速補充後依 UOP 調整</li>
+          <li><strong>電解質：</strong>積極補 K⁺（低鉀血症常見且嚴重）；補 Mg²⁺；監測 Na⁺（矯正低鈉勿過快）</li>
+          <li><strong>IV 止吐藥：</strong>Ondansetron 4-8 mg IV q8h + Metoclopramide 10 mg IV q6h（不同機轉合用）</li>
+          <li><strong>PPN / TPN（極嚴重 / 長期）：</strong>無法耐受任何口服 → 鼻胃管餵食（首選）or 靜脈營養</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Wernicke 腦病（Thiamine 缺乏）</p>
+        <ul class="k-list">
+          <li><strong>臨床三聯症：</strong>意識改變 + 眼肌麻痺（眼球震顫、外展神經麻痺）+ 共濟失調</li>
+          <li><strong>高危：</strong>HG 持續 &gt;3 週；任何補液前未給 Thiamine；嘔吐期間持續只給葡萄糖液</li>
+          <li><strong>治療：</strong>Thiamine 500 mg IV tid × 2 天 → 250 mg IV qd × 5 天（懷疑 Wernicke 時高劑量）</li>
+          <li class="note">MRI 腦部：乳頭體和丘腦對稱性 T2 高信號（Wernicke 特徵）；確診後立刻高劑量 Thiamine</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 避孕 + 緊急避孕 -->
+<div class="topic-block" id="contraception">
+  <div class="topic-block-head">
+    <span class="topic-block-title">避孕 + 緊急避孕 Contraception & Emergency Contraception</span>
+    <div data-bm-id="contraception" data-bm-dept="婦產科" data-bm-title="避孕 + 緊急避孕">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    避孕方法依效果分為四個等級：<strong>長效可逆避孕（LARC）</strong>（IUD、植入型）效果最好（失敗率 &lt;1%）；荷爾蒙避孕法（OCP、陰道環、貼片）次之；屏障法效果較差。<strong>美國醫療適應性標準（US MEC）</strong>提供各健康狀況的避孕選擇指引（分類 1-4）。<strong>緊急避孕（EC）</strong>= 無保護性行為後 72-120 小時內使用；LNG（事後藥）最常用；銅 IUD 最有效（失敗率 &lt;1%）。依 Williams Obstetrics 26th（Ch.38）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="contraception-methods" data-bm-dept="婦產科" data-bm-title="避孕方法比較">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">避孕方法效果比較（依 Williams 26th Table 38-1）</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>等級</th><th>方法</th><th>完美使用失敗率</th><th>典型使用失敗率</th></tr></thead>
+          <tbody>
+            <tr>
+              <td rowspan="5"><strong>第一等級（最有效）</strong></td>
+              <td>LNG-IUS（Mirena / Liletta / Kyleena / Skyla）</td>
+              <td>0.1%</td>
+              <td>0.1%</td>
+            </tr>
+            <tr>
+              <td>銅 IUD（ParaGard）</td>
+              <td>0.6%</td>
+              <td>0.8%</td>
+            </tr>
+            <tr>
+              <td>皮下植入（Etonogestrel，Nexplanon）</td>
+              <td>0.1%</td>
+              <td>0.1%</td>
+            </tr>
+            <tr>
+              <td>女性結紮</td>
+              <td>0.5%</td>
+              <td>0.5%</td>
+            </tr>
+            <tr>
+              <td>輸精管切除（男性結紮）</td>
+              <td>0.1%</td>
+              <td>0.15%</td>
+            </tr>
+            <tr>
+              <td rowspan="5"><strong>第二等級（非常有效）</strong></td>
+              <td>複合口服避孕藥（OCP）</td>
+              <td>0.3%</td>
+              <td>7%</td>
+            </tr>
+            <tr>
+              <td>陰道環（NuvaRing / Annovera）</td>
+              <td>0.3%</td>
+              <td>7%</td>
+            </tr>
+            <tr>
+              <td>貼片（Ortho Evra / Xulane）</td>
+              <td>0.3%</td>
+              <td>7%</td>
+            </tr>
+            <tr>
+              <td>DMPA 注射（Depo-Provera）</td>
+              <td>0.2%</td>
+              <td>4%</td>
+            </tr>
+            <tr>
+              <td>純黃體素避孕藥（Mini-pill）</td>
+              <td>0.3%</td>
+              <td>7%</td>
+            </tr>
+            <tr>
+              <td rowspan="2"><strong>第三等級（有效）</strong></td>
+              <td>男性保險套</td>
+              <td>2%</td>
+              <td>13%</td>
+            </tr>
+            <tr>
+              <td>女性保險套</td>
+              <td>5%</td>
+              <td>21%</td>
+            </tr>
+            <tr>
+              <td><strong>第四等級（最低效）</strong></td>
+              <td>殺精劑；避孕海綿</td>
+              <td>18-28%</td>
+              <td>28%</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">IUD 種類（台灣可得）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>種類</th><th>有效期限</th><th>機轉</th><th>特點</th></tr></thead>
+          <tbody>
+            <tr><td><strong>LNG-IUS（Mirena 52 mg）</strong></td><td>5-6 年（FDA 核准 5 年，實際可用 7 年）</td><td>局部黃體素：子宮內膜萎縮 + 宮頸黏液增厚；不穩定抑制排卵</td><td>月經量減少（約 35% 閉經）；治療月經過多、子宮腺肌症；不含雌激素</td></tr>
+            <tr><td><strong>銅 IUD（ParaGard）</strong></td><td>10 年（也可用於緊急避孕）</td><td>銅離子殺精 + 子宮腔炎症反應抑制受精 / 著床</td><td>月經量可能增加；最有效緊急避孕；無荷爾蒙；適合哺乳期</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">OCP 禁忌（US MEC 第 4 類 = 不可使用）</p>
+        <ul class="k-list">
+          <li>35 歲以上 + 吸菸（&gt;15 支 / 天）；靜脈血栓栓塞症（DVT / PE）史；缺血性心臟病；中風史</li>
+          <li>有視覺先兆的偏頭痛；未控制的高血壓（SBP ≥160 or DBP ≥100）；有複雜因素的糖尿病（血管病變）</li>
+          <li>哺乳期（產後 &lt;6 週，因影響乳汁產量）；活動性肝炎 / 肝硬化失代償；乳癌（現在或過去）</li>
+          <li class="note">含雌激素的避孕法（OCP / 貼片 / 陰道環）↑ VTE 風險；純黃體素方法（Mini-pill、DMPA、植入型）VTE 風險更低</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="emergency-contraception" data-bm-dept="婦產科" data-bm-title="緊急避孕">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">緊急避孕（Emergency Contraception，EC）</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>越早使用越有效。銅 IUD 是最有效的緊急避孕（性行為後 120 小時內放置，失敗率 &lt;1%）。</span>
+        </div>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>方法</th><th>劑量 / 使用時機</th><th>失敗率</th><th>機轉</th><th>注意</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>LNG（事後藥，首選）</strong></td>
+              <td>
+                Levonorgestrel 1.5 mg PO 單次（或 0.75 mg × 2 劑，間隔 12 小時）<br/>
+                性行為後 72 小時內（最好 &lt;24 小時）；最多 120 小時
+              </td>
+              <td>~1.5-2%（72 小時內）；越晚效果越差</td>
+              <td>抑制 / 延遲排卵（主要）；不影響已著床胚胎</td>
+              <td>體重 &gt;75 kg 效果可能降低 → 考慮 Ulipristal 或銅 IUD；無荷爾蒙禁忌（短期使用）；哺乳可用</td>
+            </tr>
+            <tr>
+              <td><strong>Ulipristal（Ella）</strong></td>
+              <td>30 mg PO 單次；性行為後 120 小時內</td>
+              <td>~1-2%（效果較 LNG 稍佳，尤其 72-120 小時）</td>
+              <td>選擇性黃體素受體調節劑（SPRM）；抑制 / 延遲排卵</td>
+              <td>需處方；哺乳期避免（排入乳汁）；台灣可得性需確認</td>
+            </tr>
+            <tr>
+              <td><strong>銅 IUD（最有效）</strong></td>
+              <td>性行為後 120 小時（5 天）內放置</td>
+              <td>&lt;1%（最有效的 EC）</td>
+              <td>銅離子殺精 + 阻止著床</td>
+              <td>同時提供後續長效避孕；STI 高風險患者需考慮；可在流產後或產後立刻放置</td>
+            </tr>
+            <tr>
+              <td><strong>Yuzpe 法（OCP）</strong></td>
+              <td>含 EE 100 μg + LNG 0.5 mg（或等效 OCP）× 2 次，間隔 12 小時；72 小時內</td>
+              <td>2-3.5%（效果最差）</td>
+              <td>抑制排卵</td>
+              <td>副作用最多（噁心嘔吐）；事前給 Metoclopramide；僅在其他 EC 不可得時使用</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">EC 後處置</p>
+        <ul class="k-list">
+          <li>EC 後下次月經可能提早或延遲 1 週；月經延遲 &gt;1 週 → 懷孕測試</li>
+          <li>EC 不影響已著床的妊娠；使用後若已懷孕不需中止妊娠</li>
+          <li>EC 後立刻開始持續避孕（OCP、保險套等）</li>
+          <li>LNG EC 後開始 OCP → 同日開始（「Quick Start」）或下次月經後</li>
+          <li class="note">EC 諮詢資源：台灣婦產科醫學會；不孕症相關諮詢；性侵害後 EC（需同時評估 STI 預防 + PEP）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">特殊族群避孕選擇</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>族群</th><th>建議 / 注意事項</th></tr></thead>
+          <tbody>
+            <tr><td><strong>哺乳期（產後 &lt;6 週）</strong></td><td>純黃體素方法首選（Mini-pill、DMPA、植入型、LNG-IUS）；含雌激素 → 可能 ↓ 乳汁分泌（避免）；銅 IUD 可立刻放置</td></tr>
+            <tr><td><strong>青少年</strong></td><td>LARC（IUD、植入型）同樣安全有效（ACOG 推薦）；不需等到生過孩子</td></tr>
+            <tr><td><strong>偏頭痛合併先兆</strong></td><td>含雌激素方法禁忌（↑ 中風風險）→ 純黃體素方法；銅 IUD</td></tr>
+            <tr><td><strong>靜脈血栓病史</strong></td><td>含雌激素方法禁忌；銅 IUD 首選；純黃體素方法可考慮（需個別評估）</td></tr>
+            <tr><td><strong>乳癌病史</strong></td><td>所有荷爾蒙方法避免（US MEC 4）；銅 IUD 首選</td></tr>
+            <tr><td><strong>肥胖（BMI &gt;30）</strong></td><td>OCP 仍可用（US MEC 2）；貼片效果可能 ↓（&gt;90 kg）；LNG EC 效果 ↓ → 銅 IUD 或 Ulipristal</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  const SEARCH_INDEX = [
+    { id:'ob-emergency',  dept:'婦產科', title:'產科急症（子癲前症 + 產後出血）', url:'#ob-emergency',  text:'', modalIds:[] },
+    { id:'ectopic',       dept:'婦產科', title:'異位妊娠',                       url:'#ectopic',       text:'', modalIds:[] },
+    { id:'miscarriage',   dept:'婦產科', title:'流產分類與處置',                  url:'#miscarriage',   text:'', modalIds:[] },
+    { id:'preterm',       dept:'婦產科', title:'早產 + 胎膜早破',                url:'#preterm',       text:'', modalIds:[] },
+    { id:'pelvic-pain',   dept:'婦產科', title:'急性骨盆腔疼痛鑑別',             url:'#pelvic-pain',   text:'', modalIds:[] },
+    { id:'aub',           dept:'婦產科', title:'異常子宮出血（AUB）',            url:'#aub',           text:'', modalIds:[] },
+    { id:'hyperemesis',   dept:'婦產科', title:'妊娠劇吐',                       url:'#hyperemesis',   text:'', modalIds:[] },
+    { id:'contraception', dept:'婦產科', title:'避孕 + 緊急避孕',               url:'#contraception', text:'', modalIds:[] },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
