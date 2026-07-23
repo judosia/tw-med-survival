@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>一般外科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit; transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 640px; max-height: 90vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+    .score-result {
+      background: var(--light); border-radius: 8px;
+      padding: 14px 16px; margin-top: 8px;
+      font-size: 0.82rem; line-height: 1.65;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#surgery" class="nav-back">外科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">一般外科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">一般外科</div>
+
+    <div class="sidebar-section-title">急性腹症</div>
+    <a href="#acute-abdomen"     class="sidebar-link">急性腹痛評估</a>
+    <a href="#appendicitis"      class="sidebar-link">急性闌尾炎</a>
+    <a href="#bowel-obstruction" class="sidebar-link">腸阻塞（SBO + LBO）</a>
+    <a href="#peritonitis"       class="sidebar-link">腹膜炎 + 腸穿孔</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">膽道 / 胰臟</div>
+    <a href="#biliary"           class="sidebar-link">膽道疾病（膽囊炎 + 膽管炎）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">腹壁 / 其他</div>
+    <a href="#hernia"            class="sidebar-link">疝氣（腹股溝 + 嵌頓）</a>
+    <a href="#gi-bleed-sx"       class="sidebar-link">消化道出血外科處置</a>
+    <a href="#postop"            class="sidebar-link">術後常見併發症</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="../im/gi.html#pancreatitis"  class="sidebar-link">胰臟炎 →（腸胃科）</a>
+    <a href="../im/gi.html#gi-bleeding"   class="sidebar-link">上消化道出血 →（腸胃科）</a>
+    <a href="../er/trauma.html#abdominal" class="sidebar-link">腹部外傷 →（外傷）</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-hero" style="background: linear-gradient(135deg, #f5fff5 0%, #f0f8ff 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>一般外科</h1>
+        <p>急性腹症、膽道疾病、腸阻塞、疝氣與術後併發症，PGY 外科 rotation 必備。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#surgery">外科</a> › 一般外科
+    </div>
+
+    <!-- 內容從這裡開始 -->
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  const SEARCH_INDEX = [
+    { id:'acute-abdomen',     dept:'一般外科', title:'急性腹痛評估',                url:'#acute-abdomen',     text:'', modalIds:[] },
+    { id:'appendicitis',      dept:'一般外科', title:'急性闌尾炎',                  url:'#appendicitis',      text:'', modalIds:[] },
+    { id:'bowel-obstruction', dept:'一般外科', title:'腸阻塞（SBO + LBO）',         url:'#bowel-obstruction', text:'', modalIds:[] },
+    { id:'peritonitis',       dept:'一般外科', title:'腹膜炎 + 腸穿孔',            url:'#peritonitis',       text:'', modalIds:[] },
+    { id:'biliary',           dept:'一般外科', title:'膽道疾病（膽囊炎 + 膽管炎）', url:'#biliary',           text:'', modalIds:[] },
+    { id:'hernia',            dept:'一般外科', title:'疝氣（腹股溝 + 嵌頓）',      url:'#hernia',            text:'', modalIds:[] },
+    { id:'gi-bleed-sx',       dept:'一般外科', title:'消化道出血外科處置',          url:'#gi-bleed-sx',       text:'', modalIds:[] },
+    { id:'postop',            dept:'一般外科', title:'術後常見併發症',              url:'#postop',            text:'', modalIds:[] },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
