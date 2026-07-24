@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>精神科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit; transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 640px; max-height: 90vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+    .score-result {
+      background: var(--light); border-radius: 8px;
+      padding: 14px 16px; margin-top: 8px;
+      font-size: 0.82rem; line-height: 1.65;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#psych" class="nav-back">精神科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">精神科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">精神科</div>
+
+    <div class="sidebar-section-title">急症評估</div>
+    <a href="#psych-emergency"  class="sidebar-link">精神科急診評估 + 強制住院</a>
+    <a href="#psych-agitation"  class="sidebar-link">激動患者處置 + 自殺評估</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">主要疾患</div>
+    <a href="#psych-psychosis"  class="sidebar-link">思覺失調症（Schizophrenia）</a>
+    <a href="#psych-mood"       class="sidebar-link">情感性疾患（重鬱症 + 躁鬱症）</a>
+    <a href="#psych-anxiety"    class="sidebar-link">焦慮症 + PTSD + OCD</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">物質使用</div>
+    <a href="#psych-substance"  class="sidebar-link">物質使用疾患（酒精 + 戒斷）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">藥物</div>
+    <a href="#psych-meds"       class="sidebar-link">精神科藥物速查</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">其他科別</div>
+    <a href="../er/toxicology.html#tox-cns"          class="sidebar-link">Serotonin syndrome / NMS →（毒物學）</a>
+    <a href="../im/neuro.html#delirium"              class="sidebar-link">譫妄 →（神經科）</a>
+    <a href="../er/toxicology.html#tox-alcohols"     class="sidebar-link">酒精戒斷 →（毒物學）</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-hero" style="background: linear-gradient(135deg, #f5f0ff 0%, #f0f5ff 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>精神科</h1>
+        <p>精神科急診評估、主要疾患診斷與藥物處置，依 Kaplan & Sadock 12th 整合編排。PGY 急診和各科 rotation 都會遇到。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2"/>
+          <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#psych">精神科</a> › 精神科
+    </div>
+
+    <!-- 精神科急診評估 -->
+<div class="topic-block" id="psych-emergency">
+  <div class="topic-block-head">
+    <span class="topic-block-title">精神科急診評估 + 強制住院 Psychiatric Emergency Evaluation</span>
+    <div data-bm-id="psych-emergency" data-bm-dept="精神科" data-bm-title="精神科急診評估">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    精神科急診評估的首要任務是<strong>排除「偽裝成精神科問題的器質性疾病」</strong>——約 1/3 的醫學疾病以精神症狀表現（譫妄、甲狀腺風暴、低血糖、腦炎等）。評估五大核心問題：患者安全？問題是生理還是功能性？有無精神病？有無自殺或殺人意念？患者的自我照護能力？依 Kaplan & Sadock Synopsis of Psychiatry 12th（Ch.25.3）。台灣強制住院依《精神衛生法》第 42 條（嚴重病人緊急安置）和第 46 條（強制住院申請）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="psych-eval-framework" data-bm-dept="精神科" data-bm-title="精神科急診評估框架">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">精神科急診評估框架（依 Kaplan & Sadock Ch.25.3）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">五大核心評估問題</p>
+        <ul class="k-list">
+          <li><strong>1. 患者在急診科是否安全？</strong>激動 / 暴力風險評估；環境安全（移除銳器）；需要保全或約束嗎？</li>
+          <li><strong>2. 問題是生理性、功能性，還是兩者兼有？</strong>最重要的問題——先排除器質性病因</li>
+          <li><strong>3. 患者是否有精神病（Psychosis）？</strong>幻覺、妄想、現實感喪失</li>
+          <li><strong>4. 患者是否有自殺或殺人意念？</strong>每個患者均需評估</li>
+          <li><strong>5. 患者的自我照護能力如何？</strong>決定住院 vs 門診處置</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">器質性病因線索（Table 25-8，Kaplan & Sadock）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>線索</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr><td>急性發作（小時至分鐘）</td><td>功能性精神疾病通常漸進發展；急性起病 → 考慮器質性</td></tr>
+            <tr><td>首次發作</td><td>無精神科病史的首次發作 → 高度懷疑器質性</td></tr>
+            <tr><td>年齡較大</td><td>&gt;40 歲首次精神病發作 → 器質性可能性 ↑</td></tr>
+            <tr><td>當前醫學疾病 / 外傷</td><td>頭部外傷、感染、代謝異常</td></tr>
+            <tr><td>顯著物質使用史</td><td>急性中毒或戒斷</td></tr>
+            <tr><td>非聽幻覺</td><td>視幻覺、嗅幻覺、觸幻覺 → 器質性更常見</td></tr>
+            <tr><td>神經症狀</td><td>意識改變、癲癇、頭痛加劇、視覺變化</td></tr>
+            <tr><td>認知功能改變</td><td>定向感↓、記憶↓、注意力↓、計算能力↓</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">精神科急診常見診斷（Kaplan & Sadock）</p>
+        <ul class="k-list">
+          <li>憂鬱症（最常見）；躁症發作；思覺失調症；酒精依賴；約 20% 患者有自殺意念；約 10% 有暴力風險；約 40% 需要住院</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">必要檢查（排除器質性病因）</p>
+        <ul class="k-list">
+          <li><strong>基本：</strong>血糖（立刻）；生命徵象；CBC、BMP（電解質、BUN、Cr、血糖）；LFT；TSH；尿液毒物篩查；血中酒精濃度</li>
+          <li><strong>選擇性（依臨床）：</strong>CT 頭部（頭部外傷、局灶神經症狀、首次精神病）；腰椎穿刺（發燒 + 意識改變）；EEG（懷疑癲癇）；HIV、梅毒（VDRL）；維他命 B12 / 葉酸；NH₃（懷疑肝性腦病）</li>
+          <li><strong>心電圖：</strong>QTc 延長（多種精神科藥物 ↑ QTc）；電解質異常；心臟原因</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="mental-status-exam" data-bm-dept="精神科" data-bm-title="精神狀態檢查">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">精神狀態檢查（Mental Status Examination，MSE）</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>項目</th><th>評估內容</th><th>異常發現 → 意義</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>外觀（Appearance）</strong></td>
+              <td>整體外表、衛生、眼神接觸、姿態</td>
+              <td>邋遢 → 自我照護↓；奇裝異服 → 可能躁症</td>
+            </tr>
+            <tr>
+              <td><strong>行為（Behavior）</strong></td>
+              <td>動作速度、激動、重複動作</td>
+              <td>精神運動激動 → 躁症 / 焦慮；精神運動遲緩 → 憂鬱 / 藥物</td>
+            </tr>
+            <tr>
+              <td><strong>言語（Speech）</strong></td>
+              <td>速度、音量、語流</td>
+              <td>言語急迫（Pressured）→ 躁症；音量低、緩慢 → 憂鬱</td>
+            </tr>
+            <tr>
+              <td><strong>情感 / 心情（Affect / Mood）</strong></td>
+              <td>外觀情感表達 vs 主觀心情；一致性</td>
+              <td>平板情感（Flat）→ 思覺失調；情感不一致 → 精神病</td>
+            </tr>
+            <tr>
+              <td><strong>思考過程（Thought Process）</strong></td>
+              <td>思考連貫性、邏輯</td>
+              <td>思維奔逸（Flight of ideas）→ 躁症；思維鬆弛（Loose associations）→ 思覺失調</td>
+            </tr>
+            <tr>
+              <td><strong>思考內容（Thought Content）</strong></td>
+              <td>妄想、強迫思想、自殺 / 殺人意念</td>
+              <td>被害妄想 → 思覺失調 / 偏執；誇大妄想 → 躁症</td>
+            </tr>
+            <tr>
+              <td><strong>知覺（Perception）</strong></td>
+              <td>幻覺（聽 / 視 / 嗅 / 觸）、錯覺</td>
+              <td>聽幻覺 → 思覺失調；視幻覺 → 器質性 / 物質相關</td>
+            </tr>
+            <tr>
+              <td><strong>認知（Cognition）</strong></td>
+              <td>定向感（人時地）；記憶；注意力；計算；抽象思維</td>
+              <td>定向感喪失 + 記憶↓ → 譫妄 / 失智；注意力↓ → 譫妄</td>
+            </tr>
+            <tr>
+              <td><strong>病識感（Insight）</strong></td>
+              <td>對自身疾病的認識</td>
+              <td>病識感缺乏 → 思覺失調；常影響治療依從性</td>
+            </tr>
+            <tr>
+              <td><strong>判斷力（Judgment）</strong></td>
+              <td>做決定的能力；行為的合理性</td>
+              <td>判斷力↓ → 可能需要代理決策 / 強制住院</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">快速認知篩查工具</p>
+        <ul class="k-list">
+          <li><strong>MMSE（Mini Mental State Examination）：</strong>30 分；&lt;24 分 = 認知損傷；評估定向感、記憶、計算、語言、繪圖</li>
+          <li><strong>MoCA（Montreal Cognitive Assessment）：</strong>30 分；&lt;26 分 = 輕度認知損傷；更敏感（尤其執行功能）</li>
+          <li><strong>CAM（Confusion Assessment Method）：</strong>譫妄篩查；四項（急性起病 + 波動性 + 注意力不集中 + 意識改變 or 思維混亂）= 譫妄診斷</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="involuntary-admission" data-bm-dept="精神科" data-bm-title="強制住院">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">強制住院（台灣《精神衛生法》）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">相關法條</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>條文</th><th>內容</th><th>程序</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>第 42 條（緊急安置）</strong></td>
+              <td>嚴重病人傷害他人或自己，或有傷害之虞，且無法以其他方式避免</td>
+              <td>
+                警察 / 消防 / 家屬通報 → 送醫強制評估<br/>
+                精神科醫師評估後，可緊急安置最長 <strong>72 小時</strong>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>第 46 條（強制住院）</strong></td>
+              <td>嚴重病人非住院治療不足以維護其自身或他人安全</td>
+              <td>
+                需兩位精神科醫師診斷 + 精神疾病嚴重度評估<br/>
+                送審查委員會審查；最長 <strong>60 天</strong>（可申請延長）<br/>
+                家屬或關係人可提出異議
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">住院 vs 門診決策</p>
+        <ul class="k-list">
+          <li><strong>考慮住院（任一項）：</strong>主動自殺意念 + 計劃或手段；對他人有暴力威脅；無法自我照護（拒食、衛生嚴重忽視）；需要藥物調整無法在門診完成；社會支持系統崩潰</li>
+          <li><strong>可考慮門診：</strong>被動死亡意念（無計劃）；有支持系統；症狀輕微且穩定；有就診和遵囑能力；後續門診已安排</li>
+          <li><strong>安全計劃（Safety Planning）：</strong>出院前完成；危機聯絡方式；移除家中致命物品（藥物、武器）；24 小時危機熱線（台灣：1925 安心專線）</li>
+          <li class="note">「嚴重病人」定義（《精神衛生法》第 3 條）：病情嚴重，已不能處理自己事務，且其判斷力、辨識能力、自我保護能力或衝動控制能力顯著退化，有自傷、傷人之虞者</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 激動患者處置 + 自殺評估 -->
+<div class="topic-block" id="psych-agitation">
+  <div class="topic-block-head">
+    <span class="topic-block-title">激動患者處置 + 自殺評估 Agitation & Suicide Risk Assessment</span>
+    <div data-bm-id="psych-agitation" data-bm-dept="精神科" data-bm-title="激動患者處置 + 自殺評估">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    急診激動患者處置的原則：<strong>言語去激動（De-escalation）優先，藥物鎮靜次之，物理約束最後</strong>。自殺評估是每個精神科急診患者的必做項目——<strong>直接詢問自殺意念不會增加自殺風險，反而建立治療聯盟</strong>。台灣自殺防治專線：<strong>1925（安心專線，24 小時）</strong>。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="agitation-management" data-bm-dept="精神科" data-bm-title="激動患者處置">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">激動患者處置（Agitation Management）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Step 1：言語去激動（De-escalation，首選）</p>
+        <ul class="k-list">
+          <li>保持冷靜語氣；不要對抗或爭辯；尊重個人空間（至少一臂距離）</li>
+          <li>提供選擇（「你想坐下嗎？」）；避免命令語氣</li>
+          <li>找出激動原因（疼痛？恐懼？誤解？）並回應</li>
+          <li>確保出口暢通（醫師站在靠近門的位置）；請保全在旁但不要圍堵患者</li>
+          <li>若有暴力跡象 → 立刻請求支援；不要單獨處理</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Step 2：藥物鎮靜（De-escalation 失效後）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>藥物</th><th>劑量</th><th>適合情境</th><th>注意</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Lorazepam（BZD，首選）</strong></td>
+              <td>1-2 mg IM / IV；可重複 q30-60 分</td>
+              <td>酒精戒斷；BZD / 酒精中毒；焦慮性激動；老年患者</td>
+              <td>呼吸抑制（老年 / 多重用藥）；拮抗劑：Flumazenil</td>
+            </tr>
+            <tr>
+              <td><strong>Haloperidol（典型抗精神病藥）</strong></td>
+              <td>2.5-5 mg IM；可 + Lorazepam 2 mg IM（協同效果）</td>
+              <td>精神病性激動（思覺失調、躁症）；不知病因的激動</td>
+              <td>QTc 延長（監測 ECG）；EPS（肌張力不全）；Akathisia</td>
+            </tr>
+            <tr>
+              <td><strong>Olanzapine（非典型抗精神病藥）</strong></td>
+              <td>5-10 mg IM</td>
+              <td>精神病性激動；較少 EPS</td>
+              <td><strong>Olanzapine IM + Lorazepam IM 禁止同時給予</strong>（↑ 心肺抑制風險）；低血壓</td>
+            </tr>
+            <tr>
+              <td><strong>Ziprasidone</strong></td>
+              <td>10-20 mg IM</td>
+              <td>精神病性激動</td>
+              <td>QTc 延長（慎用）</td>
+            </tr>
+            <tr>
+              <td><strong>Droperidol</strong></td>
+              <td>2.5-5 mg IM / IV</td>
+              <td>急診激動；快速起效</td>
+              <td>QTc 延長；FDA 黑框警告（心律不整）；部分醫院仍常用</td>
+            </tr>
+            <tr>
+              <td><strong>Ketamine</strong></td>
+              <td>4-5 mg/kg IM（解離性劑量）</td>
+              <td>嚴重暴力性激動；其他藥物無效；院前急救</td>
+              <td>氣道 / 呼吸監測；↑ 分泌物；幻覺（恢復期）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Step 3：物理約束（最後手段）</p>
+        <ul class="k-list">
+          <li><strong>適應症：</strong>言語和藥物處置無效；立即的傷害風險（自傷或傷人）</li>
+          <li><strong>需要 5 人團隊：</strong>1 人負責頭部 / 指揮；4 人各負責一個肢體</li>
+          <li><strong>約束後：</strong>每 15 分鐘評估生命徵象；檢查肢體循環；記錄於病歷；持續尋求解除約束的機會</li>
+          <li><strong>法律要求：</strong>台灣《精神衛生法》規定使用約束 / 隔離需有醫師醫令；定期評估必要性；家屬通知</li>
+          <li class="note">約束不是懲罰——需明確告知患者：「我們這樣做是為了確保你的安全，當你可以控制自己的行為時，我們會解除約束」</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="suicide-assessment" data-bm-dept="精神科" data-bm-title="自殺評估">
+      <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+      <div class="k-card-head"><span class="k-card-title">自殺風險評估（Suicide Risk Assessment）</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>台灣自殺防治專線：1925（安心專線，24 小時）。直接詢問自殺意念不會增加風險。</span>
+        </div>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">自殺危險因素（記憶口訣：IS PATH WARM）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>字母</th><th>項目</th><th>說明</th></tr></thead>
+          <tbody>
+            <tr><td><strong>I</strong></td><td>Ideation（意念）</td><td>自殺意念（被動 or 主動）</td></tr>
+            <tr><td><strong>S</strong></td><td>Substance abuse（物質濫用）</td><td>酒精 / 藥物使用 ↑ 衝動性</td></tr>
+            <tr><td><strong>P</strong></td><td>Purposelessness（無目標感）</td><td>「活著沒有意義」</td></tr>
+            <tr><td><strong>A</strong></td><td>Anxiety（焦慮）</td><td>嚴重焦慮 / 恐慌 ↑ 自殺風險</td></tr>
+            <tr><td><strong>T</strong></td><td>Trapped（被困感）</td><td>「無路可走」的感覺</td></tr>
+            <tr><td><strong>H</strong></td><td>Hopelessness（絕望）</td><td>未來無希望感 = 最強預測因子之一</td></tr>
+            <tr><td><strong>W</strong></td><td>Withdrawal（退縮）</td><td>社交退縮；孤立</td></tr>
+            <tr><td><strong>A</strong></td><td>Anger（憤怒）</td><td>無法控制的憤怒；尋求報復</td></tr>
+            <tr><td><strong>R</strong></td><td>Recklessness（魯莽）</td><td>高風險行為（如超速、危險性行為）</td></tr>
+            <tr><td><strong>M</strong></td><td>Mood changes（情緒變化）</td><td>劇烈情緒波動</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">自殺風險評估問診（Columbia Suicide Severity Rating Scale，C-SSRS 核心問題）</p>
+        <ul class="k-list">
+          <li><strong>1. 被動死亡意念：</strong>「你有沒有希望自己睡著不要醒來，或是希望自己已經死了？」</li>
+          <li><strong>2. 主動自殺意念：</strong>「你有沒有想要傷害或殺死自己的念頭？」</li>
+          <li><strong>3. 有無計劃：</strong>「你有沒有想過要怎麼做？」（有計劃 = 高風險）</li>
+          <li><strong>4. 有無意圖：</strong>「你打算這樣做嗎？」（有意圖 = 極高風險）</li>
+          <li><strong>5. 手段可及性：</strong>「你能取得你計劃要用的方法嗎？」（藥物、武器等）</li>
+          <li><strong>6. 過去自殺嘗試史：</strong>「你以前有沒有試過傷害自己？」（最強危險因子之一）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">自殺風險分層</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>風險層級</th><th>特徵</th><th>處置</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>低風險</strong></td>
+              <td>被動死亡意念；無計劃；無過去嘗試；有支持系統；願意求助</td>
+              <td>安全計劃；移除致命手段；門診追蹤（盡快）；危機熱線資訊</td>
+            </tr>
+            <tr>
+              <td><strong>中風險</strong></td>
+              <td>主動意念但無具體計劃；有部分危險因子；支持系統薄弱</td>
+              <td>密切評估；考慮住院；強化支持系統；安全計劃</td>
+            </tr>
+            <tr>
+              <td><strong>高風險</strong></td>
+              <td>有具體計劃 + 意圖 + 手段可及；過去嘗試史；近期重大失落；合併物質濫用</td>
+              <td>立刻住院（自願或強制）；移除手段；持續監視；不讓患者獨處</td>
+            </tr>
+            <tr>
+              <td><strong>立即危機</strong></td>
+              <td>正在進行中的自殺行為；剛完成自殺嘗試；威脅立刻自殺</td>
+              <td>立刻醫療介入；安全保護；急診評估；住院</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">保護因子</p>
+        <ul class="k-list">
+          <li>宗教信仰（反對自殺）；對家人 / 子女的責任感；社會支持；求生意志；未來計劃感；治療中的精神疾病有所改善</li>
+          <li class="note">台灣自殺率：男性 &gt; 女性；自殺意念：女性 &gt; 男性（女性意念多但嘗試致死率低）；老年男性是高危族群；近期出院患者（出院後 30 天是高風險期）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 思覺失調症 -->
+<div class="topic-block" id="psych-psychosis">
+  <div class="topic-block-head">
+    <span class="topic-block-title">思覺失調症 Schizophrenia Spectrum Disorders</span>
+    <div data-bm-id="psych-psychosis" data-bm-dept="精神科" data-bm-title="思覺失調症">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    思覺失調症是一種以<strong>正性症狀（幻覺、妄想、思維混亂）</strong>和<strong>負性症狀（情感平板、貧語、意志缺乏、無快感）</strong>為特徵的慢性嚴重精神疾病。終生盛行率約 1%，男女相近但男性發病較早（高峰 15-25 歲 vs 女性 25-35 歲）。<strong>多巴胺假說</strong>是核心：中腦邊緣徑路過度活化（正性症狀）+ 前額葉皮質多巴胺不足（負性症狀）。抗精神病藥物（D2 拮抗劑）是主要治療，但負性症狀對藥物反應較差。依 Kaplan & Sadock 12th（Ch.5）+ DSM-5。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="schizophrenia-dx" data-bm-dept="精神科" data-bm-title="思覺失調症診斷">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">DSM-5 診斷標準 + 症狀分類</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">DSM-5 思覺失調症診斷標準（A-E）</p>
+        <ul class="k-list">
+          <li><strong>A. 特徵性症狀（持續 ≥1 個月，以下 ≥2 項，且至少包含前 3 項之一）：</strong>
+            <ul>
+              <li>妄想（Delusions）</li>
+              <li>幻覺（Hallucinations）</li>
+              <li>思維混亂 / 語言瓦解（Disorganized speech）</li>
+              <li>嚴重瓦解或緊張症行為（Grossly disorganized / catatonic behavior）</li>
+              <li>負性症狀（貧語、情感平板、意志缺乏）</li>
+            </ul>
+          </li>
+          <li><strong>B. 社會 / 職業功能障礙：</strong>工作、人際關係、自我照護明顯低於發病前水準</li>
+          <li><strong>C. 持續時間 ≥6 個月（含 A 標準症狀 ≥1 個月）</strong></li>
+          <li><strong>D. 排除情感性精神疾病（Schizoaffective disorder、MDD with psychotic features）</strong></li>
+          <li><strong>E. 排除物質或醫學疾病引起</strong></li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">正性 vs 負性症狀（Kaplan & Sadock）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>正性症狀（Positive）</th><th>負性症狀（Negative，5A）</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>妄想（Delusions）：</strong>被害妄想（最常見）；誇大妄想；關係妄想；思想插入 / 抽取 / 廣播<br/>
+                <strong>幻覺（Hallucinations）：</strong>聽幻覺最常見（命令性聲音；評論性聲音）；視幻覺 → 考慮器質性<br/>
+                <strong>思維瓦解（Disorganized thought）：</strong>思維鬆弛；語詞拼盤（Word salad）；新語症；模仿語言<br/>
+                <strong>行為瓦解：</strong>怪異行為；緊張症（Catatonia）；蠟曲症（Waxy flexibility）
+              </td>
+              <td>
+                <strong>Alogia（貧語）：</strong>語言量少；內容空洞<br/>
+                <strong>Avolition（意志缺乏）：</strong>缺乏目標導向行為<br/>
+                <strong>Anhedonia（無快感）：</strong>對活動缺乏愉悅感<br/>
+                <strong>Affect（情感平板）：</strong>情感表達減少<br/>
+                <strong>Asociality（社交退縮）：</strong>社交興趣 / 活動減少<br/>
+                <em>注：負性症狀對功能預後影響更大；對抗精神病藥物反應差</em>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">思覺失調症光譜（Kaplan & Sadock Ch.5）</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>疾患</th><th>特徵</th><th>病程</th></tr></thead>
+          <tbody>
+            <tr><td><strong>思覺失調症</strong></td><td>正性 + 負性症狀；功能↓；≥6 個月</td><td>慢性；反覆發作</td></tr>
+            <tr><td><strong>類思覺失調症（Schizophreniform）</strong></td><td>同思覺失調症</td><td>1-6 個月；預後較好</td></tr>
+            <tr><td><strong>短暫精神病（Brief Psychotic）</strong></td><td>突發精神症狀</td><td>&lt;1 個月；完全恢復</td></tr>
+            <tr><td><strong>妄想症（Delusional Disorder）</strong></td><td>單一或相關妄想；無顯著功能障礙；無其他精神病症狀</td><td>慢性</td></tr>
+            <tr><td><strong>分裂情感性疾患（Schizoaffective）</strong></td><td>思覺失調症 + 情感疾患（重鬱 or 躁症）；需同時滿足兩組診斷</td><td>中間型預後</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="schizophrenia-tx" data-bm-dept="精神科" data-bm-title="思覺失調症治療">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">思覺失調症治療 + 抗精神病藥物原則</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性發作期處置</p>
+        <ul class="k-list">
+          <li><strong>排除器質性病因（首要）：</strong>器質性精神病 vs 功能性 → 見精神科急診評估 block</li>
+          <li><strong>藥物治療（急性期）：</strong>非典型抗精神病藥（首選）或典型抗精神病藥；急性激動 → 口服崩解錠（ODT）或肌肉注射（見激動處置 block）</li>
+          <li><strong>住院適應症：</strong>危及自身或他人安全；無法自我照護；首次發作需評估</li>
+          <li><strong>目標：</strong>症狀減輕（正性症狀通常 2-6 週改善）；恢復功能；預防復發</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常用抗精神病藥物比較</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>藥物</th><th>類型</th><th>特性</th><th>主要副作用</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Clozapine</strong></td>
+              <td>非典型（第二代）</td>
+              <td>難治性思覺失調症首選（2 種以上抗精神病藥失敗）；↓ 自殺風險；↓ 攻擊行為</td>
+              <td><strong>顆粒性白血球缺乏症（Agranulocytosis，1%，需定期血球監測）</strong>；代謝症候群；流涎；癲癇</td>
+            </tr>
+            <tr>
+              <td><strong>Olanzapine</strong></td>
+              <td>非典型</td>
+              <td>正性 + 負性症狀；鎮靜作用強；有 IM 劑型（急性激動）</td>
+              <td>體重增加（最明顯）；代謝症候群（血糖 ↑、血脂 ↑）；鎮靜</td>
+            </tr>
+            <tr>
+              <td><strong>Risperidone</strong></td>
+              <td>非典型</td>
+              <td>正性 + 負性症狀；QTc 相對安全；有長效針劑（Risperdal Consta）</td>
+              <td>高劑量 → EPS；催乳素↑（↑ QTc 較少）；體重增加中等</td>
+            </tr>
+            <tr>
+              <td><strong>Quetiapine</strong></td>
+              <td>非典型</td>
+              <td>鎮靜作用強；較少 EPS 和 ↑ 催乳素；也用於躁症 / 雙相情感</td>
+              <td>鎮靜；體重增加；低血壓；白內障（長期）</td>
+            </tr>
+            <tr>
+              <td><strong>Aripiprazole</strong></td>
+              <td>非典型（部分促效劑）</td>
+              <td>代謝副作用最少；較少鎮靜；有口服崩解錠和長效針劑</td>
+              <td>Akathisia（最常見）；失眠；頭痛；體重增加較少</td>
+            </tr>
+            <tr>
+              <td><strong>Haloperidol</strong></td>
+              <td>典型（第一代）</td>
+              <td>急性激動 IM 可靠；正性症狀有效；長效針劑（Haloperidol Decanoate）</td>
+              <td>EPS（最明顯）；Tardive dyskinesia；QTc 延長（IV 使用）；↑ 催乳素</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">錐體外症狀（EPS）處置</p>
+        <ul class="k-list">
+          <li><strong>急性肌張力不全（Acute Dystonia）：</strong>突發肌肉不自主收縮（斜頸、眼偏斜危象 Oculogyric crisis）→ Benztropine 1-2 mg IM / IV 或 Diphenhydramine 25-50 mg IM / IV；立刻有效</li>
+          <li><strong>靜坐不能（Akathisia）：</strong>無法靜止、主觀不安感（常被誤認為焦慮）→ ↓ 抗精神病藥劑量；Propranolol 10-30 mg bid；Clonazepam</li>
+          <li><strong>假性帕金森氏症（Pseudoparkinsonism）：</strong>震顫、肌張力 ↑、運動遲緩 → Benztropine 或 Trihexyphenidyl（抗膽鹼藥）</li>
+          <li><strong>遲發性運動障礙（Tardive Dyskinesia，TD）：</strong>長期抗精神病藥後；口周不自主運動 + 肢體舞蹈樣動作 → 換用 Clozapine 或 Quetiapine；Valbenazine / Deutetrabenazine（VMAT2 抑制劑）</li>
+          <li class="note">惡性抗精神病藥症候群（NMS）= 罕見但致命 → 見毒物學 NMS block（停藥 + Dantrolene + Bromocriptine + 支持療法）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">維持治療 + 心理社會介入</p>
+        <ul class="k-list">
+          <li><strong>長效針劑（LAI）：</strong>提升服藥遵從性；適合反覆停藥導致復發的患者；每 2-4 週或每 1-3 個月注射</li>
+          <li><strong>第一次發作後：</strong>維持至少 1-2 年抗精神病藥治療（復發風險極高）</li>
+          <li><strong>多次復發：</strong>考慮長期維持治療（甚至終生）</li>
+          <li><strong>心理社會介入：</strong>認知行為治療（CBT）↓ 正性症狀；家庭教育 ↓ 復發；職業復健；支持性就業</li>
+          <li class="note">預後因素：預後較佳 ← 急性發作、晚發、有情感症狀、女性、有社會支持、首發前功能好；預後較差 ← 漸進發作、早發、顯著負性症狀、家族史、低社會功能</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 情感性疾患 -->
+<div class="topic-block" id="psych-mood">
+  <div class="topic-block-head">
+    <span class="topic-block-title">情感性疾患 Mood Disorders（重鬱症 + 躁鬱症）</span>
+    <div data-bm-id="psych-mood" data-bm-dept="精神科" data-bm-title="情感性疾患">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    情感性疾患分為<strong>重鬱症（MDD）</strong>和<strong>躁鬱症（Bipolar Disorder I / II）</strong>。<strong>核心鑑別：有無躁症 / 輕躁症病史</strong>——給躁鬱症患者單用抗鬱劑可能誘發躁症發作或快速循環，必須先給情緒穩定劑。重鬱症：約 2/3 患者有自殺意念，10-15% 最終自殺。重要陷阱：<strong>「矛盾性自殺」= 重鬱症開始改善時自殺風險反而↑</strong>（能量恢復但絕望感仍在）。依 Kaplan & Sadock 12th（Ch.6、7）+ DSM-5。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="mdd-dx-tx" data-bm-dept="精神科" data-bm-title="重鬱症">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">重鬱症（Major Depressive Disorder，MDD）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">DSM-5 診斷標準（需 ≥5 項，持續 ≥2 週，含第 1 或 2 項）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>記憶口訣：SIG E CAPS</th><th>症狀</th></tr></thead>
+          <tbody>
+            <tr><td><strong>S — Sleep</strong></td><td>失眠或嗜睡</td></tr>
+            <tr><td><strong>I — Interest</strong></td><td><strong>對事物失去興趣 / 愉悅感（核心症狀之一）</strong></td></tr>
+            <tr><td><strong>G — Guilt</strong></td><td>過度罪惡感 / 無價值感</td></tr>
+            <tr><td><strong>E — Energy</strong></td><td>疲倦、精力不足</td></tr>
+            <tr><td><strong>C — Concentration</strong></td><td>注意力不集中；決策困難</td></tr>
+            <tr><td><strong>A — Appetite</strong></td><td>食慾 ↑ or ↓；體重 ±5% / 月</td></tr>
+            <tr><td><strong>P — Psychomotor</strong></td><td>精神運動激動或遲緩（他人可觀察）</td></tr>
+            <tr><td><strong>S — Suicidality</strong></td><td>反覆想到死亡；自殺意念 / 計劃 / 嘗試</td></tr>
+            <tr><td><strong>（+）Depressed Mood</strong></td><td><strong>憂鬱情緒（核心症狀之一）</strong></td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">特殊亞型</p>
+        <ul class="k-list">
+          <li><strong>精神病性憂鬱（With Psychotic Features）：</strong>情緒一致性妄想（罪惡妄想、貧困妄想）；需抗鬱劑 + 抗精神病藥；ECT 是選擇</li>
+          <li><strong>憂鬱性昏迷（With Melancholic Features）：</strong>嚴重快感缺失；清晨早醒；清晨情緒最低；強烈罪惡感；體重↓</li>
+          <li><strong>非典型憂鬱（With Atypical Features）：</strong>反應性情緒（好事發生時情緒可暫時改善）；嗜睡；暴食；手腳「鉛樣沉重」；拒絕敏感性高</li>
+          <li><strong>產後憂鬱（Peripartum onset）：</strong>分娩後 4 週內發作；與「產後憂鬱情緒（Blues，3-5 天自限）」不同；需治療</li>
+          <li><strong>季節性憂鬱（SAD）：</strong>秋冬發作、春夏緩解；光照治療（1500-10000 lux）有效</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">抗鬱劑治療（Kaplan & Sadock Ch.7 + Ch.21）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>藥物類別</th><th>代表藥物</th><th>特性 / 適應症</th><th>注意事項</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>SSRI（一線首選）</strong></td>
+              <td>Fluoxetine、Sertraline、Escitalopram、Paroxetine</td>
+              <td>最廣泛使用；耐受性好；適合各類型憂鬱；焦慮共病</td>
+              <td>起效 2-6 週；血清素症候群（+ MAOI / Tramadol 等）；性功能障礙；Fluoxetine 半衰期最長（停藥後 Washout 最長）</td>
+            </tr>
+            <tr>
+              <td><strong>SNRI</strong></td>
+              <td>Venlafaxine、Duloxetine</td>
+              <td>焦慮 + 憂鬱共病；慢性疼痛（Duloxetine）；難治性憂鬱</td>
+              <td>↑ BP（Venlafaxine 高劑量）；戒斷症候群（勿突然停藥）</td>
+            </tr>
+            <tr>
+              <td><strong>NaSSA（Mirtazapine）</strong></td>
+              <td>Mirtazapine</td>
+              <td>失眠 + 憂鬱；食慾↓ / 體重↓；嚴重噁心；老年患者</td>
+              <td>鎮靜、體重↑；低劑量（7.5-15 mg）鎮靜更強（H1 阻斷）</td>
+            </tr>
+            <tr>
+              <td><strong>TCA</strong></td>
+              <td>Amitriptyline、Nortriptyline、Imipramine</td>
+              <td>難治性憂鬱；神經性疼痛；遺尿（Imipramine）</td>
+              <td>過量致命（心臟毒性）；抗膽鹼副作用；老年慎用</td>
+            </tr>
+            <tr>
+              <td><strong>MAOI</strong></td>
+              <td>Phenelzine、Tranylcypromine</td>
+              <td>非典型憂鬱；難治性憂鬱</td>
+              <td>飲食限制（酪胺 → 高血壓危象）；多重藥物交互作用；較少使用</td>
+            </tr>
+            <tr>
+              <td><strong>Bupropion（NDRI）</strong></td>
+              <td>Bupropion</td>
+              <td>性功能副作用少；戒菸輔助；ADHD 共病</td>
+              <td>↑ 癲癇閾值（厭食症 / 高劑量禁忌）；失眠；焦慮</td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="k-list">
+          <li><strong>治療原則：</strong>症狀改善通常需 2-6 週；急性期 6-12 週；鞏固期 4-9 個月；維持期（反覆發作者）長期</li>
+          <li><strong>難治性憂鬱（Treatment-Resistant Depression，TRD）：</strong>≥2 次足夠劑量和療程的抗鬱劑無效 → 換藥 / 合用 / ECT / Ketamine（Esketamine 鼻腔噴劑，FDA 核准）</li>
+          <li><strong>ECT（電痙攣治療）：</strong>精神病性憂鬱；嚴重自殺風險；難治性；最快速有效（2-3 週）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="bipolar-dx-tx" data-bm-dept="精神科" data-bm-title="躁鬱症">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">躁鬱症（Bipolar Disorder I / II）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷標準（DSM-5）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th></th><th>躁鬱症 I 型</th><th>躁鬱症 II 型</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>定義</strong></td>
+              <td>≥1 次完整躁症發作（可有或無重鬱症發作）</td>
+              <td>≥1 次輕躁症 + ≥1 次重鬱症（從未有完整躁症）</td>
+            </tr>
+            <tr>
+              <td><strong>躁症發作（Manic Episode）</strong></td>
+              <td colspan="2">情緒異常高亢 / 易怒 / 精力充沛 ≥1 週（DSM-5 DIGFAST）</td>
+            </tr>
+            <tr>
+              <td><strong>功能影響</strong></td>
+              <td>嚴重損害功能；需住院；可有精神病症狀</td>
+              <td>輕躁症不嚴重影響功能；不需住院；無精神病症狀</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">躁症症狀（DSM-5，DIGFAST）</p>
+        <ul class="k-list">
+          <li><strong>D — Distractibility（注意力分散）</strong></li>
+          <li><strong>I — Impulsivity / Indiscretion（衝動 / 魯莽行為）：</strong>亂花錢、性行為不謹慎、投資失當</li>
+          <li><strong>G — Grandiosity（誇大）：</strong>自我膨脹；可達妄想程度</li>
+          <li><strong>F — Flight of ideas（思維奔逸）：</strong>想法快速跳躍；言語急迫</li>
+          <li><strong>A — Activity increase（活動量增加）/ Agitation</strong></li>
+          <li><strong>S — Sleep need decreased（睡眠需求↓）：</strong>睡 3 小時仍精力充沛（非失眠）</li>
+          <li><strong>T — Talkativeness（話量多）：</strong>言語急迫難以打斷</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">躁鬱症藥物治療（依 Kaplan & Sadock Table 6-6 + 6-7）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>階段</th><th>首選藥物</th><th>注意</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>急性躁症</strong></td>
+              <td>Lithium / Valproate / Olanzapine / Risperidone / Quetiapine / Aripiprazole（單藥或合用）</td>
+              <td>嚴重激動 → + 高效價 BZD（Lorazepam）；Haloperidol IM 緊急鎮靜</td>
+            </tr>
+            <tr>
+              <td><strong>急性雙相憂鬱</strong></td>
+              <td>Quetiapine（最強證據）；Lurasidone；Lamotrigine（預防復發）；Lithium</td>
+              <td><strong>避免單用抗鬱劑</strong>（↑ 轉躁風險）；需合併情緒穩定劑</td>
+            </tr>
+            <tr>
+              <td><strong>維持治療</strong></td>
+              <td>Lithium（防躁症 + 防憂鬱 + 降自殺風險）；Valproate；Lamotrigine（防憂鬱更強）；非典型抗精神病藥</td>
+              <td>服藥遵從性是最大挑戰</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Lithium 使用重點</p>
+        <ul class="k-list">
+          <li><strong>治療濃度：</strong>急性期 0.8-1.2 mEq/L；維持期 0.6-1.0 mEq/L；毒性 &gt;1.5 mEq/L（輕度：震顫、胃腸不適）；&gt;2.0 mEq/L（重度：意識改變、癲癇）</li>
+          <li><strong>監測：</strong>Lithium 濃度（穩定後每 3-6 月）；腎功能；TSH（Lithium → 甲狀腺功能低下）；尿液比重</li>
+          <li><strong>交互作用：</strong>NSAIDs / 利尿劑（尤其 Thiazide）/ ACEi → ↑ Lithium 濃度（腎清除 ↓）；鈉攝取 ↓ → ↑ Lithium 吸收</li>
+          <li><strong>過量處置：</strong>停藥；補充水分和 NaCl；嚴重 → 血液透析</li>
+          <li><strong>懷孕：</strong>第一孕期 → ↑ Ebstein 畸形（三尖瓣）風險（小但存在）；需諮詢</li>
+          <li class="note">Valproate 監測：LFT + 血球（肝毒性 + 血小板）；妊娠 → 致畸（神經管缺損）→ 育齡女性補充葉酸；Lamotrigine → 起始劑量慢增（↓ Stevens-Johnson Syndrome 風險）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 焦慮症 + PTSD + OCD -->
+<div class="topic-block" id="psych-anxiety">
+  <div class="topic-block-head">
+    <span class="topic-block-title">焦慮症 + PTSD + OCD Anxiety, Trauma & OCD</span>
+    <div data-bm-id="psych-anxiety" data-bm-dept="精神科" data-bm-title="焦慮症 + PTSD + OCD">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    焦慮症是最常見的精神疾患（終生盛行率 ~20%）。<strong>恐慌症（Panic Disorder）</strong>急性發作容易被誤診為心臟病——急診常見的鑑別診斷難題，需先排除器質性病因（心肌梗塞、肺栓塞）。<strong>PTSD</strong> 需要暴露於創傷事件；急診可能遇到急性應激反應。<strong>OCD</strong> 是自我不協調（Ego-dystonic）的強迫思想和強迫行為，患者知道這些想法不合理但無法控制。依 Kaplan & Sadock 12th（Ch.8、9、10）+ DSM-5。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="anxiety-types" data-bm-dept="精神科" data-bm-title="焦慮症分類">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">焦慮症分類 + 診斷要點</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>診斷</th><th>核心特徵</th><th>DSM-5 關鍵標準</th><th>治療</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>恐慌症（Panic Disorder）</strong></td>
+              <td>反覆突發性強烈恐懼（恐慌發作）+ 預期性焦慮 + 迴避行為</td>
+              <td>
+                恐慌發作（4+ 症狀）：心悸；發汗；顫抖；呼吸困難；胸痛；頭暈；感覺異常；現實感喪失；恐懼死亡 / 失控<br/>
+                ≥1 次發作後 ≥1 個月持續擔心 or 行為改變
+              </td>
+              <td>SSRI / SNRI（一線）；CBT（曝露治療）；BZD（短期急性）</td>
+            </tr>
+            <tr>
+              <td><strong>廣泛性焦慮症（GAD）</strong></td>
+              <td>對多種事件 / 活動過度且難以控制的擔憂；慢性病程</td>
+              <td>
+                ≥6 個月的過度擔憂（多種議題）<br/>
+                + 以下 ≥3 項（兒童 ≥1）：坐立難安；易疲勞；注意力↓；易怒；肌肉緊張；睡眠障礙
+              </td>
+              <td>SSRI / SNRI；Duloxetine；Buspirone；CBT</td>
+            </tr>
+            <tr>
+              <td><strong>社交焦慮症（SAD）</strong></td>
+              <td>對社交情境（被評判、尷尬）的強烈恐懼和迴避</td>
+              <td>
+                暴露於社交情境 → 幾乎必然引起焦慮<br/>
+                ≥6 個月；造成顯著困擾或功能損害
+              </td>
+              <td>SSRI（首選）；Venlafaxine；CBT；β-blocker（situational）</td>
+            </tr>
+            <tr>
+              <td><strong>特定恐懼症（Specific Phobia）</strong></td>
+              <td>對特定物體 / 情境的強烈恐懼（血液、針、蜘蛛、飛行等）</td>
+              <td>≥6 個月；恐懼與實際危險不相稱</td>
+              <td>CBT（系統性減敏感）；暴露治療；BZD（短期）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">恐慌症急診鑑別（Kaplan & Sadock）</p>
+        <ul class="k-list">
+          <li>恐慌症患者常以心臟或呼吸症狀就診急診——必須先排除器質性病因</li>
+          <li><strong>需排除：</strong>心肌梗塞；肺栓塞；心律不整；甲狀腺風暴；低血糖；嗜鉻細胞瘤；藥物中毒（咖啡因、可卡因、安非他命）；戒斷（酒精、BZD）</li>
+          <li>完整排除後 + 典型恐慌症病史 → 精神科評估；<strong>不要急著在急診給予 BZD 長期處方</strong>——應轉介精神科門診</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="ptsd-ocd" data-bm-dept="精神科" data-bm-title="PTSD + OCD">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">PTSD + OCD</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">創傷後壓力症（PTSD，DSM-5）</p>
+        <ul class="k-list">
+          <li><strong>創傷事件暴露（A 標準）：</strong>直接經歷；目擊他人；聽聞親近者；職業暴露（急救人員、醫護）</li>
+          <li><strong>四大症狀群（B-E，需 &gt;1 個月）：</strong></li>
+          <li>B. <strong>闖入（Intrusion）：</strong>閃回（Flashbacks）；噩夢；觸發器引發心理痛苦</li>
+          <li>C. <strong>迴避（Avoidance）：</strong>迴避與創傷相關的想法或外部提醒</li>
+          <li>D. <strong>認知和情緒負向改變（Negative Cognition/Mood）：</strong>負面信念；持續負面情緒；疏離感；正面情緒能力↓</li>
+          <li>E. <strong>激動和反應性改變（Arousal/Reactivity）：</strong>過度警覺；驚嚇反應↑；睡眠障礙；攻擊性；魯莽行為</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">PTSD 治療</p>
+        <ul class="k-list">
+          <li><strong>心理治療（首選）：</strong>延長暴露治療（Prolonged Exposure，PE）；認知處理治療（CPT）；EMDR（眼動減敏重整）= 最強實證</li>
+          <li><strong>藥物：</strong>Sertraline / Paroxetine（FDA 核准）；Venlafaxine；Prazosin（↓ 噩夢，α1 拮抗劑）；BZD 不建議常規使用（↑ 復原障礙）</li>
+          <li><strong>急性應激反應（Acute Stress Reaction，&lt;4 週）：</strong>支持治療；CBT 早期介入；不建議立刻 BZD（↑ PTSD 形成）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">強迫症（OCD，DSM-5）</p>
+        <ul class="k-list">
+          <li><strong>強迫思想（Obsessions）：</strong>反覆侵入性想法 / 衝動 / 畫面；患者認為不合理；引起顯著焦慮</li>
+          <li><strong>強迫行為（Compulsions）：</strong>重複性行為（洗手、檢查、排序）或心理行為（計數、禱告）；為了中和焦慮；非理性且過度</li>
+          <li><strong>自我不協調（Ego-dystonic）：</strong>患者知道這些是自己的思想但感覺不受控 → 區別思覺失調症妄想（患者認為妄想是真實的）</li>
+          <li><strong>常見 OCD 主題：</strong>污染 / 清潔；傷害他人 / 自己的侵入性思想；對稱 / 整潔；宗教 / 道德</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">OCD 治療</p>
+        <ul class="k-list">
+          <li><strong>CBT（暴露和反應預防，ERP）：</strong>心理治療首選；面對害怕的情境並抵制強迫行為</li>
+          <li><strong>藥物（一線）：</strong>高劑量 SSRI（OCD 需要比憂鬱症更高劑量，且起效更慢 8-12 週）；Fluvoxamine、Fluoxetine、Sertraline、Paroxetine；Clomipramine（TCA，最有效但副作用多）</li>
+          <li><strong>難治性 OCD：</strong>SSRI + Risperidone / Haloperidol 增強；深腦電刺激（DBS）</li>
+          <li class="note">OCD 光譜（DSM-5 獨立成章）：囤積症（Hoarding Disorder）；拔毛症（Trichotillomania）；摳皮症（Excoriation Disorder）；身體臆形症（BDD）；疑病症</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 物質使用疾患 -->
+<div class="topic-block" id="psych-substance">
+  <div class="topic-block-head">
+    <span class="topic-block-title">物質使用疾患 Substance Use Disorders</span>
+    <div data-bm-id="psych-substance" data-bm-dept="精神科" data-bm-title="物質使用疾患">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    急診最常見的物質相關急症：<strong>酒精戒斷（最危險，可致死）、鴉片類過量（Naloxone 拮抗）、興奮劑中毒（高血壓危象、心律不整）</strong>。酒精戒斷的嚴重程度從輕微（顫抖、焦慮）到致命（Delirium Tremens，DTs）——DTs 死亡率未治療可達 15-20%。<strong>所有酒精相關患者在給葡萄糖前先給 Thiamine 100 mg IV</strong>，預防 Wernicke 腦病。依 Kaplan & Sadock 12th（Ch.4）+ DSM-5。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="alcohol-withdrawal" data-bm-dept="精神科" data-bm-title="酒精戒斷">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">酒精使用疾患 + 酒精戒斷</span></div>
+      <div class="k-card-body">
+        <div class="alert alert-red" style="margin-bottom:12px">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+          <span>所有酒精患者：Thiamine 100 mg IV 先給，再給含糖輸液。DTs 是內科急症，死亡率未治療達 15-20%。</span>
+        </div>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">酒精戒斷時序</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>時間（最後飲酒後）</th><th>症狀</th><th>嚴重度</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>6-12 小時</strong></td>
+              <td>顫抖（Tremor）；焦慮；噁心嘔吐；心搏過速；高血壓；發汗；失眠</td>
+              <td>輕度</td>
+            </tr>
+            <tr>
+              <td><strong>12-24 小時</strong></td>
+              <td>酒精性幻覺症（Alcoholic Hallucinosis）：視 / 聽 / 觸幻覺，但意識清醒（非譫妄）</td>
+              <td>中度</td>
+            </tr>
+            <tr>
+              <td><strong>24-48 小時（高峰）</strong></td>
+              <td>癲癇發作（Grand mal，通常單次）；可能多次</td>
+              <td>嚴重</td>
+            </tr>
+            <tr>
+              <td><strong>48-96 小時</strong></td>
+              <td><strong>Delirium Tremens（DTs）：</strong>嚴重激動 + 混亂 + 自律神經亢進（高燒、心搏過速、高血壓）+ 意識改變 + 幻覺</td>
+              <td>致命</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">CIWA-Ar 評分（Clinical Institute Withdrawal Assessment for Alcohol）</p>
+        <ul class="k-list">
+          <li>評估 10 項症狀（噁心、顫抖、發汗、焦慮、激動、知覺異常、頭痛、定向感）</li>
+          <li>&lt;8 分：輕度（觀察）；8-15 分：中度（口服 BZD）；&gt;15 分：重度（IV BZD 積極治療）</li>
+          <li>症狀觸發給藥（Symptom-triggered）優於固定排程（↓ 總 BZD 使用量）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">酒精戒斷治療（依 Kaplan & Sadock）</p>
+        <ul class="k-list">
+          <li><strong>Thiamine 100 mg IV（先給！）</strong>→ 所有酒精相關患者；防 Wernicke 腦病；懷疑 Wernicke → 500 mg IV tid × 2 天</li>
+          <li><strong>BZD（首選）：</strong>長效（Diazepam 10-20 mg PO；Chlordiazepoxide 50-100 mg PO）→ 自我漸減優點；短效（Lorazepam 1-2 mg IV/IM）→ 肝衰竭 / 老年患者首選（無活性代謝物）</li>
+          <li><strong>注意：Diazepam / Chlordiazepoxide 禁止 IM 給藥</strong>（吸收不穩定）→ PO 或 IV</li>
+          <li><strong>DTs 處置：</strong>高劑量 BZD（Diazepam 10-20 mg IV q5-10 分 or Lorazepam 2-4 mg IV）；補液；Thiamine；多種維他命；持續監測；考慮 ICU</li>
+          <li><strong>癲癇：</strong>BZD 首選；Phenytoin 對酒精戒斷癲癇效果有限；排除其他癲癇原因</li>
+          <li><strong>Carbamazepine：</strong>BZD 替代（輕中度戒斷）；較少濫用潛力；800 mg/天 × 7 天</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Wernicke-Korsakoff 症候群（依 Kaplan & Sadock）</p>
+        <ul class="k-list">
+          <li><strong>Wernicke 腦病（急性）：</strong>眼肌麻痺（外展神經麻痺、眼球震顫）+ 共濟失調 + 意識混亂三聯症；→ Thiamine 100-500 mg IV tid × 2 天後口服</li>
+          <li><strong>Korsakoff 症候群（慢性）：</strong>嚴重順行性和逆行性記憶障礙；虛談症（Confabulation）；無法形成新記憶；→ Thiamine 100 mg PO tid × 3-12 個月；預後差（僅少數完全恢復）</li>
+        </ul>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">酒精使用疾患維持治療藥物</p>
+        <ul class="k-list">
+          <li><strong>Naltrexone 50 mg PO qd（首選）：</strong>↓ 飲酒渴求；↓ 重度飲酒天數；禁忌：正在使用鴉片類；急性肝炎 / 肝衰竭</li>
+          <li><strong>Acamprosate 666 mg PO tid：</strong>NMDA 拮抗劑；↓ 復飲；腎功能依賴清除；輕度 GI 副作用</li>
+          <li><strong>Disulfiram 250 mg PO qd：</strong>乙醛去氫酶抑制劑 → 飲酒後乙醛積累 → 不適（潮紅、頭痛、噁心）；需強烈動機；禁忌：心臟病、肝病、精神疾病</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="other-substance" data-bm-dept="精神科" data-bm-title="其他物質使用">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">其他物質：鴉片類 + 興奮劑 + BZD + 大麻</span></div>
+      <div class="k-card-body">
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>物質</th><th>急性中毒</th><th>戒斷症狀</th><th>處置</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>鴉片類（Opioids）</strong></td>
+              <td>意識↓；呼吸抑制；針尖縮瞳；皮膚潮濕；心搏過緩</td>
+              <td>流涕；流淚；肌肉疼痛；不安腿；焦慮；腹瀉（流感樣，通常不危及生命）；開始於最後一劑 8-24 小時後</td>
+              <td>
+                <strong>過量 → Naloxone</strong>（見毒物學）<br/>
+                <strong>維持治療：</strong><br/>
+                Methadone 維持治療（MMT）<br/>
+                Buprenorphine / Naloxone（Suboxone）<br/>
+                Naltrexone（Vivitrol，長效針劑）
+              </td>
+            </tr>
+            <tr>
+              <td><strong>興奮劑（Stimulants）<br/>安非他命、可卡因</strong></td>
+              <td>心搏過速；高血壓；瞳孔散大；體溫↑；激動 / 精神病症狀（幻覺、偏執）；可卡因 → ↑ 心肌梗塞 / 腦中風風險</td>
+              <td>「墜落（Crash）」：嗜睡；憂鬱；疲倦；食慾↑；渴求</td>
+              <td>
+                中毒 → BZD（激動 / 癲癇）<br/>
+                高血壓危象 → BZD + Phentolamine<br/>
+                <strong>避免 β-blocker（↑ 冠狀動脈痙攣）</strong><br/>
+                精神病 → 抗精神病藥（短期）<br/>
+                戒斷：支持性治療
+              </td>
+            </tr>
+            <tr>
+              <td><strong>BZD / 鎮靜安眠藥</strong></td>
+              <td>類酒精（意識↓、協調 ↓、言語含糊）；呼吸抑制（合併酒精 ↑↑）</td>
+              <td><strong>類酒精戒斷（可致死！）：</strong>焦慮；顫抖；失眠；癲癇；譫妄；嚴重程度依劑量和使用期間</td>
+              <td>
+                戒斷治療：長效 BZD（Diazepam）漸減<br/>
+                拮抗劑：Flumazenil（謹慎，BZD 依賴者 → 癲癇）
+              </td>
+            </tr>
+            <tr>
+              <td><strong>大麻（Cannabis）</strong></td>
+              <td>結膜充血；口乾；心搏過速；感知增強；時間感扭曲；大量 → 焦慮 / 恐慌；急性精神病（THC 高濃度）</td>
+              <td>易怒；焦慮；失眠；食慾↓；不適感（通常輕微）</td>
+              <td>中毒 → 支持性；焦慮 → BZD；急性精神病 → 抗精神病藥</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">DSM-5 物質使用疾患診斷標準（適用各物質）</p>
+        <ul class="k-list">
+          <li>12 個月內出現 ≥2 項：耐受性 ↑；戒斷症狀；使用量超過預期；難以控制使用；花費大量時間在物質上；因物質而放棄重要活動；持續使用儘管知道有害</li>
+          <li>嚴重度：輕度（2-3 項）；中度（4-5 項）；重度（≥6 項）</li>
+          <li class="note">雙重診斷（Dual Diagnosis）= 物質使用疾患 + 其他精神疾患（常見）；約 50% 物質使用疾患患者有共病精神疾患；需同步治療兩者</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    <!-- 精神科藥物速查 -->
+<div class="topic-block" id="psych-meds">
+  <div class="topic-block-head">
+    <span class="topic-block-title">精神科藥物速查 Psychopharmacology Quick Reference</span>
+    <div data-bm-id="psych-meds" data-bm-dept="精神科" data-bm-title="精神科藥物速查">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    精神科藥物的核心原則：<strong>同一類藥物效果大致相同，副作用是選擇的關鍵</strong>。抗精神病藥監測重點：QTc 延長、代謝症候群（體重、血糖、血脂）、EPS。Clozapine 是難治性思覺失調症的最後選擇但需每週血球監測。情緒穩定劑（Lithium、Valproate）需要定期濃度和器官功能監測。依 Kaplan & Sadock 12th（Ch.21）。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card full" data-bm-id="antipsychotic-table" data-bm-dept="精神科" data-bm-title="抗精神病藥速查">
+      <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+      <div class="k-card-head"><span class="k-card-title">抗精神病藥速查（Kaplan & Sadock Ch.21.1）</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">第二代（非典型）抗精神病藥（SGA）比較</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>藥物</th><th>常用劑量</th><th>EPS</th><th>體重↑</th><th>鎮靜</th><th>QTc↑</th><th>特殊考量</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Clozapine（Clozaril）</strong></td>
+              <td>起始 12.5-25 mg bid；目標 300-450 mg/天</td>
+              <td>最少</td><td>++++</td><td>++++</td><td>+</td>
+              <td><strong>顆粒性白血球缺乏症（需血球監測）；流涎；癲癇（高劑量）；難治性思覺失調症首選；↓ 自殺風險</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Olanzapine（Zyprexa）</strong></td>
+              <td>急性：5-10 mg PO 或 10 mg IM；維持：5-20 mg/天</td>
+              <td>少</td><td>++++</td><td>+++</td><td>+</td>
+              <td>代謝症候群最明顯；體重↑↑；DM 風險；有口崩錠（ODT）；<strong>IM + Lorazepam IM 禁止同時給</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Risperidone（Risperdal）</strong></td>
+              <td>起始 1-2 mg/天；目標 4-6 mg/天；IM LAI：25-50 mg q2週</td>
+              <td>++（高劑量）</td><td>++</td><td>++</td><td>+</td>
+              <td>↑ 催乳素（性功能障礙、月經異常）；高劑量 EPS；長效針劑（Risperdal Consta）適合服藥遵從性差患者</td>
+            </tr>
+            <tr>
+              <td><strong>Quetiapine（Seroquel）</strong></td>
+              <td>思覺失調：150-750 mg/天；雙相憂鬱：50-300 mg/天</td>
+              <td>最少</td><td>+++</td><td>+++</td><td>+</td>
+              <td>低 EPS；低 ↑ 催乳素；常用於失眠（低劑量，off-label）；白內障（長期）；體位性低血壓</td>
+            </tr>
+            <tr>
+              <td><strong>Aripiprazole（Abilify）</strong></td>
+              <td>10-30 mg/天；IM：9.75 mg（急性）；LAI：400 mg/月</td>
+              <td>少</td><td>+</td><td>+</td><td>最少</td>
+              <td>部分 D2 促效劑；代謝副作用最少；Akathisia 常見；失眠；長效針劑月注射（Abilify Maintena）</td>
+            </tr>
+            <tr>
+              <td><strong>Ziprasidone</strong></td>
+              <td>40-80 mg bid PO（需與食物一起服）；IM：10-20 mg</td>
+              <td>+</td><td>最少</td><td>++</td><td>+++</td>
+              <td>QTc 延長（最明顯）；體重影響最少；需監測 ECG；食物↑ 吸收</td>
+            </tr>
+            <tr>
+              <td><strong>Haloperidol（Haldol）</strong></td>
+              <td>急性激動：2-5 mg IM；維持：1-10 mg PO bid；LAI：每 4 週</td>
+              <td>++++</td><td>+</td><td>++</td><td>++（IV）</td>
+              <td>EPS 最明顯；IV 使用 ↑ QTc（需監測 ECG）；TD 風險；長效針劑（Haldol Decanoate）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">代謝症候群監測（所有 SGA，Kaplan & Sadock）</p>
+        <ul class="k-list">
+          <li>開始前 + 定期監測：體重 / BMI；腰圍；血壓；空腹血糖；空腹血脂；HbA1C（DM 患者）</li>
+          <li>頻率：基礎值 → 4 週 → 8 週 → 12 週 → 每季（體重）→ 每年（血脂、血糖）</li>
+          <li class="note">老年失智症患者使用抗精神病藥 → ↑ 死亡率（1.6-1.7 倍）→ FDA 黑框警告；非必要不用</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="mood-stabilizer-antidepressant-table" data-bm-dept="精神科" data-bm-title="情緒穩定劑 + 抗鬱劑速查">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">情緒穩定劑 + 抗鬱劑監測速查</span></div>
+      <div class="k-card-body">
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">情緒穩定劑（Mood Stabilizers）</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>藥物</th><th>治療濃度</th><th>監測項目</th><th>主要副作用</th><th>禁忌 / 注意</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Lithium</strong></td>
+              <td>急性：0.8-1.2 mEq/L；維持：0.6-1.0 mEq/L；毒性 &gt;1.5 mEq/L</td>
+              <td>Lithium 濃度（每 12h 後抽血）；腎功能（BUN/Cr）；TSH；鈉電解質</td>
+              <td>震顫（細小）；多尿多飲（腎源性尿崩症）；體重↑；認知↓；甲狀腺功能低下；腎毒性（長期）</td>
+              <td>腎衰竭（主要禁忌）；NSAIDs / 利尿劑 / ACEi → ↑ 濃度；妊娠（Ebstein 畸形）；鈉攝取↓ → ↑ 再吸收</td>
+            </tr>
+            <tr>
+              <td><strong>Valproate（Depakote）</strong></td>
+              <td>50-125 μg/mL（躁症）；抗癲癇：50-100 μg/mL</td>
+              <td>Valproate 濃度；LFT；血小板（CBC）</td>
+              <td>體重↑；震顫；掉髮；噁心；血小板↓；肝毒性（罕見但嚴重）；胰臟炎</td>
+              <td>肝病；<strong>妊娠（神經管缺損 ↑↑ → 育齡期婦女補葉酸）</strong>；血小板減少症</td>
+            </tr>
+            <tr>
+              <td><strong>Lamotrigine（Lamictal）</strong></td>
+              <td>抗癲癇：3-14 μg/mL；躁鬱維持：無固定濃度範圍</td>
+              <td>皮疹監測（尤其前 8 週）</td>
+              <td>皮疹（Stevens-Johnson Syndrome，與快速增加劑量相關）；頭痛；頭暈；複視</td>
+              <td><strong>必須緩慢增加劑量</strong>（每 2 週 25 mg ↑）↓ SJS 風險；Valproate 合用 → ↓ 劑量（抑制代謝）；妊娠相對安全（但需調整劑量）</td>
+            </tr>
+            <tr>
+              <td><strong>Carbamazepine（Tegretol）</strong></td>
+              <td>4-12 μg/mL</td>
+              <td>濃度；CBC（顆粒性白血球缺乏）；LFT；電解質（低鈉）</td>
+              <td>低鈉血症（SIADH）；皮疹（SJS，尤其 HLA-B*1502，亞洲族群！）；顆粒性白血球缺乏</td>
+              <td>CYP450 強力誘導劑（↓ 多種藥物濃度，含口服避孕藥）；HLA-B*1502 篩查（亞洲族群）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">抗鬱劑關鍵副作用與交互作用速查</p>
+        <table class="data-table" style="margin-bottom:12px">
+          <thead><tr><th>類別</th><th>代表藥</th><th>關鍵副作用</th><th>重要交互作用 / 注意</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>SSRI</strong></td>
+              <td>Fluoxetine、Sertraline、Escitalopram</td>
+              <td>性功能障礙（最常見停藥原因）；噁心（初期）；失眠 or 嗜睡；QTc↑（Citalopram 最明顯）</td>
+              <td>血清素症候群（+ MAOI / Tramadol / Linezolid / Triptans）；出血↑（+ NSAIDs / Warfarin）；CYP450 抑制（Fluoxetine / Paroxetine 最強）</td>
+            </tr>
+            <tr>
+              <td><strong>SNRI</strong></td>
+              <td>Venlafaxine、Duloxetine</td>
+              <td>↑ BP（Venlafaxine 高劑量）；戒斷症候群（突然停藥 → 「電擊感」）；性功能障礙</td>
+              <td>同 SSRI；Venlafaxine + MAOI 禁忌（血清素症候群）；腎功能影響 Duloxetine 清除</td>
+            </tr>
+            <tr>
+              <td><strong>TCA</strong></td>
+              <td>Amitriptyline、Nortriptyline</td>
+              <td>抗膽鹼（口乾、便秘、尿滯留、視力模糊）；心臟毒性（QRS 寬化、QTc）；嗜睡；體位性低血壓；<strong>過量致命</strong></td>
+              <td>MAOI 禁忌（血清素症候群）；可能使 SSRI 濃度↑；避免老年 / 心臟病患者</td>
+            </tr>
+            <tr>
+              <td><strong>MAOI</strong></td>
+              <td>Phenelzine、Tranylcypromine</td>
+              <td>高血壓危象（酪胺食物 → 乳酪、紅酒、醃製肉品）；嗜睡；體重↑；性功能障礙</td>
+              <td><strong>多重嚴重交互作用：SSRI / SNRI / TCA / Tramadol / Dextromethorphan / Meperidine → 血清素症候群；停 SSRI 後 Washout 2 週（Fluoxetine 5 週）才能開始 MAOI</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">精神科常用 BZD 比較</p>
+        <table class="data-table" style="margin-bottom:0">
+          <thead><tr><th>藥物</th><th>半衰期</th><th>適應症</th><th>注意</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Diazepam（Valium）</strong></td><td>長（20-100 hr + 活性代謝物）</td><td>酒精戒斷；肌肉鬆弛；癲癇</td><td>禁止 IM；老年慎用（蓄積）</td></tr>
+            <tr><td><strong>Lorazepam（Ativan）</strong></td><td>中（12-15 hr；無活性代謝物）</td><td>急性激動 IM；酒精戒斷（肝病）；癲癇持續狀態</td><td>老年和肝病首選（無活性代謝物）</td></tr>
+            <tr><td><strong>Clonazepam（Klonopin）</strong></td><td>長（18-50 hr）</td><td>恐慌症；社交焦慮；Akathisia；躁症輔助</td><td>強效；依賴性；戒斷困難</td></tr>
+            <tr><td><strong>Alprazolam（Xanax）</strong></td><td>中短（6-12 hr）</td><td>恐慌症；廣泛性焦慮</td><td>強效；依賴性高；戒斷明顯</td></tr>
+            <tr><td><strong>Midazolam（Versed）</strong></td><td>極短（1-4 hr）</td><td>PSA（程序性鎮靜）；急性激動</td><td>快速起效；失憶效果</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  const SEARCH_INDEX = [
+    { id:'psych-emergency', dept:'精神科', title:'精神科急診評估 + 強制住院', url:'#psych-emergency', text:'', modalIds:[] },
+    { id:'psych-agitation', dept:'精神科', title:'激動患者處置 + 自殺評估',   url:'#psych-agitation', text:'', modalIds:[] },
+    { id:'psych-psychosis', dept:'精神科', title:'思覺失調症',                url:'#psych-psychosis', text:'', modalIds:[] },
+    { id:'psych-mood',      dept:'精神科', title:'情感性疾患（重鬱症 + 躁鬱症）', url:'#psych-mood',  text:'', modalIds:[] },
+    { id:'psych-anxiety',   dept:'精神科', title:'焦慮症 + PTSD + OCD',      url:'#psych-anxiety',   text:'', modalIds:[] },
+    { id:'psych-substance', dept:'精神科', title:'物質使用疾患（酒精 + 戒斷）', url:'#psych-substance', text:'', modalIds:[] },
+    { id:'psych-meds',      dept:'精神科', title:'精神科藥物速查',             url:'#psych-meds',      text:'', modalIds:[] },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
