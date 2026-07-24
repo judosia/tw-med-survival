@@ -1,14 +1,14 @@
 // notion-notes.js
 // 前端載入 Notion 筆記並注入到各 topic-block
-
+ 
 (function () {
-  const API = '/api/notion-notes';
-
+  const API = 'https://tw-med-survival.vercel.app/api/notion-notes';
+ 
   // 在每個 topic-block 底部插入筆記區塊
   function injectNoteUI(blockEl, note) {
     // 避免重複插入
     if (blockEl.querySelector('.notion-note')) return;
-
+ 
     const div = document.createElement('div');
     div.className = 'notion-note';
     div.innerHTML = `
@@ -25,13 +25,13 @@
     `;
     blockEl.appendChild(div);
   }
-
+ 
   function formatTime(iso) {
     if (!iso) return '';
     const d = new Date(iso);
     return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()} 更新`;
   }
-
+ 
   function escapeHtml(str) {
     return str
       .replace(/&/g, '&amp;')
@@ -39,7 +39,7 @@
       .replace(/>/g, '&gt;')
       .replace(/\n/g, '<br>');
   }
-
+ 
   // 主流程：fetch 所有筆記，依 block_id 注入
   async function loadNotes() {
     try {
@@ -47,7 +47,7 @@
       if (!res.ok) return;
       const { notes } = await res.json();
       if (!notes || notes.length === 0) return;
-
+ 
       notes.forEach((note) => {
         if (!note.block_id || !note.content || !note.show) return;
         const blockEl = document.getElementById(note.block_id);
@@ -58,7 +58,7 @@
       console.debug('[notion-notes] 無法載入筆記:', e.message);
     }
   }
-
+ 
   // DOM ready 後執行
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', loadNotes);
