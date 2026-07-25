@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>麻醉科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 640px; max-height: 90vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#anesthesia" class="nav-back">麻醉科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">麻醉科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">麻醉科</div>
+
+    <div class="sidebar-section-title">術前</div>
+    <a href="#anesthesia-preop"     class="sidebar-link">術前評估（ASA 分級 + 禁食 + 風險）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">藥物</div>
+    <a href="#anesthesia-agents"    class="sidebar-link">麻醉藥物速查（誘導 + 吸入 + 肌鬆）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">氣道管理</div>
+    <a href="#anesthesia-airway"    class="sidebar-link">氣道管理 + RSI + 困難氣道</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">區域麻醉</div>
+    <a href="#anesthesia-regional"  class="sidebar-link">區域麻醉（脊椎 + 硬膜外 + 神經阻斷）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">術中 + 術後</div>
+    <a href="#anesthesia-monitoring" class="sidebar-link">術中監測 + 常見術中問題</a>
+    <a href="#anesthesia-postop"    class="sidebar-link">術後照護（PACU + PONV + 疼痛）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急症</div>
+    <a href="#anesthesia-emergency" class="sidebar-link">麻醉急症（惡性高熱 + 過敏 + 氣道急症）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../er/general.html#airway"    class="sidebar-link">急診插管 / RSI →（急診）</a>
+    <a href="../surg/gs.html#postop"       class="sidebar-link">術後併發症 →（外科）</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-hero" style="background: linear-gradient(135deg, #f0f4ff 0%, #f5f0ff 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>麻醉科</h1>
+        <p>術前評估、麻醉藥物、氣道管理與麻醉急症，依 Morgan & Mikhail's Clinical Anesthesiology + Miller's Anesthesia 9th 編排。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#anesthesia">麻醉科</a> › 麻醉科
+    </div>
+
+    <!-- 內容從這裡開始 -->
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  const SEARCH_INDEX = [
+    { id:'anesthesia-preop',      dept:'麻醉科', title:'術前評估（ASA 分級 + 禁食 + 風險）',         url:'#anesthesia-preop',      text:'' },
+    { id:'anesthesia-agents',     dept:'麻醉科', title:'麻醉藥物速查（誘導 + 吸入 + 肌鬆）',         url:'#anesthesia-agents',     text:'' },
+    { id:'anesthesia-airway',     dept:'麻醉科', title:'氣道管理 + RSI + 困難氣道',                 url:'#anesthesia-airway',     text:'' },
+    { id:'anesthesia-regional',   dept:'麻醉科', title:'區域麻醉（脊椎 + 硬膜外 + 神經阻斷）',       url:'#anesthesia-regional',   text:'' },
+    { id:'anesthesia-monitoring', dept:'麻醉科', title:'術中監測 + 常見術中問題',                   url:'#anesthesia-monitoring', text:'' },
+    { id:'anesthesia-postop',     dept:'麻醉科', title:'術後照護（PACU + PONV + 疼痛管理）',        url:'#anesthesia-postop',     text:'' },
+    { id:'anesthesia-emergency',  dept:'麻醉科', title:'麻醉急症（惡性高熱 + 過敏性休克 + 氣道急症）', url:'#anesthesia-emergency',  text:'' },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
