@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>新生兒科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 640px; max-height: 90vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#peds" class="nav-back">兒科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">新生兒科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">新生兒科</div>
+
+    <div class="sidebar-section-title">產房評估</div>
+    <a href="#neo-assessment"  class="sidebar-link">新生兒評估（APGAR + NRP）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">常見問題</div>
+    <a href="#neo-jaundice"    class="sidebar-link">新生兒黃疸（光照治療）</a>
+    <a href="#neo-sepsis"      class="sidebar-link">新生兒敗血症</a>
+    <a href="#neo-respiratory" class="sidebar-link">新生兒呼吸窘迫（RDS + TTN + MAS）</a>
+    <a href="#neo-metabolic"   class="sidebar-link">新生兒代謝問題（低血糖 + 低鈣）</a>
+    <a href="#neo-common"      class="sidebar-link">新生兒常見問題 + 篩查</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="./general.html"            class="sidebar-link">一般兒科 →</a>
+    <a href="../obgyn/obgyn.html#preterm" class="sidebar-link">早產 / PPROM →（婦產科）</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-hero" style="background: linear-gradient(135deg, #fff8f0 0%, #f0f8ff 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>新生兒科</h1>
+        <p>新生兒評估、黃疸、敗血症與呼吸窘迫，依 Nelson Textbook of Pediatrics 22nd Edition 編排。生後 72 小時是最關鍵的觀察期。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+          <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+          <line x1="9" y1="9" x2="9.01" y2="9"/>
+          <line x1="15" y1="9" x2="15.01" y2="9"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#peds">兒科</a> › 新生兒科
+    </div>
+
+    <!-- ══ 新生兒評估 + APGAR + NRP ══ -->
+    <div class="topic-block" id="neo-assessment">
+      <div class="topic-block-head">
+        <span class="topic-block-title">新生兒評估 + APGAR + NRP Neonatal Assessment & Resuscitation</span>
+        <div data-bm-id="neo-assessment" data-bm-dept="新生兒科" data-bm-title="新生兒評估 + APGAR + NRP">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        新生兒出生後的最初幾分鐘決定後續的神經發育預後。<strong>NRP（Neonatal Resuscitation Program）2020 更新重點：延遲臍帶結紮（DCC）≥30-60 秒；初始復甦用室內空氣（21% O₂）；心率是最重要的復甦反應指標</strong>。APGAR 評分是標準化記錄，但不用來決定是否需要復甦——復甦應在評分完成前就開始。依 Nelson 22nd（Ch.123）。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="apgar-score" data-bm-dept="新生兒科" data-bm-title="APGAR 評分">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">APGAR 評分（1 分鐘 + 5 分鐘）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>項目</th><th>0 分</th><th>1 分</th><th>2 分</th></tr></thead>
+              <tbody>
+                <tr><td><strong>A — Appearance（膚色）</strong></td><td>全身青紫或蒼白</td><td>軀幹粉紅、四肢青紫</td><td>全身粉紅</td></tr>
+                <tr><td><strong>P — Pulse（心率）</strong></td><td>無</td><td>&lt;100 bpm</td><td>≥100 bpm</td></tr>
+                <tr><td><strong>G — Grimace（反射）</strong></td><td>無反應</td><td>輕微反應（皺眉）</td><td>哭泣 / 打噴嚏 / 咳嗽</td></tr>
+                <tr><td><strong>A — Activity（肌張力）</strong></td><td>軟趴趴（Flaccid）</td><td>四肢輕微彎曲</td><td>積極活動</td></tr>
+                <tr><td><strong>R — Respiration（呼吸）</strong></td><td>無</td><td>不規則、微弱</td><td>規律哭泣</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li><strong>7-10 分：</strong>正常；觀察</li>
+              <li><strong>4-6 分：</strong>中度抑制；需要刺激 + 輔助通氣</li>
+              <li><strong>0-3 分：</strong>嚴重抑制；立刻 NRP 復甦</li>
+              <li class="note">APGAR 是記錄工具，不是決定開始復甦的依據——外觀軟趴趴 / 無呼吸 / 心率 &lt;100 → 立刻開始 NRP，不等 1 分鐘評分</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="nrp-algorithm" data-bm-dept="新生兒科" data-bm-title="NRP 流程">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">NRP 2020 流程（依 Nelson 22nd Ch.123）</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:10px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>心率是復甦反應的最重要指標——最重要的介入是有效通氣。</span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">初始評估（出生後立刻）</p>
+            <ul class="k-list">
+              <li>三個問題：足月？肌張力正常？哭泣 or 呼吸？</li>
+              <li>三個都是 → 延遲臍帶結紮（DCC ≥30-60 秒）→ 皮膚接觸 → 常規護理</li>
+              <li>任何一個否 → 送到輻射保溫台 → 保暖 + 擺位 + 清潔氣道 + 刺激</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:8px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Step 1（0-30 秒）：初始步驟</p>
+            <ul class="k-list">
+              <li>保暖（輻射保溫台）；擺位（輕微伸展頸部）；清潔氣道（吸引分泌物）；刺激（擦乾 + 拍打腳底）</li>
+              <li>評估：呼吸 + 心率 + SpO₂（右手）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:8px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Step 2（30-60 秒）：若心率 &lt;100 或呼吸暫停</p>
+            <ul class="k-list">
+              <li><strong>正壓通氣（PPV）：</strong>面罩 + 氣球；PIP ~20 cmH₂O；PEEP 5 cmH₂O；速率 40-60 次/分</li>
+              <li>初始 FiO₂：足月 = 21%（室內空氣）；早產 &lt;35 週 = 21-30%；依 SpO₂ 調整</li>
+              <li>目標 SpO₂（生後分鐘）：1 分 60-65%；3 分 70-75%；5 分 80-85%；10 分 85-95%</li>
+              <li>有效 PPV 指標 = 心率↑（最重要）+ 胸廓起伏 + SpO₂ 上升</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:8px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Step 3（60 秒後）：若 PPV 後心率 &lt;60 bpm</p>
+            <ul class="k-list">
+              <li>插管（確保有效通氣）→ 胸外心臟按壓（3:1 比例，90 次壓 + 30 次通氣 / 分）</li>
+              <li>FiO₂ → 100%（胸外按壓期間）</li>
+              <li><strong>Epinephrine：</strong>0.01-0.03 mg/kg IV（臍靜脈導管）或 0.05-0.1 mg/kg ETT（若無靜脈）</li>
+              <li>找可逆原因：氣胸？低血容？先天性心臟病（PGE₁）？</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:8px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">MRSOPA（PPV 無效時的矯正步驟）</p>
+            <ul class="k-list">
+              <li><strong>M：</strong>Mask adjustment（面罩密合度）</li>
+              <li><strong>R：</strong>Reposition airway（頭部姿勢）</li>
+              <li><strong>S：</strong>Suction（清潔口鼻）</li>
+              <li><strong>O：</strong>Open mouth（張嘴）</li>
+              <li><strong>P：</strong>Pressure increase（增加 PIP）</li>
+              <li><strong>A：</strong>Airway alternative（考慮 LMA 或插管）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="k-card full" data-bm-id="newborn-exam" data-bm-dept="新生兒科" data-bm-title="新生兒身體檢查">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">新生兒身體檢查重點 + 正常值</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>項目</th><th>正常發現</th><th>異常 → 考慮</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>體重 / 身長</strong></td>
+                  <td>足月：2500-4000 g；身長 48-52 cm；頭圍 33-37 cm</td>
+                  <td>LGA（&gt;4000 g）→ 母親 DM；SGA（&lt;2500 g）→ IUGR、早產</td>
+                </tr>
+                <tr>
+                  <td><strong>頭部</strong></td>
+                  <td>前囟門菱形（2-4 cm）；後囟門三角形（小）；產瘤（頭先露）；頭血腫（骨膜下）</td>
+                  <td>囟門飽滿 → 顱壓↑；囟門凹 → 脫水；縫線早閉 → 頭顱狹窄症</td>
+                </tr>
+                <tr>
+                  <td><strong>眼睛</strong></td>
+                  <td>結膜下出血（正常）；紅光反射（正常）；輕微斜視（正常，3-4 個月改善）</td>
+                  <td>無紅光反射 → 白內障 / 視網膜母細胞瘤；膿性分泌物 → 淋病 / 披衣菌感染</td>
+                </tr>
+                <tr>
+                  <td><strong>口腔</strong></td>
+                  <td>Epstein pearls（齒齦白色囊腫，正常）；高弓形上顎</td>
+                  <td>唇裂 / 腭裂；短舌繫帶（Ankyloglossia）</td>
+                </tr>
+                <tr>
+                  <td><strong>心臟</strong></td>
+                  <td>心率 120-160 bpm；第 1-2 天可有功能性雜音（過渡期）</td>
+                  <td>持續性雜音；上下肢血壓差異 &gt;10 mmHg → 主動脈縮窄；發紺</td>
+                </tr>
+                <tr>
+                  <td><strong>腹部</strong></td>
+                  <td>肝臟可觸及（肋緣下 1-2 cm）；臍帶 2 條動脈 + 1 條靜脈</td>
+                  <td>單臍動脈（SUA）→ 腎臟超音波篩查；腹脹 → Hirschsprung / 腸阻塞</td>
+                </tr>
+                <tr>
+                  <td><strong>髖關節</strong></td>
+                  <td>Barlow（脫臼試驗）+ Ortolani（復位試驗）陰性</td>
+                  <td>陽性 → DDH（發育性髖關節發育不良）→ 超音波 + 骨科</td>
+                </tr>
+                <tr>
+                  <td><strong>神經</strong></td>
+                  <td>原始反射：Moro（驚嚇）；Grasp（抓握）；Rooting（尋乳）；Sucking（吸吮）；Stepping（踏步）</td>
+                  <td>原始反射缺失或不對稱 → 神經損傷；持續超過正常消退年齡 → 腦性麻痺</td>
+                </tr>
+                <tr>
+                  <td><strong>生殖器</strong></td>
+                  <td>男：陰囊皮膚深皺褶；睪丸下降；女：大陰唇覆蓋小陰唇（足月）</td>
+                  <td>隱睪（Cryptorchidism）→ 6 個月後仍未下降 → 手術；尿道下裂 → 不要割包皮</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">生理性體重下降</p>
+            <ul class="k-list">
+              <li>出生後 3-5 天體重下降 ≤10%（母乳）or ≤7%（配方奶）= 正常</li>
+              <li>通常 10-14 天恢復出生體重</li>
+              <li>&gt;10% 體重下降 → 評估餵食 + 脫水 + 感染</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 新生兒黃疸 ══ -->
+    <div class="topic-block" id="neo-jaundice">
+      <div class="topic-block-head">
+        <span class="topic-block-title">新生兒黃疸 Neonatal Jaundice / Hyperbilirubinemia</span>
+        <div data-bm-id="neo-jaundice" data-bm-dept="新生兒科" data-bm-title="新生兒黃疸">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        新生兒黃疸影響 60%（足月）至 80%（早產）的新生兒，大多數是生理性且良性的。<strong>需要立即處置的警訊：24 小時內出現黃疸（病理性）；快速上升（&gt;0.5 mg/dL/h）；需要換血輸血的嚴重高膽紅素血症（核黃疸風險）</strong>。依 Nelson 22nd（Ch.137）+ AAP 2022 指引。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="jaundice-types" data-bm-dept="新生兒科" data-bm-title="黃疸分類">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">生理性 vs 病理性黃疸</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>生理性黃疸</th><th>病理性黃疸</th></tr></thead>
+              <tbody>
+                <tr><td><strong>出現時間</strong></td><td>生後 24 小時以後</td><td><strong>生後 24 小時內 = 病理性</strong></td></tr>
+                <tr><td><strong>消退時間</strong></td><td>足月 ≤2 週；早產 ≤3 週</td><td>超過正常消退時間</td></tr>
+                <tr><td><strong>上升速率</strong></td><td>&lt;0.5 mg/dL/h；&lt;5 mg/dL/天</td><td>≥0.5 mg/dL/h 或快速上升</td></tr>
+                <tr><td><strong>最高濃度</strong></td><td>足月 &lt;12-13 mg/dL；早產 &lt;15 mg/dL</td><td>超過光照治療閾值</td></tr>
+                <tr><td><strong>直接膽紅素</strong></td><td>&lt;1 mg/dL（或 &lt;20% 總膽紅素）</td><td>直接膽紅素升高 = 膽汁鬱積（嚴重）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">24 小時內黃疸的鑑別</p>
+            <ul class="k-list">
+              <li>溶血性疾病（ABO 或 Rh 不相容）= 最常見</li>
+              <li>G6PD 缺乏症（台灣男性盛行率約 3%）</li>
+              <li>先天性感染（TORCH）；敗血症</li>
+              <li>內出血（頭血腫、皮下出血）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">黃疸高風險因素（AAP 2022）</p>
+            <ul class="k-list">
+              <li>溶血性疾病（isoimmune、G6PD、球形紅血球症）</li>
+              <li>敗血症；低白蛋白（&lt;3.0 g/dL）</li>
+              <li>胎齡 35-36 週；前 24 小時快速上升</li>
+              <li>前一胎有換血輸血史</li>
+              <li class="note">早產兒（胎齡越小）：膽紅素腦損傷閾值越低——早產兒的光照治療閾值比足月兒低</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="jaundice-treatment" data-bm-dept="新生兒科" data-bm-title="黃疸治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">光照治療 + 換血輸血（依 AAP 2022 + Nelson 22nd）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">光照治療閾值（足月 ≥38 週，無高危因素）</p>
+            <ul class="k-list">
+              <li>生後 24 小時：TSB ≥12 mg/dL → 光照</li>
+              <li>生後 48 小時：TSB ≥15 mg/dL → 光照</li>
+              <li>生後 72 小時：TSB ≥18 mg/dL → 光照</li>
+              <li>有高危因素（溶血、G6PD、&lt;38 週）→ 閾值降低 2-3 mg/dL</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">光照治療（Phototherapy）</p>
+            <ul class="k-list">
+              <li><strong>機轉：</strong>藍綠光（波長 460-490 nm）使不溶性膽紅素 → 水溶性異構體 → 尿液 / 膽汁排出</li>
+              <li><strong>強化光照（Intensive phototherapy）：</strong>多組光源；暴露最大皮膚面積；眼罩保護（視網膜損傷）；遮蓋生殖器</li>
+              <li><strong>監測：</strong>每 4-6 小時測 TSB；持續水分補充（光照↑ 不顯性水分喪失）</li>
+              <li><strong>停止光照條件：</strong>TSB 低於光照閾值 2 mg/dL 以下；停後 24 小時追蹤（反彈）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">換血輸血（Exchange Transfusion）</p>
+            <ul class="k-list">
+              <li>適應症：TSB 超過換血閾值（依胎齡 + 高危因素）；急性膽紅素腦病（Acute Bilirubin Encephalopathy）</li>
+              <li>急性膽紅素腦病三期：早期（嗜睡、肌張力低、哭聲高亢）→ 中期（後弓反張、高音調哭聲、發燒）→ 晚期（神經損傷永久，核黃疸）</li>
+              <li>雙倍血量換血（2 × 80 mL/kg = 160 mL/kg）；全血 or pRBC + FFP；通過臍靜脈導管</li>
+              <li class="note">母乳性黃疸（Breast Milk Jaundice）：生後 1-3 週持續輕度非結合性膽紅素↑；母乳成分抑制膽紅素代謝；通常不需停母乳；若 TSB &gt;20 mg/dL 才考慮暫停 24-48 小時</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="k-card full" data-bm-id="jaundice-evaluation" data-bm-dept="新生兒科" data-bm-title="黃疸評估檢查">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">延長性黃疸 + 直接膽紅素升高評估</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">延長性黃疸（&gt;2 週足月 / &gt;3 週早產）→ 評估</p>
+            <ul class="k-list">
+              <li>TSB + 直接膽紅素；血型 + Coombs 試驗；CBC + 網狀紅血球；G6PD 活性（台灣建議篩查）</li>
+              <li>甲狀腺功能（先天性甲狀腺功能低下）；尿液培養（UTI）；肝功能</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">直接膽紅素（結合型）升高 = 膽汁鬱積 → 緊急評估</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>診斷</th><th>特徵</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>膽道閉鎖（Biliary Atresia）</strong></td>
+                  <td>生後 2-6 週；黃疸 + 白陶土便（灰白便）+ 茶色尿；肝腫大；GGT ↑↑</td>
+                  <td><strong>外科急症！</strong>肝臟超音波 + 核醫肝膽掃描 + 肝臟切片；Kasai 手術（生後 60 天內效果最好）</td>
+                </tr>
+                <tr>
+                  <td><strong>新生兒肝炎（TORCH）</strong></td>
+                  <td>CMV（最常見）；HSV；弓漿蟲；先天性梅毒；肝功能↑；血小板↓；小頭症</td>
+                  <td>TORCH 篩查；CMV → Ganciclovir；HSV → Acyclovir</td>
+                </tr>
+                <tr>
+                  <td><strong>Alagille 症候群</strong></td>
+                  <td>遺傳性；膽管減少症；三角臉；蝴蝶椎骨；先天性心臟病</td>
+                  <td>肝移植（嚴重者）</td>
+                </tr>
+                <tr>
+                  <td><strong>代謝性疾病</strong></td>
+                  <td>半乳糖血症（餵食配方奶後）；α₁-抗胰蛋白酶缺乏症；酪胺酸血症</td>
+                  <td>新生兒代謝篩查；飲食治療</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 新生兒敗血症 ══ -->
+    <div class="topic-block" id="neo-sepsis">
+      <div class="topic-block-head">
+        <span class="topic-block-title">新生兒敗血症 Neonatal Sepsis</span>
+        <div data-bm-id="neo-sepsis" data-bm-dept="新生兒科" data-bm-title="新生兒敗血症">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        新生兒敗血症的臨床表現非常非特異性——<strong>「新生兒看起來不太對」= 需要排除敗血症</strong>。依發病時間分為早發性（EOS，&lt;72 小時）和晚發性（LOS，≥72 小時），兩者病原不同，抗生素選擇不同。依 Nelson 22nd（Ch.148）。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="neonatal-sepsis-dx" data-bm-dept="新生兒科" data-bm-title="新生兒敗血症診斷">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">早發性 vs 晚發性敗血症</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>早發性（EOS）</th><th>晚發性（LOS）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>發病時間</strong></td><td>&lt;72 小時（部分定義 &lt;7 天）</td><td>≥72 小時（或 &gt;7 天）</td></tr>
+                <tr><td><strong>傳播途徑</strong></td><td>垂直傳播（母體到嬰兒）</td><td>水平傳播（醫療環境 / 社區）</td></tr>
+                <tr><td><strong>主要病原</strong></td><td><strong>GBS（B 群鏈球菌，最常見）</strong>；大腸桿菌；Listeria；克雷伯氏菌</td><td>凝固酶陰性葡萄球菌（CONS，院內最常見）；金黃色葡萄球菌；大腸桿菌；念珠菌（早產兒）</td></tr>
+                <tr><td><strong>危險因素</strong></td><td>GBS 帶菌陽性母親；早產；PPROM；產時發燒；絨毛膜羊膜炎</td><td>留置管路（CVC、氣管插管）；早產；腸道外營養；抗生素暴露</td></tr>
+                <tr><td><strong>臨床表現</strong></td><td>體溫不穩（發燒或低體溫）；呼吸暫停；嗜睡；餵食困難；低血糖；黃疸加重；灌流差</td><td>類似早發性 + 可能有局部感染焦點（腦膜炎、骨髓炎、關節炎）</td></tr>
+                <tr><td><strong>初始抗生素</strong></td><td>Ampicillin + Gentamicin（覆蓋 GBS + 大腸桿菌 + Listeria）</td><td>Vancomycin（覆蓋 CONS + MRSA）+ Gentamicin 或 Cefotaxime；懷疑腦膜炎 → 加 Ampicillin</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">評估步驟</p>
+            <ul class="k-list">
+              <li><strong>血液培養（×2 sets）：</strong>在抗生素前，從不同部位抽取；血量 ≥1 mL（新生兒）</li>
+              <li><strong>尿液培養（無菌導尿）：</strong>LOS 必做；EOS 若臨床懷疑也做</li>
+              <li><strong>腰椎穿刺：</strong>EOS 有症狀；LOS 所有懷疑敗血症；血培養陽性前先做（抗生素會使 CSF 培養快速轉陰）</li>
+              <li><strong>CBC + CRP + Procalcitonin：</strong>輔助，不能確診或排除；WBC &lt;5000 or &gt;30000 = 異常；Procalcitonin 是較敏感的感染標誌物</li>
+              <li><strong>胸部 X 光：</strong>有呼吸症狀時；排除 RDS、氣胸</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">GBS 預防（產前）</p>
+            <ul class="k-list">
+              <li>妊娠 35-37 週 GBS 陰道 / 直腸培養篩查</li>
+              <li>GBS ⊕ 或上次分娩有 GBS 新生兒敗血症史 → 分娩時 Penicillin G IV（或 Ampicillin）</li>
+              <li>Penicillin 過敏 + 低過敏風險 → Cefazolin；高過敏風險 → Clindamycin（若 GBS 敏感）or Vancomycin</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 新生兒呼吸窘迫 ══ -->
+    <div class="topic-block" id="neo-respiratory">
+      <div class="topic-block-head">
+        <span class="topic-block-title">新生兒呼吸窘迫 Neonatal Respiratory Distress</span>
+        <div data-bm-id="neo-respiratory" data-bm-dept="新生兒科" data-bm-title="新生兒呼吸窘迫">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        新生兒呼吸窘迫的鑑別最重要的是依胎齡和發病時間：<strong>早產兒早期 → RDS（界面活性劑缺乏）；足月兒剖腹產 → TTN（暫時性呼吸急促）；過期產 + 胎便羊水 → MAS（胎便吸入症候群）</strong>。Silverman-Anderson 評分是評估嚴重度的工具。依 Nelson 22nd（Ch.126）。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="neonatal-rds-comparison" data-bm-dept="新生兒科" data-bm-title="新生兒呼吸窘迫鑑別">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">RDS vs TTN vs MAS 鑑別</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>RDS（呼吸窘迫症候群）</th><th>TTN（暫時性呼吸急促）</th><th>MAS（胎便吸入症候群）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>好發族群</strong></td><td>早產兒（&lt;35 週最常見）；母親 DM</td><td>足月兒；選擇性剖腹產（未經產道擠壓）</td><td>過期產（&gt;42 週）；胎兒窘迫；胎便羊水</td></tr>
+                <tr><td><strong>發病時間</strong></td><td>出生後立刻至數小時</td><td>出生後數小時內，24-72 小時改善</td><td>出生後立刻（吸入胎便）</td></tr>
+                <tr><td><strong>病生理</strong></td><td>界面活性劑（Surfactant）不足 → 肺泡塌陷 → 分流</td><td>肺液清除不完全 → 氣道液體滯留</td><td>胎便吸入 → 氣道阻塞（ball-valve）+ 化學性肺炎 + 肺動脈高壓</td></tr>
+                <tr><td><strong>CXR 特徵</strong></td><td>瀰漫性細顆粒狀（毛玻璃）；支氣管充氣徵（Air bronchogram）；肺容量↓</td><td>兩側肺紋路增加；積液在水平葉間裂；肺容量正常或↑</td><td>不均勻團塊狀浸潤；過度充氣 + 肺不張並存；氣胸可能</td></tr>
+                <tr><td><strong>血氧</strong></td><td>低氧（右向左分流）</td><td>輕中度低氧；高 FiO₂ 反應好</td><td>嚴重低氧；對 O₂ 反應差（肺動脈高壓）</td></tr>
+                <tr>
+                  <td><strong>治療</strong></td>
+                  <td>
+                    Surfactant 替代治療（首選）<br/>
+                    CPAP 或機械通氣<br/>
+                    產前 ACS（Betamethasone）<br/>
+                    氧氣支持
+                  </td>
+                  <td>
+                    支持性（O₂）<br/>
+                    自然緩解<br/>
+                    避免過度補液<br/>
+                    24-72 小時改善
+                  </td>
+                  <td>
+                    氧氣（高流量）<br/>
+                    機械通氣（嚴重）<br/>
+                    iNO（肺動脈高壓）<br/>
+                    ECMO（極重度）<br/>
+                    避免氣道吸引刺激
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Surfactant 替代治療（依 Nelson 22nd Ch.126）</p>
+            <ul class="k-list">
+              <li><strong>適應症：</strong>&lt;30 週預防性；任何胎齡 FiO₂ &gt;0.3 + CPAP 失敗 → 治療性</li>
+              <li><strong>種類：</strong>天然（Calfactant / Beractant / Poractant alfa）優於人工合成</li>
+              <li><strong>劑量：</strong>Poractant alfa（Curosurf）100-200 mg/kg 氣管內</li>
+              <li><strong>INSURE 法：</strong>Intubate → Surfactant → Extubate（給完立刻拔管接 CPAP）↓ 需要機械通氣時間</li>
+              <li class="note">CPAP（持續氣道正壓）是 RDS 輕中度的首選通氣支持；PEEP 4-6 cmH₂O 防止肺泡塌陷</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="k-card" data-bm-id="silverman-anderson" data-bm-dept="新生兒科" data-bm-title="Silverman-Anderson 評分">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">Silverman-Anderson 呼吸窘迫評分</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>項目</th><th>0 分</th><th>1 分</th><th>2 分</th></tr></thead>
+              <tbody>
+                <tr><td><strong>上胸廓運動</strong></td><td>與腹部同步</td><td>輕微落後</td><td>明顯落後（矛盾呼吸）</td></tr>
+                <tr><td><strong>肋間凹陷</strong></td><td>無</td><td>輕微</td><td>明顯</td></tr>
+                <tr><td><strong>劍突凹陷</strong></td><td>無</td><td>輕微</td><td>明顯</td></tr>
+                <tr><td><strong>鼻翼扇動</strong></td><td>無</td><td>輕微</td><td>明顯</td></tr>
+                <tr><td><strong>呻吟（Grunting）</strong></td><td>無</td><td>聽診才聽到</td><td>耳聽即可聞</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li>0 分：無呼吸窘迫</li>
+              <li>1-3 分：輕度窘迫</li>
+              <li>4-6 分：中度窘迫 → 考慮 CPAP / 氧氣</li>
+              <li>7-10 分：重度窘迫 → 立刻介入（插管 / 機械通氣）</li>
+              <li class="note"><strong>呻吟（Grunting）</strong>= 新生兒呼氣時聲門部分關閉，製造自發性 PEEP 對抗肺泡塌陷——是肺泡疾病（RDS、肺炎）的重要徵象</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="k-card" data-bm-id="pphn" data-bm-dept="新生兒科" data-bm-title="新生兒持續性肺動脈高壓">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">新生兒持續性肺動脈高壓（PPHN）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>定義：</strong>出生後肺血管阻力（PVR）持續升高 → 右向左分流（通過 PFO / PDA）→ 嚴重低氧</li>
+              <li><strong>病因：</strong>MAS；肺炎；RDS；先天性膈疝（CDH）；窒息；敗血症</li>
+              <li><strong>診斷線索：</strong>導管前（右手）SpO₂ - 導管後（左手 / 腳）SpO₂ 差異 &gt;5-10%（右向左分流徵象）；高濃度 O₂ 反應差；心臟超音波確診</li>
+              <li><strong>治療：</strong>高濃度氧氣（肺血管擴張）；吸入性一氧化氮（iNO，20 ppm）= 選擇性肺血管擴張；機械通氣；Sildenafil（PDE-5 抑制劑）；ECMO（極重度 / iNO 無效）</li>
+              <li class="note">先天性膈疝（CDH）= 橫膈缺損 → 腸管進入胸腔 → 肺發育不全 + PPHN；出生後立刻插管；避免面罩 PPV（脹氣惡化）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 新生兒代謝問題 ══ -->
+    <div class="topic-block" id="neo-metabolic">
+      <div class="topic-block-head">
+        <span class="topic-block-title">新生兒代謝問題 Neonatal Metabolic Issues</span>
+        <div data-bm-id="neo-metabolic" data-bm-dept="新生兒科" data-bm-title="新生兒代謝問題">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        新生兒低血糖是最常見的代謝問題，高危族群包括 LGA（母親 DM）、SGA（IUGR）、早產兒。<strong>低血糖的臨床表現非特異性，可能與敗血症、呼吸問題類似——所有病態新生兒均需排除低血糖</strong>。依 Nelson 22nd（Ch.113、121）。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="neonatal-hypoglycemia" data-bm-dept="新生兒科" data-bm-title="新生兒低血糖">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">新生兒低血糖（依 Nelson 22nd Ch.113）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">定義 + 高危族群</p>
+            <ul class="k-list">
+              <li><strong>定義：</strong>血糖 &lt;40-45 mg/dL（生後 24 小時）；&lt;50 mg/dL（&gt;24 小時）</li>
+              <li><strong>高危族群：</strong>
+                <ul>
+                  <li>LGA（母親 DM → 高胰島素血症）</li>
+                  <li>SGA / IUGR（肝醣儲存不足）</li>
+                  <li>早產兒（糖質新生和脂肪分解能力低）</li>
+                  <li>窒息 / 低體溫（↑ 葡萄糖消耗）</li>
+                  <li>先天性高胰島素血症（Nesidioblastosis）</li>
+                </ul>
+              </li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+            <ul class="k-list">
+              <li>抖動（Jitteriness）；煩躁；嗜睡；餵食差；哭聲異常（高亢）；低體溫；呼吸暫停；發紺；癲癇</li>
+              <li>無症狀低血糖也可能造成神經損傷（尤其持續低血糖）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+            <ul class="k-list">
+              <li><strong>無症狀 / 輕度（&gt;25 mg/dL）：</strong>立刻餵食（母乳 or 配方奶）；30 分後重測血糖</li>
+              <li><strong>無法口服 / 有症狀：</strong>D10W（10% 葡萄糖水）2 mL/kg IV bolus → 維持 GIR（葡萄糖輸注速率）4-8 mg/kg/分</li>
+              <li><strong>難治性低血糖：</strong>GIR &gt;12 mg/kg/分仍無法維持 → 考慮 Glucagon 0.1 mg/kg IM（短效）；皮質醇（先天性腎上腺增生）；Diazoxide / Octreotide（高胰島素血症）</li>
+              <li><strong>目標血糖：</strong>≥50 mg/dL（無症狀）；≥60 mg/dL（有症狀）；穩定後漸減 IV 葡萄糖</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="neonatal-calcium" data-bm-dept="新生兒科" data-bm-title="新生兒低鈣血症">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">新生兒低鈣血症 + 電解質問題</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">低鈣血症（Hypocalcemia）</p>
+            <ul class="k-list">
+              <li><strong>定義：</strong>總鈣 &lt;7 mg/dL（早產 &lt;6 mg/dL）；或游離鈣 &lt;1.0 mmol/L</li>
+              <li><strong>早發型（&lt;72 小時）：</strong>早產兒；母親 DM；窒息；DiGeorge 症候群（PTH 缺乏）</li>
+              <li><strong>晚發型（&gt;7 天）：</strong>高磷配方奶（牛奶 / 未稀釋）→↑ 磷 → ↓ 鈣；維生素 D 缺乏</li>
+              <li><strong>臨床：</strong>抖動；高音調哭聲；癲癇；Chvostek 徵（叩擊顏面神經 → 臉部抽搐）；QTc 延長</li>
+              <li><strong>急性治療：</strong>10% Calcium Gluconate 1-2 mL/kg IV 緩慢推注（&gt;10 分）；監測 ECG（心搏過緩）；不可 IM（組織壞死）</li>
+              <li><strong>維持：</strong>口服 Calcium gluconate；維生素 D 補充</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">新生兒體溫調節</p>
+            <ul class="k-list">
+              <li><strong>正常體溫：</strong>36.5-37.5°C（腋溫）</li>
+              <li><strong>低體溫：</strong>&lt;36.5°C；早產兒和 SGA 最高風險（體表面積 / 體重比高）</li>
+              <li><strong>預防：</strong>立刻擦乾 + 保暖毯；輻射保溫台；塑膠袋包裹（極早產）；延遲洗澡（&gt;24 小時）</li>
+              <li><strong>低體溫後果：</strong>↑ 耗氧量；↑ 低血糖；↑ 代謝性酸中毒；↑ 死亡率</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 新生兒常見問題 + 篩查 ══ -->
+    <div class="topic-block" id="neo-common">
+      <div class="topic-block-head">
+        <span class="topic-block-title">新生兒常見問題 + 篩查 Common Neonatal Issues & Screening</span>
+        <div data-bm-id="neo-common" data-bm-dept="新生兒科" data-bm-title="新生兒常見問題 + 篩查">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        新生兒期許多「問題」其實是生理性過渡現象，家長衛教很重要。同時，台灣新生兒篩查計劃提供了早期診斷罕見遺傳代謝疾病的機會——篩查結果陽性需要盡快追蹤確診，不要耽誤。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="newborn-common-issues" data-bm-dept="新生兒科" data-bm-title="新生兒常見問題">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">新生兒常見問題（生理性 vs 病理性）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>問題</th><th>生理性（正常）</th><th>需評估（異常警訊）</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>呼吸型態</strong></td>
+                  <td>週期性呼吸（短暫停頓 &lt;10 秒）= 正常；RR 30-60 次/分；偶發的呻吟</td>
+                  <td>呼吸暫停 &gt;20 秒 or 伴隨心跳過緩 / 紫紺；RR &gt;60 次/分持續；呻吟持續</td>
+                </tr>
+                <tr>
+                  <td><strong>胎便排出</strong></td>
+                  <td>90% 生後 24 小時排出；99% 生後 48 小時排出</td>
+                  <td>&gt;48 小時未排胎便 → Hirschsprung 病 / 鎖肛 / 腸阻塞</td>
+                </tr>
+                <tr>
+                  <td><strong>排尿</strong></td>
+                  <td>生後 24-48 小時開始；之後每天 6-8 次濕尿布（母乳充足的指標）</td>
+                  <td>&gt;24 小時無排尿 → 脫水 / 腎臟問題</td>
+                </tr>
+                <tr>
+                  <td><strong>皮膚問題</strong></td>
+                  <td>胎脂（Vernix）；粟粒疹（Milia，白色細顆粒）；新生兒痤瘡；中毒性紅斑（Erythema toxicum）</td>
+                  <td>水皰（HSV？）；膿皰（膿皮症）；瘀點（血小板低下 / 感染）；黃疸（見黃疸 block）</td>
+                </tr>
+                <tr>
+                  <td><strong>乳房腫大</strong></td>
+                  <td>男女均可發生；母體雌激素影響；自然消退</td>
+                  <td>紅腫熱痛 → 乳腺炎 → 抗生素</td>
+                </tr>
+                <tr>
+                  <td><strong>臍帶護理</strong></td>
+                  <td>自然乾燥法；生後 1-3 週脫落</td>
+                  <td>臍周紅腫 / 膿液 → 臍炎（Omphalitis）→ 抗生素（Ampicillin + Gentamicin）；臍帶 &gt;3 週未脫落 → 考慮白血球功能障礙（LAD）</td>
+                </tr>
+                <tr>
+                  <td><strong>陰道分泌物（女嬰）</strong></td>
+                  <td>血性分泌物（撤退性出血）；白色分泌物 = 正常；母體雌激素影響</td>
+                  <td>持續性出血 &gt;10 天 → 評估</td>
+                </tr>
+                <tr>
+                  <td><strong>頭顱血腫</strong></td>
+                  <td>骨膜下血腫（不跨越縫線）；生後 2-3 天明顯；幾週消退；可能加重黃疸</td>
+                  <td>大量 → 貧血 + 黃疸加重；帽狀腱膜下出血（跨越縫線 + 快速擴大 → 失血性休克！）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="k-card full" data-bm-id="neonatal-screening" data-bm-dept="新生兒科" data-bm-title="台灣新生兒篩查">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">台灣新生兒篩查計劃 + 餵食</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">台灣公費新生兒篩查（生後 48-72 小時足跟採血）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>篩查項目</th><th>疾病</th><th>若陽性 → 確診 + 早期介入</th></tr></thead>
+              <tbody>
+                <tr><td><strong>先天性甲狀腺功能低下症</strong></td><td>TSH ↑（或 T4 ↓）</td><td>甲狀腺素補充（越早開始越好 → 預防智能障礙）</td></tr>
+                <tr><td><strong>苯酮尿症（PKU）</strong></td><td>苯丙胺酸 ↑</td><td>低苯丙胺酸飲食</td></tr>
+                <tr><td><strong>半乳糖血症</strong></td><td>半乳糖 ↑</td><td>停母乳 + 低半乳糖配方奶</td></tr>
+                <tr><td><strong>G6PD 缺乏症</strong></td><td>G6PD 活性 ↓</td><td>避免氧化性藥物和食物（蠶豆）；急性溶血 → 輸血</td></tr>
+                <tr><td><strong>先天性腎上腺增生（CAH）</strong></td><td>17-OH 黃體素 ↑</td><td>皮質醇 ± 鹽皮質醇補充；女嬰可能外陰模糊（男性化）</td></tr>
+                <tr><td><strong>楓糖尿症（MSUD）</strong></td><td>支鏈胺基酸 ↑</td><td>特殊飲食</td></tr>
+                <tr><td><strong>其他有機酸 / 脂肪酸代謝異常</strong></td><td>多項氨基酸 / 醯基肉鹼異常</td><td>依疾病種類</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">出生後常規處置</p>
+            <ul class="k-list">
+              <li><strong>維生素 K₁ 1 mg IM（出生後立刻）：</strong>預防新生兒出血症（VKDB）；應拒絕者需簽切結書並衛教</li>
+              <li><strong>眼藥水（眼結膜炎預防）：</strong>Erythromycin 眼藥膏（淋病性眼炎預防）；台灣常規給予</li>
+              <li><strong>聽力篩查：</strong>出院前 AABR 或 OAE；雙側未通過 → 轉介 ABR 確診</li>
+              <li><strong>先天性心臟病（CCHD）篩查：</strong>出生後 24 小時以上 Pulse oximetry 篩查（右手 + 一隻腳）；任一 &lt;95% 或差異 &gt;3% → 心臟超音波</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">新生兒餵食</p>
+            <ul class="k-list">
+              <li><strong>母乳：</strong>首選；按需哺乳 8-12 次/天；生後第 1 天 5-7 mL/次 → 第 3 天 30 mL/次 → 第 7 天 60 mL/次</li>
+              <li><strong>配方奶（足月）：</strong>20 kcal/oz（標準濃度）；需求量 150-180 mL/kg/天</li>
+              <li><strong>早產兒配方奶：</strong>22-24 kcal/oz（高熱量密度）；含 DHA/ARA；Fortifier 可加入母乳</li>
+              <li class="note">母乳哺育充足性評估：生後 3-5 天每日至少 6 次黃色軟便；體重每天增加 20-30 g（生後 2 週後）；餵食後嬰兒滿足感</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  const SEARCH_INDEX = [
+    { id:'neo-assessment',  dept:'新生兒科', title:'新生兒評估 + APGAR + NRP',             url:'#neo-assessment',  text:'' },
+    { id:'neo-jaundice',    dept:'新生兒科', title:'新生兒黃疸（光照治療 + 換血）',          url:'#neo-jaundice',    text:'' },
+    { id:'neo-sepsis',      dept:'新生兒科', title:'新生兒敗血症（EOS vs LOS）',            url:'#neo-sepsis',      text:'' },
+    { id:'neo-respiratory', dept:'新生兒科', title:'新生兒呼吸窘迫（RDS + TTN + MAS）',    url:'#neo-respiratory', text:'' },
+    { id:'neo-metabolic',   dept:'新生兒科', title:'新生兒代謝問題（低血糖 + 低鈣）',       url:'#neo-metabolic',   text:'' },
+    { id:'neo-common',      dept:'新生兒科', title:'新生兒常見問題 + 台灣新生兒篩查',       url:'#neo-common',      text:'' },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
