@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>兒科（一般）| 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .score-modal-overlay.open { display: flex; }
+    .score-modal {
+      background: var(--white); border-radius: 14px;
+      width: 100%; max-width: 640px; max-height: 90vh;
+      overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .score-modal-head {
+      position: sticky; top: 0; background: var(--white);
+      padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+    .score-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .score-modal-close:hover { background: var(--light); }
+    .score-modal-body { padding: 20px 22px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#peds" class="nav-back">兒科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">一般兒科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head">
+    <span>書籤</span>
+    <button class="bm-close" id="bm-close">✕</button>
+  </div>
+  <div id="bm-list"></div>
+</div>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">一般兒科</div>
+
+    <div class="sidebar-section-title">基礎評估</div>
+    <a href="#peds-vitals"        class="sidebar-link">生命徵象 + 體重公式</a>
+    <a href="#peds-development"   class="sidebar-link">發育里程碑</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">發燒</div>
+    <a href="#peds-fever"         class="sidebar-link">兒科發燒評估（依年齡分層）</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">呼吸道</div>
+    <a href="#peds-croup"         class="sidebar-link">哮吼（Croup）</a>
+    <a href="#peds-bronchiolitis" class="sidebar-link">細支氣管炎（Bronchiolitis）</a>
+    <a href="#peds-asthma"        class="sidebar-link">氣喘急性發作</a>
+    <a href="#peds-pneumonia"     class="sidebar-link">兒科肺炎</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">腸胃</div>
+    <a href="#peds-gastro"        class="sidebar-link">腸胃炎與脫水</a>
+    <a href="#peds-gi-surgical"   class="sidebar-link">腸套疊 + 幽門狹窄</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">神經</div>
+    <a href="#peds-seizure"       class="sidebar-link">熱性痙攣 + 兒科癲癇</a>
+    <a href="#peds-meningitis"    class="sidebar-link">兒科腦膜炎</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">感染</div>
+    <a href="#peds-uti"           class="sidebar-link">泌尿道感染</a>
+    <a href="#peds-infection"     class="sidebar-link">川崎病 + 出疹疾病</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急症</div>
+    <a href="#peds-shock"         class="sidebar-link">兒科休克 + PALS</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">預防保健</div>
+    <a href="#peds-vaccines"      class="sidebar-link">台灣公費疫苗時程</a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="./newborn.html"             class="sidebar-link">新生兒科 →</a>
+    <a href="../er/general.html#airway"  class="sidebar-link">兒童插管 →（急診）</a>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-hero" style="background: linear-gradient(135deg, #f0fff4 0%, #e8f4ff 100%); color: var(--navy);">
+      <div class="page-hero-text">
+        <h1>一般兒科</h1>
+        <p>兒科常見急症、感染與評估工具，依 Nelson Textbook of Pediatrics 22nd Edition 編排。發燒 + 嬰兒 → 依年齡分層評估。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+          <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+          <line x1="9" y1="9" x2="9.01" y2="9"/>
+          <line x1="15" y1="9" x2="15.01" y2="9"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#peds">兒科</a> › 一般兒科
+    </div>
+
+    <!-- ══ 生命徵象 + 體重公式 ══ -->
+    <div class="topic-block" id="peds-vitals">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科生命徵象 + 體重公式 Pediatric Vitals & Formulas</span>
+        <div data-bm-id="peds-vitals" data-bm-dept="兒科" data-bm-title="兒科生命徵象 + 體重公式">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        兒科最大的挑戰：<strong>生命徵象正常值隨年齡變化，且低血壓是代償失調的晚期表現</strong>——心搏過速和灌流不足才是早期休克的警示。體重估算公式是急救藥物劑量的基礎，PGY 必須熟記。依 Nelson 22nd。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="peds-vitals-table" data-bm-dept="兒科" data-bm-title="生命徵象正常值">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">正常生命徵象（依年齡）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>年齡</th><th>心率（bpm）</th><th>呼吸速率（/分）</th><th>收縮壓（mmHg）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>新生兒（0-4 週）</strong></td><td>100-160</td><td>30-60</td><td>60-90</td></tr>
+                <tr><td><strong>嬰兒（1-12 個月）</strong></td><td>100-160</td><td>30-60</td><td>70-100</td></tr>
+                <tr><td><strong>幼兒（1-3 歲）</strong></td><td>90-150</td><td>24-40</td><td>80-110</td></tr>
+                <tr><td><strong>學齡前（3-5 歲）</strong></td><td>80-140</td><td>22-34</td><td>80-110</td></tr>
+                <tr><td><strong>學齡（6-11 歲）</strong></td><td>70-120</td><td>18-30</td><td>90-120</td></tr>
+                <tr><td><strong>青少年（≥12 歲）</strong></td><td>60-100</td><td>12-20</td><td>100-130</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">低血壓定義（依年齡）</p>
+            <ul class="k-list">
+              <li><strong>新生兒：</strong>SBP &lt;60 mmHg</li>
+              <li><strong>1-12 個月：</strong>SBP &lt;70 mmHg</li>
+              <li><strong>1-10 歲：</strong>SBP &lt;70 + (年齡×2) mmHg</li>
+              <li><strong>&gt;10 歲：</strong>SBP &lt;90 mmHg</li>
+              <li class="note">兒童低血壓是休克晚期！心搏過速 + 毛細血管回充時間延長 + 皮膚花紋 = 早期休克徵象</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="peds-formulas" data-bm-dept="兒科" data-bm-title="兒科常用公式">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科常用公式（體重估算、插管、急救）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">體重估算</p>
+            <ul class="k-list">
+              <li><strong>嬰兒（3-12 個月）：</strong>體重（kg）= 月齡 / 2 + 4</li>
+              <li><strong>1-10 歲：</strong>體重（kg）= 年齡（歲）× 2 + 8</li>
+              <li><strong>Broselow 尺：</strong>急救現場估算體重的最準確工具</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">插管相關</p>
+            <ul class="k-list">
+              <li><strong>ETT 大小（無氣囊，&gt;1 歲）：</strong>（年齡/4）+ 4 mm</li>
+              <li><strong>ETT 大小（有氣囊，&gt;1 歲）：</strong>（年齡/4）+ 3 mm</li>
+              <li><strong>插管深度（嘴脣到管尖）：</strong>ETT 尺寸 × 3 cm</li>
+              <li><strong>新生兒 ETT：</strong>3.0-3.5 mm（足月）；2.5-3.0 mm（早產）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急救劑量</p>
+            <ul class="k-list">
+              <li><strong>Epinephrine（心跳停止）：</strong>0.01 mg/kg IV（1:10,000）；最大 1 mg</li>
+              <li><strong>Epinephrine（過敏性休克）：</strong>0.01 mg/kg IM（1:1,000）；大腿外側；最大 0.5 mg</li>
+              <li><strong>電擊（VF/pVT）：</strong>2 J/kg 首次 → 4 J/kg 後續</li>
+              <li><strong>補液（休克）：</strong>10-20 mL/kg NS 快速輸注 × 1-3 次（評估後決定）</li>
+              <li><strong>Atropine（心搏過緩）：</strong>0.02 mg/kg IV；最小劑量 0.1 mg；最大 0.5 mg</li>
+              <li><strong>Glucose（低血糖）：</strong>0.5-1 g/kg IV（10% GS = 5-10 mL/kg）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 發育里程碑 ══ -->
+    <div class="topic-block" id="peds-development">
+      <div class="topic-block-head">
+        <span class="topic-block-title">發育里程碑 Developmental Milestones</span>
+        <div data-bm-id="peds-development" data-bm-dept="兒科" data-bm-title="發育里程碑">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        發育里程碑評估是每次兒科健康檢查的核心。<strong>任何年齡的技能退步（Regression）= 立刻評估</strong>，不要假設是退步期。「Red Flag」指標提供早期介入的時機，越早轉介語言、職能、物理治療效果越好。依 Nelson 22nd。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="milestones-table" data-bm-dept="兒科" data-bm-title="發育里程碑表">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">發育里程碑（依 Nelson 22nd）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>年齡</th><th>粗動作</th><th>細動作</th><th>語言</th><th>社交</th></tr></thead>
+              <tbody>
+                <tr><td><strong>2 個月</strong></td><td>俯臥抬頭 45°</td><td>追視 180°；手鬆開</td><td>社交性微笑；咕噥音</td><td>認出父母</td></tr>
+                <tr><td><strong>4 個月</strong></td><td>俯臥抬頭 90°；翻身（俯→仰）</td><td>伸手抓物</td><td>牙牙學語；笑出聲</td><td>大聲笑；認陌生人</td></tr>
+                <tr><td><strong>6 個月</strong></td><td>不扶坐穩；翻身（仰→俯）</td><td>兩手換持物品</td><td>雙音節（mama/dada 無意義）</td><td>認生；鏡中自我</td></tr>
+                <tr><td><strong>9 個月</strong></td><td>爬行；扶站；扶走</td><td>拇食指鉗形抓握</td><td>mama/dada 有意義；聽懂「不」</td><td>分離焦慮；揮手拜拜</td></tr>
+                <tr><td><strong>12 個月</strong></td><td>獨立站穩；可能獨走</td><td>拍手；物品入杯</td><td>1-3 個有意義單字</td><td>模仿動作；指示性指物</td></tr>
+                <tr><td><strong>18 個月</strong></td><td>跑步（不穩）；爬樓梯（扶）</td><td>疊 3-4 個積木；用湯匙</td><td>10-20 個單字；指身體部位</td><td>平行遊戲；假扮遊戲開始</td></tr>
+                <tr><td><strong>24 個月</strong></td><td>跑步；上下樓梯（雙腳踩）</td><td>疊 6 個積木；翻書頁</td><td>50+ 單字；2 詞句；50% 可理解</td><td>平行遊戲；「我的」概念</td></tr>
+                <tr><td><strong>36 個月</strong></td><td>單腳站 2-3 秒；三輪車</td><td>疊 9 積木；畫圓；剪刀</td><td>3 詞句；75% 可理解；問「為什麼」</td><td>輪流；想象遊戲豐富</td></tr>
+                <tr><td><strong>4 歲</strong></td><td>單腳跳；爬梯子</td><td>畫方形；剪直線</td><td>4 詞句；100% 可理解</td><td>協作遊戲；規則遊戲</td></tr>
+                <tr><td><strong>5 歲</strong></td><td>跳繩；騎腳踏車</td><td>畫三角形；寫名字</td><td>流利語言；語法正確</td><td>友誼；競爭意識</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">發育落後紅旗（立刻轉介）</p>
+            <ul class="k-list">
+              <li>6 個月：無社交性微笑；無追視</li>
+              <li>9 個月：無手勢；無雙向互動</li>
+              <li>12 個月：無牙牙學語；無手勢（指物、揮手）</li>
+              <li>16 個月：無任何有意義單字</li>
+              <li>24 個月：無二字詞句</li>
+              <li class="note"><strong>任何年齡技能退步（Regression）= 立刻評估</strong>——自閉症、神經退化疾病的警訊</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 兒科發燒評估 ══ -->
+    <div class="topic-block" id="peds-fever">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科發燒評估 Pediatric Fever Assessment</span>
+        <div data-bm-id="peds-fever" data-bm-dept="兒科" data-bm-title="兒科發燒評估">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        兒科發燒評估最重要的是依年齡分層——<strong>嬰兒（尤其 &lt;60 天）有嚴重細菌感染（SBI）的機率遠高於年長兒，且臨床表現可以很輕微</strong>。外觀「看起來不舒服」比任何單一生命徵象或 Lab 值都重要。依 Nelson 22nd（Ch.220）+ AAP 2021 年指引。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="fever-algorithm" data-bm-dept="兒科" data-bm-title="發燒評估演算法">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">發燒評估（依 Nelson 22nd Table 220.2 + AAP 2021）</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>任何年齡 Toxic-appearing（嗜睡、易激惹、灌流差、呼吸窘迫）→ 立刻住院 + 血 / 尿 / CSF 培養 + 靜脈抗生素。</span>
+            </div>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>年齡</th><th>評估重點</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>&lt;22 天</strong></td>
+                  <td>發燒 ≥38°C = 高風險；臨床外觀不可靠；SBI 包含 GBS、大腸桿菌、HSV</td>
+                  <td>全套評估（血 + 尿 + CSF）+ 住院 + 靜脈抗生素（Ampicillin + Gentamicin）±  Acyclovir（懷疑 HSV）</td>
+                </tr>
+                <tr>
+                  <td><strong>22-28 天</strong></td>
+                  <td>低風險標準（同下）+ 體溫 ≤38.5°C + Procalcitonin ≤0.5 ng/mL + CRP ≤20 mg/L + ANC ≤4000-5200/mm³</td>
+                  <td>低風險 → 可考慮 LP；靜脈抗生素；住院觀察。非低風險 → 全套評估 + 住院 + 抗生素</td>
+                </tr>
+                <tr>
+                  <td><strong>29-60 天</strong></td>
+                  <td>
+                    <strong>低風險標準：</strong>外觀良好；UA 陰性（LE/Nitrite 陰性，WBC &lt;5/hpf）；Procalcitonin ≤0.5 ng/mL；CRP ≤20 mg/L；ANC ≤4000-5200/mm³
+                  </td>
+                  <td>低風險 → 不需 LP；不需抗生素；密切門診追蹤（24-36 小時內）<br/>非低風險 → 依 CRP/ANC 結果決定是否 LP 和住院</td>
+                </tr>
+                <tr>
+                  <td><strong>2-36 個月，38-39°C</strong></td>
+                  <td>外觀良好；已完整接種 PCV13 + Hib</td>
+                  <td>安慰（多數為自限性病毒感染）；退燒藥；告知回診指標（持續 &gt;39°C、新症狀）；UA（女生 / 未割包皮男生 &lt;2 歲）</td>
+                </tr>
+                <tr>
+                  <td><strong>2-36 個月，&gt;39°C</strong></td>
+                  <td>已完整接種 → 評估 UA（女生 + 特定男生）；未完整接種 → 依 1993 指引較積極處置</td>
+                  <td>UA + 尿液培養；若有焦點感染 → 針對治療；無明確焦點 + 外觀良好 → 密切追蹤</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">發燒處置原則</p>
+            <ul class="k-list">
+              <li><strong>退燒藥：</strong>Acetaminophen 15 mg/kg q4-6h；Ibuprofen（&gt;6 個月）10 mg/kg q6-8h；兩者交替使用可有效控制發燒</li>
+              <li><strong>避免 Aspirin：</strong>兒童病毒性發燒禁用（Reye 症候群）</li>
+              <li><strong>溫水擦澡：</strong>效果有限，退燒藥仍是主要處置</li>
+              <li class="note">發燒本身不會造成腦損傷（除非 &gt;41°C 才有神經毒性）；控制不舒適感比追求體溫正常更重要</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 哮吼 ══ -->
+    <div class="topic-block" id="peds-croup">
+      <div class="topic-block-head">
+        <span class="topic-block-title">哮吼 Croup（Laryngotracheobronchitis）</span>
+        <div data-bm-id="peds-croup" data-bm-dept="兒科" data-bm-title="哮吼">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        哮吼是最常見的 3 個月至 5 歲急性上呼吸道阻塞原因，75% 由副流感病毒引起。<strong>典型表現：犬吠樣咳嗽（Barking cough）+ 吸氣性喘鳴（Stridor）+ 聲音嘶啞</strong>，夜間加重。輕中度 → Dexamethasone 口服；中重度 → 加 Racemic epinephrine 霧化。依 Nelson 22nd（Ch.433）。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="croup-severity" data-bm-dept="兒科" data-bm-title="哮吼嚴重度評估與治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">哮吼嚴重度分級 + 治療</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>嚴重度</th><th>臨床特徵</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>輕度</strong></td>
+                  <td>偶發犬吠樣咳嗽；休息時無喘鳴；輕微或無呼吸困難；外觀良好</td>
+                  <td>Dexamethasone 0.6 mg/kg PO 單次（最大 10 mg）；衛教；門診追蹤</td>
+                </tr>
+                <tr>
+                  <td><strong>中度</strong></td>
+                  <td>頻繁犬吠樣咳嗽；休息時聽得到喘鳴；輕度肋間凹陷；活動力稍下降</td>
+                  <td>Dexamethasone 0.6 mg/kg PO/IM/IV；Racemic epinephrine 霧化（2.25%，0.05 mL/kg，最大 0.5 mL 以 3 mL NS 稀釋）；觀察 2-4 小時</td>
+                </tr>
+                <tr>
+                  <td><strong>重度</strong></td>
+                  <td>持續嚴重犬吠樣咳嗽；休息時顯著喘鳴；明顯肋間 / 胸骨上凹陷；激動 / 嗜睡；蒼白或發紺</td>
+                  <td>住院；Epinephrine 霧化；Dexamethasone IV；準備插管（若惡化）；最小刺激原則（不要激惹孩子）</td>
+                </tr>
+                <tr>
+                  <td><strong>瀕危</strong></td>
+                  <td>意識改變；低氧；青紫；exhausted appearance</td>
+                  <td>立刻氣道管理；插管（小一號 ETT）；ICU</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">注意事項（依 Nelson 22nd Ch.433）</p>
+            <ul class="k-list">
+              <li><strong>Steeple sign：</strong>頸部正位 X 光看到聲門下氣管狹窄（如鐘塔）；存在但非必要診斷條件；影像不與嚴重度相關</li>
+              <li><strong>診斷是臨床診斷</strong>，不需 X 光確認（典型表現即可診斷）</li>
+              <li><strong>Epinephrine 後 2-4 小時觀察：</strong>症狀可能反彈（rebound）；給藥後不可立刻離院</li>
+              <li><strong>鑑別：急性會厭炎（Epiglottitis）：</strong>「三 D」—— Dysphagia、Dysphonia、Drooling；高燒；坐前傾位（tripod）；不哭不鬧、面容恐懼；<strong>不要做喉嚨視診（可能誘發完全阻塞）→ 立刻到 OR 在麻醉下視診</strong></li>
+              <li><strong>細菌性氣管炎（Bacterial Tracheitis）：</strong>類似哮吼但高燒 + 毒性外觀 + 膿性分泌物 + 對 epinephrine 無反應 → 住院 + 抗生素（Staphylococcus aureus）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 細支氣管炎 ══ -->
+    <div class="topic-block" id="peds-bronchiolitis">
+      <div class="topic-block-head">
+        <span class="topic-block-title">細支氣管炎 Bronchiolitis</span>
+        <div data-bm-id="peds-bronchiolitis" data-bm-dept="兒科" data-bm-title="細支氣管炎">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        細支氣管炎是 &lt;2 歲（尤其 &lt;12 個月）最常見的下呼吸道感染，RSV 佔 50-80%。<strong>大多數治療是支持性的——沒有任何藥物被證明能縮短病程</strong>。關鍵是評估呼吸工作量和餵食能力。依 Nelson 22nd（Ch.439）。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="bronchiolitis-mgmt" data-bm-dept="兒科" data-bm-title="細支氣管炎處置">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">細支氣管炎評估 + 處置（依 Nelson 22nd Ch.439）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床特徵</p>
+            <ul class="k-list">
+              <li>初期：流涕、輕咳、低燒（1-3 天）→ 進展為下呼吸道：喘鳴、咳嗽加重、呼吸窘迫</li>
+              <li>高峰：發病後 3-5 天；多數 7-10 天改善；咳嗽可持續 2-3 週</li>
+              <li><strong>重度危險因素：</strong>&lt;2 個月；早產兒（&lt;32 週）；先天性心臟病；免疫缺陷；慢性肺病（BPD）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">住院適應症</p>
+            <ul class="k-list">
+              <li>SpO₂ &lt;90-92%（室內空氣）；呼吸速率 &gt;70 次/分；顯著呼吸窘迫（輔助肌、鼻翼扇動、明顯凹陷）</li>
+              <li>脫水 / 無法餵食（經口補充 &lt;50%）；反覆呼吸暫停；重度危險因素存在</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">支持性治療（核心）</p>
+            <ul class="k-list">
+              <li><strong>氧氣：</strong>SpO₂ &lt;90% → 鼻導管氧氣（或 High-flow 鼻導管）；目標 SpO₂ ≥90-92%</li>
+              <li><strong>鼻腔清潔：</strong>生理食鹽水滴鼻 + 吸引分泌物（尤其餵食前）</li>
+              <li><strong>補液：</strong>NG 管餵食 or IV 補液（若無法經口）；避免過度補液</li>
+              <li><strong>體位：</strong>抬頭 30°；不要讓嬰兒平躺</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">不建議常規使用</p>
+            <ul class="k-list">
+              <li>Bronchodilators（Salbutamol / Albuterol）：沒有明確效益；試用一次，無反應則停用</li>
+              <li>類固醇（全身性）：無效；不建議</li>
+              <li>Antibiotics：病毒性感染，不建議（除非合併細菌感染）</li>
+              <li>Ribavirin：高危患者可考慮，但使用限制多</li>
+              <li class="note">Hypertonic saline（3% NS）霧化：可能有助於住院患者，但門診效益不確定</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 氣喘急性發作 ══ -->
+    <div class="topic-block" id="peds-asthma">
+      <div class="topic-block-head">
+        <span class="topic-block-title">氣喘急性發作 Pediatric Asthma Exacerbation</span>
+        <div data-bm-id="peds-asthma" data-bm-dept="兒科" data-bm-title="氣喘急性發作">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        兒童氣喘急性發作的處置核心：<strong>短效 β₂ 促效劑（SABA）+ 全身性類固醇</strong>是所有中重度急性發作的必要治療。<strong>「寂靜肺（Silent chest）」= 呼吸音消失 = 氣流嚴重受阻 = 最危險的徵象</strong>。依 Nelson 22nd（Ch.185）+ GINA 指引。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="asthma-exacerbation" data-bm-dept="兒科" data-bm-title="氣喘急性發作處置">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">氣喘急性發作嚴重度 + 分級處置</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>嚴重度</th><th>臨床特徵</th><th>SpO₂</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>輕度</strong></td>
+                  <td>說話成句；步行時喘；不焦躁；輕度喘鳴</td>
+                  <td>≥95%</td>
+                  <td>SABA（Salbutamol MDI + spacer）2-4 噴 q20 分 × 3 次；若改善 → 回家 + 口服類固醇 3-5 天</td>
+                </tr>
+                <tr>
+                  <td><strong>中度</strong></td>
+                  <td>說話斷句；坐直較舒服；明顯焦躁；明顯喘鳴</td>
+                  <td>91-95%</td>
+                  <td>氧氣；SABA + Ipratropium 霧化 q20 分 × 3 次；Prednisolone 1-2 mg/kg PO（最大 40 mg）；觀察 1-4 小時</td>
+                </tr>
+                <tr>
+                  <td><strong>重度</strong></td>
+                  <td>說單字；前傾不動；極度焦躁；廣泛喘鳴或呼吸音↓</td>
+                  <td>&lt;91%</td>
+                  <td>高流量氧氣；連續 SABA + Ipratropium 霧化；IV/IM Methylprednisolone 1-2 mg/kg；考慮 IV MgSO₄；住院</td>
+                </tr>
+                <tr>
+                  <td><strong>瀕危</strong></td>
+                  <td><strong>寂靜肺（Silent chest）</strong>；意識改變；發紺；呼吸費力但氣流極少</td>
+                  <td>&lt;90%</td>
+                  <td>ICU；考慮插管（高風險）；IV 支氣管擴張藥；氦氧混合氣（Heliox）</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常用藥物劑量</p>
+            <ul class="k-list">
+              <li><strong>Salbutamol（Albuterol）霧化：</strong>0.15 mg/kg（最小 2.5 mg，最大 5 mg）以 3 mL NS 稀釋；q20 分</li>
+              <li><strong>Ipratropium 霧化：</strong>0.25 mg（&lt;20 kg）/ 0.5 mg（≥20 kg）加入 Salbutamol 中；中重度急性發作合用</li>
+              <li><strong>Prednisolone PO：</strong>1-2 mg/kg/天（最大 40 mg）× 3-5 天</li>
+              <li><strong>Methylprednisolone IV：</strong>1-2 mg/kg q6h（急性重度）</li>
+              <li><strong>MgSO₄ IV：</strong>25-75 mg/kg（最大 2 g）× 20 分；重度急性發作；↓ 肌肉收縮 → 支氣管擴張</li>
+              <li class="note">住院指標：3 次 SABA 後仍 SpO₂ &lt;92%；需連續 SABA；呼吸困難持續；過去有重度急性發作史</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 兒科肺炎 ══ -->
+    <div class="topic-block" id="peds-pneumonia">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科肺炎 Pediatric Pneumonia</span>
+        <div data-bm-id="peds-pneumonia" data-bm-dept="兒科" data-bm-title="兒科肺炎">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        兒科社區肺炎（CAP）的病原依年齡不同：<strong>嬰兒（&lt;5 歲）多為病毒性；學齡兒童 Mycoplasma 比例升高</strong>。胸部 X 光確認診斷，但輕度 CAP 可憑臨床診斷治療。依 Nelson 22nd（Ch.449）。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="peds-pneumonia-mgmt" data-bm-dept="兒科" data-bm-title="兒科肺炎治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科肺炎病原 + 治療（依 Nelson 22nd Ch.449）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>年齡</th><th>常見病原</th><th>首選抗生素</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>新生兒（&lt;3 週）</strong></td>
+                  <td>GBS、大腸桿菌、Listeria、CMV、HSV</td>
+                  <td>Ampicillin + Gentamicin；懷疑 HSV → Acyclovir</td>
+                </tr>
+                <tr>
+                  <td><strong>3 週 - 3 個月</strong></td>
+                  <td>Chlamydia trachomatis（無熱性肺炎）；RSV；副流感；肺炎鏈球菌</td>
+                  <td>Chlamydia → Azithromycin；細菌 → Amoxicillin；住院 → Ampicillin IV</td>
+                </tr>
+                <tr>
+                  <td><strong>3 個月 - 5 歲</strong></td>
+                  <td>病毒（RSV、副流感、腺病毒）最常見；肺炎鏈球菌（細菌中最常見）</td>
+                  <td>門診輕度：Amoxicillin 90 mg/kg/天 ÷ 2-3 次（×5-7 天）；住院：Ampicillin IV 或 Penicillin G IV</td>
+                </tr>
+                <tr>
+                  <td><strong>5-15 歲</strong></td>
+                  <td>Mycoplasma pneumoniae（walk-in pneumonia）；肺炎鏈球菌；病毒</td>
+                  <td>Azithromycin（Mycoplasma）；Amoxicillin（典型細菌）；非典型肺炎懷疑 → Azithromycin 首選</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">住院適應症（依 Nelson 22nd）</p>
+            <ul class="k-list">
+              <li>SpO₂ &lt;90-92%（室內空氣）；呼吸窘迫（RR &gt;70/分 嬰兒，&gt;50/分 學齡兒）</li>
+              <li>脫水 / 無法口服；&lt;3-6 個月；免疫缺陷；複雜性肺炎（肋膜積液、膿胸）</li>
+              <li>門診 48-72 小時無改善</li>
+              <li class="note">Mycoplasma 肺炎（非典型）特點：漸進發作；持續乾咳；學齡兒；CXR 浸潤比症狀嚴重；WBC 通常正常</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 腸胃炎與脫水 ══ -->
+    <div class="topic-block" id="peds-gastro">
+      <div class="topic-block-head">
+        <span class="topic-block-title">腸胃炎與脫水 Gastroenteritis & Dehydration</span>
+        <div data-bm-id="peds-gastro" data-bm-dept="兒科" data-bm-title="腸胃炎與脫水">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        兒科急性腸胃炎最重要的處置是<strong>評估脫水程度 + 口服補液（ORS）</strong>。ORS 在輕中度脫水的效果和靜脈補液相當，且併發症更少。止瀉藥和止吐藥在兒科腸胃炎通常不建議使用。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="gastro-dehydration" data-bm-dept="兒科" data-bm-title="脫水評估與補液">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">脫水程度評估 + 補液方案</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>程度</th><th>體重流失</th><th>臨床特徵</th><th>補液方案</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>輕度（&lt;5%）</strong></td>
+                  <td>&lt;50 mL/kg</td>
+                  <td>口唇稍乾；眼淚存在；囟門正常；精神好；黏膜稍乾；皮膚彈性正常；UOP 正常或稍↓</td>
+                  <td>ORS 50 mL/kg × 4 小時（口服）；每次嘔吐後繼續給予</td>
+                </tr>
+                <tr>
+                  <td><strong>中度（5-10%）</strong></td>
+                  <td>50-100 mL/kg</td>
+                  <td>口唇乾；眼淚↓；囟門凹；易激惹；心搏稍快；皮膚彈性↓；UOP↓；眼眶凹陷</td>
+                  <td>ORS 100 mL/kg × 4 小時；無法口服 → NS 20 mL/kg IV bolus × 1-2 次 → 轉 ORS</td>
+                </tr>
+                <tr>
+                  <td><strong>重度（&gt;10%）</strong></td>
+                  <td>&gt;100 mL/kg</td>
+                  <td>極乾燥；無眼淚；囟門極凹；嗜睡/意識改變；心搏過速 + 低血壓；皮膚彈性極差；無 UOP；毛細血管回充 &gt;3 秒</td>
+                  <td>NS 20 mL/kg IV 快速 bolus（重複直到血壓穩定）→ D5 0.45%NS + KCl 維持輸液；住院</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ORS 使用原則</p>
+            <ul class="k-list">
+              <li>使用 WHO ORS 或 Pedialyte（不可用白開水或運動飲料）</li>
+              <li>嘔吐不是 ORS 的禁忌——少量多次（5 mL/2-3 分）；嘔吐後 5-10 分繼續給予</li>
+              <li><strong>Ondansetron（Zofran）：</strong>0.15 mg/kg（最大 4 mg）SL/PO；用於嚴重嘔吐以利口服補液；使用後 15-30 分嘗試 ORS</li>
+              <li>補液後 4 小時重新評估 → 開始正常飲食（BRAT 飲食不再推薦，正常飲食即可）</li>
+              <li class="note">抗生素適應症：Salmonella（嬰兒、免疫缺陷）；Shigella；C. difficile；Campylobacter（嚴重者）；大多數病毒性腸胃炎不需抗生素</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 腸套疊 + 幽門狹窄 ══ -->
+    <div class="topic-block" id="peds-gi-surgical">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科 GI 急症 Pediatric GI Emergencies（腸套疊 + 幽門狹窄）</span>
+        <div data-bm-id="peds-gi-surgical" data-bm-dept="兒科" data-bm-title="腸套疊 + 幽門狹窄">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        <strong>腸套疊</strong> = 最常見的 5 個月至 3 歲腸阻塞；未治療 24 小時內可致命。<strong>幽門狹窄</strong> = 2-8 週嬰兒噴射性非膽汁性嘔吐；手術前先矯正電解質。依 Nelson 22nd（Ch.375、379）。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="intussusception" data-bm-dept="兒科" data-bm-title="腸套疊">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">腸套疊（Intussusception）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>好發：</strong>5 個月 - 3 歲；男：女 = 3:1；90% 特發性；Lead point ↑（&gt;2 歲）：Meckel 憩室、息肉、淋巴瘤</li>
+              <li><strong>典型三聯症（僅 20-40% 同時出現）：</strong>陣發性哭鬧（突然 + 膝蓋蜷縮 + 緩解 + 再發）；嘔吐；血便（「果凍便」，24-48 小時後）</li>
+              <li><strong>腹部腫塊：</strong>RUQ「臘腸形」+ 空出 RLQ（Dance 徵）</li>
+              <li><strong>嗜睡：</strong>可以是唯一症狀！—— 嗜睡 + 陣發性哭鬧 = 腸套疊直到排除為止</li>
+              <li><strong>診斷：</strong>腹部超音波首選（Donut/Target sign）；Se/Sp 各 ~98%</li>
+              <li><strong>治療：</strong>空氣灌腸（成功率 80-95%）；外科備援；穿孔 / 腹膜炎 / 休克 → 直接手術</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pyloric-stenosis" data-bm-dept="兒科" data-bm-title="幽門狹窄">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">肥厚性幽門狹窄（Pyloric Stenosis）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>流行病學：</strong>2-5 / 1000 嬰兒；男：女 = 4:1（長子多）；典型 3-6 週發病</li>
+              <li><strong>危險因素：</strong>Erythromycin 使用（生後 2 週內）；家族史</li>
+              <li><strong>症狀：</strong>噴射性非膽汁性嘔吐（餵食後立刻）；吐完仍飢餓；漸進加重</li>
+              <li><strong>電解質：</strong>低氯低鉀代謝性鹼中毒（丟失 HCl）</li>
+              <li><strong>身體檢查：</strong>橄欖形腫塊（RUQ）；可見胃蠕動波（左→右）</li>
+              <li><strong>診斷：</strong>超音波（Se ~95%）；幽門肌厚度 ≥3-4 mm；長度 ≥15-19 mm</li>
+              <li><strong>治療：</strong>先矯正電解質（Cl⁻ &gt;100，K⁺ &gt;3.5）→ Ramstedt 幽門肌切開術（腹腔鏡）</li>
+              <li class="note">幽門狹窄不是外科急症——手術時機由電解質決定，不是症狀！</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 熱性痙攣 + 癲癇 ══ -->
+    <div class="topic-block" id="peds-seizure">
+      <div class="topic-block-head">
+        <span class="topic-block-title">熱性痙攣 + 兒科癲癇 Febrile Seizure & Pediatric Epilepsy</span>
+        <div data-bm-id="peds-seizure" data-bm-dept="兒科" data-bm-title="熱性痙攣 + 兒科癲癇">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        熱性痙攣是最常見的兒科癲癇型態（6 個月 - 5 歲），<strong>大多數是良性且自限性的，不增加智能障礙或腦損傷風險</strong>。關鍵是鑑別「複雜型」（&gt;15 分鐘、局部、24 小時內再發）和「單純型」，並排除腦膜炎。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="febrile-seizure-mgmt" data-bm-dept="兒科" data-bm-title="熱性痙攣處置">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">熱性痙攣分型 + 處置</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>單純型（Simple）</th><th>複雜型（Complex）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>持續時間</strong></td><td>&lt;15 分鐘</td><td>≥15 分鐘</td></tr>
+                <tr><td><strong>型態</strong></td><td>全身性（Generalized）</td><td>局部性（Focal）</td></tr>
+                <tr><td><strong>24 小時內再發</strong></td><td>無</td><td>有（&gt;1 次）</td></tr>
+                <tr><td><strong>復發率</strong></td><td>30-35%（2 歲前首發更高）</td><td>較高</td></tr>
+                <tr><td><strong>後續癲癇</strong></td><td>風險僅稍↑（2-4%）</td><td>風險較高</td></tr>
+                <tr><td><strong>處置</strong></td><td>支持性；家長衛教；不需長期抗癲癇藥物</td><td>評估腦膜炎；考慮 EEG / 腦部影像；神經科諮詢</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性痙攣發作處置（任何病因）</p>
+            <ul class="k-list">
+              <li><strong>第一線（0-5 分）：</strong>側臥保護氣道；氧氣；血糖監測；Diazepam 直腸 0.2-0.5 mg/kg（最大 10 mg）；或 Midazolam 鼻腔 0.2 mg/kg；或 Lorazepam IV 0.1 mg/kg</li>
+              <li><strong>第二線（5-20 分，第一線無效）：</strong>Phenobarbital IV 20 mg/kg × 20-30 分；或 Levetiracetam IV 40-60 mg/kg；或 Fosphenytoin IV 20 mg/kg</li>
+              <li><strong>第三線（&gt;20 分，癲癇重積持續狀態）：</strong>麻醉誘導（Propofol / Midazolam / Pentobarbital）；ICU 插管</li>
+              <li><strong>腰椎穿刺適應症（熱性痙攣後）：</strong>&lt;12 個月發燒 + 痙攣（腦膜刺激徵可能不可靠）；任何腦膜炎症狀（頸僵、Kernig / Brudzinski 徵陽性）；意識恢復異常慢</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 兒科腦膜炎 ══ -->
+    <div class="topic-block" id="peds-meningitis">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科腦膜炎 Pediatric Meningitis</span>
+        <div data-bm-id="peds-meningitis" data-bm-dept="兒科" data-bm-title="兒科腦膜炎">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        細菌性腦膜炎是兒科最緊急的感染症之一，<strong>懷疑腦膜炎 → 立刻抗生素（不要因等 LP 而延誤抗生素）</strong>。嬰兒腦膜炎可以沒有發燒或頸僵，只有嗜睡、哺乳困難、囟門膨出。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="meningitis-mgmt" data-bm-dept="兒科" data-bm-title="腦膜炎診斷治療">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科細菌性腦膜炎診斷 + 治療</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常見病原（依年齡）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>年齡</th><th>常見病原</th><th>抗生素選擇</th></tr></thead>
+              <tbody>
+                <tr><td><strong>&lt;1 個月</strong></td><td>GBS；大腸桿菌；Listeria；Klebsiella</td><td>Ampicillin + Cefotaxime（或 Gentamicin）</td></tr>
+                <tr><td><strong>1-3 個月</strong></td><td>GBS；肺炎鏈球菌；腦膜炎球菌；大腸桿菌</td><td>Ampicillin + Ceftriaxone（±Vancomycin）</td></tr>
+                <tr><td><strong>3 個月 - 18 歲</strong></td><td>肺炎鏈球菌（最常見）；腦膜炎球菌（N. meningitidis）</td><td>Ceftriaxone 100 mg/kg/天 ÷ q12h + Vancomycin（抗藥性 Streptococcus pneumoniae）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">腦脊液（CSF）判讀</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>正常</th><th>細菌性腦膜炎</th><th>病毒性腦膜炎</th></tr></thead>
+              <tbody>
+                <tr><td>WBC</td><td>&lt;5/mm³</td><td>&gt;1000（嗜中性為主）</td><td>10-1000（淋巴為主）</td></tr>
+                <tr><td>蛋白質</td><td>&lt;45 mg/dL</td><td>&gt;100 mg/dL</td><td>正常或輕度↑</td></tr>
+                <tr><td>葡萄糖</td><td>&gt;60% 血糖</td><td>&lt;40 mg/dL（&lt;40% 血糖）</td><td>正常</td></tr>
+                <tr><td>外觀</td><td>清澈</td><td>混濁</td><td>清澈</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li><strong>Dexamethasone 0.15 mg/kg q6h × 4 天：</strong>抗生素前 15-20 分給予；↓ 聽力喪失（尤其 H. influenzae）；肺炎鏈球菌腦膜炎也有效；不確定病原時可給</li>
+              <li><strong>LP 禁忌（先給抗生素再評估）：</strong>顱內高壓徵象（瞳孔不等、視乳頭水腫、Cushing triad）；局部神經症狀；意識改變顯著；凝血異常</li>
+              <li><strong>腦膜炎球菌（N. meningitidis）特徵：</strong>出血性瘀斑（Petechiae/Purpura）+ 快速惡化；流行期（學生宿舍）；隔離；接觸者預防（Rifampin / Ciprofloxacin）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 兒科泌尿道感染 ══ -->
+    <div class="topic-block" id="peds-uti">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科泌尿道感染 Pediatric UTI</span>
+        <div data-bm-id="peds-uti" data-bm-dept="兒科" data-bm-title="兒科泌尿道感染">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        兒童 UTI 常沒有典型下泌尿道症狀，<strong>嬰兒 UTI 可能只有發燒</strong>。尿液培養是確診的唯一方式，無菌導尿或恥骨上膀胱穿刺取樣最準確。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="uti-peds-mgmt" data-bm-dept="兒科" data-bm-title="兒科 UTI 處置">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科 UTI 診斷 + 治療</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">尿液取樣方法（重要！）</p>
+            <ul class="k-list">
+              <li><strong>無法自主排尿：</strong>導尿（Catheterization）或恥骨上膀胱穿刺 → 最準確</li>
+              <li><strong>尿袋收集（Bag specimen）：</strong>汙染率 &gt;50%；<strong>陽性結果不能診斷 UTI，只能用於篩選陰性結果（排除 UTI）</strong></li>
+              <li><strong>中段尿（Midstream）：</strong>較大孩子配合時使用</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷標準</p>
+            <ul class="k-list">
+              <li>UA：膿尿（≥5 WBC/hpf）+ 菌尿（Gram stain 陽性）→ 高度懷疑</li>
+              <li>確診：尿液培養 ≥50,000 CFU/mL（導尿）or &gt;100,000 CFU/mL（中段尿）</li>
+              <li><strong>篩查適應症（不明原因發燒）：</strong>女生 &lt;24 個月；未割包皮男生 &lt;12 個月；割包皮男生 &lt;2 個月；有 VUR 或反覆 UTI 史</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+            <ul class="k-list">
+              <li><strong>門診（輕度，可口服）：</strong>Amoxicillin-clavulanate 或 Cephalosporins（第一代）× 7-14 天；依當地抗藥性選擇</li>
+              <li><strong>住院（&lt;2 個月；毒性外觀；嘔吐無法口服；Pyelonephritis）：</strong>Ampicillin + Gentamicin IV 或 Ceftriaxone IV</li>
+              <li><strong>影像追蹤：</strong>首次 UTI → VCUG（膀胱尿道攝影）評估 VUR（膀胱輸尿管逆流）；腎臟超音波（排除水腎、腎臟發育異常）</li>
+              <li class="note">VUR = 尿液從膀胱逆流回輸尿管 / 腎臟 → 反覆 UTI → 腎臟瘢痕 → 高血壓 / 慢性腎臟病；低劑量預防性抗生素（Trimethoprim）用於高風險 VUR 患者</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 川崎病 + 出疹疾病 ══ -->
+    <div class="topic-block" id="peds-infection">
+      <div class="topic-block-head">
+        <span class="topic-block-title">川崎病 + 出疹疾病 Kawasaki Disease & Pediatric Exanthems</span>
+        <div data-bm-id="peds-infection" data-bm-dept="兒科" data-bm-title="川崎病 + 出疹疾病">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        <strong>川崎病</strong>是台灣兒童最常見的後天性心臟病原因；未治療 20-25% 發生冠狀動脈瘤。<strong>發燒 ≥5 天 + ≥4 項主要標準 = 川崎病——不要等所有症狀都出現才考慮</strong>。台灣 BCG 接種部位紅腫是高度提示性徵象。依 Nelson 22nd（Ch.208）。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="kawasaki" data-bm-dept="兒科" data-bm-title="川崎病">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">川崎病（Kawasaki Disease）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷標準：發燒 ≥5 天 + ≥4 項</p>
+            <ul class="k-list">
+              <li>雙側非化膿性結膜炎（無分泌物；limbic sparing）</li>
+              <li>口腔黏膜變化（草莓舌；口唇紅腫乾裂）</li>
+              <li>四肢末端變化（急性期手足硬性水腫；恢復期指趾蛻皮）</li>
+              <li>多形性皮疹（軀幹為主；無水皰）</li>
+              <li>頸部淋巴結腫大（&gt;1.5 cm，通常單側）</li>
+              <li><strong>台灣特徵：BCG 接種疤痕紅腫</strong>（高特異性）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療（10 天內最有效）</p>
+            <ul class="k-list">
+              <li><strong>IVIG 2 g/kg IV × 1 次（10-12 小時）：</strong>↓ 冠狀動脈瘤（20-25% → &lt;5%）</li>
+              <li><strong>Aspirin 高劑量：</strong>80-100 mg/kg/天 ÷ 4 次（急性炎症期）→ 退燒後改低劑量 3-5 mg/kg/天（抗血小板）× 6-8 週</li>
+              <li><strong>心臟超音波：</strong>確診時 + 第 2 週 + 第 6-8 週追蹤</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="peds-exanthem" data-bm-dept="兒科" data-bm-title="兒科出疹疾病">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">常見出疹疾病速查</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>疾病</th><th>特徵</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>玫瑰疹（HHV-6）</strong></td>
+                  <td>高燒 3-5 天 → 退燒後出疹（軀幹）；6-24 個月；熱性痙攣常見</td>
+                  <td>支持性；衛教（退燒後出疹是好轉）</td>
+                </tr>
+                <tr>
+                  <td><strong>猩紅熱（GAS）</strong></td>
+                  <td>砂紙樣皮疹；草莓舌；Pastia's lines；扁桃腺膿性炎</td>
+                  <td>Amoxicillin × 10 天（預防 ARF）</td>
+                </tr>
+                <tr>
+                  <td><strong>手足口病（EV71）</strong></td>
+                  <td>手掌、腳掌、口腔水皰；夏秋季；EV71 → 腦幹腦炎</td>
+                  <td>支持性；EV71 神經症狀 → 住院</td>
+                </tr>
+                <tr>
+                  <td><strong>水痘（VZV）</strong></td>
+                  <td>不同發育階段同時存在；搔癢；頭皮也有</td>
+                  <td>Acyclovir（免疫缺陷）；禁 ASA</td>
+                </tr>
+                <tr>
+                  <td><strong>麻疹</strong></td>
+                  <td>3C（咳嗽、流涕、結膜炎）+ Koplik 斑；耳後→下蔓延</td>
+                  <td>支持性；Vitamin A；通報</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 兒科休克 + PALS ══ -->
+    <div class="topic-block" id="peds-shock">
+      <div class="topic-block-head">
+        <span class="topic-block-title">兒科休克 + PALS Pediatric Shock & PALS</span>
+        <div data-bm-id="peds-shock" data-bm-dept="兒科" data-bm-title="兒科休克 + PALS">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        兒科休克的最大特點是<strong>代償期很長，低血壓是晚期表現</strong>——心搏過速 + 毛細血管回充延長 + 皮膚花紋 = 早期休克。容積補充是多數兒科休克的第一線處置。依 Nelson 22nd（Ch.85）。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="peds-shock-types" data-bm-dept="兒科" data-bm-title="兒科休克分類">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">兒科休克分類 + 處置（依 Nelson 22nd Table 85.1）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>特徵</th><th>常見原因</th><th>處置重點</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>低血容性（最常見）</strong></td>
+                  <td>心搏過速；血管收縮；脈壓縮小；毛細血管回充延長；晚期低血壓</td>
+                  <td>腸胃炎脫水；出血（外傷）；燒傷；腹膜炎</td>
+                  <td>NS 10-20 mL/kg IV bolus（重複）；出血 → pRBC</td>
+                </tr>
+                <tr>
+                  <td><strong>分布性（感染性最常見）</strong></td>
+                  <td>心搏過速；周邊血管擴張；皮膚溫暖紅潤；脈壓寬；閃現性毛細血管回充</td>
+                  <td>敗血症；過敏性休克；神經性休克</td>
+                  <td>補液 + 升壓藥（Norepinephrine）；過敏 → Epinephrine IM</td>
+                </tr>
+                <tr>
+                  <td><strong>心因性</strong></td>
+                  <td>心搏過速；四肢冰冷；脈壓縮小；肝腫大；JVD；心音遠</td>
+                  <td>心肌炎；先天性心臟病；心律不整；心包填塞</td>
+                  <td>謹慎補液；Inotropes（Dopamine / Dobutamine）；病因治療</td>
+                </tr>
+                <tr>
+                  <td><strong>阻塞性</strong></td>
+                  <td>心搏過速；頸靜脈怒張；呼吸音不對稱；心音遠</td>
+                  <td>張力性氣胸；心包填塞；肺栓塞；主動脈縮窄（嬰兒）</td>
+                  <td>張力性氣胸 → 針減壓；填塞 → 心包穿刺；主動脈縮窄 → PGE₁</td>
+                </tr>
+                <tr>
+                  <td><strong>解離性</strong></td>
+                  <td>蒼白 or 潮紅；心搏過速；SpO₂ 不準確（CO）</td>
+                  <td>嚴重貧血；CO 中毒；MetHb 血症；氰化物</td>
+                  <td>輸血；高濃度氧氣；Methylene blue（MetHb）；Hydroxocobalamin（氰化物）</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">PALS 心跳停止流程重點</p>
+            <ul class="k-list">
+              <li><strong>CPR 比例：</strong>嬰兒（&lt;1 歲）= 30:2（單人）/ 15:2（雙人）；兒童 = 30:2（單人）/ 15:2（雙人）</li>
+              <li><strong>胸壓深度：</strong>嬰兒 ≥4 cm（前後徑 1/3）；兒童 ≥5 cm</li>
+              <li><strong>胸壓部位：</strong>嬰兒 = 乳線以下兩指（兩拇指環扣法）；兒童 = 胸骨下半段</li>
+              <li><strong>速率：</strong>100-120 次/分</li>
+              <li><strong>可電擊節律：</strong>VF / pVT → 2 J/kg 首次 → 4 J/kg → CPR 2 分 → Epinephrine → 重複</li>
+              <li><strong>不可電擊節律（PEA / Asystole）：</strong>CPR → Epinephrine 0.01 mg/kg IV q3-5 分 → 找 H's & T's</li>
+              <li><strong>嬰兒心搏過緩（&lt;60 bpm + 灌流不足）：</strong>= 心肺停止處置 → 立刻 CPR</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 台灣公費疫苗時程 ══ -->
+    <div class="topic-block" id="peds-vaccines">
+      <div class="topic-block-head">
+        <span class="topic-block-title">台灣公費疫苗時程 Taiwan Immunization Schedule</span>
+        <div data-bm-id="peds-vaccines" data-bm-dept="兒科" data-bm-title="台灣公費疫苗時程">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        台灣公費疫苗時程每年可能調整，<strong>以衛福部疾管署官網最新公告為準</strong>。此處列 2024-2025 年版本供快速參考。接種前評估：發燒 ≥38.5°C 暫緩；輕微感冒不需暫緩；過去對同疫苗嚴重過敏反應為禁忌。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="vaccine-schedule" data-bm-dept="兒科" data-bm-title="疫苗時程表">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">台灣公費疫苗時程（2024-2025，依疾管署）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>年齡</th><th>疫苗</th></tr></thead>
+              <tbody>
+                <tr><td><strong>出生 24 小時內</strong></td><td>B 型肝炎（HBV，第 1 劑）；BCG 卡介苗；HBsAg⊕ 母親 → 加 HBIG 100 IU IM</td></tr>
+                <tr><td><strong>出生 1 個月</strong></td><td>B 型肝炎（HBV，第 2 劑）</td></tr>
+                <tr><td><strong>出生 2 個月</strong></td><td>五合一（DTaP-IPV-Hib，第 1 劑）；13 價肺炎鏈球菌結合疫苗（PCV13，第 1 劑）</td></tr>
+                <tr><td><strong>出生 4 個月</strong></td><td>五合一（第 2 劑）；PCV13（第 2 劑）</td></tr>
+                <tr><td><strong>出生 6 個月</strong></td><td>五合一（第 3 劑）；HBV（第 3 劑）；流感（每年接種，首次 × 2 劑間隔 4 週）</td></tr>
+                <tr><td><strong>出生 12 個月</strong></td><td>MMR（麻疹腮腺炎德國麻疹，第 1 劑）；水痘（VZV，第 1 劑）；A 型肝炎（HAV，第 1 劑）</td></tr>
+                <tr><td><strong>出生 15 個月</strong></td><td>五合一（第 4 劑加強）；PCV13（第 3 劑加強）</td></tr>
+                <tr><td><strong>出生 18 個月</strong></td><td>A 型肝炎（HAV，第 2 劑）</td></tr>
+                <tr><td><strong>出生 27 個月（2.5 歲）</strong></td><td>日本腦炎（滅活，第 1、2 劑，間隔 2 週）</td></tr>
+                <tr><td><strong>幼稚園（5-6 歲）</strong></td><td>MMR（第 2 劑）；水痘（第 2 劑）；日本腦炎（第 3 劑加強）；DTaP（第 5 劑加強）</td></tr>
+                <tr><td><strong>國小 1 年級（7 歲）</strong></td><td>Tdap（減量破傷風白喉百日咳）；HPV（女生 2 劑，間隔 6 個月）</td></tr>
+                <tr><td><strong>國小 5 年級（11 歲）</strong></td><td>HPV（男生，部分縣市公費）；流感（每年）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">重要補充</p>
+            <ul class="k-list">
+              <li><strong>延誤接種補種：</strong>不需重頭開始；從缺漏處繼續（catch-up schedule）</li>
+              <li><strong>同時接種：</strong>多種疫苗可同日不同部位注射；不需間隔</li>
+              <li><strong>活菌疫苗間隔：</strong>若未同日接種，兩次活菌疫苗需間隔 ≥28 天（例如 MMR 和水痘）</li>
+              <li><strong>接種後觀察：</strong>所有疫苗接種後留觀 30 分鐘（過敏反應）</li>
+              <li class="note">最新時程：https://www.cdc.gov.tw（衛福部疾管署）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  const SEARCH_INDEX = [
+    { id:'peds-vitals',       dept:'兒科', title:'兒科生命徵象 + 體重公式',              url:'#peds-vitals',       text:'' },
+    { id:'peds-development',  dept:'兒科', title:'發育里程碑',                          url:'#peds-development',  text:'' },
+    { id:'peds-fever',        dept:'兒科', title:'兒科發燒評估（依年齡分層）',            url:'#peds-fever',        text:'' },
+    { id:'peds-croup',        dept:'兒科', title:'哮吼（Croup）',                       url:'#peds-croup',        text:'' },
+    { id:'peds-bronchiolitis',dept:'兒科', title:'細支氣管炎（Bronchiolitis）',          url:'#peds-bronchiolitis',text:'' },
+    { id:'peds-asthma',       dept:'兒科', title:'氣喘急性發作',                        url:'#peds-asthma',       text:'' },
+    { id:'peds-pneumonia',    dept:'兒科', title:'兒科肺炎',                            url:'#peds-pneumonia',    text:'' },
+    { id:'peds-gastro',       dept:'兒科', title:'腸胃炎與脫水',                        url:'#peds-gastro',       text:'' },
+    { id:'peds-gi-surgical',  dept:'兒科', title:'腸套疊 + 幽門狹窄',                  url:'#peds-gi-surgical',  text:'' },
+    { id:'peds-seizure',      dept:'兒科', title:'熱性痙攣 + 兒科癲癇',                url:'#peds-seizure',      text:'' },
+    { id:'peds-meningitis',   dept:'兒科', title:'兒科腦膜炎',                          url:'#peds-meningitis',   text:'' },
+    { id:'peds-uti',          dept:'兒科', title:'兒科泌尿道感染',                      url:'#peds-uti',          text:'' },
+    { id:'peds-infection',    dept:'兒科', title:'川崎病 + 出疹疾病',                  url:'#peds-infection',    text:'' },
+    { id:'peds-shock',        dept:'兒科', title:'兒科休克 + PALS',                    url:'#peds-shock',        text:'' },
+    { id:'peds-vaccines',     dept:'兒科', title:'台灣公費疫苗時程',                    url:'#peds-vaccines',     text:'' },
+  ];
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else {
+    initSearch(SEARCH_INDEX);
+  }
+</script>
+</body>
+</html>
