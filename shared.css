@@ -462,6 +462,23 @@ nav {
 .breadcrumb a { color: var(--muted); text-decoration: none; }
 .breadcrumb a:hover { color: var(--navy); }
 
+/* ── NOTION NOTES ── */
+.notion-note { margin-top: 20px; border-top: 1.5px dashed var(--border); padding-top: 14px; }
+.notion-note-head { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 700; color: var(--blue); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+.notion-note-time { margin-left: auto; font-weight: 400; color: var(--muted); text-transform: none; letter-spacing: 0; }
+.notion-note-body { font-size: 0.82rem; line-height: 1.7; color: var(--navy); background: #f0f6ff; border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 12px 16px; word-break: break-word; }
+.notion-note-body p { margin: 0 0 6px; }
+.notion-note-body p:last-child { margin-bottom: 0; }
+.notion-note-body h4 { font-size: 0.85rem; font-weight: 800; margin: 10px 0 4px; color: var(--navy); }
+.notion-note-body h5 { font-size: 0.82rem; font-weight: 700; margin: 8px 0 4px; }
+.notion-note-body ul { margin: 4px 0 6px 16px; padding: 0; list-style: disc; }
+.notion-note-body ol { margin: 4px 0 6px 16px; padding: 0; list-style: decimal; }
+.notion-note-body li { margin-bottom: 3px; }
+.notion-note-body blockquote { border-left: 2px solid var(--blue); margin: 6px 0; padding: 4px 10px; color: var(--muted); font-style: italic; }
+.notion-note-body code { background: var(--light); border-radius: 4px; padding: 1px 5px; font-family: monospace; font-size: 0.78rem; }
+.notion-note-body hr { border: none; border-top: 1px solid var(--border); margin: 8px 0; }
+.notion-note-body strong { font-weight: 700; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   :root { --sidebar-w: 0px; }
