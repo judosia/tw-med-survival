@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>胸腔外科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .score-modal-overlay.open{display:flex;}
+    .score-modal{background:var(--white);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .score-modal-head{position:sticky;top:0;background:var(--white);padding:18px 22px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .score-modal-head h2{font-size:1rem;font-weight:800;}
+    .score-modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;}
+    .score-modal-body{padding:20px 22px;}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#thoracic" class="nav-back">胸腔外科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">胸腔外科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">X</button></div>
+  <div id="bm-list"></div>
+</div>
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">胸腔外科</div>
+    <div class="sidebar-section-title">基礎評估</div>
+    <a href="#thoracic-approach" class="sidebar-link">胸腔評估（胸管適應症 + 置放）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">氣胸 + 積液</div>
+    <a href="#thoracic-pneumo" class="sidebar-link">氣胸（自發性 + 張力性）</a>
+    <a href="#thoracic-pleural" class="sidebar-link">胸腔積液（Light's criteria + 引流）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">腫瘤</div>
+    <a href="#thoracic-lung" class="sidebar-link">肺癌（分期 + 手術適應症）+ 縱膈腔腫瘤</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">食道</div>
+    <a href="#thoracic-esophagus" class="sidebar-link">食道疾病（食道癌 + Boerhaave）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急症</div>
+    <a href="#thoracic-emergency" class="sidebar-link">胸腔急症（血胸 + 心包填塞 + 創傷）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../im/pulm.html" class="sidebar-link">胸腔內科 →</a>
+    <a href="../er/trauma.html" class="sidebar-link">外傷急診 →</a>
+  </aside>
+  <main class="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#f0f9ff 0%,#e8f4ff 100%);color:var(--navy);">
+      <div class="page-hero-text">
+        <h1>胸腔外科</h1>
+        <p>氣胸、胸腔積液、肺癌手術適應症、食道急症與胸腔創傷，涵蓋胸管置放和胸腔急症處置。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2L8 7H4l4 5-1.5 6L12 15l5.5 3L16 12l4-5h-4z"/></svg>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#thoracic">胸腔外科</a> › 胸腔外科
+    </div>
+
+
+    <!-- thoracic-approach -->
+    <div class="topic-block" id="thoracic-approach">
+      <div class="topic-block-head">
+        <span class="topic-block-title">胸腔評估基礎 Thoracic Assessment + Chest Tube</span>
+        <div data-bm-id="thoracic-approach" data-bm-dept="胸腔外科" data-bm-title="胸腔評估基礎"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">胸腔外科評估的核心：<strong>胸部 X 光判讀</strong>是最快速的篩查工具；<strong>CT 胸腔</strong>是評估肺部病灶和縱膈腔的金標準；<strong>胸管（Chest tube / Intercostal drain）</strong>是最常需要的操作技能之一——適應症包括氣胸、血胸、胸腔積液和膿胸。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="cxr-interpretation" data-bm-dept="胸腔外科" data-bm-title="胸部 X 光判讀">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">胸部 X 光系統性判讀</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ABCDE 系統性判讀法</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>項目</th><th>評估重點</th><th>異常發現</th></tr></thead>
+              <tbody>
+                <tr><td><strong>A — Airway</strong></td><td>氣管位置（正中）；主支氣管</td><td>氣管偏移 → 張力性氣胸（偏離患側）；肺塌陷（偏向患側）</td></tr>
+                <tr><td><strong>B — Bones</strong></td><td>肋骨；鎖骨；胸骨；脊椎</td><td>肋骨骨折（連枷胸 ≥3 根相鄰，多處骨折）；病理性骨折</td></tr>
+                <tr><td><strong>C — Cardiac</strong></td><td>心臟大小（CTR &lt;0.5）；心臟輪廓</td><td>CTR &gt;0.5 = 心臟擴大；水滴狀心（心包積液）</td></tr>
+                <tr><td><strong>D — Diaphragm</strong></td><td>橫膈高度和輪廓；肋膈角（銳利）</td><td>肋膈角鈍化 &gt;200 mL 積液；橫膈下氣體（腸胃穿孔）；右高於左（正常）</td></tr>
+                <tr><td><strong>E — Everything else</strong></td><td>肺野；縱膈腔；軟組織；管路</td><td>氣胸（肺紋消失 + 肺緣線）；浸潤；縱膈腔擴寬（&gt;8 cm，主動脈剝離）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">管路位置確認（術後或 ICU）</p>
+            <ul class="k-list">
+              <li><strong>氣管內管（ETT）：</strong>管尖應在隆突（Carina）上方 2-3 cm；若太深 → 右主支氣管插管（右肺過度充氣，左肺塌陷）</li>
+              <li><strong>中心靜脈導管（CVP）：</strong>管尖位於上腔靜脈（SVC）和右心房交界；避免進入右心室（心律不整）</li>
+              <li><strong>胸管：</strong>管尖確認位置；氣胸 → 頂端；積液 → 底部；確認無扭折</li>
+              <li><strong>鼻胃管（NGT）：</strong>應在胃內（左上腹）；確認不在支氣管</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="chest-tube" data-bm-dept="胸腔外科" data-bm-title="胸管置放">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">胸管（Chest Tube）適應症 + 置放 + 移除</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">適應症</p>
+            <ul class="k-list">
+              <li><strong>氣胸：</strong>大型（&gt;2 cm 肺緣）；張力性（立刻！）；雙側；機械通氣中；復發性</li>
+              <li><strong>血胸：</strong>幾乎所有外傷性血胸；單側血胸 &gt;300 mL</li>
+              <li><strong>胸腔積液：</strong>大量（呼吸困難）；膿胸；惡性積液（引流）</li>
+              <li><strong>乳糜胸（Chylothorax）：</strong>乳白色積液（TG &gt;110 mg/dL）</li>
+              <li><strong>術後引流：</strong>開胸 / 心臟手術後常規</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">置放技巧（Safe triangle）</p>
+            <ul class="k-list">
+              <li><strong>安全三角（Safe triangle）：</strong>前界 = 胸大肌外緣；後界 = 背闊肌前緣；下界 = 第五肋間（乳頭水平）；在此範圍置入避免損傷神經血管</li>
+              <li><strong>置入位置：</strong>第 4-6 肋間腋中線（液體）；第 2-3 肋間鎖骨中線（氣體，前氣胸）</li>
+              <li><strong>肋骨上緣進針：</strong>避免損傷走行於肋骨下緣的神經血管束（VAN = Vein, Artery, Nerve）</li>
+              <li><strong>胸管大小：</strong>氣胸 → 小管（14-20 Fr）或豬尾巴導管；血胸 → 大管（28-36 Fr）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">胸管引流系統判讀</p>
+            <ul class="k-list">
+              <li><strong>水封瓶（Water seal）：</strong>正常 = 呼吸時水柱波動（Tidaling）；無波動 = 胸管扭折 or 肺已完全擴張；持續氣泡（Bubbling）= 氣漏（Air leak）</li>
+              <li><strong>移除條件：</strong>氣胸 → 無氣漏 + CXR 顯示肺完全擴張；積液 → 引流量 &lt;100-200 mL/天；移除時讓患者深吸氣後閉氣（Valsalva）</li>
+              <li><strong>持續大量引流：</strong>&gt;200 mL/小時 × 2-3 小時 = 持續性血胸 → 手術適應症（開胸探查）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- thoracic-pneumo -->
+    <div class="topic-block" id="thoracic-pneumo">
+      <div class="topic-block-head">
+        <span class="topic-block-title">氣胸 Pneumothorax</span>
+        <div data-bm-id="thoracic-pneumo" data-bm-dept="胸腔外科" data-bm-title="氣胸"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">氣胸是空氣進入胸膜腔，導致肺塌陷。<strong>張力性氣胸（Tension pneumothorax）</strong>= 最危急的急症之一，氣體只進不出，縱膈腔移位 → 靜脈回流受阻 → 心輸出量驟降 → 死亡。<strong>立刻針刺減壓，不要等 X 光</strong>。原發性自發性氣胸多見於高瘦年輕男性（Blebs 破裂）。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="pneumo-classification" data-bm-dept="胸腔外科" data-bm-title="氣胸分類 + 處置">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">氣胸分類 + 處置</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>特徵</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>原發性自發性氣胸（PSP）</strong></td>
+                  <td>無潛在肺疾；高瘦年輕男性（Blebs）；吸菸是危險因子；突發胸痛 + 呼吸困難；CXR = 肺緣線 + 肺紋消失</td>
+                  <td>
+                    小型（&lt;2 cm）+ 症狀輕 → 觀察 / 補充 O₂（↑ 氮氣吸收）<br/>
+                    大型（&gt;2 cm）或症狀明顯 → 針吸（Aspiration）or 小胸管<br/>
+                    復發 → 胸腔鏡（VATS）+ 胸膜固定術（Pleurodesis）
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>繼發性自發性氣胸（SSP）</strong></td>
+                  <td>有潛在肺疾（COPD、肺纖維化、結核、肺囊性纖維化、PCP）；症狀較重（肺功能儲備差）；老年患者多</td>
+                  <td>幾乎都需要胸管引流；住院；治療潛在疾病；復發率高 → 考慮 Pleurodesis</td>
+                </tr>
+                <tr>
+                  <td><strong>外傷性氣胸</strong></td>
+                  <td>肋骨骨折；穿刺傷；醫源性（CVP 置放、胸腔穿刺後）；可能合併血胸（血氣胸）</td>
+                  <td>胸管引流（大管）；評估合併傷；機械通氣患者需積極處理（PEEP → 擴大氣胸）</td>
+                </tr>
+                <tr>
+                  <td><strong>張力性氣胸（Tension）</strong></td>
+                  <td>
+                    單向活瓣效應 → 氣體持續進入胸腔<br/>
+                    <strong>臨床：</strong>呼吸困難 + 低血壓 + 氣管偏移（離患側）+ 患側呼吸音↓ + 頸靜脈怒張（JVD）<br/>
+                    <strong>不要等 X 光！臨床診斷！</strong>
+                  </td>
+                  <td>
+                    <strong>立刻針刺減壓（Needle decompression）：</strong><br/>
+                    第 2 肋間鎖骨中線（傳統）or 第 4-5 肋間腋前線（較肥胖患者更可靠）<br/>
+                    14G 針頭；聽到氣體排出確認<br/>
+                    → 立刻接胸管（針刺只是暫時）
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">復發預防（胸膜固定術 Pleurodesis）</p>
+            <ul class="k-list">
+              <li><strong>適應症：</strong>第二次同側自發性氣胸；第一次對側氣胸；職業高風險（潛水員、飛行員）</li>
+              <li><strong>方式：</strong>VATS + 機械磨擦（首選）；Talc 灌注（Talc pleurodesis）= 化學性；Tetracycline / Doxycycline（替代）</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- thoracic-pleural -->
+    <div class="topic-block" id="thoracic-pleural">
+      <div class="topic-block-head">
+        <span class="topic-block-title">胸腔積液 Pleural Effusion（Light's Criteria + 膿胸）</span>
+        <div data-bm-id="thoracic-pleural" data-bm-dept="胸腔外科" data-bm-title="胸腔積液"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">胸腔積液最重要的第一步是用 <strong>Light's criteria</strong> 判斷滲出液 vs 漏出液，決定後續評估方向。漏出液多為全身性疾病（心衰竭、肝硬化）；滲出液需找局部原因（肺炎、腫瘤、結核）。<strong>膿胸</strong>是感染性積液，依分期選擇抗生素、引流或手術。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="pleural-effusion" data-bm-dept="胸腔外科" data-bm-title="胸腔積液">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">胸腔積液（Pleural Effusion）+ Light's Criteria</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Light's Criteria（滲出液 vs 漏出液）</p>
+            <div class="alert alert-red" style="margin-bottom:10px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>符合以下任一條件 = 滲出液（Exudate）。三者皆不符合 = 漏出液（Transudate）。</span>
+            </div>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>Light's Criteria（任一符合 = 滲出液）</th><th>數值</th></tr></thead>
+              <tbody>
+                <tr><td>積液蛋白 / 血清蛋白比值</td><td><strong>&gt;0.5</strong></td></tr>
+                <tr><td>積液 LDH / 血清 LDH 比值</td><td><strong>&gt;0.6</strong></td></tr>
+                <tr><td>積液 LDH</td><td><strong>&gt;2/3 血清 LDH 正常上限</strong></td></tr>
+              </tbody>
+            </table>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>漏出液（Transudate）</th><th>滲出液（Exudate）</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>心衰竭（最常見）；肝硬化（肝水胸）；腎病症候群；低白蛋白血症；心包炎</td>
+                  <td>肺炎旁積液（Parapneumonic）；惡性腫瘤（最常見滲出液）；結核；PE；膿胸；乳糜胸；類風濕性關節炎</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">胸腔積液進一步分析</p>
+            <ul class="k-list">
+              <li><strong>葡萄糖 &lt;60 mg/dL：</strong>膿胸；RA；惡性；食道穿孔（接近 0）；結核</li>
+              <li><strong>pH &lt;7.2：</strong>膿胸（需引流）；食道穿孔；惡性；結核</li>
+              <li><strong>Amylase ↑：</strong>食道穿孔；胰腺炎（左側）；惡性</li>
+              <li><strong>TG &gt;110 mg/dL：</strong>乳糜胸（胸管或淋巴系統損傷）</li>
+              <li><strong>血性積液（Bloody）：</strong>Hct &gt;50% 血液 = 血胸；&lt;50% = 惡性 / PE / 外傷</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">膿胸（Empyema）分期 + 處置</p>
+            <ul class="k-list">
+              <li><strong>Stage I（滲出期）：</strong>稀薄液體；pH &gt;7.2；抗生素可能足夠</li>
+              <li><strong>Stage II（纖維化膿期）：</strong>pH &lt;7.2；糖 &lt;60；LDH ↑；纖維分隔形成 → <strong>胸管引流 + 抗生素；考慮 tPA/DNase 注射（溶解纖維蛋白）</strong></li>
+              <li><strong>Stage III（機化期）：</strong>厚纖維殼；肺困陷（Trapped lung）→ <strong>VATS 清創 or 開胸去皮質術（Decortication）</strong></li>
+              <li><strong>抗生素：</strong>社區型 → Amoxicillin-clavulanate；院內型 → Pip/Tazo + Vancomycin</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- thoracic-lung -->
+    <div class="topic-block" id="thoracic-lung">
+      <div class="topic-block-head">
+        <span class="topic-block-title">肺癌 + 縱膈腔腫瘤 Lung Cancer & Mediastinal Tumors</span>
+        <div data-bm-id="thoracic-lung" data-bm-dept="胸腔外科" data-bm-title="肺癌 + 縱膈腔腫瘤"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">肺癌是台灣癌症死亡率第一名。<strong>非小細胞肺癌（NSCLC，85%）</strong>= 腺癌（最常見，台灣女性）+ 鱗狀細胞癌 + 大細胞癌；<strong>小細胞肺癌（SCLC，15%）</strong>= 診斷時幾乎已擴散，以化放療為主。<strong>縱膈腔腫瘤</strong>記憶口訣「<strong>4T</strong>」依前中後縱膈腔位置分類。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="lung-cancer" data-bm-dept="胸腔外科" data-bm-title="肺癌分期 + 手術">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">肺癌分類 + 手術適應症 + 靶向治療</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>非小細胞肺癌（NSCLC）</th><th>小細胞肺癌（SCLC）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>比例</strong></td><td>85%</td><td>15%</td></tr>
+                <tr><td><strong>組織學</strong></td><td>腺癌（台灣最常見，非吸菸者）；鱗狀細胞癌（中央型，吸菸）；大細胞癌</td><td>燕麥細胞癌；神經內分泌腫瘤；中央型；幾乎都和吸菸有關</td></tr>
+                <tr><td><strong>基因突變</strong></td><td>EGFR（台灣腺癌 ~50%）；ALK；ROS1；KRAS；PD-L1</td><td>通常無可靶向突變</td></tr>
+                <tr><td><strong>手術</strong></td><td>Stage I-II → 手術（肺葉切除術 + 淋巴清除）；選擇性 Stage III</td><td><strong>幾乎不手術</strong>（除罕見 Stage I）</td></tr>
+                <tr><td><strong>治療</strong></td><td>Stage I-II：手術 ± 輔助化療；Stage III：同步化放療；Stage IV：靶向（EGFR → Osimertinib；ALK → Alectinib）+ 免疫（PD-1/PD-L1）</td><td>局限期（Limited）：化療（Cisplatin/Etoposide）+ 放療；廣泛期（Extensive）：化療 + Atezolizumab；預防性全腦放療</td></tr>
+                <tr><td><strong>副腫瘤症候群</strong></td><td>肥大性骨關節病（Hypertrophic osteoarthropathy）；高鈣血症（鱗狀細胞癌，PTHrP）</td><td>SIADH（低血鈉）；Lambert-Eaton syndrome（肌無力）；Cushing（ACTH）；SCLC = 副腫瘤症候群最多</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">手術切除適應症（可切除性評估）</p>
+            <ul class="k-list">
+              <li><strong>腫瘤因素（可切除）：</strong>Stage I / II；選擇性 Stage IIIA；無縱膈腔廣泛侵犯；無遠端轉移</li>
+              <li><strong>肺功能評估：</strong>FEV1 &gt;1.5 L（肺葉切除）；FEV1 &gt;2.0 L（全肺切除）；術前預測術後 FEV1 &gt;800 mL 或 &gt;40% 預測值</li>
+              <li><strong>不可切除：</strong>Stage IIIB-IV；惡性胸腔積液；對側縱膈腔淋巴腺（N3）；心臟大血管侵犯；氣管隆突侵犯（特殊情況可考慮）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="mediastinal-tumors" data-bm-dept="胸腔外科" data-bm-title="縱膈腔腫瘤">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">縱膈腔腫瘤（4T 記憶口訣）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">縱膈腔分區 + 常見腫瘤</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>位置</th><th>常見腫瘤（4T）</th><th>特徵</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>前縱膈腔（Anterior）</strong></td>
+                  <td>
+                    <strong>T — Thymoma（胸腺瘤）</strong><br/>
+                    T — Teratoma / Germ cell tumor<br/>
+                    T — Terrible lymphoma（淋巴瘤）<br/>
+                    T — Thyroid（甲狀腺腫塊）
+                  </td>
+                  <td>
+                    <strong>胸腺瘤：</strong>合併重症肌無力（MG，30-50%）；成人前縱膈最常見腫瘤；切片確診；手術切除<br/>
+                    <strong>畸胎瘤：</strong>年輕人；AFP / hCG ↑（NSGCT）；鈣化<br/>
+                    <strong>淋巴瘤：</strong>霍奇金病（HL）= 前縱膈最常見；B 症狀；切片（不做 FNA）
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>中縱膈腔（Middle）</strong></td>
+                  <td>淋巴結腫大；氣管病灶；心包囊腫；支氣管囊腫</td>
+                  <td>Sarcoidosis（雙側肺門淋巴腺腫）；結核；轉移性淋巴結</td>
+                </tr>
+                <tr>
+                  <td><strong>後縱膈腔（Posterior）</strong></td>
+                  <td>神經源性腫瘤（最常見後縱膈腫瘤）；食道腫瘤；主動脈瘤</td>
+                  <td>神經鞘瘤（Schwannoma）；神經纖維瘤；節細胞神經瘤；Dumbell tumor（啞鈴型，延伸入椎管）</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">上腔靜脈症候群（SVC Syndrome）</p>
+            <ul class="k-list">
+              <li><strong>原因：</strong>肺癌（最常見）/ 淋巴瘤 / 中心靜脈導管血栓壓迫 SVC</li>
+              <li><strong>臨床：</strong>臉部 / 頸部 / 上肢水腫；頸靜脈怒張；頭痛；側支循環（胸壁靜脈擴張）；症狀臥位加重</li>
+              <li><strong>處置：</strong>頭抬高；利尿劑（輕度）；放療（淋巴瘤 / 肺癌）；血管支架（血栓性）；類固醇（淋巴瘤）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- thoracic-esophagus -->
+    <div class="topic-block" id="thoracic-esophagus">
+      <div class="topic-block-head">
+        <span class="topic-block-title">食道疾病 Esophageal Diseases</span>
+        <div data-bm-id="thoracic-esophagus" data-bm-dept="胸腔外科" data-bm-title="食道疾病"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>Boerhaave syndrome（自發性食道穿孔）</strong>= 嘔吐後突發胸痛 + 縱膈腔炎，死亡率極高，需緊急手術。<strong>食道癌</strong>在台灣以鱗狀細胞癌為主（95%，與飲酒、吸菸、嚼檳榔相關），預後差（5 年存活率 &lt;20%）。<strong>食道異物</strong>（魚刺、假牙）是急診常見問題。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="esophageal-perforation" data-bm-dept="胸腔外科" data-bm-title="食道穿孔 + Boerhaave">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">食道穿孔 + Boerhaave Syndrome</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>Boerhaave syndrome = 外科急症！24 小時內手術死亡率 25%；延遲 &gt;24 小時死亡率 &gt;50%。</span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">食道穿孔原因</p>
+            <ul class="k-list">
+              <li><strong>醫源性（最常見，75%）：</strong>上消化道內視鏡（EGD）；食道擴張術；插胃管創傷；最常見於食道咽喉交界和 Killian's dehiscence</li>
+              <li><strong>Boerhaave syndrome（自發性）：</strong>劇烈嘔吐 → 食道內壓力驟升 → 下段食道後外側壁撕裂；最常見於大量飲食後嘔吐的男性（40-60 歲）</li>
+              <li><strong>外傷性：</strong>穿刺傷；鈍傷（罕見）</li>
+              <li><strong>腫瘤侵蝕：</strong>食道癌 / 肺癌</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Boerhaave Syndrome 三聯症（Mackler's triad）</p>
+            <ul class="k-list">
+              <li>劇烈嘔吐後 → 胸痛（撕裂感，左側多）→ 皮下氣腫（頸部、胸壁捻髮音）</li>
+              <li><strong>CXR：</strong>縱膈腔積氣（Pneumomediastinum）；左側胸腔積液；皮下氣腫</li>
+              <li><strong>Hamman's sign：</strong>聽診心臟時聽到與心跳同步的捻髮音（縱膈腔積氣）</li>
+              <li><strong>診斷：</strong>水溶性顯影劑食道攝影（Gastrografin swallow）= 首選；CT 胸腔（最敏感）；禁用鋇劑（縱膈腔炎症加重）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">處置</p>
+            <ul class="k-list">
+              <li><strong>立刻禁食（NPO）+ 廣效抗生素（Pip/Tazo + Fluconazole）+ 大量補液</strong></li>
+              <li><strong>早期（&lt;24 小時，汙染少）：</strong>開胸 + 直接縫合修補 + 引流</li>
+              <li><strong>晚期（&gt;24 小時，廣泛汙染）：</strong>食道切除 + 頸部造口 + 胃造口（分期重建）；或內視鏡支架（Esophageal stent，選擇性患者）</li>
+              <li><strong>醫源性小穿孔（早期發現、無縱膈腔炎）：</strong>禁食 + 抗生素 ± 內視鏡夾閉</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="esophageal-cancer" data-bm-dept="胸腔外科" data-bm-title="食道癌">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">食道癌（Esophageal Cancer）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>鱗狀細胞癌（SCC）</th><th>腺癌（Adenocarcinoma）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>比例（台灣）</strong></td><td>~95%（台灣主要類型）</td><td>~5%（西方較多）</td></tr>
+                <tr><td><strong>位置</strong></td><td>中上段食道</td><td>下段食道 / 胃食道交界</td></tr>
+                <tr><td><strong>危險因素</strong></td><td>吸菸、飲酒、<strong>嚼檳榔</strong>（台灣特有）、熱飲、腐蝕性食道炎</td><td>GERD、Barrett's esophagus、肥胖、抽菸</td></tr>
+                <tr><td><strong>前驅病灶</strong></td><td>食道黏膜上皮內瘤變</td><td>Barrett's esophagus（腸化生）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床 + 診斷</p>
+            <ul class="k-list">
+              <li><strong>症狀：</strong>進行性吞嚥困難（先固體後液體）；體重下降；嘔吐（食道阻塞後逆流）；聲音嘶啞（喉返神經侵犯）；Horner syndrome（交感神經侵犯）</li>
+              <li><strong>診斷：</strong>上消化道內視鏡 + 切片（確診）；CT 胸腹（分期）；PET-CT（遠端轉移）；超音波內視鏡（EUS，T / N 分期）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+            <ul class="k-list">
+              <li><strong>早期（T1-T2N0）：</strong>食道切除術（Esophagectomy）= 根治性；Ivor Lewis / McKeown / transhiatal 術式</li>
+              <li><strong>局部進展（T3-T4 或 N+）：</strong>術前新輔助同步化放療（Chemoradiation）→ 再評估手術</li>
+              <li><strong>不可切除 / 轉移：</strong>同步化放療（根治目的）；姑息性化療；食道支架（緩解吞嚥困難）</li>
+              <li class="note">預後極差：診斷時 50% 已有轉移；整體 5 年存活率 &lt;20%；早期診斷至關重要</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- thoracic-emergency -->
+    <div class="topic-block" id="thoracic-emergency">
+      <div class="topic-block-head">
+        <span class="topic-block-title">胸腔急症 Thoracic Emergencies（血胸 + 心包填塞 + 創傷）</span>
+        <div data-bm-id="thoracic-emergency" data-bm-dept="胸腔外科" data-bm-title="胸腔急症"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">胸腔創傷六大立即致命傷（ATOM FC）：<strong>A</strong>irway obstruction；<strong>T</strong>ension pneumothorax；<strong>O</strong>pen pneumothorax；<strong>M</strong>assive hemothorax；<strong>F</strong>lail chest；<strong>C</strong>ardiac tamponade。這六種傷害必須在初次評估中立刻識別和處置。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="hemothorax-tamponade" data-bm-dept="胸腔外科" data-bm-title="血胸 + 心包填塞">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">血胸 + 心包填塞（Cardiac Tamponade）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">血胸（Hemothorax）</p>
+            <ul class="k-list">
+              <li><strong>原因：</strong>外傷（最常見）；主動脈剝離；腫瘤；抗凝血藥物</li>
+              <li><strong>大量血胸（Massive hemothorax）：</strong>胸腔積血 &gt;1500 mL（或 &gt;1/3 血容量）；低血壓 + 患側呼吸音↓ + 叩診濁音（鑑別張力性氣胸）；頸靜脈可能因血容量下降而無怒張</li>
+              <li><strong>處置：</strong>大管胸管（28-36 Fr）引流 + 大量補液 / 輸血（同時）；<strong>手術適應症（開胸）：</strong>初始引流 &gt;1500 mL；持續出血 &gt;200 mL/h × 2-4 h；血流動力學不穩定；凝血性血胸（clotted hemothorax）</li>
+              <li><strong>凝血性血胸（Retained hemothorax）：</strong>胸管引流不完全 → 血塊機化 → 纖維胸（Fibrothorax）→ VATS 清除（2 週內）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">心包填塞（Cardiac Tamponade）</p>
+            <div class="alert alert-red" style="margin-bottom:10px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>Beck's triad = 低血壓 + JVD + 心音遙遠（Muffled heart sounds）→ 心包穿刺或開胸！</span>
+            </div>
+            <ul class="k-list">
+              <li><strong>原因：</strong>外傷（穿刺傷）；惡性腫瘤；尿毒症；心包炎後；主動脈剝離；醫源性（介入手術）</li>
+              <li><strong>病生理：</strong>心包內液體增加 → 心腔受壓 → 舒張期充盈↓ → 心輸出量↓ → 休克；少量液體（100-200 mL）若快速積聚即可造成填塞</li>
+              <li><strong>Pulsus paradoxus：</strong>吸氣時 SBP 下降 &gt;10 mmHg（正常 &lt;10 mmHg）= 靈敏度高但不特異</li>
+              <li><strong>ECG：</strong>電交替（Electrical alternans）= QRS 方向交替變化；心動過速；低電壓</li>
+              <li><strong>超音波：</strong>右心室舒張期塌陷（RA / RV diastolic collapse）= 最特異性；「搖擺心臟（Swinging heart）」</li>
+              <li><strong>處置：</strong>
+                <ul>
+                  <li>補液（暫時維持前負荷）；避免利尿劑（加重）</li>
+                  <li><strong>心包穿刺術（Pericardiocentesis）：</strong>劍突下進針；超音波引導；緊急時可盲刺；引流 50 mL 即可顯著改善</li>
+                  <li>外傷性填塞（刀傷）→ 開胸探查（心包穿刺風險高）</li>
+                  <li>復發 / 惡性 → 心包窗手術（Pericardial window）</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="flail-chest-open-pneumo" data-bm-dept="胸腔外科" data-bm-title="連枷胸 + 開放性氣胸 + 創傷處置">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">連枷胸 + 開放性氣胸 + 胸腔創傷</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">連枷胸（Flail Chest）</p>
+            <ul class="k-list">
+              <li><strong>定義：</strong>≥3 根相鄰肋骨，每根有 ≥2 處骨折 → 胸壁喪失完整性 → 矛盾性呼吸（吸氣時患側陷入，呼氣時膨出）</li>
+              <li><strong>危險：</strong>本身不是主要威脅，但幾乎必定合併肺挫傷（Pulmonary contusion）→ 肺內出血 / 水腫 → 低血氧 → ARDS</li>
+              <li><strong>處置：</strong>充分鎮痛（Epidural 或 PCA = 首選，改善呼吸力學）；機械通氣（嚴重低血氧）；手術固定（Open reduction，選擇性）；積極肺復原</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">開放性氣胸（Open Pneumothorax，「吸吮胸傷」）</p>
+            <ul class="k-list">
+              <li><strong>機轉：</strong>胸壁缺損 &gt;2/3 氣管直徑 → 空氣優先從傷口進出 → 肺塌陷</li>
+              <li><strong>立刻處置：</strong>三面貼紮（Three-sided occlusive dressing）= 覆蓋傷口但留一邊開口（呼氣時排氣，防止張力性氣胸）→ 立刻胸管引流（另選位置）→ 手術修補</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">胸腔創傷 ATOM FC 立即致命傷速查</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>致命傷</th><th>立刻處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>A — Airway obstruction</strong></td><td>清除異物；插管；環甲膜切開</td></tr>
+                <tr><td><strong>T — Tension pneumothorax</strong></td><td>立刻針刺減壓 → 胸管</td></tr>
+                <tr><td><strong>O — Open pneumothorax</strong></td><td>三面貼紮 → 胸管</td></tr>
+                <tr><td><strong>M — Massive hemothorax</strong></td><td>大管胸管 + 輸血；失敗 → 開胸</td></tr>
+                <tr><td><strong>F — Flail chest</strong></td><td>充分鎮痛；機械通氣（嚴重）</td></tr>
+                <tr><td><strong>C — Cardiac tamponade</strong></td><td>心包穿刺 or 開胸（外傷性）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'thoracic-approach',   dept:'胸腔外科', title:'胸腔評估（胸管適應症 + 置放技巧）',          url:'#thoracic-approach',   text:'' },
+    { id:'thoracic-pneumo',     dept:'胸腔外科', title:'氣胸（自發性 + 張力性 + 處置）',             url:'#thoracic-pneumo',     text:'' },
+    { id:'thoracic-pleural',    dept:'胸腔外科', title:'胸腔積液（Light’s criteria + 引流）',   url:'#thoracic-pleural',    text:'' },
+    { id:'thoracic-lung',       dept:'胸腔外科', title:'肺癌分期 + 手術適應症 + 縱膈腔腫瘤',          url:'#thoracic-lung',       text:'' },
+    { id:'thoracic-esophagus',  dept:'胸腔外科', title:'食道疾病（食道癌 + 食道穿孔 + Boerhaave）',  url:'#thoracic-esophagus',  text:'' },
+    { id:'thoracic-emergency',  dept:'胸腔外科', title:'胸腔急症（血胸 + 心包填塞 + 創傷性氣胸）',   url:'#thoracic-emergency',  text:'' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else { initSearch(SEARCH_INDEX); }
+</script>
+</body>
+</html>
