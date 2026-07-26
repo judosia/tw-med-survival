@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>神經外科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .score-modal-overlay.open{display:flex;}
+    .score-modal{background:var(--white);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .score-modal-head{position:sticky;top:0;background:var(--white);padding:18px 22px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .score-modal-head h2{font-size:1rem;font-weight:800;}
+    .score-modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;}
+    .score-modal-body{padding:20px 22px;}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#neurosurg" class="nav-back">神經外科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">神經外科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">X</button></div>
+  <div id="bm-list"></div>
+</div>
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">神經外科</div>
+    <div class="sidebar-section-title">基礎評估</div>
+    <a href="#neuro-approach" class="sidebar-link">神外評估（GCS + 瞳孔 + ICP 監測）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">顱內出血</div>
+    <a href="#neuro-head" class="sidebar-link">顱內出血（硬膜外 + 硬膜下 + SAH）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">頭部外傷</div>
+    <a href="#neuro-tbi" class="sidebar-link">頭部外傷（TBI + ICP 處置）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">脊椎</div>
+    <a href="#neuro-spine" class="sidebar-link">脊椎急症（脊髓損傷 + 馬尾症候群）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">腫瘤</div>
+    <a href="#neuro-tumor" class="sidebar-link">顱內腫瘤（原發 + 轉移 + 腦水腫）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急症</div>
+    <a href="#neuro-emergency" class="sidebar-link">神外急症（腦疝 + 水腦症）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../im/neuro.html" class="sidebar-link">神經內科 →</a>
+    <a href="../er/general.html" class="sidebar-link">急診 →</a>
+  </aside>
+  <main class="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#f5f0ff 0%,#f0f4ff 100%);color:var(--navy);">
+      <div class="page-hero-text">
+        <h1>神經外科</h1>
+        <p>顱內出血、頭部外傷、脊椎急症與顱內腫瘤，涵蓋神外急症處置與 ICP 管理，各科 PGY 必備。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12A10 10 0 0 1 12 2z"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#neurosurg">神經外科</a> › 神經外科
+    </div>
+
+
+    <!-- neuro-approach -->
+    <div class="topic-block" id="neuro-approach">
+      <div class="topic-block-head">
+        <span class="topic-block-title">神外評估基礎 Neurosurgical Assessment</span>
+        <div data-bm-id="neuro-approach" data-bm-dept="神經外科" data-bm-title="神外評估基礎"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">神外評估三大核心：<strong>GCS（Glasgow Coma Scale）</strong>量化意識程度；<strong>瞳孔評估</strong>反映顱內壓和腦幹功能；<strong>神經學局部症狀</strong>定位病灶。正常顱內壓（ICP）= 5-15 mmHg；&gt;20 mmHg = 顱內壓升高需處置；&gt;40 mmHg = 嚴重危及生命。<strong>腦灌流壓（CPP）= MAP - ICP，目標 60-70 mmHg</strong>。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="gcs-pupil" data-bm-dept="神經外科" data-bm-title="GCS + 瞳孔評估">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">GCS + 瞳孔評估</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Glasgow Coma Scale（GCS）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>項目</th><th>反應</th><th>分數</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td rowspan="4"><strong>眼睛開啟（E）</strong></td>
+                  <td>自發性睜眼</td><td>4</td>
+                </tr>
+                <tr><td>聲音刺激睜眼</td><td>3</td></tr>
+                <tr><td>疼痛刺激睜眼</td><td>2</td></tr>
+                <tr><td>無反應</td><td>1</td></tr>
+                <tr>
+                  <td rowspan="5"><strong>語言反應（V）</strong></td>
+                  <td>定向清楚</td><td>5</td>
+                </tr>
+                <tr><td>混亂對話</td><td>4</td></tr>
+                <tr><td>不適當字詞</td><td>3</td></tr>
+                <tr><td>無意義聲音</td><td>2</td></tr>
+                <tr><td>無反應</td><td>1</td></tr>
+                <tr>
+                  <td rowspan="6"><strong>運動反應（M）</strong></td>
+                  <td>遵從指令</td><td>6</td>
+                </tr>
+                <tr><td>定位疼痛（Localizing）</td><td>5</td></tr>
+                <tr><td>逃避疼痛（Withdrawal）</td><td>4</td></tr>
+                <tr><td>屈曲反應（Flexion，去皮質）</td><td>3</td></tr>
+                <tr><td>伸展反應（Extension，去大腦）</td><td>2</td></tr>
+                <tr><td>無反應</td><td>1</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li><strong>最高：</strong>15 分（E4V5M6）；<strong>最低：</strong>3 分（E1V1M1）</li>
+              <li><strong>輕度 TBI：</strong>GCS 13-15；<strong>中度：</strong>GCS 9-12；<strong>重度：</strong>GCS ≤8 → 考慮插管保護氣道</li>
+              <li><strong>插管患者：</strong>標記為「VT」（Voice Tube），如 E3VTM5</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">瞳孔評估</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>瞳孔表現</th><th>意義</th></tr></thead>
+              <tbody>
+                <tr><td><strong>等大（3-4 mm）+ 對光反射正常</strong></td><td>正常</td></tr>
+                <tr><td><strong>單側散大固定（Blown pupil）</strong></td><td>同側第三對腦神經（CN III）壓迫 → 小腦幕切跡疝（Uncal herniation）；顱內壓升高警訊</td></tr>
+                <tr><td><strong>雙側針尖瞳孔（Pinpoint，&lt;1 mm）</strong></td><td>橋腦（Pons）病灶；Opioid 中毒</td></tr>
+                <tr><td><strong>雙側散大固定</strong></td><td>嚴重腦幹損傷；腦死；抗膽鹼藥物中毒</td></tr>
+                <tr><td><strong>Horner's syndrome（單側縮瞳 + 眼瞼下垂 + 無汗）</strong></td><td>同側交感神經受損（頸脊髓損傷、頸動脈剝離、肺尖腫瘤）</td></tr>
+                <tr><td><strong>Marcus Gunn pupil（RAPD）</strong></td><td>單側視神經損傷；搖擺燈光試驗（Swinging flashlight test）患側瞳孔擴大</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="icp-monitoring" data-bm-dept="神經外科" data-bm-title="ICP 監測 + CPP 管理">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">ICP 監測 + CPP 管理 + Cushing's Triad</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Monro-Kellie 假說</p>
+            <ul class="k-list">
+              <li>顱腔容積固定 = 腦組織（80%）+ 腦脊液（10%）+ 血液（10%）</li>
+              <li>任何成分增加 → 其他成分代償性減少；代償耗盡 → ICP 急劇升高</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Cushing's Triad（顱內壓升高的晚期徵象）</p>
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>Cushing's Triad = 高血壓 + 心搏過緩 + 呼吸不規則 → 腦疝即將發生，立刻處置！</span>
+            </div>
+            <ul class="k-list">
+              <li><strong>高血壓（↑ SBP）：</strong>代償性維持 CPP</li>
+              <li><strong>心搏過緩（↓ HR）：</strong>迷走神經反射</li>
+              <li><strong>呼吸不規則：</strong>腦幹受壓</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ICP 監測方式</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>方式</th><th>特性</th></tr></thead>
+              <tbody>
+                <tr><td><strong>腦室外引流（EVD）</strong></td><td>金標準；可監測 + 引流 CSF；感染風險；需每日校正</td></tr>
+                <tr><td><strong>腦實質感應器（Bolt）</strong></td><td>較簡單；只監測不能引流；Camino / Codman 系統</td></tr>
+                <tr><td><strong>硬膜下 / 硬膜外感應器</strong></td><td>較不準確；較少用</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">關鍵數值目標</p>
+            <ul class="k-list">
+              <li><strong>ICP 目標：</strong>&lt;20 mmHg（嚴重 TBI）；&lt;15 mmHg（一般）</li>
+              <li><strong>CPP = MAP - ICP：</strong>目標 60-70 mmHg；&lt;50 mmHg = 腦缺血風險</li>
+              <li><strong>MAP 目標：</strong>TBI 患者維持 SBP &gt;90 mmHg（避免低血壓惡化腦缺血）</li>
+              <li><strong>SpO₂：</strong>&gt;95%；PaO₂ &gt;60 mmHg；避免低血氧</li>
+              <li><strong>血糖：</strong>維持正常（避免高血糖加重神經損傷）</li>
+              <li><strong>體溫：</strong>積極控制發燒（↑ 體溫 → ↑ 腦代謝 → ↑ ICP）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- neuro-head -->
+    <div class="topic-block" id="neuro-head">
+      <div class="topic-block-head">
+        <span class="topic-block-title">顱內出血 Intracranial Hemorrhage</span>
+        <div data-bm-id="neuro-head" data-bm-dept="神經外科" data-bm-title="顱內出血"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">顱內出血四大類型依解剖位置分：<strong>硬膜外血腫（EDH）</strong>= 動脈出血，雙凸透鏡形，classic lucid interval；<strong>硬膜下血腫（SDH）</strong>= 靜脈出血，新月形，老年人常見；<strong>蜘蛛網膜下腔出血（SAH）</strong>= 動脈瘤破裂，「一生中最嚴重的頭痛」；<strong>腦內出血（ICH）</strong>= 高血壓最常見原因。CT 是第一線影像。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="edh-sdh" data-bm-dept="神經外科" data-bm-title="硬膜外 + 硬膜下血腫">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">硬膜外血腫（EDH）+ 硬膜下血腫（SDH）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>硬膜外血腫（EDH）</th><th>硬膜下血腫（SDH）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>出血來源</strong></td><td>中腦膜動脈（MMA）= 動脈性出血；顳骨骨折撕裂</td><td>橋接靜脈（Bridging veins）= 靜脈性；腦萎縮老年人橋接靜脈拉長更易撕裂</td></tr>
+                <tr><td><strong>位置</strong></td><td>硬膜外（骨頭和硬膜之間）；不跨越縫線</td><td>硬膜下（硬膜和蜘蛛膜之間）；可跨越縫線；可雙側</td></tr>
+                <tr><td><strong>CT 外觀</strong></td><td><strong>雙凸透鏡形（Biconvex / Lenticular）</strong>；高密度；邊界清楚</td><td><strong>新月形（Crescent）</strong>；急性 = 高密度；亞急性 = 等密度；慢性 = 低密度</td></tr>
+                <tr><td><strong>典型病程</strong></td><td><strong>Lucid interval（意識清醒間隔）</strong>= 受傷後短暫昏迷 → 清醒 → 再度昏迷（動脈血腫擴大）</td><td>急性：重度外傷後立刻昏迷；慢性：老年人輕微外傷後數週出現認知改變</td></tr>
+                <tr><td><strong>好發族群</strong></td><td>年輕人（外傷，顳骨骨折）</td><td>急性：重度外傷；慢性：老年人、酒精中毒、抗凝血藥物</td></tr>
+                <tr><td><strong>手術適應症</strong></td><td>血腫厚度 &gt;10 mm；中線偏移 &gt;5 mm；GCS 下降；任何 EDH + 神經學惡化</td><td>急性：血腫厚度 &gt;10 mm；中線偏移 &gt;5 mm；GCS &lt;9；慢性：有症狀（頭痛、認知改變、局部神經缺損）</td></tr>
+                <tr><td><strong>手術方式</strong></td><td>開顱血腫清除術（Craniotomy）</td><td>急性：開顱清除；慢性：鑽孔引流（Burr hole drainage）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="sah-ich" data-bm-dept="神經外科" data-bm-title="蜘蛛網膜下腔出血 + 腦內出血">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">蜘蛛網膜下腔出血（SAH）+ 腦內出血（ICH）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">蜘蛛網膜下腔出血（SAH）</p>
+            <div class="alert alert-red" style="margin-bottom:10px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>「一生中最嚴重的頭痛（Thunderclap headache）」= SAH 直到排除為止！CT 陰性 → 腰椎穿刺（Xanthochromia）。</span>
+            </div>
+            <ul class="k-list">
+              <li><strong>最常見原因：</strong>腦動脈瘤破裂（75-80%）；動靜脈畸形（AVM）；外傷</li>
+              <li><strong>危險因素：</strong>高血壓；吸菸；家族史；多囊腎（PKD）；結締組織病（Marfan / Ehlers-Danlos）</li>
+              <li><strong>好發位置：</strong>前交通動脈（ACoA，最常見）；後交通動脈（PCoA）；大腦中動脈（MCA）分叉</li>
+              <li><strong>CT：</strong>星狀高密度（蜘蛛網膜下腔；腦池充滿血液）；敏感度 98%（6 小時內）→ 之後下降</li>
+              <li><strong>CT 陰性 + 高度懷疑 → 腰椎穿刺：</strong>Xanthochromia（黃變色）= 血紅素降解產物；出血後 2-4 小時出現，持續數週</li>
+              <li><strong>Hunt-Hess 分級：</strong>I（無症狀）→ V（深昏迷 / 去大腦姿勢）；越高分預後越差</li>
+              <li><strong>主要併發症：</strong>
+                <ul>
+                  <li><strong>再出血（Re-bleeding）：</strong>24 小時內最高風險；死亡率 70%；動脈瘤夾閉（Clipping）或線圈栓塞（Coiling）是根本治療</li>
+                  <li><strong>血管痙攣（Vasospasm）：</strong>出血後 4-14 天；缺血性腦梗塞；Nimodipine（CCB）預防；3H 療法（Hypertension + Hypervolemia + Hemodilution）→ 現僅維持正常血容量</li>
+                  <li><strong>水腦症：</strong>急性（CSF 阻塞）→ EVD 引流；慢性 → VP shunt</li>
+                  <li><strong>低血鈉：</strong>SIADH 或 Cerebral salt wasting；需鑑別（治療不同）</li>
+                </ul>
+              </li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">腦內出血（ICH）</p>
+            <ul class="k-list">
+              <li><strong>最常見原因：</strong>高血壓（60-70%，基底核最常見）；澱粉樣血管病變（Amyloid angiopathy，老年人皮質下）；抗凝血藥物；腦腫瘤出血；AVM</li>
+              <li><strong>ICH Score：</strong>GCS + 血腫體積 + 腦室內出血 + 出血位置 + 年齡；預測 30 天死亡率</li>
+              <li><strong>處置：</strong>血壓控制（SBP 目標 140-160 mmHg）；逆轉抗凝血（Vitamin K / PCC / FFP / Protamine）；ICP 管理；手術（幕上血腫 &gt;30 mL 且可到達者；小腦出血 &gt;3 cm 或壓迫腦幹 / 水腦症）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- neuro-tbi -->
+    <div class="topic-block" id="neuro-tbi">
+      <div class="topic-block-head">
+        <span class="topic-block-title">頭部外傷 Traumatic Brain Injury（TBI）</span>
+        <div data-bm-id="neuro-tbi" data-bm-dept="神經外科" data-bm-title="頭部外傷 TBI"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">TBI 是全球主要致死和致殘原因。<strong>重度 TBI（GCS ≤8）</strong>需要氣道保護、ICP 監測和積極處置。<strong>輕度 TBI（腦震盪）</strong>= GCS 13-15，症狀多數數週內恢復，但需注意「Second impact syndrome」（二次受傷）。<strong>避免二次傷害（Secondary injury prevention）</strong>是神外處置的核心——防低血壓、低血氧、高 ICP、發燒。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="tbi-classification" data-bm-dept="神經外科" data-bm-title="TBI 分類 + 處置">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">TBI 分類 + 急性處置（ATLS 原則）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>嚴重度</th><th>GCS</th><th>臨床特徵</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>輕度 TBI（腦震盪）</strong></td>
+                  <td>13-15</td>
+                  <td>短暫意識喪失（&lt;30 分）；失憶（&lt;24 小時）；頭痛、噁心、頭暈；無局部神經缺損</td>
+                  <td>CT 評估（Canadian CT head rule）；觀察；休息（體力和認知）；腦震盪後症候群（數週頭痛/認知改變）</td>
+                </tr>
+                <tr>
+                  <td><strong>中度 TBI</strong></td>
+                  <td>9-12</td>
+                  <td>意識喪失 30 分-24 小時；可能有局部神經缺損；需住院觀察</td>
+                  <td>住院；CT；密切神經學監測；ICP 監測考慮</td>
+                </tr>
+                <tr>
+                  <td><strong>重度 TBI</strong></td>
+                  <td>≤8</td>
+                  <td>長時間昏迷；局部神經缺損；可能腦疝</td>
+                  <td>插管（RSI）保護氣道；ICP 監測；積極 ICP 管理；神外會診</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Canadian CT Head Rule（輕度 TBI，需做 CT 的條件）</p>
+            <ul class="k-list">
+              <li><strong>高危（需立刻 CT）：</strong>GCS &lt;15（受傷後 2 小時）；懷疑開放性或凹陷性骨折；顱底骨折徵象（熊貓眼、Battle's sign、CSF 耳漏/鼻漏）；嘔吐 ≥2 次；年齡 ≥65 歲</li>
+              <li><strong>中危（需 CT）：</strong>失憶 ≥30 分；危險機轉（行人被車撞、從高處墜落 &gt;3 呎 / 5 階）</li>
+              <li class="note">無意識喪失或失憶的輕微頭部外傷 → 不需常規 CT</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">重度 TBI ICP 管理（階梯式）</p>
+            <ul class="k-list">
+              <li><strong>第一階梯：</strong>頭部抬高 30°；鎮靜止痛（Propofol + Fentanyl）；維持正常體溫；維持血糖正常；維持 CPP 60-70 mmHg</li>
+              <li><strong>第二階梯：</strong>CSF 引流（EVD）；<strong>Mannitol 0.25-1 g/kg IV</strong>（滲透性利尿，目標 Osm 300-320）；<strong>Hypertonic saline（3% NaCl）</strong>100-200 mL（↑ 血清滲透壓 → ↓ 腦水腫）</li>
+              <li><strong>第三階梯：</strong>過度通氣（目標 PaCO₂ 30-35 mmHg，短期緊急使用）→ ↓ PaCO₂ → 腦血管收縮 → ↓ 腦血流 → ↓ ICP；<strong>注意：過度使用會造成腦缺血</strong></li>
+              <li><strong>第四階梯：</strong>去骨瓣減壓術（Decompressive craniectomy）；Barbiturate 昏迷（Pentobarbital，難治性 ICP 升高）；低體溫療法（爭議中）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="diffuse-axonal" data-bm-dept="神經外科" data-bm-title="瀰漫性軸索損傷 + 腦震盪後症候群">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">瀰漫性軸索損傷（DAI）+ 腦震盪後症候群</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">瀰漫性軸索損傷（Diffuse Axonal Injury，DAI）</p>
+            <ul class="k-list">
+              <li><strong>機轉：</strong>加速-減速傷害 → 剪切力 → 白質軸索瀰漫性撕裂；好發胼胝體（Corpus callosum）/ 腦幹 / 腦白質深部</li>
+              <li><strong>CT：</strong>可能正常（DAI 不一定在 CT 上可見）；小出血點（Petechial hemorrhages）於灰白質交界</li>
+              <li><strong>MRI：</strong>遠比 CT 敏感；T2/FLAIR 高信號；SWI 序列（對微出血最敏感）</li>
+              <li><strong>臨床：</strong>昏迷（可能長期）；去皮質 / 去大腦姿勢；與 CT 顱內出血量不成比例的嚴重意識改變</li>
+              <li><strong>預後：</strong>腦幹 DAI 預後最差；嚴重 DAI 常導致植物人狀態</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">腦震盪後症候群（Post-Concussion Syndrome）</p>
+            <ul class="k-list">
+              <li><strong>症狀（持續 &gt;3 個月）：</strong>持續頭痛；認知改變（記憶、注意力）；睡眠障礙；情緒問題（焦慮、憂鬱）；頭暈；光聲敏感</li>
+              <li><strong>危險因素：</strong>女性；年長；有頭痛病史；憂鬱焦慮；高強度工作壓力</li>
+              <li><strong>治療：</strong>認知休息（逐漸恢復）；心理支持；症狀治療（頭痛、睡眠）；避免過早恢復接觸性運動（二次受傷）</li>
+              <li class="note">運動員腦震盪：同一次賽季第二次腦震盪（Second impact syndrome）= 腦血流調節失常 → 惡性腦水腫 → 死亡率高；禁止帶傷上場</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- neuro-spine -->
+    <div class="topic-block" id="neuro-spine">
+      <div class="topic-block-head">
+        <span class="topic-block-title">脊椎急症 Spine Emergencies（脊髓損傷 + 馬尾症候群）</span>
+        <div data-bm-id="neuro-spine" data-bm-dept="神經外科" data-bm-title="脊椎急症"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>馬尾症候群（Cauda Equina Syndrome）</strong>是外科急症——延遲手術 &gt;48 小時預後顯著變差。<strong>脊髓損傷（SCI）</strong>急性期主要任務是固定 + 避免二次損傷 + 維持脊椎灌流壓。<strong>脊髓休克（Spinal shock）</strong>= 急性損傷後暫時性完全無反射，需與真正的完全性損傷鑑別。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="sci-asia" data-bm-dept="神經外科" data-bm-title="脊髓損傷 ASIA 分級">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">脊髓損傷（SCI）+ ASIA 分級</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ASIA Impairment Scale（AIS）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>分級</th><th>定義</th></tr></thead>
+              <tbody>
+                <tr><td><strong>AIS A（完全性）</strong></td><td>損傷節段以下完全無感覺和運動功能（包括 S4-S5 骶神經）</td></tr>
+                <tr><td><strong>AIS B（感覺不完全）</strong></td><td>損傷節段以下有感覺但無運動功能；含 S4-S5</td></tr>
+                <tr><td><strong>AIS C（運動不完全）</strong></td><td>損傷節段以下有運動功能；關鍵肌肉肌力 &lt;3/5</td></tr>
+                <tr><td><strong>AIS D（運動不完全）</strong></td><td>損傷節段以下有運動功能；關鍵肌肉肌力 ≥3/5</td></tr>
+                <tr><td><strong>AIS E（正常）</strong></td><td>感覺和運動功能正常</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">不完全性脊髓損傷症候群</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>症候群</th><th>損傷部位</th><th>特徵</th></tr></thead>
+              <tbody>
+                <tr><td><strong>中央脊髓症候群（Central cord，最常見）</strong></td><td>頸椎中央（老年人過伸傷害）</td><td>上肢 &gt; 下肢無力；膀胱功能障礙；感覺保留</td></tr>
+                <tr><td><strong>前脊髓症候群（Anterior cord）</strong></td><td>前脊髓動脈梗塞</td><td>運動和疼痛/溫度感覺喪失；本體感覺保留（後柱保留）</td></tr>
+                <tr><td><strong>Brown-Séquard 症候群</strong></td><td>半側脊髓切斷（穿刺傷）</td><td>同側運動 + 本體感覺喪失；對側痛溫感覺喪失</td></tr>
+                <tr><td><strong>後脊髓症候群（Posterior cord，罕見）</strong></td><td>後柱損傷</td><td>本體感覺和振動感覺喪失；運動保留</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性脊髓損傷處置</p>
+            <ul class="k-list">
+              <li><strong>固定：</strong>頸椎護具（Cervical collar）+ 脊椎板（Spine board）直到影像排除不穩定骨折</li>
+              <li><strong>血壓目標：</strong>維持 MAP &gt;85 mmHg（脊椎灌流壓）× 7 天；避免低血壓（神經性休克 → Norepinephrine）</li>
+              <li><strong>類固醇：</strong>Methylprednisolone（高劑量）= 現多數指引<strong>不建議</strong>常規使用（副作用 &gt; 效益）；若使用需在 8 小時內開始</li>
+              <li><strong>手術：</strong>不穩定骨折；進行性神經惡化；有壓迫可解除者 → 早期手術（24-48 小時內）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="cauda-equina" data-bm-dept="神經外科" data-bm-title="馬尾症候群 + 頸椎骨折">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">馬尾症候群 + 頸椎骨折</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>馬尾症候群 = 外科急症！立刻 MRI + 緊急手術減壓。48 小時內手術預後顯著優於延遲。</span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">馬尾症候群（Cauda Equina Syndrome，CES）</p>
+            <ul class="k-list">
+              <li><strong>原因：</strong>椎間盤突出（最常見）；腫瘤；硬膜外膿瘍/血腫；骨折</li>
+              <li><strong>症狀（ABCDE）：</strong>
+                <ul>
+                  <li><strong>A：Anorectal dysfunction</strong>（大便失禁 / 便秘）</li>
+                  <li><strong>B：Bladder dysfunction</strong>（尿滯留 / 尿失禁）= <strong>最重要警訊！</strong></li>
+                  <li><strong>C：Cauda equina pain</strong>（下背痛 + 雙側放射）</li>
+                  <li><strong>D：Decreased sensation</strong>（鞍區麻木，Saddle anesthesia）= 肛門 / 會陰 / 大腿內側</li>
+                  <li><strong>E：Extremity weakness</strong>（雙側下肢無力）</li>
+                </ul>
+              </li>
+              <li><strong>診斷：</strong>MRI 腰椎（緊急）；CT 可評估骨骼</li>
+              <li><strong>治療：</strong>緊急手術減壓（Emergent decompression laminectomy）；48 小時內效果最好；延遲 → 永久膀胱/大腸功能障礙</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">頸椎骨折重要類型</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>骨折類型</th><th>特徵</th><th>穩定性</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Jefferson 骨折（C1 爆裂）</strong></td><td>軸向壓迫（頭頂撞擊）；C1 四點骨折；齒狀突 X 光見 C1 側塊外移</td><td>多數穩定（韌帶完整）</td></tr>
+                <tr><td><strong>Hangman 骨折（C2 椎弓根）</strong></td><td>過伸傷害（車禍、絞刑）；C2 雙側椎弓根骨折</td><td>不穩定（神經損傷少）</td></tr>
+                <tr><td><strong>齒狀突骨折（Odontoid / Dens）</strong></td><td>Type II（齒突基部）= 最常見 + 不穩定；老年人低能量外傷</td><td>Type II 不穩定</td></tr>
+                <tr><td><strong>Clay shoveler 骨折（棘突撕裂）</strong></td><td>下頸椎 / 上胸椎棘突撕裂骨折（C6-T1）；過屈傷害</td><td>穩定</td></tr>
+                <tr><td><strong>Teardrop 骨折</strong></td><td>過屈 + 壓縮；椎體前下角骨折（淚滴形）；常合併嚴重脊髓損傷</td><td>極不穩定</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- neuro-tumor -->
+    <div class="topic-block" id="neuro-tumor">
+      <div class="topic-block-head">
+        <span class="topic-block-title">顱內腫瘤 Intracranial Tumors</span>
+        <div data-bm-id="neuro-tumor" data-bm-dept="神經外科" data-bm-title="顱內腫瘤"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">顱內腫瘤可分為<strong>原發性</strong>（起源自腦組織）和<strong>轉移性</strong>（最常見，尤其肺癌、乳癌、黑色素瘤）。<strong>膠質母細胞瘤（GBM）</strong>是最惡性的原發腦瘤，中位存活期約 15 個月。<strong>腦膜瘤（Meningioma）</strong>是最常見的良性顱內腫瘤。腦瘤常見三徵：頭痛 + 噁心嘔吐 + 局部神經缺損。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="brain-tumors" data-bm-dept="神經外科" data-bm-title="顱內腫瘤速查">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">原發性顱內腫瘤速查</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>腫瘤</th><th>特徵</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>膠質母細胞瘤（GBM，WHO Grade 4）</strong></td>
+                  <td>最惡性原發腦瘤；成人最常見惡性腦瘤；環形強化（Ring enhancement）；蝴蝶膠質瘤（Butterfly glioma，跨越胼胝體）；IDHI 野生型；預後極差</td>
+                  <td>最大程度安全切除 → Temozolomide + 放療（Stupp protocol）→ 輔助 Temozolomide；MGMT 甲基化 → 化療反應較好；中位存活 15 個月</td>
+                </tr>
+                <tr>
+                  <td><strong>低惡性度膠質瘤（WHO Grade 2）</strong></td>
+                  <td>年輕成人；生長緩慢；IDH1 突變（預後較好）；癲癇常為首發症狀；T2/FLAIR 高信號，無明顯強化</td>
+                  <td>手術切除（盡量多切）；放療 + 化療（依危險因子）；長期追蹤（可轉變成高惡性度）</td>
+                </tr>
+                <tr>
+                  <td><strong>腦膜瘤（Meningioma）</strong></td>
+                  <td>最常見良性顱內腫瘤；女性多（雌激素受體）；硬膜附著；Dural tail sign（MRI 增強）；WHO Grade 1（良性）多數；緩慢生長</td>
+                  <td>小且無症狀 → 觀察；有症狀或進展 → 手術切除；放射手術（Gamma knife，小型）；復發率依切除完整度</td>
+                </tr>
+                <tr>
+                  <td><strong>聽神經瘤（Vestibular Schwannoma）</strong></td>
+                  <td>第八對腦神經（前庭蝸神經）；內耳道擴大；單側感音神經性聽損 + 耳鳴；雙側 = NF-2；Ice cream cone sign（MRI）</td>
+                  <td>小 → 觀察；中 → Gamma knife；大 → 手術（面神經保留）</td>
+                </tr>
+                <tr>
+                  <td><strong>髓母細胞瘤（Medulloblastoma）</strong></td>
+                  <td>兒童最常見惡性腦瘤；後顱窩（小腦蚓部）；第四腦室阻塞 → 急性水腦症；容易沿 CSF 播種（Drop metastasis）</td>
+                  <td>手術 + 全腦脊髓放療 + 化療；5 年存活率約 70-80%</td>
+                </tr>
+                <tr>
+                  <td><strong>顱咽管瘤（Craniopharyngioma）</strong></td>
+                  <td>鞍上區（Suprasellar）；兒童 + 老年雙峰；蛋殼樣鈣化（Shell-like calcification）；視野缺損（雙顳側偏盲）；尿崩症；垂體功能低下</td>
+                  <td>手術切除 ± 放療；激素替代治療</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="brain-mets-edema" data-bm-dept="神經外科" data-bm-title="腦轉移 + 腦水腫處置">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">腦轉移 + 腦水腫處置</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">腦轉移（Brain Metastasis）</p>
+            <ul class="k-list">
+              <li><strong>最常見的顱內腫瘤</strong>（比原發腦瘤更多）</li>
+              <li><strong>原發來源（依頻率）：</strong>肺癌（最常見，40%）→ 乳癌 → 黑色素瘤（最容易出血）→ 腎細胞癌 → 大腸癌</li>
+              <li><strong>CT / MRI：</strong>多發性環形強化病灶；位於灰白質交界（cortical-subcortical junction）；伴隨大量血管性水腫</li>
+              <li><strong>治療：</strong>
+                <ul>
+                  <li>單一轉移（Solitary，可切除）+ 原發灶控制 → 手術切除 + 全腦放療（WBRT）</li>
+                  <li>1-4 個病灶（小）→ 立體定向放射手術（SRS，Gamma knife / Cyber knife）</li>
+                  <li>多發性或廣泛轉移 → 全腦放療（WBRT）+ 類固醇</li>
+                  <li>依原發癌種的靶向治療（如肺腺癌 EGFR 突變 → Osimertinib 可穿過血腦障壁）</li>
+                </ul>
+              </li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">腦水腫（Cerebral Edema）處置</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>類型</th><th>機轉</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>血管性水腫（Vasogenic，最常見）</strong></td>
+                  <td>血腦障壁破壞 → 蛋白質和液體進入細胞外間隙；腫瘤 / 膿瘍 / 轉移</td>
+                  <td><strong>Dexamethasone 最有效</strong>；4-10 mg IV q6h；數小時內有效；適合腫瘤相關水腫；外傷性腦水腫<strong>不建議</strong>使用</td>
+                </tr>
+                <tr>
+                  <td><strong>細胞毒性水腫（Cytotoxic）</strong></td>
+                  <td>細胞能量耗竭 → Na/K-ATPase 失能 → 細胞內水分積聚；缺血性腦梗塞最常見</td>
+                  <td>Mannitol / Hypertonic saline（暫時）；類固醇<strong>無效</strong>；治療原因（溶栓 / 取栓）</td>
+                </tr>
+                <tr>
+                  <td><strong>間質性水腫（Interstitial）</strong></td>
+                  <td>CSF 從腦室滲漏至周圍白質；梗阻性水腦症</td>
+                  <td>引流 CSF（EVD / VP Shunt）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- neuro-emergency -->
+    <div class="topic-block" id="neuro-emergency">
+      <div class="topic-block-head">
+        <span class="topic-block-title">神外急症 Neurosurgical Emergencies（腦疝 + 水腦症）</span>
+        <div data-bm-id="neuro-emergency" data-bm-dept="神經外科" data-bm-title="神外急症"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>腦疝（Brain herniation）</strong>= ICP 升高導致腦組織被迫移位，壓迫關鍵結構，是神外最緊急的急症。<strong>小腦幕切跡疝（Uncal herniation）</strong>= 單側散大瞳孔 + 對側偏癱 = 立刻處置。<strong>急性水腦症</strong>需緊急 CSF 引流。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="brain-herniation" data-bm-dept="神經外科" data-bm-title="腦疝類型 + 緊急處置">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">腦疝類型 + 緊急 ICP 處置</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>單側散大瞳孔 + 意識惡化 = Uncal herniation → 立刻過度通氣 + Mannitol + 神外緊急手術！</span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">腦疝類型</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>移位方向</th><th>臨床表現</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>小腦幕切跡疝（Uncal / Transtentorial）</strong></td>
+                  <td>顳葉鉤回向下穿過小腦幕切跡</td>
+                  <td><strong>同側 CN III 壓迫 → 同側散大固定瞳孔</strong>；對側偏癱（錐體束受壓）；意識惡化；Cushing's triad</td>
+                </tr>
+                <tr>
+                  <td><strong>中央性疝（Central / Transtentorial）</strong></td>
+                  <td>雙側向下位移穿過小腦幕</td>
+                  <td>雙側小瞳孔（初期）→ 雙側固定散瞳（晚期）；意識逐漸喪失；去皮質→去大腦姿勢</td>
+                </tr>
+                <tr>
+                  <td><strong>小腦扁桃體疝（Tonsillar / Downward）</strong></td>
+                  <td>小腦扁桃體疝入枕骨大孔</td>
+                  <td>壓迫延髓 → 呼吸驟停；頸部僵硬；心搏過緩；最致命</td>
+                </tr>
+                <tr>
+                  <td><strong>鐮狀疝（Subfalcine / Cingulate）</strong></td>
+                  <td>扣帶迴越過大腦鐮</td>
+                  <td>對側下肢無力（前腦動脈受壓）；早期可無症狀；中線偏移 CT 可見</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">腦疝緊急處置（分鐘計）</p>
+            <ul class="k-list">
+              <li><strong>立刻：</strong>頭部抬高 30°；叫神外；叫麻醉（可能需要緊急手術）</li>
+              <li><strong>過度通氣（最快）：</strong>Ambu bag 過度通氣 → PaCO₂ 30-35 mmHg → 腦血管收縮 → ↓ 腦血容量 → ↓ ICP；僅用於即將腦疝的橋接（不宜長期）</li>
+              <li><strong>Mannitol 1 g/kg IV：</strong>快速推注（15-20 分）；滲透性脫水；效果持續 2-4 小時；目標 Osm 300-320；需尿液排出（無尿禁忌）</li>
+              <li><strong>Hypertonic saline（3% NaCl）250 mL：</strong>Mannitol 替代或合用；適合低血壓患者（不造成利尿）；Na 目標 145-155 mEq/L</li>
+              <li><strong>緊急手術：</strong>移除占位病灶（血腫清除）；去骨瓣減壓術（Decompressive craniectomy）；EVD 引流 CSF</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="hydrocephalus-postop" data-bm-dept="神經外科" data-bm-title="水腦症 + 術後照護">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性水腦症 + 神外術後照護</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">水腦症（Hydrocephalus）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>機轉</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>阻塞性（Non-communicating）</strong></td>
+                  <td>CSF 循環通道阻塞（腫瘤、血塊阻塞導水管或第四腦室）</td>
+                  <td>緊急 EVD（腦室外引流）；移除阻塞原因；VP shunt</td>
+                </tr>
+                <tr>
+                  <td><strong>交通性（Communicating）</strong></td>
+                  <td>CSF 吸收障礙（SAH 後蜘蛛網膜顆粒阻塞；腦膜炎後）</td>
+                  <td>LP（腰椎穿刺）；VP shunt；ETV（內視鏡第三腦室造口）</td>
+                </tr>
+                <tr>
+                  <td><strong>正常壓力水腦症（NPH）</strong></td>
+                  <td>老年人；CSF 吸收↓；ICP 正常</td>
+                  <td>臨床三聯症（磁步態 + 失禁 + 失智）；LP 放液改善 → VP shunt</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">神外術後常見問題</p>
+            <ul class="k-list">
+              <li><strong>術後神經惡化：</strong>立刻 CT（排除血腫 / 水腫 / 腦梗塞）；血壓管理；ICP 監測</li>
+              <li><strong>術後癲癇：</strong>預防性 Levetiracetam（幕上手術）；癲癇控制依標準流程</li>
+              <li><strong>術後感染：</strong>腦膜炎（術後 1-2 週）；硬膜下積膿；傷口感染；EVD 相關感染（每 5-7 天考慮更換）；腦室炎（EVD 引流出混濁 CSF）</li>
+              <li><strong>VP Shunt 功能異常：</strong>頭痛 + 噁心嘔吐（阻塞）→ CT（腦室擴大）→ Shunt tap / 更換；過度引流 → 低顱壓頭痛（站立加重）→ 調整壓力</li>
+              <li><strong>CSF 漏（Fistula）：</strong>清澈水狀鼻漏或耳漏（含 beta-2 transferrin）→ 頭部抬高 + 避免用力；嚴重 → 硬膜修補</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'neuro-approach',  dept:'神經外科', title:'神外評估（GCS + 瞳孔 + ICP 監測）',          url:'#neuro-approach',  text:'' },
+    { id:'neuro-head',      dept:'神經外科', title:'顱內出血（硬膜外 + 硬膜下 + SAH + 腦內出血）', url:'#neuro-head',      text:'' },
+    { id:'neuro-tbi',       dept:'神經外科', title:'頭部外傷（輕中重度 TBI + ICP 處置）',          url:'#neuro-tbi',       text:'' },
+    { id:'neuro-spine',     dept:'神經外科', title:'脊椎急症（脊髓損傷 + 馬尾症候群 + 頸椎骨折）', url:'#neuro-spine',     text:'' },
+    { id:'neuro-tumor',     dept:'神經外科', title:'顱內腫瘤（原發 + 轉移 + 腦水腫處置）',         url:'#neuro-tumor',     text:'' },
+    { id:'neuro-emergency', dept:'神經外科', title:'神外急症（腦疝 + 急性水腦症 + 術後處置）',      url:'#neuro-emergency', text:'' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else { initSearch(SEARCH_INDEX); }
+</script>
+</body>
+</html>
