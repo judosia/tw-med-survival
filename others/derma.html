@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>皮膚科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .score-modal-overlay.open{display:flex;}
+    .score-modal{background:var(--white);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .score-modal-head{position:sticky;top:0;background:var(--white);padding:18px 22px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .score-modal-head h2{font-size:1rem;font-weight:800;}
+    .score-modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;}
+    .score-modal-body{padding:20px 22px;}
+    .pdf-download-bar{display:flex;align-items:center;gap:12px;background:#f0f6ff;border:1.5px solid var(--blue);border-radius:10px;padding:14px 18px;margin-bottom:28px;}
+    .pdf-download-bar-text{flex:1;}
+    .pdf-download-bar-title{font-size:0.88rem;font-weight:700;color:var(--navy);}
+    .pdf-download-bar-sub{font-size:0.76rem;color:var(--muted);margin-top:2px;}
+    .pdf-download-btn{display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:white;border:none;border-radius:7px;padding:8px 14px;font-size:0.78rem;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap;}
+    .pdf-download-btn:hover{background:var(--navy);}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#derm" class="nav-back">皮膚科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">皮膚科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">X</button></div>
+  <div id="bm-list"></div>
+</div>
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">皮膚科</div>
+    <div class="sidebar-section-title">基礎評估</div>
+    <a href="#derm-approach" class="sidebar-link">皮膚評估 + Wood's lamp + 外用類固醇</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">發炎性疾病</div>
+    <a href="#derm-eczema" class="sidebar-link">濕疹 + 皮膚炎</a>
+    <a href="#derm-psoriasis" class="sidebar-link">乾癬 + 糠疹</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">感染性</div>
+    <a href="#derm-infection" class="sidebar-link">感染性皮膚病</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">水泡 + 藥疹</div>
+    <a href="#derm-blistering" class="sidebar-link">水泡病 + SJS/TEN</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">色素 + 腫瘤</div>
+    <a href="#derm-pigment" class="sidebar-link">色素疾患</a>
+    <a href="#derm-tumor" class="sidebar-link">皮膚腫瘤（BCC + SCC + Melanoma）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">自體免疫</div>
+    <a href="#derm-autoimmune" class="sidebar-link">自體免疫皮膚病</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">速查</div>
+    <a href="#derm-signs" class="sidebar-link">皮膚科 Signs 速查</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../im/infect.html#sti" class="sidebar-link">STI / 梅毒 →（感染科）</a>
+  </aside>
+  <main class="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#fff5f5 0%,#fff0fa 100%);color:var(--navy);">
+      <div class="page-hero-text">
+        <h1>皮膚科</h1>
+        <p>皮膚病灶評估、常見發炎 / 感染 / 腫瘤性皮膚病，結合臨床處置與國考重點。附完整國考複習 PDF 下載。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#derm">皮膚科</a> › 皮膚科
+    </div>
+    <div class="pdf-download-bar">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;color:var(--blue)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+      <div class="pdf-download-bar-text">
+        <div class="pdf-download-bar-title">皮膚科國考複習筆記（完整版）</div>
+        <div class="pdf-download-bar-sub">改編自 TINY notes 馬聖翔學長，含皮膚組織學、所有主要疾病、皮膚科 Signs 完整版</div>
+      </div>
+      <a href="../assets/derm-notes.pdf" download class="pdf-download-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        下載 PDF
+      </a>
+    </div>
+
+
+    <!-- derm-approach -->
+    <div class="topic-block" id="derm-approach">
+      <div class="topic-block-head">
+        <span class="topic-block-title">皮膚評估基礎 Dermatological Assessment</span>
+        <div data-bm-id="derm-approach" data-bm-dept="皮膚科" data-bm-title="皮膚評估基礎"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">皮膚科評估的核心是<strong>準確描述病灶形態（Morphology）</strong>。<strong>外用類固醇分級</strong>是 PGY 最常需要的實用知識：臉部 / 皺摺 / 嬰兒只能用弱效（Class VI-VII），手掌腳掌可用超強效。<strong>Wood's lamp</strong>（365 nm UV）可快速鑑別多種皮膚感染和色素疾患。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="skin-morphology" data-bm-dept="皮膚科" data-bm-title="皮膚病灶形態術語">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">皮膚病灶形態術語（Morphology）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">原發性病灶</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>術語</th><th>定義</th><th>舉例</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Macule / Patch</strong></td><td>平坦色素變化；&lt;1 cm = Macule；&gt;1 cm = Patch</td><td>雀斑、白斑、太田母斑</td></tr>
+                <tr><td><strong>Papule / Plaque</strong></td><td>實心隆起；&lt;1 cm = Papule；&gt;1 cm = Plaque</td><td>痤瘡、乾癬、扁平苔癬</td></tr>
+                <tr><td><strong>Nodule</strong></td><td>深層實心隆起（至真皮/皮下）</td><td>BCC、化膿性汗腺炎</td></tr>
+                <tr><td><strong>Vesicle / Bulla</strong></td><td>含清澈液體；&lt;1 cm = Vesicle；&gt;1 cm = Bulla</td><td>水痘/HSV；類天疱瘡/SJS</td></tr>
+                <tr><td><strong>Pustule</strong></td><td>含膿液的隆起</td><td>膿痂疹、膿皰性乾癬、痤瘡</td></tr>
+                <tr><td><strong>Wheal（膨疹）</strong></td><td>短暫性水腫（數小時消退）</td><td>蕁麻疹</td></tr>
+                <tr><td><strong>Telangiectasia</strong></td><td>皮膚表面可見擴張微血管</td><td>BCC、酒糟、CREST 症候群</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">繼發性病灶</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>術語</th><th>定義 + 臨床意義</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Scale（鱗屑）</strong></td><td>銀白色（乾癬）；油膩黃色（脂漏性）；糠皮樣（汗斑）</td></tr>
+                <tr><td><strong>Crust（痂皮）</strong></td><td>蜜黃色（膿痂疹特徵）；乾燥血清/膿</td></tr>
+                <tr><td><strong>Erosion / Ulcer</strong></td><td>糜爛 = 未至真皮（天疱瘡）；潰瘍 = 真皮以下（梅毒下疳、SCC）</td></tr>
+                <tr><td><strong>Lichenification</strong></td><td>皮膚增厚 + 皮紋加深（慢性搔抓）；異位性皮膚炎慢性期</td></tr>
+                <tr><td><strong>Burrow（隧道）</strong></td><td>蜿蜒線狀病灶 = 疥瘡特徵</td></tr>
+                <tr><td><strong>Atrophy（萎縮）</strong></td><td>皮膚變薄；長期外用類固醇副作用</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="topical-steroid" data-bm-dept="皮膚科" data-bm-title="外用類固醇分級">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">外用類固醇分級 + Wood's Lamp</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>強度</th><th>Class</th><th>代表藥物</th><th>適用部位</th></tr></thead>
+              <tbody>
+                <tr><td><strong>超強效</strong></td><td>I</td><td>Clobetasol propionate 0.05%（Dermovate）</td><td>手掌/腳掌；短期</td></tr>
+                <tr><td><strong>強效</strong></td><td>II-III</td><td>Betamethasone dipropionate；Mometasone furoate 0.1%（Elomet）</td><td>軀幹/四肢；中重度濕疹</td></tr>
+                <tr><td><strong>中效</strong></td><td>IV-V</td><td>Triamcinolone acetonide 0.1%（Kenacort）</td><td>軀幹/四肢；一般皮膚炎</td></tr>
+                <tr><td><strong>弱效</strong></td><td>VI-VII</td><td>Hydrocortisone 1-2.5%；Desonide 0.05%</td><td><strong>臉部/眼週/腹股溝/腋下/嬰兒</strong></td></tr>
+              </tbody>
+            </table>
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>臉部/眼週/皺摺/嬰兒禁用強效類固醇！長期 → 皮膚萎縮、Telangiectasia、青光眼（眼週）、掩蓋感染（類固醇癬）。</span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Wood's Lamp（伍氏燈，365 nm UV）</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>疾病</th><th>Wood's lamp 下表現</th></tr></thead>
+              <tbody>
+                <tr><td><strong>紅癬（Erythrasma）</strong></td><td><strong>珊瑚紅螢光</strong>（Corynebacterium minutissimum）</td></tr>
+                <tr><td><strong>頭癬（Microsporum）</strong></td><td><strong>亮綠色螢光</strong>；Trichophyton 不螢光</td></tr>
+                <tr><td><strong>白斑（Vitiligo）</strong></td><td><strong>亮白色（ivory white）螢光</strong></td></tr>
+                <tr><td><strong>汗斑（Tinea versicolor）</strong></td><td><strong>黃綠色螢光</strong>（Malassezia）</td></tr>
+                <tr><td><strong>綠膿桿菌（P. aeruginosa）</strong></td><td><strong>綠色螢光</strong>（Pyocyanin）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- derm-eczema -->
+    <div class="topic-block" id="derm-eczema">
+      <div class="topic-block-head">
+        <span class="topic-block-title">濕疹 + 皮膚炎 Eczema & Dermatitis</span>
+        <div data-bm-id="derm-eczema" data-bm-dept="皮膚科" data-bm-title="濕疹 + 皮膚炎"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">最常見類型是<strong>異位性皮膚炎（AD）</strong>——台灣兒童盛行率約 10-20%，常合併過敏性鼻炎和氣喘（過敏三聯症）。免疫機轉：急性期 TH2/IL-4/IL-13；慢性期 TH1。Filaggrin 基因突變 → 皮膚屏障↓。<strong>Dupilumab</strong> 現已納入台灣健保。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="atopic-dermatitis" data-bm-dept="皮膚科" data-bm-title="異位性皮膚炎">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">異位性皮膚炎（Atopic Dermatitis）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷標準（4 取 3）</p>
+            <ul class="k-list">
+              <li>搔癢（Pruritus）</li>
+              <li>典型分布（嬰兒：臉頰/伸側；兒童/成人：屈側皺摺）</li>
+              <li>慢性或反覆發作病程</li>
+              <li>個人或家族過敏史（氣喘/過敏性鼻炎/AD）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療階梯</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>嚴重度</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>基礎（所有）</strong></td><td>保濕劑多次塗抹；避免誘發因子（刺激物、流汗）；溫水短時間沐浴</td></tr>
+                <tr><td><strong>輕度</strong></td><td>弱效外用類固醇；外用 Tacrolimus / Pimecrolimus（鈣調神經磷酸酶抑制劑，臉部可長期使用）</td></tr>
+                <tr><td><strong>中重度</strong></td><td>中強效外用類固醇；Crisaborole（PDE-4 抑制劑）；NB-UVB 光療；口服抗組織胺</td></tr>
+                <tr><td><strong>重度</strong></td><td><strong>Dupilumab（IL-4Ra 拮抗劑，抑制 IL-4+IL-13）</strong>；台灣健保給付；Tralokinumab；JAK 抑制劑（Baricitinib / Abrocitinib）</td></tr>
+                <tr><td><strong>急性惡化</strong></td><td>短期口服類固醇；合併 S. aureus → Cephalexin</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="other-dermatitis" data-bm-dept="皮膚科" data-bm-title="其他皮膚炎 + 蕁麻疹">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">接觸性皮膚炎 + 脂漏性 + 蕁麻疹</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>疾病</th><th>機轉</th><th>特徵</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>刺激性接觸性（ICD）</strong></td><td>直接化學傷害（無需致敏）</td><td>邊界清晰對應接觸部位；燒灼感 &gt; 搔癢</td><td>避開刺激物；保濕；外用類固醇</td></tr>
+                <tr><td><strong>過敏性接觸性（ACD）</strong></td><td>Type IV 延遲型過敏（T 細胞）</td><td>再接觸才發病；常見：鎳、香料、Neomycin；<strong>Patch test 金標準</strong></td><td>避過敏原；外用/口服類固醇</td></tr>
+                <tr><td><strong>脂漏性皮膚炎</strong></td><td>Malassezia 相關</td><td>油膩黃色鱗屑；頭皮/眉間/鼻側；HIV 患者更嚴重</td><td>Ketoconazole 洗髮精/乳膏；弱效類固醇</td></tr>
+                <tr><td><strong>汗皰疹（Pompholyx）</strong></td><td>不明（多汗相關）</td><td>手掌/腳掌深層小水泡；劇烈搔癢</td><td>強效外用類固醇（手掌可 Class I）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">蕁麻疹（Urticaria）</p>
+            <ul class="k-list">
+              <li><strong>急性（&lt;6 週）：</strong>IgE 媒介；膨疹單個 &lt;24 小時消退；H1 抗組織胺；嚴重 → Prednisolone；過敏休克 → Epinephrine IM</li>
+              <li><strong>慢性（&gt;6 週）：</strong>50% 不明原因；頑固性 → Omalizumab（抗 IgE）</li>
+              <li><strong>血管性水腫：</strong>深層水腫（臉/嘴唇/喉）；ACEi 引起（緩激肽）→ 停藥改 ARB；HAE（C1-INH 缺乏）→ C4 ↓</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- derm-psoriasis -->
+    <div class="topic-block" id="derm-psoriasis">
+      <div class="topic-block-head">
+        <span class="topic-block-title">乾癬 + 糠疹 Psoriasis & Pityriasis</span>
+        <div data-bm-id="derm-psoriasis" data-bm-dept="皮膚科" data-bm-title="乾癬 + 糠疹"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">乾癬（Psoriasis）= 慢性自體免疫皮膚病；HLA-Cw6；好發 Extensor side 和頭皮。誘發因子：<strong>TIDES</strong>（Trauma、Infection 鏈球菌、Drugs、Stress、Sunlight）。指甲乾癬：Nail pitting 最常見；<strong>Salmon patch / Oil spot 最具特異性</strong>。禁用口服類固醇（停藥後反彈）。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="psoriasis-types" data-bm-dept="皮膚科" data-bm-title="乾癬亞型與治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">乾癬亞型 + 治療階梯</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>亞型</th><th>特徵</th></tr></thead>
+              <tbody>
+                <tr><td><strong>尋常性（最常見）</strong></td><td>銀白色鱗屑的紅色斑塊；伸側（膝、肘）；Auspitz sign；Koebner phenomenon；可融合成地圖狀</td></tr>
+                <tr><td><strong>點滴狀（Guttate）</strong></td><td>多橘紅色（salmon pink）點滴狀病灶；鏈球菌感染後；年輕人；預後較好</td></tr>
+                <tr><td><strong>乾癬性關節炎（PsA）</strong></td><td>30% 乾癬患者；非對稱性；DIP 關節；腊腸指（Dactylitis）；RF 陰性</td></tr>
+                <tr><td><strong>膿皰性（Von Zumbusch）</strong></td><td>急性；全身無菌性膿皰；高燒；「Lake of pus」；需住院</td></tr>
+                <tr><td><strong>乾癬性紅皮症</strong></td><td>&gt;90% BSA 發紅；體溫調節障礙；心衰竭風險</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">加劇乾癬藥物（ABCD+LI）</p>
+            <ul class="k-list">
+              <li>β-blocker；ACEi；Lithium；Anti-malarials（Chloroquine）；Corticosteroid 突然停藥；Interferon-a</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療階梯</p>
+            <ul class="k-list">
+              <li><strong>輕度：</strong>外用類固醇；Calcipotriol（Vit D 類似物）；焦油（Coal tar）；水楊酸</li>
+              <li><strong>中重度：</strong>NB-UVB（311 nm，光療首選）；PUVA；MTX；Acitretin；Cyclosporine（短期）</li>
+              <li><strong>生物製劑：</strong>TNF-a 抑制劑（Etanercept / Adalimumab）；IL-17 抑制劑（Secukinumab）；IL-23 抑制劑（Guselkumab）；IL-12/23（Ustekinumab）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="pityriasis" data-bm-dept="皮膚科" data-bm-title="糠疹速查">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">糠疹速查（Pityriasis）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>疾病</th><th>特徵 + 治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>玫瑰糠疹（Pityriasis Rosea）</strong></td><td>先驅斑（Herald patch）→ Christmas tree 分布；HHV-6/7 相關；自限（6-8 週）；NB-UVB 加速消退</td></tr>
+                <tr><td><strong>汗斑（Tinea Versicolor）</strong></td><td>Malassezia 過度生長；KOH = 義大利麵加肉丸；Wood's lamp = 黃綠色；外用 Ketoconazole；口服 Itraconazole</td></tr>
+                <tr><td><strong>毛孔角化症（Keratosis Pilaris）</strong></td><td>上臂外側雞皮疙瘩；常合併 AD；外用 Urea / Retinoid</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- derm-infection -->
+    <div class="topic-block" id="derm-infection">
+      <div class="topic-block-head">
+        <span class="topic-block-title">感染性皮膚病 Infectious Skin Diseases</span>
+        <div data-bm-id="derm-infection" data-bm-dept="皮膚科" data-bm-title="感染性皮膚病"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>蜂窩性組織炎 vs 丹毒</strong>最常需要鑑別。<strong>壞死性筋膜炎</strong>外觀輕微但疼痛不成比例，立刻外科清創不能等。帶狀疱疹後神經痛（PHN）= 最常見併發症。<strong>疥瘡</strong>在安養院容易群聚，接觸者需一起治療。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="bacterial-skin" data-bm-dept="皮膚科" data-bm-title="細菌性皮膚感染">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">細菌性皮膚感染速查</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>疾病</th><th>病原</th><th>特徵</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>膿痂疹（Impetigo）</strong></td><td>S. aureus；GAS</td><td>Non-bullous：蜜黃色痂皮；Bullous：大水泡破後紅底（Exfoliatin A）</td><td>外用 Mupirocin；口服 Cephalexin；MRSA → TMP/SMX</td></tr>
+                <tr><td><strong>丹毒（Erysipelas）</strong></td><td>beta-溶血性鏈球菌（GAS）</td><td>淺層真皮；<strong>邊界清楚</strong>的鮮紅腫脹；臉和下肢；全身發燒</td><td>Penicillin V PO；住院 → Penicillin G IV</td></tr>
+                <tr><td><strong>蜂窩性組織炎</strong></td><td>S. aureus；beta-溶血性鏈球菌</td><td>深層真皮和皮下；<strong>邊界不清楚</strong>；下肢最常見</td><td>Cephalexin PO；住院 → Cefazolin IV；MRSA → Vancomycin</td></tr>
+                <tr><td><strong>壞死性筋膜炎</strong></td><td>多菌（Type I）；GAS（Type II）</td><td><strong>疼痛不成比例（out-of-proportion pain）</strong>；皮膚變紫/大水泡；進展快</td><td><strong>立刻外科清創 + Pip/Tazo + Clindamycin + Vancomycin</strong></td></tr>
+                <tr><td><strong>SSSS（葡萄球菌燙傷樣）</strong></td><td>S. aureus Exfoliatin A+B</td><td>兒童多見；全身脫皮；<strong>Nikolsky sign（+）</strong>；不侵犯黏膜</td><td>Oxacillin IV；支持性</td></tr>
+                <tr><td><strong>紅癬（Erythrasma）</strong></td><td>Corynebacterium minutissimum</td><td>腹股溝/腋下；Wood's lamp = <strong>珊瑚紅螢光</strong></td><td>外用/口服 Erythromycin</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="viral-fungal-skin" data-bm-dept="皮膚科" data-bm-title="病毒性 + 黴菌性 + 疥瘡">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">病毒性 + 黴菌性 + 疥瘡速查</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>疾病</th><th>特徵 + 治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>帶狀疱疹（VZV）</strong></td><td>單側沿皮節水泡 + 劇痛；Hutchinson sign = 鼻尖水泡 → 眼帶狀疱疹風險；PHN 最常見併發症；Acyclovir（72 h 內）；PHN → Gabapentin；Shingrix 疫苗</td></tr>
+                <tr><td><strong>HSV</strong></td><td>群聚水泡 → 潰瘍（痛）；反覆發作；Tzanck smear = 多核巨細胞；Acyclovir；復發頻繁 → 長期抑制</td></tr>
+                <tr><td><strong>疣（HPV）</strong></td><td>Common wart：粗糙丘疹；Condyloma：HPV 6/11 良性、16/18 癌變；冷凍 / 水楊酸 / Imiquimod</td></tr>
+                <tr><td><strong>傳染性軟疣</strong></td><td>中央臍狀凹陷珍珠樣丘疹（Umbilicated）；多自限；刮除/冷凍</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">黴菌性（Tinea）</p>
+            <ul class="k-list">
+              <li>KOH 鏡檢（菌絲 + 孢子）；Wood's lamp（Microsporum = 亮綠色）</li>
+              <li>外用：Terbinafine / Clotrimazole / Ketoconazole（體癬/足癬）</li>
+              <li>口服：Terbinafine 首選（甲癬、頭癬）；甲癬需 3-6 個月療程</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">疥瘡（Scabies）</p>
+            <ul class="k-list">
+              <li>Sarcoptes scabiei；夜間搔癢；好發指縫/手腕屈側/腹股溝；<strong>Burrow（隧道）</strong>= 特徵</li>
+              <li><strong>挪威疥：</strong>免疫缺陷患者；大量蟎蟲；傳染力極強</li>
+              <li><strong>治療：</strong>Permethrin 5%（全身 8-12 h）= 首選；Ivermectin PO（挪威疥）；同住者一起治療；衣物 60°C 洗滌</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- derm-blistering -->
+    <div class="topic-block" id="derm-blistering">
+      <div class="topic-block-head">
+        <span class="topic-block-title">水泡病 + SJS/TEN Blistering Diseases & Drug Reactions</span>
+        <div data-bm-id="derm-blistering" data-bm-dept="皮膚科" data-bm-title="水泡病 + SJS/TEN"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>天疱瘡（Pemphigus）</strong>= 表皮內裂解，水泡易破，Nikolsky（+）；<strong>類天疱瘡（Pemphigoid）</strong>= 表皮下裂解，水泡緊實，Nikolsky（-）。<strong>SJS/TEN</strong>死亡率高，懷疑即停藥，越早越好。HLA-B*1502 + Carbamazepine 在台灣漢族是高風險組合，使用前需基因篩查。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="pemphigus-pemphigoid" data-bm-dept="皮膚科" data-bm-title="天疱瘡 vs 類天疱瘡">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">天疱瘡 vs 類天疱瘡</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th></th><th>天疱瘡（Pemphigus）</th><th>類天疱瘡（Bullous Pemphigoid）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>好發年齡</strong></td><td>中年（40-60 歲）</td><td>老年（70-80 歲）</td></tr>
+                <tr><td><strong>水泡特性</strong></td><td>薄壁、易破 → 只見到糜爛；黏膜常受侵犯</td><td><strong>厚壁、緊實不易破；黏膜較少</strong></td></tr>
+                <tr><td><strong>Nikolsky sign</strong></td><td><strong>陽性（+）</strong></td><td><strong>陰性（-）</strong></td></tr>
+                <tr><td><strong>裂解位置</strong></td><td>Suprabasal（表皮內）</td><td>Subepidermal（表皮下）</td></tr>
+                <tr><td><strong>DIF</strong></td><td>表皮細胞間 IgG（蛛網樣）</td><td>基底膜 linear IgG + C3</td></tr>
+                <tr><td><strong>抗原</strong></td><td>Dsg3（尋常性）；Dsg1（落葉型）</td><td>BP180（Collagen XVII）；BP230</td></tr>
+                <tr><td><strong>治療</strong></td><td>全身性類固醇 + 免疫抑制劑（MTX / Azathioprine）；Rituximab（難治性）</td><td>外用類固醇（輕度）；低劑量全身類固醇；Doxycycline + Niacinamide</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="sjs-ten" data-bm-dept="皮膚科" data-bm-title="SJS/TEN">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">SJS / TEN + SCORTEN</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:10px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>懷疑 SJS/TEN → 立刻停所有可疑藥物！越早停藥死亡率越低。</span>
+            </div>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>SJS</th><th>重疊</th><th>TEN</th></tr></thead>
+              <tbody>
+                <tr><td><strong>皮膚剝脫</strong></td><td>&lt;10% BSA</td><td>10-30%</td><td><strong>&gt;30%（死亡率 30-50%）</strong></td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常見致病藥物</p>
+            <ul class="k-list">
+              <li><strong>Carbamazepine + HLA-B*1502（台灣漢族）：</strong>使用前需基因篩查</li>
+              <li><strong>Allopurinol + HLA-B*5801；Phenytoin；Sulfa；Lamotrigine；NSAIDs</strong></li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">SCORTEN（TEN 死亡率預測，各 1 分）</p>
+            <ul class="k-list">
+              <li>年齡 &gt;40；惡性腫瘤史；HR &gt;120；初始剝脫 &gt;10% BSA；BUN &gt;28 mg/dL；血糖 &gt;252 mg/dL；HCO3 &lt;20 mEq/L</li>
+              <li>0-1 分：3.2%；2 分：12.1%；3 分：35.3%；4 分：58.3%；≥5 分：90%</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <ul class="k-list">
+              <li>立刻停可疑藥物；燒燙傷病房；<strong>眼科會診（預防失明）</strong>；大量補液</li>
+              <li>Cyclosporine 3-5 mg/kg/天；IVIG 1 g/kg/天 × 3 天</li>
+              <li class="note">DRESS = 廣泛皮疹 + 嗜酸性球↑ + 臉部水腫 + 內臟侵犯 + 用藥 2-6 週後發作；停藥 + 全身類固醇</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- derm-pigment -->
+    <div class="topic-block" id="derm-pigment">
+      <div class="topic-block-head">
+        <span class="topic-block-title">色素疾患 Pigmentary Disorders</span>
+        <div data-bm-id="derm-pigment" data-bm-dept="皮膚科" data-bm-title="色素疾患"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">色素疾患分為<strong>脫色素</strong>和<strong>色素沉著</strong>兩大類。<strong>台灣人最常見的黑色素瘤亞型是肢端性（Acral lentiginous）</strong>，好發手掌 / 腳掌 / 指趾甲下，與日曬無直接關係。任何符合 ABCDE 的黑色斑塊都需要切片確認。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="pigment-disorders" data-bm-dept="皮膚科" data-bm-title="色素疾患速查">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">脫色素 + 色素沉著 + 母斑速查</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">脫色素疾患</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>疾病</th><th>機轉</th><th>特徵 + 治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>白化症（Albinism）</strong></td><td>Tyrosinase 缺乏 → Melanin↓；Melanocyte 數量正常</td><td>皮膚粉紅；畏光；視力差；<strong>皮膚癌風險↑</strong>；防曬為主</td></tr>
+                <tr><td><strong>白斑（Vitiligo）</strong></td><td>後天自體免疫破壞 Melanocyte</td><td>乳白色（ivory white）邊界清楚；Wood's lamp 更明顯；合併甲狀腺疾病/DM；NB-UVB；Tacrolimus；JAK 抑制劑（Ruxolitinib）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">色素沉著 + 母斑</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>疾病</th><th>特徵</th></tr></thead>
+              <tbody>
+                <tr><td><strong>黃褐斑（Melasma）</strong></td><td>臉部對稱色素沉著；懷孕/OCP；4% Hydroquinone；防曬；雷射效果差易復發</td></tr>
+                <tr><td><strong>太田母斑（Nevus of Ota）</strong></td><td><strong>亞洲女性常見</strong>；三叉神經第一、二支範圍；藍灰色；雷射效果好</td></tr>
+                <tr><td><strong>蒙古斑</strong></td><td>薦部；亞洲嬰兒；藍灰色；多自然消退（5-10 歲）</td></tr>
+                <tr><td><strong>咖啡牛奶斑</strong></td><td>≥6 個（青春期前 &gt;5 mm）→ 神經纖維瘤（NF-1）診斷條件</td></tr>
+                <tr><td><strong>Addison's disease</strong></td><td>ACTH + MSH↑ → 全身色素沉著；口腔黏膜/手掌皺摺最明顯</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- derm-tumor -->
+    <div class="topic-block" id="derm-tumor">
+      <div class="topic-block-head">
+        <span class="topic-block-title">皮膚腫瘤 Skin Tumors（BCC + SCC + Melanoma）</span>
+        <div data-bm-id="derm-tumor" data-bm-dept="皮膚科" data-bm-title="皮膚腫瘤"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">皮膚癌三大類：<strong>BCC 最常見</strong>（轉移罕見）；<strong>SCC 有轉移風險</strong>（口腔/生殖器最危險）；<strong>Melanoma 致死率最高</strong>。台灣最常見 Melanoma 亞型：<strong>肢端性（Acral lentiginous）</strong>，不與日曬直接相關。最重要預後因子：<strong>Breslow thickness（腫瘤厚度）</strong>。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="bcc-scc" data-bm-dept="皮膚科" data-bm-title="BCC + SCC">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">BCC vs SCC + 癌前病灶 + 手術切緣</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>BCC（最常見）</th><th>SCC（第二常見）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>起源</strong></td><td>基底層細胞</td><td>角質細胞（Keratinocyte）</td></tr>
+                <tr><td><strong>外觀</strong></td><td>珍珠樣有光澤結節；Telangiectasia；Rodent ulcer；無痛</td><td>增厚結節/潰瘍/結痂；出血；邊緣不規則</td></tr>
+                <tr><td><strong>轉移</strong></td><td>罕見（&lt;0.1%）</td><td><strong>有轉移風險（口腔/生殖器 SCC 較高）</strong></td></tr>
+                <tr><td><strong>病理</strong></td><td>Nuclear palisading；Retraction artifact；Tumor island</td><td>角化珠（Keratin pearl）；細胞間橋</td></tr>
+                <tr><td><strong>手術切緣</strong></td><td>低風險 4-5 mm；高風險 → Mohs surgery</td><td>低風險 4-6 mm；高風險 → Mohs surgery</td></tr>
+                <tr><td><strong>治療</strong></td><td>手術切除（首選）；Mohs；Vismodegib（轉移性，Hedgehog 抑制劑）</td><td>手術切除；Cemiplimab（PD-1，晚期）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">癌前病灶</p>
+            <ul class="k-list">
+              <li><strong>日光性角化症（AK）：</strong>SCC 前期；慢性 UVB；冷凍/5-FU/Imiquimod</li>
+              <li><strong>Bowen's disease（SCC in situ）：</strong>未穿破基底膜；治療同 AK</li>
+              <li><strong>角化棘皮瘤：</strong>SCC 變型；中央火山口形；建議切除排除真正 SCC</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="melanoma" data-bm-dept="皮膚科" data-bm-title="黑色素瘤">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">黑色素瘤（Melanoma）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ABCDE 篩查法則</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>字母</th><th>意義</th><th>警訊</th></tr></thead>
+              <tbody>
+                <tr><td><strong>A</strong></td><td>Asymmetry（不對稱）</td><td>兩半不對稱</td></tr>
+                <tr><td><strong>B</strong></td><td>Border（邊緣）</td><td>不規則/模糊/鋸齒狀</td></tr>
+                <tr><td><strong>C</strong></td><td>Color（顏色）</td><td>不均勻/超過一種顏色</td></tr>
+                <tr><td><strong>D</strong></td><td>Diameter（直徑）</td><td>&gt;6 mm</td></tr>
+                <tr><td><strong>E</strong></td><td>Enlargement / Evolution</td><td>短時間持續增大/形態改變</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">亞型</p>
+            <ul class="k-list">
+              <li><strong>Superficial Spreading（70%）：</strong>最常見；水平生長期長；白人多</li>
+              <li><strong>Nodular（15%）：</strong>直接進入垂直期；生長快；外觀似藍莓；預後差</li>
+              <li><strong>Acral Lentiginous（5-10%）：</strong><strong>台灣最常見；東亞/非洲裔；手掌/腳掌/指甲下；好發 &gt;60 歲；不與日曬相關</strong></li>
+              <li><strong>Lentigo Maligna（5%）：</strong>老人臉部；慢性日曬；水平期可達 20 年</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <ul class="k-list">
+              <li><strong>手術切緣：</strong>&lt;1 mm → 1 cm；1-2 mm → 1-2 cm；&gt;2 mm → 2 cm</li>
+              <li><strong>SLNB：</strong>&gt;1 mm 或有潰瘍</li>
+              <li><strong>轉移：</strong>淋巴結 → 肺 → 腦 → 肝 → 骨頭</li>
+              <li><strong>BRAF V600E（~50%）：</strong>Vemurafenib + Trametinib</li>
+              <li><strong>免疫治療：</strong>Pembrolizumab / Nivolumab（PD-1）；Ipilimumab（CTLA-4）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- derm-autoimmune -->
+    <div class="topic-block" id="derm-autoimmune">
+      <div class="topic-block-head">
+        <span class="topic-block-title">自體免疫皮膚病 Autoimmune Skin Diseases</span>
+        <div data-bm-id="derm-autoimmune" data-bm-dept="皮膚科" data-bm-title="自體免疫皮膚病"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">皮膚是多種自體免疫疾病的窗口。<strong>皮肌炎成人患者需積極排除惡性腫瘤</strong>（東亞人特別注意 NPC 鼻咽癌）。SLE 皮膚表現分急性/亞急性/慢性，各有不同抗體關聯。結節性紅斑是最常見的脂膜炎。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="autoimmune-skin" data-bm-dept="皮膚科" data-bm-title="自體免疫皮膚病速查">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">SLE + 皮肌炎 + 硬皮症 + Sarcoidosis + 結節性紅斑</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>疾病</th><th>皮膚特徵</th><th>重要補充</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>SLE 皮膚狼瘡</strong></td>
+                  <td>急性：<strong>蝴蝶斑（Malar rash）</strong>= 跨鼻樑紅疹（避開鼻唇溝）+ 光敏感<br/>亞急性：環形紅疹；anti-Ro/SSA<br/>慢性：圓盤狀（Discoid）= 萎縮性紅斑 + 毛囊角栓 + 瘢痕性落髮</td>
+                  <td>新生兒狼瘡：母體 anti-Ro → 環形紅疹 + AV block</td>
+                </tr>
+                <tr>
+                  <td><strong>皮肌炎（Dermatomyositis）</strong></td>
+                  <td><strong>Heliotrope sign：</strong>上眼瞼淡紫色（紫紅眼影）<br/><strong>Gottron papules：</strong>手指關節背面紫色平頂丘疹<br/><strong>Shawl sign：</strong>頸前 V 字 + 上背皮疹<br/>技工手（指側角化皸裂）</td>
+                  <td><strong>成人需排除惡性腫瘤（NPC、肺癌）</strong>；近端肌肉無力 + CK↑</td>
+                </tr>
+                <tr>
+                  <td><strong>全身性硬化症</strong></td>
+                  <td>雷諾氏現象（早期）→ 手指硬化 / 指尖潰瘍<br/>LcSSc（CREST）：鈣化 + 雷諾氏 + 食道異常 + Sclerodactyly + Telangiectasia</td>
+                  <td>局部硬皮症（Morphea）= 不影響內臟；與全身性硬化症無關</td>
+                </tr>
+                <tr>
+                  <td><strong>類肉瘤病（Sarcoidosis）</strong></td>
+                  <td><strong>Lupus pernio（最具特異性）：</strong>臉部紅棕色丘疹；玻片壓 = Apple-jelly 色澤；病灶出現在疤痕/刺青處</td>
+                  <td>肺門淋巴結腫最常見；Lofgren syndrome = EN + 發燒 + 肺門腫（預後好）</td>
+                </tr>
+                <tr>
+                  <td><strong>結節性紅斑（EN）</strong></td>
+                  <td><strong>唯一的脂膜炎（Panniculitis）</strong>；小腿前脛紅色壓痛皮下結節；20-40 歲女性</td>
+                  <td>誘因：鏈球菌（最常見）、Sarcoidosis、結核、IBD、OCP；多自限</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- derm-signs -->
+    <div class="topic-block" id="derm-signs">
+      <div class="topic-block-head">
+        <span class="topic-block-title">皮膚科 Signs 速查 Dermatological Signs</span>
+        <div data-bm-id="derm-signs" data-bm-dept="皮膚科" data-bm-title="皮膚科 Signs 速查"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">皮膚科特殊徵候是國考高頻考點，也是臨床快速診斷工具。整合國考筆記，依疾病分類整理完整速查表。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="derm-signs-table" data-bm-dept="皮膚科" data-bm-title="皮膚科 Signs 完整表">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">皮膚科 Signs 完整速查表</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>Sign 名稱</th><th>定義 / 操作</th><th>陽性意義</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Nikolsky sign</strong></td><td>輕擦外觀正常皮膚 → 表皮剝離</td><td>（+）天疱瘡；SSSS；TEN；（-）類天疱瘡</td></tr>
+                <tr><td><strong>Auspitz sign</strong></td><td>刮除乾癬鱗屑 → 點狀出血</td><td>乾癬</td></tr>
+                <tr><td><strong>Koebner phenomenon</strong></td><td>正常皮膚在外傷後出現病灶（同形反應）</td><td>乾癬；白斑；扁平苔癬；Sarcoidosis 疤痕處</td></tr>
+                <tr><td><strong>Darier's sign</strong></td><td>摩擦病灶 → 膨疹（Wheal）</td><td>肥大細胞增生症（Mastocytosis）</td></tr>
+                <tr><td><strong>Wickham's striae</strong></td><td>白色網狀或條紋（在病灶表面）</td><td>扁平苔癬（Lichen planus，5P：Planar Polygonal Pruritic Purple Papule）</td></tr>
+                <tr><td><strong>Hutchinson sign</strong></td><td>鼻尖出現帶狀疱疹水泡</td><td>眼帶狀疱疹（三叉神經鼻睫支 → 眼睛風險↑）</td></tr>
+                <tr><td><strong>Gottron papules</strong></td><td>手指關節背面紫色平頂丘疹</td><td>皮肌炎（Dermatomyositis）</td></tr>
+                <tr><td><strong>Heliotrope sign</strong></td><td>上眼瞼淡紫色變化（紫紅眼影）</td><td>皮肌炎</td></tr>
+                <tr><td><strong>Shawl sign</strong></td><td>頸前 V 字 + 上背肩部皮疹</td><td>皮肌炎</td></tr>
+                <tr><td><strong>Pastia's lines</strong></td><td>腋下/鼠蹊皺摺處線狀紅斑</td><td>猩紅熱（Group A Streptococcus）</td></tr>
+                <tr><td><strong>Koplik spots</strong></td><td>頰黏膜藍白色小點（出疹前 1-2 天）</td><td>麻疹（高特異性）</td></tr>
+                <tr><td><strong>Circumoral pallor</strong></td><td>口周蒼白（臉紅但口周蒼白）</td><td>猩紅熱</td></tr>
+                <tr><td><strong>Herald patch</strong></td><td>玫瑰糠疹最早出現的單一大橢圓形先驅斑</td><td>玫瑰糠疹（後續 Christmas tree 分布）</td></tr>
+                <tr><td><strong>Apple-jelly sign</strong></td><td>玻片壓迫紅棕色丘疹 → 蘋果果凍色澤</td><td>Sarcoidosis（Lupus pernio）；皮膚結核</td></tr>
+                <tr><td><strong>Tombstone appearance</strong></td><td>切片上基底細胞排列如墓碑</td><td>天疱瘡（棘層鬆解後基底細胞排列）</td></tr>
+                <tr><td><strong>Target lesion（靶型病灶）</strong></td><td>三圈同心圓：中央暗紅 + 中間淡色 + 外圍紅</td><td>多形性紅斑（Erythema Multiforme）；SJS</td></tr>
+                <tr><td><strong>Salmon patch / Oil spot</strong></td><td>甲床黃橘色半透明斑</td><td>乾癬指甲（最具特異性）</td></tr>
+                <tr><td><strong>Nail pitting</strong></td><td>甲板表面點狀凹陷</td><td>乾癬（最常見）；斑禿（Alopecia areata）</td></tr>
+                <tr><td><strong>Spaghetti and meatballs</strong></td><td>KOH 鏡檢短菌絲 + 圓形孢子</td><td>汗斑（Malassezia）</td></tr>
+                <tr><td><strong>Burrow（隧道）</strong></td><td>皮膚表面蜿蜒線狀病灶</td><td>疥瘡（疥蟎挖掘的隧道）</td></tr>
+                <tr><td><strong>Umbilicated papule</strong></td><td>中央有臍狀凹陷的珍珠樣丘疹</td><td>傳染性軟疣（Molluscum Contagiosum）</td></tr>
+                <tr><td><strong>Peau d'orange</strong></td><td>皮膚如橙皮樣（毛囊凹陷 + 周圍水腫）</td><td>炎性乳癌；淋巴水腫</td></tr>
+                <tr><td><strong>Ash-leaf spot（白葉斑）</strong></td><td>低色素橢圓形斑（白蠟樹葉形）</td><td>結節性硬化症（Tuberous Sclerosis）</td></tr>
+                <tr><td><strong>Shagreen patch（鮫魚斑）</strong></td><td>腰背部橘皮樣結締組織痣</td><td>結節性硬化症</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'derm-approach',   dept:'皮膚科', title:'皮膚評估 + Wood lamp + 外用類固醇分級', url:'#derm-approach',   text:'' },
+    { id:'derm-eczema',     dept:'皮膚科', title:'濕疹 + 皮膚炎（異位性 + 接觸性 + 蕁麻疹）', url:'#derm-eczema', text:'' },
+    { id:'derm-psoriasis',  dept:'皮膚科', title:'乾癬 + 糠疹',                              url:'#derm-psoriasis',  text:'' },
+    { id:'derm-infection',  dept:'皮膚科', title:'感染性皮膚病（細菌 + 病毒 + 黴菌 + 疥瘡）', url:'#derm-infection',  text:'' },
+    { id:'derm-blistering', dept:'皮膚科', title:'水泡病 + SJS/TEN（SCORTEN）',              url:'#derm-blistering', text:'' },
+    { id:'derm-pigment',    dept:'皮膚科', title:'色素疾患（白斑 + 黑色素瘤 ABCDE）',         url:'#derm-pigment',    text:'' },
+    { id:'derm-tumor',      dept:'皮膚科', title:'皮膚腫瘤（BCC + SCC + 黑色素瘤 + 手術切緣）', url:'#derm-tumor', text:'' },
+    { id:'derm-autoimmune', dept:'皮膚科', title:'自體免疫皮膚病（SLE + 皮肌炎 + 類肉瘤）',  url:'#derm-autoimmune', text:'' },
+    { id:'derm-signs',      dept:'皮膚科', title:'皮膚科 Signs 速查',                         url:'#derm-signs',      text:'' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else { initSearch(SEARCH_INDEX); }
+</script>
+</body>
+</html>
