@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>泌尿外科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .score-modal-overlay.open{display:flex;}
+    .score-modal{background:var(--white);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .score-modal-head{position:sticky;top:0;background:var(--white);padding:18px 22px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .score-modal-head h2{font-size:1rem;font-weight:800;}
+    .score-modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;}
+    .score-modal-body{padding:20px 22px;}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#uro" class="nav-back">泌尿外科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">泌尿外科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">X</button></div>
+  <div id="bm-list"></div>
+</div>
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">泌尿外科</div>
+    <div class="sidebar-section-title">基礎評估</div>
+    <a href="#uro-approach" class="sidebar-link">泌尿科評估（尿液分析 + 影像）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">感染</div>
+    <a href="#uro-uti" class="sidebar-link">泌尿道感染（膀胱炎 + 腎盂腎炎）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">結石</div>
+    <a href="#uro-stone" class="sidebar-link">泌尿道結石</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">攝護腺</div>
+    <a href="#uro-bph" class="sidebar-link">BPH + 急性尿滯留</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">腫瘤</div>
+    <a href="#uro-cancer" class="sidebar-link">泌尿系統腫瘤（攝護腺癌 + 膀胱癌 + 腎細胞癌）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急症</div>
+    <a href="#uro-emergency" class="sidebar-link">泌尿科急症（睪丸扭轉 + Fournier's）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../im/nephro.html" class="sidebar-link">腎臟科 →</a>
+    <a href="../peds/general.html#peds-uti" class="sidebar-link">兒科 UTI →</a>
+  </aside>
+  <main class="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#f0f4ff 0%,#f5f0ff 100%);color:var(--navy);">
+      <div class="page-hero-text">
+        <h1>泌尿外科</h1>
+        <p>泌尿道感染、結石、BPH 與泌尿科急症，涵蓋診斷評估與處置流程，依 EAU / AUA 指引編排。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><ellipse cx="12" cy="6" rx="4" ry="6"/><path d="M8 6c0 8 8 8 8 0"/><path d="M12 12v8"/></svg>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#uro">泌尿外科</a> › 泌尿外科
+    </div>
+
+
+    <!-- uro-approach -->
+    <div class="topic-block" id="uro-approach">
+      <div class="topic-block-head">
+        <span class="topic-block-title">泌尿科評估基礎 Urological Assessment</span>
+        <div data-bm-id="uro-approach" data-bm-dept="泌尿外科" data-bm-title="泌尿科評估基礎"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">泌尿科評估的核心工具：<strong>尿液分析（UA）</strong>是最快速的篩查工具；<strong>尿液培養</strong>是 UTI 確診的金標準；<strong>泌尿道超音波</strong>無輻射首選用於腎水腫和結石篩查；<strong>CT（非增強）</strong>是泌尿道結石診斷的金標準。常見泌尿症狀：血尿、排尿困難（Dysuria）、尿頻、尿急、排尿不完全感（LUTS）。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="ua-interpretation" data-bm-dept="泌尿外科" data-bm-title="尿液分析判讀">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">尿液分析（UA）判讀</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>項目</th><th>正常</th><th>異常 → 考慮</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Leukocyte esterase（LE）</strong></td><td>陰性</td><td>陽性 → 白血球存在 → UTI 懷疑；Se ~75-90%（非特異）</td></tr>
+                <tr><td><strong>Nitrite</strong></td><td>陰性</td><td>陽性 → 革蘭氏陰性菌（大腸桿菌等）將硝酸鹽還原；高特異性（Sp ~95%）但低敏感性</td></tr>
+                <tr><td><strong>WBC（鏡檢）</strong></td><td>&lt;5 個/hpf</td><td>≥5/hpf = 膿尿（Pyuria）；UTI；間質性腎炎；無菌性膿尿（結核、衣原體）</td></tr>
+                <tr><td><strong>RBC（鏡檢）</strong></td><td>&lt;3 個/hpf</td><td>≥3/hpf = 血尿；變形 RBC（腎絲球性）vs 正常形態（非腎絲球性）</td></tr>
+                <tr><td><strong>細菌</strong></td><td>無</td><td>有菌 + 膿尿 → UTI；有菌無膿尿 → 汙染（需重新採樣）</td></tr>
+                <tr><td><strong>亞硝酸鹽 + LE 雙陽性</strong></td><td>—</td><td>UTI 陽性預測值 &gt;90%</td></tr>
+                <tr><td><strong>Cast（管型）</strong></td><td>無</td><td>RBC cast = 腎絲球腎炎；WBC cast = 腎盂腎炎 / 間質性腎炎；顆粒管型 = 急性腎小管壞死</td></tr>
+                <tr><td><strong>蛋白尿</strong></td><td>&lt;150 mg/天</td><td>&gt;300 mg/天 = 病理性；腎病症候群 &gt;3.5 g/天</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">血尿（Hematuria）評估</p>
+            <ul class="k-list">
+              <li><strong>肉眼可見血尿（Gross hematuria）：</strong>尿液明顯血色；需評估上 / 下泌尿道；&gt;35 歲 + 肉眼血尿 → 膀胱鏡排除膀胱癌</li>
+              <li><strong>顯微血尿（Microscopic hematuria）：</strong>≥3 RBC/hpf；需排除良性原因（月經、激烈運動）；持續性 → 泌尿系統評估</li>
+              <li><strong>初段血尿（Initial）：</strong>排尿開始有血 → 尿道病灶</li>
+              <li><strong>末段血尿（Terminal）：</strong>排尿末端有血 → 膀胱頸 / 攝護腺</li>
+              <li><strong>全程血尿（Total）：</strong>整段尿液有血 → 腎臟 / 輸尿管 / 膀胱</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="uro-imaging" data-bm-dept="泌尿外科" data-bm-title="泌尿科影像 + 常用檢查">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">泌尿科影像 + 常用檢查速查</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>檢查</th><th>適應症</th><th>優缺點</th></tr></thead>
+              <tbody>
+                <tr><td><strong>泌尿道超音波</strong></td><td>腎水腫；腎結石（腎盂）；腎臟腫塊；膀胱殘尿量；攝護腺大小；急性尿滯留</td><td>無輻射；快速；輸尿管結石敏感度低；操作者依賴</td></tr>
+                <tr><td><strong>CT（非增強，KUB CT）</strong></td><td>泌尿道結石（金標準）；腹痛鑑別</td><td>Se ~97% 結石；快速；輻射；不需顯影劑</td></tr>
+                <tr><td><strong>CT（含增強，CTU）</strong></td><td>腎臟腫塊評估；血尿評估；泌尿道腫瘤分期</td><td>完整評估泌尿道；需顯影劑（腎功能注意）</td></tr>
+                <tr><td><strong>X 光（KUB）</strong></td><td>不透明結石追蹤；術後評估</td><td>簡便便宜；但 50% 結石 X 光看不到（尿酸結石不透明）</td></tr>
+                <tr><td><strong>MRI（MRU）</strong></td><td>懷孕患者（避免輻射）；軟組織評估；顯影劑禁忌</td><td>無輻射；較慢；結石敏感度低</td></tr>
+                <tr><td><strong>膀胱鏡（Cystoscopy）</strong></td><td>血尿評估；膀胱腫瘤診斷；下尿路症狀評估；輸尿管開口評估</td><td>侵入性；直視膀胱黏膜；可同時切片</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常用泌尿科指標</p>
+            <ul class="k-list">
+              <li><strong>PSA（攝護腺特異抗原）：</strong>正常 &lt;4 ng/mL；4-10 = 灰色地帶；&gt;10 → 攝護腺癌高風險；良性 BPH 也可升高；PSA 速度（Velocity）和密度（Density）輔助判讀</li>
+              <li><strong>殘尿量（Post-void residual，PVR）：</strong>排尿後超音波測量；正常 &lt;50 mL；&gt;300 mL = 顯著尿滯留</li>
+              <li><strong>IPSS 評分：</strong>International Prostate Symptom Score；評估 LUTS 嚴重度（0-35 分）；≤7 輕度；8-19 中度；20-35 重度</li>
+              <li><strong>尿流速測定（Uroflowmetry）：</strong>最大尿流速（Qmax）；正常 &gt;15 mL/秒；&lt;10 mL/秒 = 阻塞性</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- uro-uti -->
+    <div class="topic-block" id="uro-uti">
+      <div class="topic-block-head">
+        <span class="topic-block-title">泌尿道感染 Urinary Tract Infection</span>
+        <div data-bm-id="uro-uti" data-bm-dept="泌尿外科" data-bm-title="泌尿道感染"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">UTI 是最常見的細菌感染之一，<strong>大腸桿菌（E. coli）佔 80-85%</strong>。<strong>單純性（Uncomplicated）UTI</strong> = 正常解剖、無功能異常、非懷孕女性；<strong>複雜性（Complicated）UTI</strong> = 男性、懷孕、糖尿病、解剖異常、免疫缺陷、院內感染、留置導尿管。腎盂腎炎（Pyelonephritis）是上泌尿道感染，需要更長療程和可能住院治療。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="uti-classification" data-bm-dept="泌尿外科" data-bm-title="UTI 分類 + 治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">UTI 分類 + 治療（依 IDSA 指引）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>臨床特徵</th><th>首選抗生素</th><th>療程</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>單純性膀胱炎（女性）</strong></td>
+                  <td>頻尿 + 排尿灼熱痛 + 尿急；無發燒；無腰痛；無脊椎肋骨角（CVA）壓痛</td>
+                  <td>
+                    Nitrofurantoin 100 mg bid（首選，低抗藥性）<br/>
+                    TMP/SMX DS bid（當地抗藥性 &lt;20%）<br/>
+                    Fosfomycin 3 g 單次（方便）
+                  </td>
+                  <td>5 天（Nitrofurantoin）；3 天（TMP/SMX）；1 次（Fosfomycin）</td>
+                </tr>
+                <tr>
+                  <td><strong>單純性腎盂腎炎（女性）</strong></td>
+                  <td>發燒（&gt;38°C）+ 畏寒 + 腰痛 + CVA 叩擊痛 ± 下泌尿道症狀；噁心嘔吐</td>
+                  <td>
+                    門診：Ciprofloxacin 500 mg bid 或 TMP/SMX DS bid<br/>
+                    住院（嚴重）：Ceftriaxone 1 g IV q24h 或 Pip/Tazo 3.375 g IV q6h
+                  </td>
+                  <td>門診 7-14 天；住院直到可以口服後轉口服共 14 天</td>
+                </tr>
+                <tr>
+                  <td><strong>複雜性 UTI（男性 / 糖尿病 / 解剖異常）</strong></td>
+                  <td>同上症狀；需找潛在原因（結石、梗阻、異常）</td>
+                  <td>Ciprofloxacin 或 Levofloxacin；住院 → 依培養選擇</td>
+                  <td>7-14 天（男性攝護腺炎需更長）</td>
+                </tr>
+                <tr>
+                  <td><strong>導管相關性 UTI（CAUTI）</strong></td>
+                  <td>留置導尿管患者；有症狀才需治療（不治療無症狀菌尿）</td>
+                  <td>移除 / 更換導尿管 → 依培養；Nitrofurantoin 不適用（腎實質感染風險）</td>
+                  <td>7 天（症狀緩解快）；14 天（延遲緩解）</td>
+                </tr>
+                <tr>
+                  <td><strong>無症狀菌尿（ASB）</strong></td>
+                  <td>培養陽性但無症狀</td>
+                  <td><strong>不治療（除外：懷孕婦女、泌尿道手術前）</strong></td>
+                  <td>懷孕 → 治療 3-7 天；術前 → 單次或短療程</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">住院指標（腎盂腎炎）</p>
+            <ul class="k-list">
+              <li>無法口服（嘔吐）；敗血症；孕婦；免疫缺陷；門診治療 48-72 小時無改善；梗阻性腎盂腎炎（需緊急引流）</li>
+              <li class="note">梗阻性腎盂腎炎 = 結石 + 腎盂腎炎 = <strong>泌尿科急症</strong>！需緊急引流（輸尿管支架或腎造瘻術）+ 靜脈抗生素，否則可能敗血症休克</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="prostatitis" data-bm-dept="泌尿外科" data-bm-title="攝護腺炎">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">攝護腺炎（Prostatitis）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">NIH 分類</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>特徵</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>Type I：急性細菌性攝護腺炎</strong></td>
+                  <td>突發高燒 + 畏寒 + 會陰/恥骨上疼痛 + LUTS；直腸指診：攝護腺腫脹熱痛（<strong>不要按摩！菌血症風險</strong>）；PSA 急性升高</td>
+                  <td>Fluoroquinolone（Ciprofloxacin）× 4-6 週；嚴重 → 住院 IV；抗生素可穿透攝護腺屏障</td>
+                </tr>
+                <tr>
+                  <td><strong>Type II：慢性細菌性攝護腺炎</strong></td>
+                  <td>反覆 UTI + 慢性骨盆疼痛；尿液和攝護腺按摩液培養陽性</td>
+                  <td>Fluoroquinolone × 6-12 週</td>
+                </tr>
+                <tr>
+                  <td><strong>Type III：慢性攝護腺炎/慢性骨盆疼痛症候群（CP/CPPS）</strong></td>
+                  <td>最常見（90%）；慢性骨盆疼痛 &gt;3 個月；培養陰性；原因不明</td>
+                  <td>Alpha-blocker（Tamsulosin）；NSAIDs；Pregabalin；心理支持；多模式治療</td>
+                </tr>
+                <tr>
+                  <td><strong>攝護腺膿瘍</strong></td>
+                  <td>急性攝護腺炎治療無反應；免疫缺陷 / 糖尿病；超音波或 CT 見膿腔</td>
+                  <td>經直腸或經會陰引流 + 靜脈抗生素（Pip/Tazo / Carbapenem）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- uro-stone -->
+    <div class="topic-block" id="uro-stone">
+      <div class="topic-block-head">
+        <span class="topic-block-title">泌尿道結石 Urolithiasis</span>
+        <div data-bm-id="uro-stone" data-bm-dept="泌尿外科" data-bm-title="泌尿道結石"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">泌尿道結石（腎結石）影響 10% 人口，男性多於女性，<strong>草酸鈣（Calcium oxalate）最常見（80%）</strong>。典型腎絞痛（Renal colic）= 突發劇烈側腹/腰部疼痛，沿輸尿管路徑放射至鼠蹊 / 睪丸 / 大陰唇。<strong>非增強 CT（Non-contrast CT KUB）是診斷金標準</strong>。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="stone-types" data-bm-dept="泌尿外科" data-bm-title="結石種類 + 處置">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">結石種類 + 急性處置 + 手術適應症</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">結石種類速查</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>種類</th><th>比例</th><th>X 光</th><th>特殊危險因素 / 特徵</th></tr></thead>
+              <tbody>
+                <tr><td><strong>草酸鈣（Calcium oxalate）</strong></td><td>80%</td><td>不透明（可見）</td><td>高草酸尿（菠菜、堅果）；高鈣尿；脫水；最常見</td></tr>
+                <tr><td><strong>磷酸鈣（Calcium phosphate）</strong></td><td>5-10%</td><td>不透明</td><td>腎小管酸中毒（RTA）；高 pH 尿液；甲狀旁腺機能亢進</td></tr>
+                <tr><td><strong>尿酸（Uric acid）</strong></td><td>5-10%</td><td><strong>透明（X 光不可見）</strong></td><td>痛風；高嘌呤飲食（肉類）；低 pH 尿液（酸性）；Lesch-Nyhan；化療後（細胞溶解）</td></tr>
+                <tr><td><strong>鳥糞石（Struvite / Mg-NH4-PO4）</strong></td><td>10%</td><td>不透明（大型）</td><td>尿素酶產生菌（Proteus、Klebsiella、Pseudomonas）；反覆 UTI；女性多；可形成「Staghorn calculus（鹿角石）」</td></tr>
+                <tr><td><strong>胱胺酸（Cystine）</strong></td><td>&lt;1%</td><td>半透明</td><td>遺傳性胱胺酸尿症（Cystinuria）；年輕患者；六角形晶體</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性腎絞痛處置</p>
+            <ul class="k-list">
+              <li><strong>疼痛控制：</strong>NSAIDs（Ketorolac 15-30 mg IV，首選）= ↓ 輸尿管痙攣 + 鎮痛；Opioid（Morphine 2-4 mg IV）若 NSAIDs 禁忌；避免過度補液（不加速排石）</li>
+              <li><strong>Alpha-blocker（Tamsulosin 0.4 mg/天）：</strong>Medical expulsive therapy（MET）；輸尿管遠端結石 ≤10 mm；↑ 自然排石率；目前 EAU 指引支持</li>
+              <li><strong>嘔吐 / 無法口服：</strong>止吐藥（Ondansetron）；靜脈補液（避免脫水）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">手術適應症 + 方式</p>
+            <ul class="k-list">
+              <li><strong>緊急泌尿科介入：</strong>梗阻性結石 + 感染（膿尿/發燒）= 急症！→ 輸尿管支架（Double-J stent）or 腎造瘻管引流 + 靜脈抗生素；等感染控制後再處理結石</li>
+              <li><strong>擇期手術適應症：</strong>結石 &gt;10 mm（自然排出率低）；持續疼痛；腎功能受損；單腎或功能腎梗阻；4-6 週觀察無進展</li>
+              <li><strong>ESWL（體外衝擊波碎石）：</strong>腎結石 ≤20 mm；輸尿管近端結石；非侵入性；禁忌：懷孕、凝血異常、主動脈瘤</li>
+              <li><strong>URS（輸尿管鏡碎石）：</strong>輸尿管結石首選；鈥雷射碎石；腎結石（軟性輸尿管鏡）</li>
+              <li><strong>PCNL（經皮腎臟碎石術）：</strong>腎結石 &gt;20 mm；鹿角石；ESWL 失敗</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="stone-prevention" data-bm-dept="泌尿外科" data-bm-title="結石預防">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">結石預防 + 代謝評估</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>飲水量：</strong>目標尿液輸出 &gt;2-2.5 L/天；充足飲水是最重要的預防措施</li>
+              <li><strong>草酸鈣結石：</strong>↓ 草酸（菠菜、堅果、巧克力）；正常鈣攝取（不要低鈣飲食！）；Thiazide 利尿劑（↓ 尿鈣）；Potassium citrate（鹼化尿液）</li>
+              <li><strong>尿酸結石：</strong>低嘌呤飲食；Allopurinol；Potassium citrate（鹼化尿液 pH &gt;6.5）；Sodium bicarbonate</li>
+              <li><strong>鳥糞石：</strong>治療根本感染；手術完全清除結石；Acetohydroxamic acid（尿素酶抑制劑）</li>
+              <li><strong>代謝評估（復發性結石患者）：</strong>24 小時尿液（鈣、草酸、尿酸、檸檬酸、磷、肌酸酐）；血液（鈣、PTH、尿酸）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- uro-bph -->
+    <div class="topic-block" id="uro-bph">
+      <div class="topic-block-head">
+        <span class="topic-block-title">BPH + 急性尿滯留 Benign Prostatic Hyperplasia & Acute Urinary Retention</span>
+        <div data-bm-id="uro-bph" data-bm-dept="泌尿外科" data-bm-title="BPH + 急性尿滯留"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">BPH 影響 50% 的 50 歲男性和 90% 的 85 歲男性，是最常見的泌尿外科疾病。<strong>LUTS（下泌尿道症狀）</strong>= 儲尿症狀（頻尿、夜尿、尿急、急迫性尿失禁）+ 排尿症狀（尿流細弱、需要用力、間歇性排尿、排尿不完全）。<strong>急性尿滯留（AUR）</strong>是最常見的泌尿科急症之一。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="bph-treatment" data-bm-dept="泌尿外科" data-bm-title="BPH 治療">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">BPH 治療階梯</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>治療</th><th>藥物 / 方式</th><th>機轉 + 效果</th><th>副作用</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>Alpha-1 blocker（症狀改善最快）</strong></td>
+                  <td>Tamsulosin 0.4 mg/天（最常用）；Alfuzosin；Silodosin；Doxazosin</td>
+                  <td>放鬆膀胱頸和攝護腺平滑肌 → 改善尿流；1-2 週起效；不縮小攝護腺</td>
+                  <td>姿勢性低血壓（Doxazosin）；逆行性射精（Tamsulosin 最少）；術中虹膜鬆弛症候群（停藥前告知眼科）</td>
+                </tr>
+                <tr>
+                  <td><strong>5-alpha reductase inhibitor（5-ARI）</strong></td>
+                  <td>Finasteride 5 mg/天（攝護腺 &lt;40 g）；Dutasteride 0.5 mg/天（攝護腺 &gt;40 g）</td>
+                  <td>抑制 DHT 合成 → 縮小攝護腺（6-12 個月效果最大，縮小約 20-30%）；↓ AUR 風險；↓ PSA 約 50%（校正 PSA × 2）</td>
+                  <td>性欲↓；勃起功能障礙；射精量↓；男性女乳症；懷孕禁忌（致胎兒畸形）</td>
+                </tr>
+                <tr>
+                  <td><strong>合併治療（Alpha-blocker + 5-ARI）</strong></td>
+                  <td>MTOPS / CombAT 研究</td>
+                  <td>中重度 LUTS + 攝護腺 &gt;40 g 或 PSA &gt;1.5 ng/mL；最有效預防進展</td>
+                  <td>兩者副作用疊加</td>
+                </tr>
+                <tr>
+                  <td><strong>Anticholinergic / Beta-3 agonist（儲尿症狀為主）</strong></td>
+                  <td>Solifenacin；Mirabegron（Beta-3 agonist，較安全）</td>
+                  <td>緩解尿急 / 頻尿 / 急迫性尿失禁；與 Alpha-blocker 合用</td>
+                  <td>Anticholinergic：口乾、便秘、尿滯留（需排除高 PVR）；Mirabegron：血壓↑</td>
+                </tr>
+                <tr>
+                  <td><strong>手術（藥物治療失敗 / AUR / 併發症）</strong></td>
+                  <td>TURP（經尿道攝護腺切除術，gold standard）；HoLEP；Greenlight laser；UroLift；iTind</td>
+                  <td>TURP = 標準術式；症狀改善最顯著；術後可能逆行性射精（~75%）</td>
+                  <td>TURP 症候群（低血鈉，使用等滲灌洗液已減少）；出血；逆行性射精</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="acute-urinary-retention" data-bm-dept="泌尿外科" data-bm-title="急性尿滯留">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性尿滯留（Acute Urinary Retention，AUR）</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>急性尿滯留 → 立刻導尿！不要因等候評估而讓患者繼續痛苦。</span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷 + 處置</p>
+            <ul class="k-list">
+              <li><strong>臨床：</strong>無法排尿 + 恥骨上脹痛 + 膀胱可叩診；超音波確認膀胱容量（&gt;300 mL 有意義；&gt;600 mL 嚴重）</li>
+              <li><strong>立刻導尿：</strong>Foley catheter（14-16 Fr）經尿道；若尿道阻力高 → 較小號（12 Fr）或使用彎頭導管（Coudé catheter）；若仍失敗 → 恥骨上導管（Suprapubic catheter，SPC）</li>
+              <li><strong>放尿注意：</strong>一次放出超過 1 L 後可先夾管（避免血尿 / 低血壓），現多數指引允許完全排空</li>
+              <li><strong>TWOC（Trial Without Catheter，拔管試驗）：</strong>48-72 小時後嘗試拔管；同時口服 Tamsulosin（↑ TWOC 成功率）；TWOC 成功率約 50-70%（取決於誘發因素）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">AUR 誘發因素（記憶口訣：MITO）</p>
+            <ul class="k-list">
+              <li><strong>M — Medications：</strong>抗膽鹼藥（抗組織胺 / 抗憂鬱）；Opioid；Alpha-agonist（鼻塞藥）；Ca channel blocker</li>
+              <li><strong>I — Infection / Inflammation：</strong>攝護腺炎；UTI；術後</li>
+              <li><strong>T — Trauma / Surgery：</strong>腹部 / 骨盆手術；脊椎麻醉後；會陰外傷</li>
+              <li><strong>O — Obstruction：</strong>BPH（最常見）；尿道狹窄；結石；腫瘤；糞便嵌塞</li>
+              <li class="note">慢性尿滯留（Chronic urinary retention，CUR）= 大量殘尿（通常 &gt;300 mL）但無急性症狀；overflow incontinence（滿溢性尿失禁）是常見表現；長期可造成腎水腫和腎功能損傷</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- uro-cancer -->
+    <div class="topic-block" id="uro-cancer">
+      <div class="topic-block-head">
+        <span class="topic-block-title">泌尿系統腫瘤 Urological Cancers</span>
+        <div data-bm-id="uro-cancer" data-bm-dept="泌尿外科" data-bm-title="泌尿系統腫瘤"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">泌尿系統三大癌症：<strong>攝護腺癌</strong>（台灣男性第五大癌症死因，PSA 篩查）；<strong>膀胱癌</strong>（無痛性肉眼血尿 = 直到排除為止是膀胱癌）；<strong>腎細胞癌（RCC）</strong>（沉默的腫瘤，多數偶然發現）。另有<strong>睪丸腫瘤</strong>（年輕男性最常見的實心腫瘤）。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="prostate-bladder-cancer" data-bm-dept="泌尿外科" data-bm-title="攝護腺癌 + 膀胱癌">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">攝護腺癌 + 膀胱癌</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">攝護腺癌（Prostate Cancer）</p>
+            <ul class="k-list">
+              <li><strong>篩查：</strong>PSA + 直腸指診（DRE）；PSA &gt;4 ng/mL 或 DRE 異常 → 經直腸超音波引導切片（TRUS biopsy）；12 核心切片 + 可疑區域</li>
+              <li><strong>Gleason Score：</strong>5（最惡性）+ 5（最惡性）= 10（最高）；≥7（4+3）= 中高風險；<strong>Grade Group 1-5 是新分類</strong></li>
+              <li><strong>分期治療：</strong>
+                <ul>
+                  <li><strong>局部（T1-T2）：</strong>積極監測（低風險）；根治性前列腺切除術（Radical prostatectomy）；放射治療（外照射 / 近接放療）</li>
+                  <li><strong>局部進展（T3-T4）：</strong>放療 + 雄性激素剝奪療法（ADT）</li>
+                  <li><strong>轉移性（M1）：</strong>ADT（Leuprolide / Bicalutamide）；去勢抵抗性前列腺癌（CRPC）→ Enzalutamide / Abiraterone / Docetaxel</li>
+                </ul>
+              </li>
+              <li class="note">骨轉移（最常見轉移部位）= 成骨性（Osteoblastic）病灶 → 骨掃描（Bone scan）；PSA 無法用來監測 CRPC 療效</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">膀胱癌（Bladder Cancer）</p>
+            <ul class="k-list">
+              <li><strong>危險因素：</strong>吸菸（最大危險因素，↑ 風險 2-6 倍）；職業暴露（苯胺染料、橡膠）；Cyclophosphamide；慢性膀胱炎（Schistosomiasis → 鱗狀細胞癌）</li>
+              <li><strong>表現：</strong><strong>無痛性肉眼血尿</strong>（最常見）；刺激性 LUTS（尿急、頻尿，原位癌 CIS 特徵）</li>
+              <li><strong>組織學：</strong>移行上皮癌（TCC / Urothelial carcinoma）95%；鱗狀細胞癌（慢性刺激）；腺癌</li>
+              <li><strong>分期 + 治療：</strong>
+                <ul>
+                  <li><strong>Non-muscle invasive（Ta, T1, CIS）：</strong>TURBT（經尿道膀胱腫瘤切除）+ 膀胱內灌注（BCG or Mitomycin C）；定期膀胱鏡追蹤</li>
+                  <li><strong>Muscle invasive（T2-T4）：</strong>根治性全膀胱切除術（Radical cystectomy）± 新輔助化療（Cisplatin-based）；尿液改道（Ileal conduit / Neobladder）</li>
+                  <li><strong>轉移性：</strong>Gem/Cis 化療；Pembrolizumab（PD-1）/ Atezolizumab（PD-L1）</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="rcc-testicular" data-bm-dept="泌尿外科" data-bm-title="腎細胞癌 + 睪丸腫瘤">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">腎細胞癌（RCC）+ 睪丸腫瘤</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">腎細胞癌（Renal Cell Carcinoma）</p>
+            <ul class="k-list">
+              <li><strong>危險因素：</strong>吸菸；肥胖；高血壓；von Hippel-Lindau（VHL）病（雙側多發）；長期透析患者</li>
+              <li><strong>臨床三聯症（只有 10% 出現）：</strong>側腹痛 + 血尿 + 可觸及的腹部腫塊 → 晚期</li>
+              <li><strong>副腫瘤症候群：</strong>高鈣血症（PTHrP）；紅血球增多症（Erythropoietin）；高血壓（Renin）；Stauffer syndrome（肝功能異常，無肝轉移）</li>
+              <li><strong>組織學：</strong>Clear cell（75%，VHL 突變）；Papillary（15%）；Chromophobe（5%）</li>
+              <li><strong>影像：</strong>CT 增強 = 評估血管侵犯和淋巴腺；腎靜脈 / 下腔靜脈瘤栓（Tumor thrombus）評估</li>
+              <li><strong>治療：</strong>局部 → 根治性 or 部分腎切除術；轉移性 → TKI（Sunitinib / Pazopanib）；免疫治療（Nivolumab + Ipilimumab）；mTOR 抑制劑（Everolimus）；RCC 對化療和放療均不敏感</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">睪丸腫瘤（Testicular Cancer）</p>
+            <ul class="k-list">
+              <li><strong>最常見的 15-35 歲男性實心腫瘤</strong>；95% 為生殖細胞瘤（GCT）</li>
+              <li><strong>危險因素：</strong>隱睪症（Cryptorchidism，最重要）；Klinefelter syndrome；家族史</li>
+              <li><strong>分類：</strong>精原細胞瘤（Seminoma，50%）= 對放療和化療敏感；預後好；非精原細胞瘤（NSGCT）= Embryonal carcinoma / Yolk sac / Choriocarcinoma / Teratoma；hCG 和 AFP 升高（Seminoma 只有 hCG 輕度升高）</li>
+              <li><strong>臨床：</strong>無痛性睪丸腫塊（最典型）；超音波確認；CT 分期</li>
+              <li><strong>治療：</strong>根治性睪丸切除術（經腹股溝）+ 依分期：放療 / 化療（BEP = Bleomycin + Etoposide + Cisplatin）/ 腹膜後淋巴清除；<strong>不要做穿刺活檢（播種風險）</strong></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- uro-emergency -->
+    <div class="topic-block" id="uro-emergency">
+      <div class="topic-block-head">
+        <span class="topic-block-title">泌尿科急症 Urological Emergencies</span>
+        <div data-bm-id="uro-emergency" data-bm-dept="泌尿外科" data-bm-title="泌尿科急症"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">泌尿科最危急的急症：<strong>睪丸扭轉（Testicular torsion）</strong>= 6 小時內手術救回率 90-100%，超過 24 小時幾乎喪失；<strong>Fournier's Gangrene</strong>= 生殖器 / 會陰壞死性筋膜炎，死亡率 20-40%；<strong>陰莖骨折（Penile fracture）</strong>= 立刻手術修補。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="testicular-torsion" data-bm-dept="泌尿外科" data-bm-title="睪丸扭轉">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">睪丸扭轉（Testicular Torsion）</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>睪丸扭轉懷疑 → 立刻叫泌尿科！不要等超音波結果。臨床懷疑即手術探查。</span>
+            </div>
+            <ul class="k-list">
+              <li><strong>好發：</strong>12-18 歲青少年（最高峰）；新生兒；Bell-clapper deformity（睪丸固定異常）</li>
+              <li><strong>臨床：</strong>突發劇烈單側陰囊疼痛；噁心嘔吐；睪丸抬高（High-riding testis）；水平位（橫位）；<strong>Cremasteric reflex 消失</strong>（最重要）；Prehn's sign 陰性（托高睪丸疼痛無緩解）</li>
+              <li><strong>救治時間窗：</strong>
+                <ul>
+                  <li>&lt;6 小時 → 存活率 90-100%</li>
+                  <li>6-12 小時 → 約 50%</li>
+                  <li>12-24 小時 → 約 10%</li>
+                  <li>&gt;24 小時 → 幾乎 0%</li>
+                </ul>
+              </li>
+              <li><strong>處置：</strong>立刻手術探查（不要等超音波耽誤時間）；手法復位（Manual detorsion，「開書」方向，由內向外旋轉）可嘗試暫時緩解但仍需手術；雙側固定（Orchiopexy）預防復發；壞死睪丸 → 睪丸切除</li>
+              <li class="note">鑑別：副睪丸炎（Epididymitis）= 漸進性疼痛 + 發燒 + 膿尿 + Cremaster reflex 存在 + Prehn sign 陽性（托高緩解）；但無法確定時優先排除扭轉</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="fournier-priapism" data-bm-dept="泌尿外科" data-bm-title="Fournier's + 其他急症">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">Fournier's Gangrene + 陰莖骨折 + 異物</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Fournier's Gangrene（陰囊 / 會陰壞死性筋膜炎）</p>
+            <ul class="k-list">
+              <li><strong>危險因素：</strong>糖尿病（最重要）；免疫缺陷；酗酒；肥胖；局部外傷 / 感染（肛周膿瘍、尿道損傷）</li>
+              <li><strong>臨床：</strong>陰囊 / 會陰紅腫熱痛 → 皮膚壞死（黑色）/ 捻髮音（Crepitus）→ 全身毒性；進展極快（數小時內可蔓延）</li>
+              <li><strong>處置：</strong><strong>立刻廣泛清創（不能等待）+ 靜脈廣效抗生素（Pip/Tazo + Vancomycin + Metronidazole）</strong>；高壓氧（輔助）；造口（保護傷口）；重建（傷口癒合後）；死亡率 20-40%</li>
+              <li><strong>FGSI 評分（Fournier's Gangrene Severity Index）：</strong>預測死亡率（體溫、心率、血壓、呼吸速率、鈉、鉀、肌酸酐、WBC、Hct）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">陰莖骨折（Penile Fracture）</p>
+            <ul class="k-list">
+              <li>勃起時白膜（Tunica albuginea）破裂；性交時最常見；聽到「啪」聲 + 陰莖立即軟化 + 血腫（茄子陰莖，Eggplant deformity）；可能合併尿道損傷（血尿）</li>
+              <li><strong>立刻手術修補</strong>（不要保守治療，否則勃起功能障礙和畸形）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">持續性陰莖勃起（Priapism）</p>
+            <ul class="k-list">
+              <li><strong>缺血性（Low-flow，最常見，急症）：</strong>疼痛；陰莖缺血；原因：鐮刀型貧血、藥物（PDE5i、抗精神病藥）；海綿體血氣分析（低氧酸中毒）</li>
+              <li><strong>處置：</strong>冰敷 + 運動（輕度）；海綿體抽血（減壓）→ 注射 Phenylephrine（Alpha-agonist，血管收縮）；持續 &gt;4 小時 → 急症；&gt;24 小時 → 勃起功能障礙風險極高</li>
+              <li><strong>非缺血性（High-flow）：</strong>無痛；外傷後動靜脈瘻管；海綿體血氣分析正常 → 動脈栓塞治療</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'uro-approach',  dept:'泌尿外科', title:'泌尿科評估（尿液分析 + 影像）',              url:'#uro-approach',  text:'' },
+    { id:'uro-uti',       dept:'泌尿外科', title:'泌尿道感染（膀胱炎 + 腎盂腎炎 + 複雜性）',   url:'#uro-uti',       text:'' },
+    { id:'uro-stone',     dept:'泌尿外科', title:'泌尿道結石（腎結石 + 輸尿管結石）',          url:'#uro-stone',     text:'' },
+    { id:'uro-bph',       dept:'泌尿外科', title:'BPH + 急性尿滯留',                         url:'#uro-bph',       text:'' },
+    { id:'uro-cancer',    dept:'泌尿外科', title:'泌尿系統腫瘤（攝護腺癌 + 膀胱癌 + 腎細胞癌）', url:'#uro-cancer',  text:'' },
+    { id:'uro-emergency', dept:'泌尿外科', title:'泌尿科急症（睪丸扭轉 + Fournier's）',      url:'#uro-emergency', text:'' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else { initSearch(SEARCH_INDEX); }
+</script>
+</body>
+</html>
