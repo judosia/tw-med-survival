@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>耳鼻喉科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .score-modal-overlay.open{display:flex;}
+    .score-modal{background:var(--white);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .score-modal-head{position:sticky;top:0;background:var(--white);padding:18px 22px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .score-modal-head h2{font-size:1rem;font-weight:800;}
+    .score-modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;}
+    .score-modal-body{padding:20px 22px;}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#ent" class="nav-back">耳鼻喉科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">耳鼻喉科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">X</button></div>
+  <div id="bm-list"></div>
+</div>
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">耳鼻喉科</div>
+    <div class="sidebar-section-title">基礎評估</div>
+    <a href="#ent-approach" class="sidebar-link">耳鼻喉評估（Weber / Rinne + 耳鏡）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">耳科</div>
+    <a href="#ent-ear" class="sidebar-link">耳科（外耳炎 + 中耳炎 + 突發性聽損）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">鼻科</div>
+    <a href="#ent-nose" class="sidebar-link">鼻科（過敏性鼻炎 + 鼻竇炎 + 鼻出血）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">咽喉</div>
+    <a href="#ent-throat" class="sidebar-link">咽喉（扁桃腺炎 + 會厭炎 + 聲音嘶啞）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">頸部</div>
+    <a href="#ent-neck" class="sidebar-link">頸部腫塊鑑別</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急症</div>
+    <a href="#ent-emergency" class="sidebar-link">ENT 急症（鼻出血填塞 + 異物 + 氣道）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../er/general.html#airway" class="sidebar-link">急診氣道管理 →</a>
+    <a href="../im/infect.html" class="sidebar-link">感染科 →</a>
+  </aside>
+  <main class="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#f0f9ff 0%,#f5fff0 100%);color:var(--navy);">
+      <div class="page-hero-text">
+        <h1>耳鼻喉科</h1>
+        <p>耳科、鼻科、咽喉與頸部腫塊評估，涵蓋急診常見 ENT 急症處置與臨床鑑別診斷。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M9 9a3 3 0 1 1 6 0c0 2-3 3-3 3"/><circle cx="12" cy="17" r="1"/><circle cx="12" cy="12" r="10"/></svg>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#ent">耳鼻喉科</a> › 耳鼻喉科
+    </div>
+
+
+    <!-- ent-approach -->
+    <div class="topic-block" id="ent-approach">
+      <div class="topic-block-head">
+        <span class="topic-block-title">耳鼻喉評估基礎 ENT Assessment</span>
+        <div data-bm-id="ent-approach" data-bm-dept="耳鼻喉科" data-bm-title="耳鼻喉評估基礎"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">ENT 評估的三大工具：<strong>音叉試驗（Weber + Rinne）</strong>快速鑑別傳導性 vs 感音性聽損；<strong>耳鏡</strong>評估耳道和鼓膜；<strong>鼻腔/咽喉視診</strong>。<strong>傳導性聽損（Conductive hearing loss，CHL）</strong>= 外耳/中耳問題；<strong>感音神經性聽損（Sensorineural hearing loss，SNHL）</strong>= 內耳/第八對腦神經問題。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="tuning-fork" data-bm-dept="耳鼻喉科" data-bm-title="Weber + Rinne 音叉試驗">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">Weber + Rinne 音叉試驗（512 Hz）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Rinne Test（單耳）</p>
+            <ul class="k-list">
+              <li><strong>操作：</strong>音叉置於乳突（骨導）→ 聲音消失後移至外耳道口（氣導）</li>
+              <li><strong>正常 / SNHL：</strong>氣導 &gt; 骨導（AC &gt; BC）= Rinne 陽性（+）</li>
+              <li><strong>CHL：</strong>骨導 &gt; 氣導（BC &gt; AC）= Rinne 陰性（-）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Weber Test（雙耳比較）</p>
+            <ul class="k-list">
+              <li><strong>操作：</strong>音叉置於頭頂正中（或額頭）→ 問患者聲音偏哪側</li>
+              <li><strong>正常：</strong>居中（兩耳相等）</li>
+              <li><strong>CHL（單側）：</strong>聲音偏向<strong>患側</strong>（患耳骨導相對↑）</li>
+              <li><strong>SNHL（單側）：</strong>聲音偏向<strong>健側</strong>（患耳感音↓）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">整合判讀</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>情況</th><th>Rinne（患側）</th><th>Weber 偏向</th></tr></thead>
+              <tbody>
+                <tr><td>正常</td><td>（+）AC &gt; BC</td><td>居中</td></tr>
+                <tr><td>單側 CHL（左耳）</td><td>左側（-）BC &gt; AC</td><td><strong>左側（患側）</strong></td></tr>
+                <tr><td>單側 SNHL（左耳）</td><td>左側（+）AC &gt; BC（但音量↓）</td><td><strong>右側（健側）</strong></td></tr>
+                <tr><td>雙側對稱性 SNHL</td><td>雙側（+）</td><td>居中</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="ent-exam" data-bm-dept="耳鼻喉科" data-bm-title="耳鏡 + 鼻腔 + 咽喉視診">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">耳鏡 + 鼻腔 + 咽喉視診重點</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">耳鏡（Otoscope）評估</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>正常鼓膜</th><th>異常發現</th><th>考慮診斷</th></tr></thead>
+              <tbody>
+                <tr><td>珍珠灰色；半透明；光錐（light reflex）明顯；錘骨柄可見</td><td>紅色 + 膨出 + 光錐消失</td><td>急性中耳炎（AOM）</td></tr>
+                <tr><td></td><td>鼓膜後方積液（氣泡/液面）；鼓膜內陷</td><td>滲出性中耳炎（OME）</td></tr>
+                <tr><td></td><td>鼓膜穿孔（中央型 / 邊緣型）</td><td>慢性中耳炎；外傷</td></tr>
+                <tr><td></td><td>白色角化斑塊（上鼓室或後上方）</td><td>膽脂瘤（Cholesteatoma）</td></tr>
+                <tr><td></td><td>外耳道紅腫 + 壓耳屏痛</td><td>外耳道炎（Swimmer's ear）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">鼻腔視診重點</p>
+            <ul class="k-list">
+              <li><strong>鼻中隔偏曲：</strong>單側鼻塞；常合併習慣性鼻出血</li>
+              <li><strong>鼻息肉（Polyp）：</strong>蒼白水腫的半透明腫塊；不痛；常合併過敏性鼻炎/慢性鼻竇炎；單側息肉要排除腫瘤</li>
+              <li><strong>黏膜顏色：</strong>蒼白水腫 = 過敏；鮮紅充血 = 感染性；蒼白乾燥 = 萎縮性鼻炎</li>
+              <li><strong>鼻出血來源：</strong>前鼻腔（Little's area，Kiesselbach plexus）= 最常見；後鼻腔 = 老年人多，出血較難控制</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">咽喉視診重點</p>
+            <ul class="k-list">
+              <li><strong>扁桃腺分級（Friedman 分級）：</strong>Grade I（扁桃腺窩內）→ Grade IV（超過中線）；Grade III-IV 合併打鼾 → 評估 OSA</li>
+              <li><strong>懸雍垂偏移：</strong>扁桃腺周圍膿瘍（Peritonsillar abscess）→ 懸雍垂偏向健側；口腔張開困難（Trismus）</li>
+              <li><strong>喉部視診（喉頭鏡）：</strong>聲帶活動度；聲帶結節 / 息肉（Reinke's edema）；喉癌（白色不規則增生）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- ent-ear -->
+    <div class="topic-block" id="ent-ear">
+      <div class="topic-block-head">
+        <span class="topic-block-title">耳科 Otology（外耳炎 + 中耳炎 + 突發性聽損）</span>
+        <div data-bm-id="ent-ear" data-bm-dept="耳鼻喉科" data-bm-title="耳科"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">耳科最常見急症：<strong>急性中耳炎（AOM）</strong>是兒童最常見的細菌感染，首選 Amoxicillin；<strong>突發性聽損（SSNHL）</strong>是耳科急症，72 小時內類固醇治療預後較好。<strong>惡性外耳道炎（Malignant OE）</strong>= 糖尿病/免疫缺陷患者的危險性外耳炎，可侵犯顱底。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="otitis-externa" data-bm-dept="耳鼻喉科" data-bm-title="外耳道炎 + 中耳炎">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">外耳道炎 + 中耳炎</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">外耳道炎（Otitis Externa，OE）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>病原</th><th>特徵</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>急性外耳道炎（Swimmer's ear）</strong></td>
+                  <td>P. aeruginosa（最常見）；S. aureus</td>
+                  <td>耳道紅腫痛；<strong>壓耳屏（Tragus）或拉耳廓時疼痛加劇</strong>（鑑別中耳炎）；耳道分泌物；聽力可正常</td>
+                  <td>外用 Ciprofloxacin + Hydrocortisone 耳滴劑（首選）；保持耳道乾燥；嚴重 → 抗生素填充（Wick）再滴藥</td>
+                </tr>
+                <tr>
+                  <td><strong>惡性外耳道炎（Malignant / Necrotizing OE）</strong></td>
+                  <td>P. aeruginosa</td>
+                  <td>糖尿病/免疫缺陷患者；外耳道底部肉芽組織；<strong>顱底骨髓炎風險（面神經麻痺！）</strong>；ESR ↑；CT/MRI 評估侵犯範圍</td>
+                  <td>靜脈 Ciprofloxacin 或 Pip/Tazo × 6-8 週；外科清創（嚴重）；血糖控制</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">中耳炎（Otitis Media）</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>類型</th><th>特徵</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>急性中耳炎（AOM）</strong></td>
+                  <td>兒童最常見細菌感染；&lt;2 歲最高風險；病原：S. pneumoniae（最常見）、H. influenzae、M. catarrhalis；鼓膜充血膨出、光錐消失、耳痛、發燒；拉耳廓不會加劇疼痛（區別 OE）</td>
+                  <td>
+                    <strong>≥2 歲輕度單側：</strong>觀察 48-72 小時（可 watchful waiting）<br/>
+                    <strong>抗生素適應症：</strong>&lt;2 歲；雙側；嚴重症狀；穿孔；免疫缺陷<br/>
+                    <strong>Amoxicillin 80-90 mg/kg/天 × 5-10 天（首選）</strong>；失敗 → Amoxicillin-clavulanate；青黴素過敏 → Cefdinir / Azithromycin
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>滲出性中耳炎（OME，分泌性）</strong></td>
+                  <td>鼓膜後積液（無發炎症狀）；鼓膜內陷 / 淡黃色 / 氣泡；傳導性聽損；兒童常見（腺樣體肥大壓迫耳咽管）；多自限（3 個月內）</td>
+                  <td>觀察（3 個月）；持續 → 耳管（Ventilation tube，PE tube）置入；腺樣體切除（復發性）；不建議常規使用抗生素或類固醇</td>
+                </tr>
+                <tr>
+                  <td><strong>膽脂瘤（Cholesteatoma）</strong></td>
+                  <td>鱗狀上皮細胞在中耳異常增生；長期侵蝕骨頭（聽小骨、顏面神經管、顱底）；無痛性慢性流膿；傳導性聽損；耳鏡見白色角化物質（上鼓室或後上方）</td>
+                  <td>手術切除（唯一治療）；不切除會持續侵蝕造成嚴重併發症（顏面神經麻痺、腦膜炎、腦膿瘍）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="ssnhl-tinnitus" data-bm-dept="耳鼻喉科" data-bm-title="突發性聽損 + 耳鳴">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">突發性聽損（SSNHL）+ 耳鳴 + 梅尼爾氏症</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>突發性聽損 = 耳科急症！72 小時內開始類固醇治療，預後較好。不要觀察等待。</span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">突發性感音神經性聽損（SSNHL）</p>
+            <ul class="k-list">
+              <li><strong>定義：</strong>72 小時內發生的單側感音神經性聽損（≥3 個連續頻率，聽力下降 ≥30 dB）</li>
+              <li><strong>原因：</strong>多數不明（特發性）；病毒感染（HSV、CMV）；血管性；免疫性；腫瘤（聽神經瘤 Acoustic neuroma = Vestibular schwannoma）</li>
+              <li><strong>症狀：</strong>突然單側聽力下降；可合併耳鳴、耳悶脹感、輕微眩暈</li>
+              <li><strong>治療：</strong>口服 Prednisolone 1 mg/kg/天（最大 60 mg）× 10-14 天後漸減；鼓膜內類固醇注射（Intratympanic steroid）= 口服失敗或禁忌時替代；高壓氧治療（輔助）</li>
+              <li><strong>MRI 檢查：</strong>排除聽神經瘤（Gadolinium 增強 MRI）</li>
+              <li class="note">預後：約 1/3 完全恢復；1/3 部分恢復；1/3 無改善；越早治療預後越好</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">梅尼爾氏症（Meniere's Disease）</p>
+            <ul class="k-list">
+              <li><strong>四聯症：</strong>反覆性眩暈（20 分鐘 - 12 小時）+ 單側感音神經性聽損 + 耳鳴 + 耳悶脹感</li>
+              <li><strong>病生理：</strong>內淋巴水腫（Endolymphatic hydrops）</li>
+              <li><strong>治療：</strong>急性發作 → 抗組織胺（Dimenhydrinate）/ Benzodiazepine；長期 → 低鹽飲食（&lt;2 g/天）；利尿劑（Hydrochlorothiazide）；鼓膜內 Gentamicin 注射（破壞前庭功能）；難治性 → 迷路切除術</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">耳鳴（Tinnitus）分類</p>
+            <ul class="k-list">
+              <li><strong>主觀性（最常見）：</strong>只有患者聽得到；SNHL 合併耳鳴（老年性聽損、噪音性聽損）；聽神經瘤；Aspirin / Quinine / 胺基糖苷類抗生素（耳毒性）</li>
+              <li><strong>客觀性（罕見）：</strong>聽診器也聽得到；血管性搏動性耳鳴（動靜脈畸形、頸靜脈球瘤）；肌肉陣攣性</li>
+              <li><strong>治療：</strong>治療原因；耳鳴遮蔽（Masker）；認知行為治療（CBT）；聽力輔具（改善聽損）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ent-nose -->
+    <div class="topic-block" id="ent-nose">
+      <div class="topic-block-head">
+        <span class="topic-block-title">鼻科 Rhinology（過敏性鼻炎 + 鼻竇炎 + 鼻出血）</span>
+        <div data-bm-id="ent-nose" data-bm-dept="耳鼻喉科" data-bm-title="鼻科"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">過敏性鼻炎（Allergic Rhinitis）影響台灣 30% 以上人口，是最常見的鼻科疾病，第二代抗組織胺和鼻用類固醇是主力。<strong>急性細菌性鼻竇炎</strong>的關鍵：症狀 &gt;10 天未改善，或改善後再惡化（double sickening），才需要抗生素。<strong>鼻出血</strong>處置先壓迫，後填塞。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="allergic-rhinitis-sinusitis" data-bm-dept="耳鼻喉科" data-bm-title="過敏性鼻炎 + 鼻竇炎">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">過敏性鼻炎 + 急慢性鼻竇炎</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">過敏性鼻炎（Allergic Rhinitis）</p>
+            <ul class="k-list">
+              <li><strong>症狀：</strong>打噴嚏（陣發性）+ 水狀鼻涕 + 鼻塞 + 眼睛癢（過敏三聯症合併）；鼻黏膜蒼白水腫；Allergic salute（鼻子向上摩擦）；Allergic shiner（黑眼圈）；Dennie-Morgan lines（眼眶下皺摺）</li>
+              <li><strong>分類：</strong>間歇性（&lt;4 天/週 or &lt;4 週）vs 持續性（&gt;4 天/週 and &gt;4 週）；輕度 vs 中重度（影響睡眠 / 日常活動）</li>
+            </ul>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>治療</th><th>藥物</th><th>效果</th></tr></thead>
+              <tbody>
+                <tr><td><strong>鼻用類固醇（最有效）</strong></td><td>Fluticasone / Mometasone / Budesonide 鼻噴劑</td><td>最有效；對鼻塞效果最好；每天規律使用；副作用少（局部）</td></tr>
+                <tr><td><strong>第二代口服抗組織胺</strong></td><td>Cetirizine / Loratadine / Fexofenadine</td><td>對噴嚏/鼻涕/眼癢效果好；鼻塞效果較差；不嗜睡（第二代）</td></tr>
+                <tr><td><strong>口服抗組織胺 + 鼻用類固醇</strong></td><td>合用</td><td>中重度首選；協同效果</td></tr>
+                <tr><td><strong>Montelukast（Leukotriene 拮抗劑）</strong></td><td>每晚口服</td><td>合併氣喘時加用；效果次於鼻用類固醇</td></tr>
+                <tr><td><strong>免疫治療（減敏）</strong></td><td>皮下注射 or 舌下滴劑</td><td>唯一改變疾病自然病程的治療；需 3-5 年</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性細菌性鼻竇炎（ABRS）</p>
+            <ul class="k-list">
+              <li><strong>診斷標準（IDSA 指引）：</strong>症狀持續 ≥10 天未改善；或症狀嚴重（高燒 &gt;39°C + 膿性鼻涕 + 顏面疼痛 ≥3-4 天）；或 double sickening（改善後 5-6 天再惡化）</li>
+              <li><strong>最常見病原：</strong>S. pneumoniae；H. influenzae；M. catarrhalis</li>
+              <li><strong>治療：</strong>Amoxicillin-clavulanate（首選，含抗 beta-lactamase）× 5-7 天；過敏 → Doxycycline 或 Levofloxacin；輔助：鼻腔沖洗（Nasal irrigation）；鼻用類固醇；鼻腔減充血劑（短期，&lt;3-5 天避免藥物性鼻炎）</li>
+              <li class="note">大多數急性鼻竇炎是病毒性（感冒後），不需抗生素！10 天才是細菌性的分界</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">慢性鼻竇炎（CRS，&gt;12 週）</p>
+            <ul class="k-list">
+              <li><strong>CRS with polyps（CRSwNP）：</strong>雙側鼻息肉；嗅覺喪失；常合併氣喘 + Aspirin 不耐受（Samter's triad）；Dupilumab（IL-4/13 抑制劑）= 嚴重型生物製劑</li>
+              <li><strong>治療：</strong>鼻用類固醇 + 鼻腔沖洗；息肉 → 口服類固醇短療程；手術（FESS，功能性內視鏡鼻竇手術）；復發常見</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="epistaxis" data-bm-dept="耳鼻喉科" data-bm-title="鼻出血處置">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">鼻出血（Epistaxis）處置流程</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">鼻出血部位分類</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>前鼻腔出血（80-90%）</th><th>後鼻腔出血（10-20%）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>來源</strong></td><td>Kiesselbach's plexus（Little's area，鼻中隔前下方）</td><td>Woodruff's plexus（鼻腔後部）</td></tr>
+                <tr><td><strong>好發</strong></td><td>兒童；乾燥；挖鼻</td><td>老年人；高血壓；抗凝血藥物；動脈硬化</td></tr>
+                <tr><td><strong>嚴重度</strong></td><td>通常不嚴重；可自止</td><td>出血量較多；較難控制；容易後流</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">處置流程（Step by step）</p>
+            <ul class="k-list">
+              <li><strong>Step 1：直接壓迫（First line）</strong>
+                <ul>
+                  <li>頭部前傾（不要後仰！後仰讓血流入咽部）</li>
+                  <li>捏住鼻翼軟骨部（鼻中隔前下方）持續 10-15 分鐘</li>
+                  <li>張口呼吸；冰敷鼻樑（輔助）</li>
+                </ul>
+              </li>
+              <li><strong>Step 2：局部處理（壓迫失敗）</strong>
+                <ul>
+                  <li>局部麻醉（Lidocaine spray）+ 血管收縮劑（Oxymetazoline 噴劑）</li>
+                  <li>前鼻腔視診確認出血點</li>
+                  <li>化學燒灼（Silver nitrate 棉棒 or 電燒）= 可見出血點的首選</li>
+                </ul>
+              </li>
+              <li><strong>Step 3：前鼻腔填塞（Anterior packing）</strong>
+                <ul>
+                  <li>凡士林紗布（Ribbon gauze）或 Merocel（膨脹海綿）填塞；維持 24-48 小時</li>
+                  <li>填塞後預防性抗生素爭議（預防中毒休克症候群 TSS）</li>
+                </ul>
+              </li>
+              <li><strong>Step 4：後鼻腔填塞 / 手術（前填塞失敗）</strong>
+                <ul>
+                  <li>後鼻腔填塞（Foley catheter balloon）或 Posterior packing；需住院監測（呼吸道風險）</li>
+                  <li>血管栓塞（Embolization）or 內視鏡蝶口竇動脈結紮（難治性）</li>
+                </ul>
+              </li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">鼻出血的系統性評估</p>
+            <ul class="k-list">
+              <li>血壓（高血壓 = 常見加重因素，但非直接原因）；CBC；凝血功能；抗凝血藥物使用</li>
+              <li><strong>出血性疾病：</strong>血小板低下；血友病；von Willebrand disease；Hereditary Hemorrhagic Telangiectasia（HHT = Osler-Weber-Rendu，多發性 AVM）</li>
+              <li>反覆單側鼻出血 + 鼻塞 → 排除腫瘤（nasopharyngeal angiofibroma 或 NPC）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ent-throat -->
+    <div class="topic-block" id="ent-throat">
+      <div class="topic-block-head">
+        <span class="topic-block-title">咽喉 Pharynx & Larynx（扁桃腺炎 + 會厭炎 + 聲音嘶啞）</span>
+        <div data-bm-id="ent-throat" data-bm-dept="耳鼻喉科" data-bm-title="咽喉"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">咽喉急症中最危險的是<strong>急性會厭炎（Acute Epiglottitis）</strong>——成人比兒童更常見（Hib 疫苗普及後），<strong>千萬不要直接看喉嚨（可能誘發完全阻塞）</strong>，直接到 OR 在麻醉下評估和插管。<strong>扁桃腺周圍膿瘍（Peritonsillar abscess，PTA）</strong>= 最常見的咽喉深層感染。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="tonsillitis-pta" data-bm-dept="耳鼻喉科" data-bm-title="扁桃腺炎 + 扁桃腺周圍膿瘍">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">扁桃腺炎 + 扁桃腺周圍膿瘍（PTA）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性扁桃腺炎（Acute Tonsillitis）</p>
+            <ul class="k-list">
+              <li><strong>病原：</strong>病毒（Adenovirus、EBV = Mono）= 最常見（70-80%）；細菌（GAS = Group A Streptococcus）</li>
+              <li><strong>GAS 篩查（Centor criteria）：</strong>扁桃腺滲出物 + 頸前淋巴腺腫大 + 發燒 + 無咳嗽 = 4 分；分數高 → Rapid Strep test 或咽拭子培養</li>
+              <li><strong>治療（GAS）：</strong>Penicillin V 或 Amoxicillin × 10 天（預防風濕性心臟病）；過敏 → Azithromycin；<strong>勿用 Ampicillin 或 Amoxicillin 若懷疑 EBV（→ 全身皮疹，maculopapular）</strong></li>
+              <li><strong>EBV（傳染性單核球增多症 Mono）：</strong>咽喉炎 + 全身淋巴腺腫 + 脾腫大 + 異形淋巴球 + Monospot test 陽性；避免接觸運動（脾破裂風險）；支持性治療</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">扁桃腺周圍膿瘍（Peritonsillar Abscess，PTA）</p>
+            <ul class="k-list">
+              <li><strong>最常見的咽喉深層感染</strong>；GAS 為主 + 厭氧菌（Fusobacterium）混合感染</li>
+              <li><strong>臨床：</strong>嚴重喉嚨痛（單側）；Trismus（牙關緊閉，張嘴困難）；吞嚥困難；說話「Hot potato voice」（口含熱馬鈴薯樣的含糊音）；懸雍垂偏向健側；同側扁桃腺膨出</li>
+              <li><strong>治療：</strong>
+                <ul>
+                  <li>引流（首選）：針吸（Needle aspiration）或切開引流（I&D）</li>
+                  <li>抗生素：Amoxicillin-clavulanate；或 Penicillin + Metronidazole（涵蓋厭氧菌）</li>
+                  <li>類固醇（Dexamethasone 10 mg IV）：↓ 水腫、改善張口、加速恢復</li>
+                  <li>復發性 PTA → 扁桃腺切除術</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="epiglottitis-hoarseness" data-bm-dept="耳鼻喉科" data-bm-title="會厭炎 + 聲音嘶啞">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性會厭炎 + 聲音嘶啞鑑別</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>急性會厭炎 → 不要用壓舌板檢查喉嚨！不要做咽拭子！直接到手術室在麻醉下處置。</span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性會厭炎（Acute Epiglottitis）</p>
+            <ul class="k-list">
+              <li><strong>病原：</strong>H. influenzae type b（兒童，Hib 疫苗後減少）；GAS、S. aureus、S. pneumoniae（成人）；成人現比兒童多見</li>
+              <li><strong>臨床三 D：</strong>Dysphagia（吞嚥困難）+ Dysphonia（聲音改變）+ Drooling（流口水）；高燒；坐前傾（Tripod position）；吸氣性喘鳴；恐懼外觀</li>
+              <li><strong>X 光（頸部側位）：</strong>「拇指徵（Thumbprint sign）」= 會厭腫大如拇指；正常會厭纖細（Vallecula sign）</li>
+              <li><strong>處置：</strong>
+                <ul>
+                  <li>最小刺激原則（不要激惹患者）</li>
+                  <li>準備插管（困難氣道！）+ 環甲膜切開術備用</li>
+                  <li>到 OR 由麻醉科 / ENT 在安全環境下處置氣道</li>
+                  <li>Ceftriaxone IV（H. influenzae）；Vancomycin（MRSA 懷疑）</li>
+                </ul>
+              </li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">聲音嘶啞（Hoarseness）鑑別</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>原因</th><th>特徵</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>急性喉炎（Laryngitis）</strong></td><td>病毒感染後；聲音粗啞 / 失聲；咳嗽；低燒；自限 1-2 週</td><td>聲音休息；蒸氣吸入；避免耳語（反而傷聲帶）</td></tr>
+                <tr><td><strong>聲帶結節（Vocal cord nodule）</strong></td><td>長期聲音過度使用（歌手、老師）；雙側對稱性結節（中三分之一交界）；漸進性沙啞</td><td>聲音治療；手術切除（頑固性）</td></tr>
+                <tr><td><strong>聲帶息肉（Polyp）</strong></td><td>單側；急性創傷性（大喊）或慢性（菸、胃食道逆流）；Reinke's edema（全段水腫）= 長期吸菸女性</td><td>手術切除；戒菸；抗逆流治療</td></tr>
+                <tr><td><strong>聲帶麻痺（Vocal cord palsy）</strong></td><td>喉返神經損傷（手術、腫瘤壓迫）；單側 = 聲音沙啞；雙側 = 呼吸困難；左側較右側多（左喉返神經繞主動脈弓）</td><td>找原因（CXR / CT 頸部胸部）；語言治療；注射填充（單側）；氣切（雙側嚴重）</td></tr>
+                <tr><td><strong>喉癌（Laryngeal Cancer）</strong></td><td>&gt;2 週持續聲音嘶啞 + 抽菸 / 飲酒；喉鏡下不規則白色增生；SCC 最常見</td><td>喉鏡 + 切片；手術 / 放療 / 化療</td></tr>
+                <tr><td><strong>胃食道逆流（GERD）</strong></td><td>晨起聲音沙啞；咽喉清嗓；喉嚨感黏液；後喉壁發紅</td><td>PPI；飲食調整；床頭抬高</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ent-neck -->
+    <div class="topic-block" id="ent-neck">
+      <div class="topic-block-head">
+        <span class="topic-block-title">頸部腫塊鑑別 Neck Mass Differential Diagnosis</span>
+        <div data-bm-id="ent-neck" data-bm-dept="耳鼻喉科" data-bm-title="頸部腫塊鑑別"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">頸部腫塊的鑑別依<strong>年齡、位置、病程</strong>三大要素分析。臨床口訣：<strong>&lt;20 歲多良性（炎症/先天性）；20-40 歲多良性腫瘤；&gt;40 歲持續性腫塊 = 惡性直到排除為止</strong>。成人持續 &gt;2 週的無痛性頸部腫塊 = 惡性淋巴結轉移，直到切片排除。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="neck-mass-ddx" data-bm-dept="耳鼻喉科" data-bm-title="頸部腫塊鑑別">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">頸部腫塊鑑別（依位置 + 年齡）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">依位置分類</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>位置</th><th>常見診斷</th><th>特徵</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>頸部正中線</strong></td>
+                  <td>
+                    甲狀舌骨囊腫（Thyroglossal duct cyst）<br/>
+                    皮樣囊腫（Dermoid cyst）<br/>
+                    甲狀腺腫塊
+                  </td>
+                  <td>甲狀舌骨囊腫：最常見先天性頸部腫塊；舌骨上下；<strong>吞嚥或伸舌時上移（特徵）</strong>；手術（Sistrunk procedure）</td>
+                </tr>
+                <tr>
+                  <td><strong>頸部前三角（胸鎖乳突肌前）</strong></td>
+                  <td>
+                    鰓裂囊腫（Branchial cleft cyst）<br/>
+                    淋巴結（炎性/轉移）<br/>
+                    頸動脈體瘤（Carotid body tumor）
+                  </td>
+                  <td>鰓裂囊腫（第二鰓裂最常見）：胸鎖乳突肌前緣；20-30 歲；軟性波動感；感染後才發現；手術切除</td>
+                </tr>
+                <tr>
+                  <td><strong>頸部後三角（胸鎖乳突肌後）</strong></td>
+                  <td>
+                    淋巴結（結核、淋巴瘤）<br/>
+                    淋巴管瘤（Lymphangioma / Cystic hygroma）<br/>
+                    脂肪瘤
+                  </td>
+                  <td>淋巴管瘤：兒童多見；透光；質軟；多囊性；侵犯範圍廣</td>
+                </tr>
+                <tr>
+                  <td><strong>下頜下腺（Submandibular）</strong></td>
+                  <td>
+                    下頜下腺炎 / 結石<br/>
+                    Ludwig's angina<br/>
+                    下頜下腺腫瘤
+                  </td>
+                  <td>Ludwig's angina = 下頜下 / 頦下 / 舌下間隙的雙側蜂窩性組織炎；氣道急症；牙源性感染（80%）</td>
+                </tr>
+                <tr>
+                  <td><strong>甲狀腺區</strong></td>
+                  <td>
+                    甲狀腺結節 / 腫瘤<br/>
+                    甲狀腺炎（Hashimoto / de Quervain）
+                  </td>
+                  <td>甲狀腺結節：超音波 + FNA（細針穿刺切片）；高危惡性特徵：硬、固定、淋巴腺腫、Microcalcification</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">惡性頸部腫塊評估（成人 &gt;40 歲）</p>
+            <ul class="k-list">
+              <li><strong>轉移性淋巴結：</strong>無痛；硬；固定；&gt;1 cm 且持續 &gt;2 週 → 強烈懷疑惡性</li>
+              <li><strong>鼻咽癌（NPC）：</strong>無痛性頸部腫塊（最常見表現）+ 鼻塞 + 鼻出血 + 耳鳴 + 聽力下降；Epstein-Barr Virus（EBV）相關；東南亞（台灣、廣東）好發；鼻咽視診 + EBV 抗體 + 切片</li>
+              <li><strong>淋巴瘤：</strong>無痛性橡皮狀頸部腫塊；B 症狀（發燒、盜汗、體重下降 &gt;10%）；CT + PET + 淋巴結切片（不做 FNA）</li>
+              <li><strong>評估流程：</strong>超音波（大小、特性）→ CT（範圍）→ FNA（細胞學）→ 切片（組織學）；先找原發灶（鼻咽 / 口咽 / 喉 / 下咽 / 甲狀腺）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ent-emergency -->
+    <div class="topic-block" id="ent-emergency">
+      <div class="topic-block-head">
+        <span class="topic-block-title">ENT 急症 ENT Emergencies</span>
+        <div data-bm-id="ent-emergency" data-bm-dept="耳鼻喉科" data-bm-title="ENT 急症"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">ENT 急症以<strong>氣道急症</strong>最危險——任何引起上呼吸道阻塞的 ENT 問題都可能致命。<strong>異物</strong>在兒童極為常見（耳、鼻、咽喉/食道），處置原則依位置而不同。<strong>顳骨骨折</strong>需評估面神經功能和腦脊液漏。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="ent-foreign-body" data-bm-dept="耳鼻喉科" data-bm-title="ENT 異物 + 深頸部感染">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">ENT 異物 + 深頸部感染</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">異物（Foreign Body）處置</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>位置</th><th>臨床表現</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>耳道異物</strong></td>
+                  <td>耳痛；聽力下降；昆蟲異物 = 耳鳴感（爬動感）</td>
+                  <td>
+                    昆蟲 → 先滴礦物油或 Lidocaine 殺死 → 再沖洗取出<br/>
+                    非活體 → 耳道沖洗（水不能用於電池、有機物）or 器械取出<br/>
+                    電池 → <strong>立刻取出（腐蝕性，24-48 小時造成穿孔）</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>鼻腔異物</strong></td>
+                  <td>單側鼻塞 + 惡臭膿性分泌物（最典型）；兒童多見</td>
+                  <td>
+                    Positive pressure technique：另一側鼻孔壓住 + 家長口對口吹氣（Mother's kiss）<br/>
+                    視診確認 → 器械取出（鉤子 / 吸引）<br/>
+                    電池 → <strong>立刻取出</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>咽喉 / 食道異物</strong></td>
+                  <td>魚骨（咽喉）= 吞嚥異物感；食道異物（兒童硬幣）= 吞嚥困難 / 流口水</td>
+                  <td>
+                    魚骨（梨狀窩 / 扁桃腺）→ 喉鏡下取出<br/>
+                    食道異物 → X 光確認位置 → 內視鏡取出<br/>
+                    氣道異物 → <strong>Heimlich maneuver（成人）；背部拍擊 + 胸部推壓（嬰兒）</strong>；緊急支氣管鏡
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">深頸部感染（Deep Neck Space Infection）</p>
+            <ul class="k-list">
+              <li><strong>Ludwig's Angina：</strong>下頜下 / 頦下 / 舌下間隙雙側蜂窩性組織炎；牙源性感染（80%）；舌頭向上向後推擠 → 氣道阻塞；板狀頸部；<strong>氣道管理優先（清醒纖維光束插管）+ Pip/Tazo IV</strong></li>
+              <li><strong>咽旁間隙膿瘍（Parapharyngeal Abscess）：</strong>牙源性 or 扁桃腺炎後；頸部腫脹 + 吞嚥困難；CT 確認範圍 → 手術引流 + 抗生素</li>
+              <li><strong>咽後間隙膿瘍（Retropharyngeal Abscess）：</strong>兒童 (&lt;5 歲) 多見；頸部淋巴結（咽後）化膿；頸部僵硬 / 伸展受限；X 光 = 咽後壁增寬；CT 確認 → 手術引流 + Ceftriaxone + Metronidazole</li>
+              <li><strong>Lemierre Syndrome：</strong>咽喉感染（扁桃腺炎）→ 頸內靜脈血栓形成 → 化膿性栓塞（肺、關節）；Fusobacterium necrophorum；青年人；抗生素（Pip/Tazo + Metronidazole）；抗凝血爭議</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="temporal-bone-vertigo" data-bm-dept="耳鼻喉科" data-bm-title="顳骨骨折 + 眩暈鑑別">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">顳骨骨折 + 眩暈鑑別診斷</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">顳骨骨折</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>縱向骨折（Longitudinal，80%）</th><th>橫向骨折（Transverse，20%）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>機轉</strong></td><td>顳頂部外傷</td><td>枕部或額部外傷</td></tr>
+                <tr><td><strong>聽力</strong></td><td>傳導性聽損（中耳 / 鼓膜損傷）</td><td>感音神經性聽損（耳蝸/前庭損傷）</td></tr>
+                <tr><td><strong>顏面神經</strong></td><td>20% 受損（多數延遲性，預後好）</td><td>50% 受損（即刻性，預後差）</td></tr>
+                <tr><td><strong>CSF 耳漏</strong></td><td>常見</td><td>較少（血鼓室多）</td></tr>
+                <tr><td><strong>特殊徵象</strong></td><td>Battle's sign（乳突瘀斑）；鼓室積血</td><td>Battle's sign；眼球震顫；嚴重眩暈</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">眩暈（Vertigo）鑑別</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>疾病</th><th>特徵</th><th>診斷 + 治療</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>BPPV（良性陣發性姿勢性眩暈）</strong></td>
+                  <td>最常見；頭部轉動誘發的短暫眩暈（&lt;1 分鐘）；無聽力下降；無耳鳴；後半規管最常見</td>
+                  <td>Dix-Hallpike test 陽性（眼球震顫）；Epley maneuver（耳石復位術）= 治療首選；多數可自限</td>
+                </tr>
+                <tr>
+                  <td><strong>前庭神經炎（Vestibular Neuritis）</strong></td>
+                  <td>持續性眩暈（數天）；通常病毒感染後；無聽力下降；頭部衝動試驗（HIT）陽性</td>
+                  <td>支持性；前庭復健運動；抗組織胺（急性期）；類固醇（爭議）</td>
+                </tr>
+                <tr>
+                  <td><strong>迷路炎（Labyrinthitis）</strong></td>
+                  <td>持續性眩暈 + 感音神經性聽損 + 耳鳴；病毒性或細菌性（中耳炎後）</td>
+                  <td>病毒性：支持性；細菌性：抗生素 + 類固醇</td>
+                </tr>
+                <tr>
+                  <td><strong>中樞性眩暈（小腦/腦幹）</strong></td>
+                  <td><strong>警訊：</strong>垂直眼球震顫；方向改變眼球震顫；無法站立；步態嚴重不穩；其他神經學症狀；HIT 陰性</td>
+                  <td>立刻 MRI；排除小腦梗塞 / 出血</td>
+                </tr>
+                <tr>
+                  <td><strong>梅尼爾氏症</strong></td>
+                  <td>反覆發作眩暈（20 min-12 h）+ 低頻聽損 + 耳鳴 + 耳悶脹感</td>
+                  <td>見耳科 block</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'ent-approach',  dept:'耳鼻喉科', title:'耳鼻喉評估基礎（Weber / Rinne + 耳鏡）', url:'#ent-approach',  text:'' },
+    { id:'ent-ear',       dept:'耳鼻喉科', title:'耳科（外耳炎 + 中耳炎 + 突發性聽損）',   url:'#ent-ear',       text:'' },
+    { id:'ent-nose',      dept:'耳鼻喉科', title:'鼻科（過敏性鼻炎 + 鼻竇炎 + 鼻出血）',   url:'#ent-nose',      text:'' },
+    { id:'ent-throat',    dept:'耳鼻喉科', title:'咽喉（扁桃腺炎 + 會厭炎 + 聲音嘶啞）',   url:'#ent-throat',    text:'' },
+    { id:'ent-neck',      dept:'耳鼻喉科', title:'頸部腫塊鑑別',                           url:'#ent-neck',      text:'' },
+    { id:'ent-emergency', dept:'耳鼻喉科', title:'ENT 急症（鼻出血填塞 + 異物 + 氣道）',   url:'#ent-emergency', text:'' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else { initSearch(SEARCH_INDEX); }
+</script>
+</body>
+</html>
