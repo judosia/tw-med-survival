@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>復健科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .score-modal-overlay.open{display:flex;}
+    .score-modal{background:var(--white);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .score-modal-head{position:sticky;top:0;background:var(--white);padding:18px 22px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .score-modal-head h2{font-size:1rem;font-weight:800;}
+    .score-modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;}
+    .score-modal-body{padding:20px 22px;}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#rehab" class="nav-back">復健科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">復健科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">復健科</div>
+    <div class="sidebar-section-title">基礎評估</div>
+    <a href="#rehab-approach" class="sidebar-link">復健評估（功能評估 + 量表）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">神經復健</div>
+    <a href="#rehab-stroke" class="sidebar-link">中風復健（急性期 + 痙攣處置）</a>
+    <a href="#rehab-neuro" class="sidebar-link">神經復健（脊髓損傷 + TBI + 帕金森）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">肌肉骨骼</div>
+    <a href="#rehab-msk" class="sidebar-link">肌肉骨骼復健（下背痛 + 肩 + 膝）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">心肺復健</div>
+    <a href="#rehab-cardiac" class="sidebar-link">心肺復健（心臟 + 肺復健）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">截肢 + 輔具</div>
+    <a href="#rehab-amputee" class="sidebar-link">截肢 + 義肢（分類 + 選擇 + 幻肢痛）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../im/neuro.html" class="sidebar-link">神經內科 →</a>
+    <a href="../surg/ortho.html" class="sidebar-link">骨科 →</a>
+    <a href="../surg/cardiac-surg.html" class="sidebar-link">心臟外科 →</a>
+  </aside>
+  <main class="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#f0f7ff 0%,#f5f0ff 100%);color:var(--navy);">
+      <div class="page-hero-text">
+        <h1>復健科</h1>
+        <p>功能評估、神經復健、肌肉骨骼復健、心肺復健與截肢處置，涵蓋各科 PGY 會遇到的復健科臨床知識。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#rehab">復健科</a> › 復健科
+    </div>
+
+
+    <!-- rehab-approach -->
+    <div class="topic-block" id="rehab-approach">
+      <div class="topic-block-head">
+        <span class="topic-block-title">復健評估基礎 Rehabilitation Assessment（ICF + 量表 + 治療團隊）</span>
+        <div data-bm-id="rehab-approach" data-bm-dept="復健科" data-bm-title="復健評估基礎"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">復健醫學的核心架構是 <strong>ICF（International Classification of Functioning, Disability and Health）</strong>——從身體功能、活動和參與三個層面評估患者。<strong>功能評估量表</strong>是復健的語言，Barthel index 和 FIM 是日常生活功能評估的主要工具；<strong>復健團隊</strong>是跨領域合作，包括復健科醫師、物理治療師（PT）、職能治療師（OT）、語言治療師（ST）、護理師和社工。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="functional-scales" data-bm-dept="復健科" data-bm-title="功能評估量表">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">功能評估量表（Barthel + FIM + MRC + Berg）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Barthel Index（日常生活活動，ADL）</p>
+            <ul class="k-list">
+              <li><strong>評估項目（共 10 項）：</strong>進食、移位、修飾、如廁、洗澡、行走、上下樓梯、穿脫衣物、大便控制、小便控制</li>
+              <li><strong>滿分 100 分；判讀：</strong>100 = 完全獨立；75-95 = 輕度依賴；50-70 = 中度依賴；25-45 = 重度依賴；0-20 = 完全依賴</li>
+              <li><strong>臨床應用：</strong>中風後功能追蹤；住院復健入出院評估；≥60 分通常可回家；&lt;40 分需考慮機構</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">FIM（Functional Independence Measure）</p>
+            <ul class="k-list">
+              <li><strong>18 個項目</strong>（13 項動作 + 5 項認知）；每項 1-7 分；總分 18-126</li>
+              <li><strong>7 = 完全獨立；1 = 完全依賴；</strong>5-6 = 需監督或輔具；1-4 = 需部分至完全協助</li>
+              <li><strong>優於 Barthel：</strong>包含認知功能（記憶、解決問題、社交）；更細緻的協助程度分級</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">其他常用量表</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>量表</th><th>評估項目</th><th>臨床應用</th></tr></thead>
+              <tbody>
+                <tr><td><strong>MRC Muscle Scale</strong></td><td>肌力（0-5 級）；0=無收縮；3=抗重力；5=正常</td><td>神經肌肉疾病；GBS；ICU 肌無力</td></tr>
+                <tr><td><strong>Berg Balance Scale</strong></td><td>14 項平衡測試；滿分 56 分</td><td>&lt;45 分 = 跌倒高風險；中風 / 帕金森評估</td></tr>
+                <tr><td><strong>Modified Ashworth Scale（MAS）</strong></td><td>痙攣程度（0-4 級）</td><td>中風 / 脊髓損傷後痙攣評估；Botox 治療前後</td></tr>
+                <tr><td><strong>VAS / NRS</strong></td><td>疼痛強度（0-10）</td><td>肌肉骨骼疼痛；慢性疼痛管理</td></tr>
+                <tr><td><strong>6 分鐘步行測試（6MWT）</strong></td><td>6 分鐘最大步行距離</td><td>心肺功能；COPD；心臟復健評估</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="rehab-team-icf" data-bm-dept="復健科" data-bm-title="復健團隊 + ICF">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">ICF 架構 + 復健團隊分工</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ICF 架構（WHO 2001）</p>
+            <ul class="k-list">
+              <li><strong>身體功能與結構（Body function & structure）：</strong>器官層面；肌力、關節活動度、認知功能、語言</li>
+              <li><strong>活動（Activity）：</strong>個人層面；行走、進食、穿衣、溝通</li>
+              <li><strong>參與（Participation）：</strong>社會層面；工作、休閒、社交、家庭角色</li>
+              <li><strong>環境因素（Environmental factors）：</strong>物理環境、社會支持、輔具、政策</li>
+              <li><strong>個人因素（Personal factors）：</strong>年齡、性別、動機、因應方式</li>
+              <li class="note">復健目標應涵蓋三個層面，不只是「讓肌力恢復」，而是「讓患者回到想要的生活角色」</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">復健團隊分工</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>角色</th><th>主要負責</th></tr></thead>
+              <tbody>
+                <tr><td><strong>復健科醫師（Physiatrist）</strong></td><td>診斷、處方、協調團隊；肉毒桿菌注射；電診斷（EMG/NCS）</td></tr>
+                <tr><td><strong>物理治療師（PT）</strong></td><td>動作功能；肌力、平衡、步態訓練；徒手治療；儀器治療</td></tr>
+                <tr><td><strong>職能治療師（OT）</strong></td><td>日常生活活動（ADL）；手部功能；認知訓練；輔具評估；環境改造</td></tr>
+                <tr><td><strong>語言治療師（ST）</strong></td><td>吞嚥功能評估（VFSS / FEES）；構音；語言障礙（失語症）；認知溝通</td></tr>
+                <tr><td><strong>義肢矯具師（P&O）</strong></td><td>義肢製作與調整；矯具（AFO、KAFO）</td></tr>
+                <tr><td><strong>社工（Social worker）</strong></td><td>出院計畫；社會資源；長照申請；家庭支持</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">電診斷（Electrodiagnosis）</p>
+            <ul class="k-list">
+              <li><strong>神經傳導檢查（NCS）：</strong>評估周邊神經功能；傳導速度 + 波幅；軸突損傷（波幅↓）vs 髓鞘病變（速度↓）</li>
+              <li><strong>肌電圖（EMG）：</strong>評估肌肉去神經狀態；Fibrillation + PSW = 去神經；MUP 分析評估再生</li>
+              <li><strong>臨床應用：</strong>腕隧道症候群；GBS；ALS；神經根病變；肌病變鑑別</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- rehab-stroke -->
+    <div class="topic-block" id="rehab-stroke">
+      <div class="topic-block-head">
+        <span class="topic-block-title">中風復健 Stroke Rehabilitation（Brunnstrom + 痙攣 + Botox）</span>
+        <div data-bm-id="rehab-stroke" data-bm-dept="復健科" data-bm-title="中風復健"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">中風是成人最常見需要復健的神經疾病。<strong>早期復健（發病 24-48 小時內開始）</strong>是改善預後的關鍵。<strong>Brunnstrom 分期</strong>是評估中風後運動恢復的標準工具。<strong>痙攣（Spasticity）</strong>是中風後常見的上運動神經元症候群，Botox 注射是局部痙攣的一線治療。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="stroke-rehab-phase" data-bm-dept="復健科" data-bm-title="中風復健時程 + Brunnstrom">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">中風復健時程 + Brunnstrom 分期</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">中風復健時程</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>階段</th><th>時間</th><th>重點</th></tr></thead>
+              <tbody>
+                <tr><td><strong>急性期</strong></td><td>發病後 0-2 週</td><td>早期床邊復健（坐起、移位）；預防併發症（DVT、壓瘡、攣縮、肺炎）；吞嚥評估；早期下床</td></tr>
+                <tr><td><strong>亞急性期</strong></td><td>2 週-3 個月</td><td>恢復最快的黃金期；住院復健；密集治療（PT + OT + ST）；步態訓練；ADL 訓練</td></tr>
+                <tr><td><strong>慢性期</strong></td><td>&gt;3-6 個月</td><td>功能維持；社區復健；輔具；環境改造；預防跌倒；繼發性預防（抗血小板、降壓）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Brunnstrom 分期（上肢 / 下肢 / 手部各自評估）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>分期</th><th>描述</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Stage I</strong></td><td>弛緩性麻痺（Flaccid）；無自主動作</td></tr>
+                <tr><td><strong>Stage II</strong></td><td>痙攣開始出現；聯合反應（Associated reaction）</td></tr>
+                <tr><td><strong>Stage III</strong></td><td>痙攣達高峰；可做共同動作（Synergy pattern）</td></tr>
+                <tr><td><strong>Stage IV</strong></td><td>開始脫離共同動作；部分分離動作</td></tr>
+                <tr><td><strong>Stage V</strong></td><td>痙攣↓；更多分離動作；精細動作困難</td></tr>
+                <tr><td><strong>Stage VI</strong></td><td>接近正常；協調稍差</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">中風常見復健問題</p>
+            <ul class="k-list">
+              <li><strong>肩關節半脫位：</strong>弛緩期上肢重力拉扯；肩帶支撐（吊帶）；避免強拉患側手</li>
+              <li><strong>肩手症候群（CRPS Type I）：</strong>患側手腫痛；避免靜脈注射患側；抬高患肢；類固醇；鏡像治療</li>
+              <li><strong>失語症（Aphasia）：</strong>Broca（表達型）；Wernicke（接受型）；語言治療；溝通輔助工具（AAC）</li>
+              <li><strong>半側忽略（Hemineglect）：</strong>右腦中風常見；視覺掃描訓練；Prism adaptation</li>
+              <li><strong>吞嚥障礙（Dysphagia）：</strong>床邊篩查（Water swallow test）；VFSS / FEES 確認；改變食物質地；姿勢調整</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="spasticity-botox" data-bm-dept="復健科" data-bm-title="痙攣處置 + Botox">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">痙攣（Spasticity）處置 + Botulinum Toxin</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">痙攣評估（Modified Ashworth Scale）</p>
+            <ul class="k-list">
+              <li><strong>0：</strong>無張力增加</li>
+              <li><strong>1：</strong>輕微阻力（活動末端）</li>
+              <li><strong>1+：</strong>輕微阻力（&lt;1/2 關節活動度）</li>
+              <li><strong>2：</strong>明顯阻力但仍可活動</li>
+              <li><strong>3：</strong>大幅阻力；被動活動困難</li>
+              <li><strong>4：</strong>關節固定（攣縮）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">痙攣治療（依嚴重度 + 範圍）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>治療</th><th>適用</th><th>重點</th></tr></thead>
+              <tbody>
+                <tr><td><strong>伸展運動 + 擺位</strong></td><td>所有痙攣；預防攣縮</td><td>每日持續性伸展；副木固定</td></tr>
+                <tr><td><strong>口服藥物</strong></td><td>全身性痙攣</td><td>Baclofen（GABA-B）；Tizanidine（α2 agonist）；Dantrolene（周邊作用）；Diazepam（鎮靜副作用）</td></tr>
+                <tr><td><strong>Botulinum Toxin A（Botox）注射</strong></td><td>局部痙攣（1-2 塊肌肉）</td><td>一線局部治療；效果 3-6 個月；超音波或 EMG 引導注射</td></tr>
+                <tr><td><strong>Phenol / Alcohol 神經阻斷</strong></td><td>局部痙攣；長效</td><td>效果可達 6-12 個月；感覺神經阻斷後可能疼痛</td></tr>
+                <tr><td><strong>鞘內 Baclofen（ITB）</strong></td><td>嚴重全身性痙攣；脊髓損傷 / MS</td><td>泵浦植入；持續鞘內給藥；口服無效時考慮</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Botulinum Toxin 臨床重點</p>
+            <ul class="k-list">
+              <li><strong>機轉：</strong>抑制乙醯膽鹼釋放 → 神經肌肉阻斷 → 肌肉弛緩</li>
+              <li><strong>中風常見注射目標：</strong>上肢屈肌（肱二頭肌、腕屈肌、指屈肌）；下肢（腓腸肌、比目魚肌 → 馬蹄足）</li>
+              <li><strong>起效時間：</strong>注射後 3-7 天；最大效果 2-4 週；持續 3-6 個月</li>
+              <li><strong>劑量限制：</strong>每次總量 ≤400-600 U（Botox A）；分散注射</li>
+              <li><strong>合併治療：</strong>注射後配合伸展 + PT 效果最佳；不可單獨靠 Botox</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- rehab-neuro -->
+    <div class="topic-block" id="rehab-neuro">
+      <div class="topic-block-head">
+        <span class="topic-block-title">神經復健 Neurological Rehabilitation（脊髓損傷 + TBI + 帕金森）</span>
+        <div data-bm-id="rehab-neuro" data-bm-dept="復健科" data-bm-title="神經復健"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>脊髓損傷（SCI）</strong>的功能預後與損傷節段和完整性密切相關，ASIA 分類是國際標準。<strong>創傷性腦傷（TBI）</strong>的 Rancho Los Amigos 認知分期用於追蹤恢復。<strong>帕金森復健</strong>強調步態訓練、平衡訓練和語言治療（LSVT），配合藥物治療效果最佳。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="sci-rehab" data-bm-dept="復健科" data-bm-title="脊髓損傷復健">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">脊髓損傷（SCI）— ASIA 分類 + 功能預後</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ASIA 損傷分類（AIS）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>分級</th><th>描述</th></tr></thead>
+              <tbody>
+                <tr><td><strong>ASIA A（完全性）</strong></td><td>S4-S5 節段無感覺或運動功能保留</td></tr>
+                <tr><td><strong>ASIA B（感覺不完全）</strong></td><td>損傷平面以下有感覺但無運動功能（包括 S4-S5）</td></tr>
+                <tr><td><strong>ASIA C（運動不完全）</strong></td><td>損傷平面以下超過一半關鍵肌肉肌力 &lt;3 級</td></tr>
+                <tr><td><strong>ASIA D（運動不完全）</strong></td><td>損傷平面以下超過一半關鍵肌肉肌力 ≥3 級</td></tr>
+                <tr><td><strong>ASIA E（正常）</strong></td><td>感覺和運動功能正常（但可能有反射異常）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">損傷節段與功能預後</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>損傷節段</th><th>保留功能</th><th>預期獨立程度</th></tr></thead>
+              <tbody>
+                <tr><td><strong>C1-C4</strong></td><td>頸部肌肉；可能需呼吸器</td><td>電動輪椅；需全時照護</td></tr>
+                <tr><td><strong>C5</strong></td><td>屈肘（肱二頭肌）；肩外展</td><td>電動輪椅；部分上肢功能；需協助</td></tr>
+                <tr><td><strong>C6</strong></td><td>伸腕（橈側伸腕肌）</td><td>手動輪椅（部分）；腱固定性抓握（Tenodesis grip）；較獨立</td></tr>
+                <tr><td><strong>C7</strong></td><td>伸肘（肱三頭肌）；屈腕</td><td>手動輪椅；大部分 ADL 獨立</td></tr>
+                <tr><td><strong>T1-T9</strong></td><td>上肢完整；部分軀幹</td><td>手動輪椅；ADL 獨立</td></tr>
+                <tr><td><strong>T10-L2</strong></td><td>上肢完整；部分下肢</td><td>矯具輔助步行（KAFO）；輪椅為主</td></tr>
+                <tr><td><strong>L3-S1</strong></td><td>股四頭肌（L3/4）；踝背屈（L4）</td><td>AFO 輔助步行；部分可獨立行走</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">SCI 重要併發症</p>
+            <ul class="k-list">
+              <li><strong>自律神經反射異常（Autonomic Dysreflexia）：</strong>T6 以上損傷；誘因（膀胱過脹/便秘/壓瘡）→ 突發高血壓 + 頭痛 + 皮膚潮紅 / 出汗（損傷以上）+ 心搏過緩；<strong>緊急處置：坐起 + 找誘因（先排尿）</strong>；Nitroglycerine / Nifedipine（血壓極高時）</li>
+              <li><strong>神經性膀胱：</strong>間歇性導尿（CIC）= 標準處置；目標殘尿量 &lt;100 mL；Oxybutynin（逼尿肌過動）</li>
+              <li><strong>壓瘡：</strong>翻身 q2h；減壓坐墊；定期皮膚檢查</li>
+              <li><strong>異位骨化（Heterotopic ossification）：</strong>關節周圍異常骨形成；髖關節最常見；Indomethacin 預防；放射治療</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="tbi-parkinsons-rehab" data-bm-dept="復健科" data-bm-title="TBI + 帕金森復健">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">創傷性腦傷（TBI）+ 帕金森復健</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">TBI 嚴重度分類</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>嚴重度</th><th>GCS</th><th>意識喪失</th><th>PTA</th></tr></thead>
+              <tbody>
+                <tr><td><strong>輕度（mTBI / 腦震盪）</strong></td><td>13-15</td><td>&lt;30 分鐘</td><td>&lt;24 小時</td></tr>
+                <tr><td><strong>中度</strong></td><td>9-12</td><td>30 分鐘-24 小時</td><td>1-7 天</td></tr>
+                <tr><td><strong>重度</strong></td><td>≤8</td><td>&gt;24 小時</td><td>&gt;7 天</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Rancho Los Amigos 認知分期（重度 TBI）</p>
+            <ul class="k-list">
+              <li><strong>I-II（無反應/反射）：</strong>昏迷期；感覺刺激；被動關節運動</li>
+              <li><strong>III（局部反應）：</strong>對刺激有一致性反應；開始感覺刺激</li>
+              <li><strong>IV（混亂躁動）：</strong>激動、攻擊、無目的行為；結構化環境；低刺激</li>
+              <li><strong>V-VI（混亂、適當）：</strong>開始跟從指令；記憶困難；需提示</li>
+              <li><strong>VII-VIII（自動、有目的）：</strong>日常例行活動；監督至獨立</li>
+            </ul>
+            <ul class="k-list">
+              <li><strong>腦震盪後症候群：</strong>頭痛、頭暈、認知困難、情緒障礙；多數 3 個月內恢復；重返運動分階段原則</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">帕金森復健重點</p>
+            <ul class="k-list">
+              <li><strong>步態訓練：</strong>凍步（Freezing of gait）= 最影響功能；視覺提示（地板線條）；聽覺節律提示（節拍器）；跨大步訓練</li>
+              <li><strong>LSVT LOUD（Lee Silverman Voice Treatment）：</strong>改善聲音響度；帕金森語言治療金標準；4 週密集療程</li>
+              <li><strong>LSVT BIG：</strong>改善動作幅度；大動作訓練（Big amplitude movement）</li>
+              <li><strong>平衡訓練：</strong>太極拳（高品質證據）；跑步機訓練；Berg balance scale 追蹤</li>
+              <li><strong>運動時機：</strong>配合 Levodopa 作用高峰期（On period）進行復健效果最佳</li>
+              <li><strong>吞嚥問題：</strong>晚期帕金森常見；VFSS 評估；改變食物質地；避免誤嗆</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- rehab-msk -->
+    <div class="topic-block" id="rehab-msk">
+      <div class="topic-block-head">
+        <span class="topic-block-title">肌肉骨骼復健 MSK Rehabilitation（下背痛 + 肩關節 + 膝關節）</span>
+        <div data-bm-id="rehab-msk" data-bm-dept="復健科" data-bm-title="肌肉骨骼復健"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">肌肉骨骼問題是門診最常見的復健科主訴。<strong>下背痛（LBP）</strong>是全球失能第一名，90% 是非特異性；<strong>紅旗警訊</strong>是關鍵鑑別。<strong>肩旋轉肌腱</strong>撕裂和<strong>膝關節骨關節炎</strong>是常見的復健目標。運動治療是各種肌肉骨骼問題的核心治療。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="low-back-pain" data-bm-dept="復健科" data-bm-title="下背痛">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">下背痛（LBP）— 紅旗 + 分類 + 治療</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">下背痛紅旗警訊（Red Flags，需進一步檢查）</p>
+            <ul class="k-list">
+              <li>年齡 &gt;50 或 &lt;20 歲新發</li>
+              <li>有癌症、結核、HIV 病史</li>
+              <li>夜間痛、休息不緩解（腫瘤 / 感染）</li>
+              <li>發燒、體重下降（感染 / 惡性）</li>
+              <li>馬尾症候群：雙側神經根症狀 + 大小便失禁 + 鞍區感覺喪失 → <strong>緊急 MRI + 外科會診</strong></li>
+              <li>外傷史（骨質疏鬆患者輕微外傷即可骨折）</li>
+              <li>類固醇長期使用</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">下背痛分類 + 治療</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>特徵</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>非特異性下背痛（90%）</strong></td><td>無神經學缺損；無紅旗；多在 6-12 週內自限</td><td>活動（不要臥床）；NSAIDs；熱敷；運動治療；認知行為治療</td></tr>
+                <tr><td><strong>神經根病變（Radiculopathy）</strong></td><td>沿皮節分布的放射痛；SLR test（+）；感覺 / 運動 / 反射異常</td><td>NSAIDs；Gabapentin；硬膜外類固醇注射；手術（保守 6 週無效）</td></tr>
+                <tr><td><strong>椎管狹窄（Stenosis）</strong></td><td>神經性跛行；走路加重、彎腰緩解；老年人</td><td>物理治療；硬膜外類固醇；手術減壓（重度）</td></tr>
+                <tr><td><strong>脊椎滑脫（Spondylolisthesis）</strong></td><td>椎體前移；L4-L5 最常見；青少年競技運動員（壓力性骨折）</td><td>核心肌群訓練；限制過度伸展；手術（重度 / 神經學損傷）</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li><strong>核心原則：</strong>急性期避免臥床休息（延長恢復）；鼓勵適度活動；運動治療是慢性下背痛最有效的介入</li>
+              <li><strong>Opioid：</strong>慢性下背痛不建議長期使用（依賴風險 &gt; 效益）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="shoulder-knee-rehab" data-bm-dept="復健科" data-bm-title="肩 + 膝關節復健">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">肩關節（旋轉肌腱）+ 膝關節復健</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">旋轉肌腱症候群（Rotator Cuff）</p>
+            <ul class="k-list">
+              <li><strong>旋轉肌腱組成（SITS）：</strong>Supraspinatus（最常撕裂）；Infraspinatus；Teres minor；Subscapularis</li>
+              <li><strong>夾擊症候群（Impingement）：</strong>Painful arc（60-120°）；Neer sign（+）；Hawkins test（+）；肩峰下空間狹窄</li>
+              <li><strong>旋轉肌腱撕裂：</strong>MRI 確診；部分撕裂 → 復健；完全撕裂 + 功能障礙 → 手術修補</li>
+              <li><strong>治療：</strong>NSAIDs；肩峰下類固醇注射（短期）；PT（肩胛穩定肌群訓練）；PRP 注射（爭議）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">五十肩（Frozen Shoulder / Adhesive Capsulitis）</p>
+            <ul class="k-list">
+              <li><strong>三期：</strong>疼痛期（6 週-9 個月）→ 僵硬期（4-6 個月）→ 恢復期（6-24 個月）；多數 1-3 年自然恢復</li>
+              <li><strong>治療：</strong>NSAIDs；關節內類固醇注射（疼痛期效果最佳）；物理治療（伸展）；水擴張術（Hydrodilation）；關節鏡放鬆術</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">膝關節骨關節炎（Knee OA）復健</p>
+            <ul class="k-list">
+              <li><strong>股四頭肌訓練 = 最重要：</strong>↑ 關節穩定性；↓ 關節負荷；等長 + 等張 + 水中運動</li>
+              <li><strong>體重控制：</strong>每減 1 kg = 膝關節負荷減少 4 kg（步行時）</li>
+              <li><strong>輔具：</strong>手杖（對側手）；膝護具（卸載支架）；楔型鞋墊（內側 OA → 外側楔型）</li>
+              <li><strong>注射治療：</strong>關節內類固醇（短期 1-3 個月效果）；HA 注射（爭議，部分患者有效）；PRP（中度證據）</li>
+              <li class="note">髕骨股骨疼痛症候群（PFPS）= 年輕人常見；股四頭肌訓練 + 髕骨貼紮（McConnell taping）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- rehab-cardiac -->
+    <div class="topic-block" id="rehab-cardiac">
+      <div class="topic-block-head">
+        <span class="topic-block-title">心肺復健 Cardiopulmonary Rehabilitation（心臟復健 + 肺復健）</span>
+        <div data-bm-id="rehab-cardiac" data-bm-dept="復健科" data-bm-title="心肺復健"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>心臟復健（Cardiac Rehabilitation）</strong>是心肌梗塞後的 Class I 建議，可降低死亡率 25%、再住院率 30%，但台灣參與率仍偏低。<strong>肺復健（Pulmonary Rehabilitation）</strong>是 COPD 最重要的非藥物治療，能改善運動耐受性和生活品質，比藥物更有效改善呼吸困難。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="cardiac-rehab" data-bm-dept="復健科" data-bm-title="心臟復健">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">心臟復健（Cardiac Rehabilitation）Phase I-III</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>階段</th><th>時間</th><th>地點</th><th>內容</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Phase I（住院期）</strong></td><td>急性期住院</td><td>病房 / CCU</td><td>早期活動（坐起、站立、短距離步行）；衛教（藥物、飲食、危險因子）；運動耐受性評估</td></tr>
+                <tr><td><strong>Phase II（門診監測期）</strong></td><td>出院後 2-12 週</td><td>醫院門診</td><td>ECG 監測下有氧運動；個別化運動處方；心血管危險因子管理；心理支持</td></tr>
+                <tr><td><strong>Phase III（維持期）</strong></td><td>長期</td><td>社區 / 家庭</td><td>自主運動維持；生活型態改變；定期追蹤</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">心臟復健適應症 + 運動處方</p>
+            <ul class="k-list">
+              <li><strong>適應症：</strong>急性心肌梗塞後；CABG / PCI 後；穩定型心絞痛；心臟衰竭（EF &lt;35% 也可）；心臟瓣膜手術後；心臟移植後</li>
+              <li><strong>運動強度目標：</strong>最大心率的 50-80%；或 RPE（自覺用力程度）12-14；或 HRR（心率儲備）40-70%</li>
+              <li><strong>FITT 原則：</strong>Frequency 3-5 次/週；Intensity 中等強度；Time 20-60 分鐘；Type 有氧（步行、腳踏車）+ 阻力訓練</li>
+              <li><strong>絕對禁忌（暫時停止運動）：</strong>不穩定心絞痛；心室頻脈；失代償性心衰竭；嚴重主動脈狹窄；急性心肌炎</li>
+              <li class="note">心臟復健每降低 1 MET 運動能力 = 死亡率增加 12%；提升運動能力是最重要的預後指標</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="pulmonary-rehab" data-bm-dept="復健科" data-bm-title="肺復健">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">肺復健（Pulmonary Rehabilitation）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">肺復健適應症 + 效益</p>
+            <ul class="k-list">
+              <li><strong>主要適應症：</strong>COPD（GOLD 2-4）；限制性肺疾病；支氣管擴張；肺高壓；肺移植前後；肺癌手術前後</li>
+              <li><strong>禁忌：</strong>不穩定心臟病；嚴重骨骼肌肉問題影響運動；認知障礙無法配合</li>
+              <li><strong>效益（最高等級證據）：</strong>改善呼吸困難（dyspnea）；↑ 運動耐受性（6MWT）；↑ 生活品質（SGRQ）；↓ 急性惡化住院；但<strong>不改變 FEV1</strong></li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">肺復健組成</p>
+            <ul class="k-list">
+              <li><strong>運動訓練（核心）：</strong>有氧運動（步行 / 腳踏車）+ 上下肢肌力訓練；高強度優於低強度；間歇訓練（Interval training）適合嚴重 COPD</li>
+              <li><strong>呼吸技巧：</strong>縮唇呼吸（Pursed-lip breathing）= 延長呼氣、↓ 動態過度充氣；橫膈呼吸；能量節省技巧</li>
+              <li><strong>胸腔物理治療：</strong>姿位引流（Postural drainage）；扣擊；主動循環呼吸技巧（ACBT）；震動排痰；適合痰多患者（支氣管擴張）</li>
+              <li><strong>NIV 輔助運動：</strong>嚴重 COPD 在肺復健期間使用 BiPAP → 可增加運動強度</li>
+              <li><strong>衛教：</strong>戒菸；藥物使用（吸入劑技術）；急性惡化早期辨識；營養</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ICU 復健（Early Mobilization）</p>
+            <ul class="k-list">
+              <li>ICU 早期活動（發病 48-72 小時內）→ ↓ 機械通氣天數；↓ ICU 獲得性虛弱（ICUAW）；↑ 出院時功能</li>
+              <li>安全標準：FiO₂ &lt;0.6；PEEP &lt;10；MAP &gt;65（或穩定升壓劑）；HR 40-130；無積極治療的心律不整</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- rehab-amputee -->
+    <div class="topic-block" id="rehab-amputee">
+      <div class="topic-block-head">
+        <span class="topic-block-title">截肢 + 義肢 Amputation & Prosthetics（分類 + 義肢選擇 + 幻肢痛）</span>
+        <div data-bm-id="rehab-amputee" data-bm-dept="復健科" data-bm-title="截肢 + 義肢"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">台灣截肢最常見原因是<strong>糖尿病足（約 50%）</strong>，其次是周邊血管疾病和外傷。<strong>截肢平面</strong>決定義肢類型和功能潛力——保留越多肢體越好。<strong>幻肢痛（Phantom limb pain）</strong>影響 70-80% 截肢者，是復健的重要挑戰。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="amputation-prosthetics" data-bm-dept="復健科" data-bm-title="截肢分類 + 義肢">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">截肢分類 + 義肢選擇</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">下肢截肢分類 + 義肢</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>截肢平面</th><th>義肢類型</th><th>功能潛力</th></tr></thead>
+              <tbody>
+                <tr><td><strong>足趾 / 前足（Partial foot）</strong></td><td>矯形鞋墊 / 前足義肢</td><td>幾乎正常行走</td></tr>
+                <tr><td><strong>Syme（踝關節離斷）</strong></td><td>Syme 義肢（末端負重）</td><td>良好步行功能</td></tr>
+                <tr><td><strong>膝下截肢（BKA / Transtibial）</strong></td><td>膝下義肢（PTB socket）</td><td>優；接近正常步行；能量消耗 ↑ 25%</td></tr>
+                <tr><td><strong>膝關節離斷（Knee disarticulation）</strong></td><td>膝關節義肢</td><td>良好；末端負重</td></tr>
+                <tr><td><strong>膝上截肢（AKA / Transfemoral）</strong></td><td>膝上義肢（含義肢膝關節）</td><td>中等；能量消耗 ↑ 65%；需較高肌力</td></tr>
+                <tr><td><strong>髖關節離斷</strong></td><td>髖關節義肢</td><td>差；能量消耗極大；多數老年人無法使用</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">殘肢照護 + 義肢訓練</p>
+            <ul class="k-list">
+              <li><strong>術後立即：</strong>硬式殘肢套（Rigid dressing）→ 塑形 + 減少水腫；彈性繃帶包紮；懸吊時避免長時間屈髖（膝上截肢）</li>
+              <li><strong>義肢訓練時機：</strong>傷口癒合（6-8 週）+ 殘肢定型後；臨時義肢（Preparatory prosthesis）→ 定型義肢</li>
+              <li><strong>K-Level 功能分類（義肢保險給付依據）：</strong>K0 = 無法使用；K1 = 室內平地；K2 = 社區低強度；K3 = 社區全強度；K4 = 高度活動（運動員）</li>
+              <li><strong>義肢足部選擇：</strong>SACH（最簡單）；Energy-storing（碳纖維，K3-K4）；Microprocessor ankle（高功能）</li>
+              <li><strong>膝上截肢義肢膝：</strong>Single-axis；Polycentric；Microprocessor knee（C-Leg，K3-K4，最智慧）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="phantom-pain" data-bm-dept="復健科" data-bm-title="幻肢痛 + 殘肢問題">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">幻肢痛（Phantom Limb Pain）+ 殘肢問題</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">幻肢痛</p>
+            <ul class="k-list">
+              <li><strong>定義：</strong>截肢後感覺截肢部位仍然存在並有疼痛；70-80% 截肢者發生；機轉 = 中樞神經重塑（Cortical reorganization）</li>
+              <li><strong>區分：</strong>幻肢痛（Phantom limb pain）= 有痛；幻肢感（Phantom sensation）= 無痛的感覺；殘肢痛（Residual limb pain）= 殘端本身疼痛</li>
+              <li><strong>藥物治療：</strong>
+                <ul>
+                  <li>Gabapentin / Pregabalin（神經病變痛，一線）</li>
+                  <li>Tricyclic antidepressants（Amitriptyline）</li>
+                  <li>SNRIs（Duloxetine）</li>
+                  <li>Opioid（短期重度疼痛）</li>
+                  <li>Ketamine（頑固性幻肢痛）</li>
+                </ul>
+              </li>
+              <li><strong>非藥物治療：</strong>
+                <ul>
+                  <li><strong>鏡像治療（Mirror therapy）：</strong>最有證據的非藥物治療；視覺反饋重塑大腦皮質</li>
+                  <li>TENS（經皮電神經刺激）；殘肢按摩；針灸</li>
+                  <li>虛擬實境（VR）= 新興治療</li>
+                </ul>
+              </li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">常見殘肢問題</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>問題</th><th>原因</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>殘端水腫</strong></td><td>截肢後淋巴回流改變</td><td>彈性繃帶包紮；殘肢套；抬高</td></tr>
+                <tr><td><strong>接觸性皮膚炎</strong></td><td>義肢接受腔材料過敏</td><td>更換材料；殘肢套保護</td></tr>
+                <tr><td><strong>殘端破皮 / 潰瘍</strong></td><td>接受腔不合；過度負重</td><td>調整接受腔；減少使用；傷口照護</td></tr>
+                <tr><td><strong>屈曲攣縮</strong></td><td>術後姿勢不良（如長時間坐輪椅）</td><td>伸展運動；俯臥訓練（膝上截肢）；正確擺位</td></tr>
+                <tr><td><strong>神經瘤（Neuroma）</strong></td><td>殘端神經芽增生</td><td>殘肢叩擊脫敏；類固醇注射；手術切除</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'rehab-approach', dept:'復健科', title:'復健評估（ICF 架構 + Barthel + FIM + MRC）',        url:'#rehab-approach', text:'' },
+    { id:'rehab-stroke',   dept:'復健科', title:'中風復健（Brunnstrom + 痙攣處置 + Botox）',         url:'#rehab-stroke',   text:'' },
+    { id:'rehab-neuro',    dept:'復健科', title:'神經復健（脊髓損傷 ASIA + TBI + 帕金森復健）',      url:'#rehab-neuro',    text:'' },
+    { id:'rehab-msk',      dept:'復健科', title:'肌肉骨骼復健（下背痛 + 肩關節 + 膝關節）',          url:'#rehab-msk',      text:'' },
+    { id:'rehab-cardiac',  dept:'復健科', title:'心肺復健（心臟復健 Phase I-III + 肺復健）',          url:'#rehab-cardiac',  text:'' },
+    { id:'rehab-amputee',  dept:'復健科', title:'截肢 + 義肢（截肢分類 + 義肢選擇 + 幻肢痛）',       url:'#rehab-amputee',  text:'' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else { initSearch(SEARCH_INDEX); }
+</script>
+</body>
+</html>
