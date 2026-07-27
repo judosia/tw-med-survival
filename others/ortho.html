@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>骨科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .score-modal-overlay.open{display:flex;}
+    .score-modal{background:var(--white);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .score-modal-head{position:sticky;top:0;background:var(--white);padding:18px 22px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .score-modal-head h2{font-size:1rem;font-weight:800;}
+    .score-modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;}
+    .score-modal-body{padding:20px 22px;}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#ortho" class="nav-back">骨科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">骨科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">X</button></div>
+  <div id="bm-list"></div>
+</div>
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">骨科</div>
+    <div class="sidebar-section-title">基礎評估</div>
+    <a href="#ortho-approach" class="sidebar-link">骨科評估（骨折分類 + 手術原則）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">上肢骨折</div>
+    <a href="#ortho-fracture" class="sidebar-link">上肢常見骨折（Colles + 肱骨 + 鎖骨）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">下肢骨折</div>
+    <a href="#ortho-lower" class="sidebar-link">下肢骨折（股骨頸 + 脛骨 + 踝關節）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">脊椎</div>
+    <a href="#ortho-spine" class="sidebar-link">脊椎骨折（頸椎 + 胸腰椎 + 骨質疏鬆）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急症</div>
+    <a href="#ortho-emergency" class="sidebar-link">骨科急症（筋膜室症候群 + 開放性骨折）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">關節</div>
+    <a href="#ortho-joint" class="sidebar-link">關節疾病（退化性關節炎 + 人工關節）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../surg/plastics.html" class="sidebar-link">整形外科（手部外傷）→</a>
+    <a href="../er/trauma.html" class="sidebar-link">外傷急診 →</a>
+  </aside>
+  <main class="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#f5f5ff 0%,#f0f5ff 100%);color:var(--navy);">
+      <div class="page-hero-text">
+        <h1>骨科</h1>
+        <p>骨折分類、常見骨折處置、骨科急症與關節疾病，參考 Rockwood &amp; Green 9th 編排，涵蓋 PGY 必備臨床知識。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0 1 12 2.944a11.955 11.955 0 0 1-8.618 3.04A12.02 12.02 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#ortho">骨科</a> › 骨科
+    </div>
+
+
+    <!-- ortho-approach -->
+    <div class="topic-block" id="ortho-approach">
+      <div class="topic-block-head">
+        <span class="topic-block-title">骨科評估基礎 Orthopaedic Assessment（骨折分類 + AO 分型 + 手術原則）</span>
+        <div data-bm-id="ortho-approach" data-bm-dept="骨科" data-bm-title="骨科評估基礎"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">骨科評估的三大核心：<strong>骨折描述</strong>（解剖位置 + AO 分型）；<strong>神經血管評估</strong>（6P）；<strong>手術時機與方式決策</strong>。參考 Rockwood &amp; Green 9th Edition 骨折分類原則，任何骨折描述都需包含：部位、骨折型態（橫型/斜型/螺旋/粉碎）、移位程度、開放或閉鎖、合併神經血管傷害。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="fracture-classification" data-bm-dept="骨科" data-bm-title="骨折分類系統">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">骨折描述 + AO 分型 + 骨折型態</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">骨折系統性描述（每個骨折必須包含）</p>
+            <ul class="k-list">
+              <li><strong>骨骼 + 解剖位置：</strong>哪根骨頭；近端 / 中段 / 遠端；骨幹 / 幹骺端 / 骨骺</li>
+              <li><strong>骨折型態：</strong>橫型（Transverse）/ 斜型（Oblique）/ 螺旋型（Spiral）/ 粉碎型（Comminuted）/ 節段型（Segmental）</li>
+              <li><strong>移位（Displacement）：</strong>成角（Angular，degrees）；平移（Translation，%）；縮短（Shortening，cm）；旋轉（Rotation）</li>
+              <li><strong>開放 vs 閉鎖（Open vs Closed）：</strong>Gustilo-Anderson 分型（見急症 block）</li>
+              <li><strong>合併傷：</strong>神經損傷；血管損傷；關節內骨折；韌帶損傷</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">AO/OTA 骨折分型（長骨三碼系統）</p>
+            <ul class="k-list">
+              <li><strong>第一碼（骨骼）：</strong>1 = 肱骨；2 = 橈尺骨；3 = 股骨；4 = 脛腓骨</li>
+              <li><strong>第二碼（部位）：</strong>1 = 近端；2 = 骨幹；3 = 遠端</li>
+              <li><strong>第三碼（型態）：</strong>A = 簡單骨折；B = 楔形（Wedge）；C = 複雜（Complex）/ 粉碎</li>
+              <li class="note">例：31A2 = 股骨近端簡單骨折（股骨頸骨折）；42C3 = 脛骨遠端複雜粉碎骨折（Pilon 骨折）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">骨折癒合基礎</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>癒合類型</th><th>條件</th><th>機轉</th></tr></thead>
+              <tbody>
+                <tr><td><strong>初級癒合（Primary healing）</strong></td><td>解剖復位 + 絕對穩定（鋼板固定）</td><td>直接哈佛氏系統重建；無骨痂</td></tr>
+                <tr><td><strong>次級癒合（Secondary healing）</strong></td><td>相對穩定（髓內釘 / 石膏）</td><td>骨痂形成（軟骨性骨痂 → 硬骨痂）；最常見</td></tr>
+                <tr><td><strong>不癒合（Non-union）</strong></td><td>感染 / 不穩定 / 血供不良 / 骨缺損</td><td>肥大型（血供好，固定不足）vs 萎縮型（血供差）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="ortho-nvassess" data-bm-dept="骨科" data-bm-title="神經血管評估 + 手術原則">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">神經血管評估 + 固定方式選擇</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">神經血管評估（每個骨折都要做）</p>
+            <ul class="k-list">
+              <li><strong>脈搏（Pulse）：</strong>遠端動脈搏動（橈動脈 / 足背動脈 / 脛後動脈）；ABI；若疑似血管損傷 → CTA 或血管攝影</li>
+              <li><strong>毛細血管充填（Capillary refill）：</strong>正常 &lt;2 秒；延遲 → 末端缺血</li>
+              <li><strong>感覺（Sensation）：</strong>輕觸覺；兩點辨別覺（2-point discrimination）；神經支配區域</li>
+              <li><strong>運動（Motor）：</strong>關鍵肌肉測試；骨折附近神經支配區域</li>
+              <li><strong>常見合併神經損傷：</strong>肱骨幹骨折 → 橈神經（Radial nerve，垂腕）；髖關節脫臼 → 坐骨神經；腓骨頸骨折 → 腓總神經（Foot drop）；肱骨遠端骨折（兒童）→ 前骨間神經（AIN）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">固定方式選擇</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>方式</th><th>適應症</th><th>優缺點</th></tr></thead>
+              <tbody>
+                <tr><td><strong>石膏 / 副木（Cast/Splint）</strong></td><td>穩定性骨折；兒童骨折；非手術治療</td><td>非侵入性；但需長期制動；肌肉萎縮</td></tr>
+                <tr><td><strong>髓內釘（IMN）</strong></td><td>長骨骨幹骨折（脛骨、股骨、肱骨）</td><td>負重早；生物力學佳；感染率低；手術時間短</td></tr>
+                <tr><td><strong>鋼板螺釘（ORIF）</strong></td><td>關節內骨折；幹骺端；IMN 無法處理</td><td>解剖復位；需廣泛剝離；感染率略高</td></tr>
+                <tr><td><strong>外固定器（External fixator）</strong></td><td>開放性骨折（暫時）；感染；嚴重軟組織傷；骨盆骨折</td><td>快速；感染少；但釘道感染；不適合長期</td></tr>
+                <tr><td><strong>全關節置換（TKR/THR）</strong></td><td>股骨頸骨折（老年人）；嚴重關節炎合併骨折</td><td>立刻負重；但人工關節壽命有限</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">手術時機</p>
+            <ul class="k-list">
+              <li><strong>緊急（&lt;6-8 小時）：</strong>開放性骨折（清創）；血管損傷；筋膜室症候群（筋膜切開）；脊髓進行性損傷</li>
+              <li><strong>急迫（&lt;24-48 小時）：</strong>股骨頸骨折（&lt;24 小時，↓ 股骨頭壞死）；不穩定骨盆骨折；多重外傷患者長骨穩定</li>
+              <li><strong>擇期（3-7 天）：</strong>軟組織腫脹消退後；複雜關節內骨折；等待全身狀況改善</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- ortho-fracture -->
+    <div class="topic-block" id="ortho-fracture">
+      <div class="topic-block-head">
+        <span class="topic-block-title">上肢常見骨折 Upper Extremity Fractures（Colles + 肱骨 + 鎖骨）</span>
+        <div data-bm-id="ortho-fracture" data-bm-dept="骨科" data-bm-title="上肢常見骨折"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">上肢骨折中最常見的是<strong>橈骨遠端骨折（Distal radius fracture）</strong>，又稱 Colles 骨折，是成人最常見的骨折，好發於老年骨質疏鬆女性（手撐地跌倒）。<strong>肱骨近端骨折</strong>是老年人第三常見骨折。<strong>鎖骨骨折</strong>是年輕人最常見的骨折（接觸性運動）。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="distal-radius-fx" data-bm-dept="骨科" data-bm-title="橈骨遠端骨折">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">橈骨遠端骨折（Colles / Distal Radius Fracture）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">典型表現 + 分型</p>
+            <ul class="k-list">
+              <li><strong>Colles 骨折：</strong>橈骨遠端背側成角（Dorsal angulation）+ 橈側移位；「Dinner fork deformity」；跌倒手撐地（FOOSH = Fall on outstretched hand）</li>
+              <li><strong>Smith 骨折（反 Colles）：</strong>掌側成角（Volar angulation）；手背撐地或直接暴力</li>
+              <li><strong>Barton 骨折：</strong>橈骨遠端關節內邊緣骨折 + 腕關節半脫位</li>
+              <li><strong>Chauffeur 骨折（Radial styloid）：</strong>橈骨莖突撕裂骨折；舟狀骨壓迫機轉</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">影像評估關鍵參數</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>參數</th><th>正常值</th><th>臨床意義</th></tr></thead>
+              <tbody>
+                <tr><td><strong>橈骨傾斜角（Radial inclination）</strong></td><td>22°（正面）</td><td>&lt;15° → 功能受損</td></tr>
+                <tr><td><strong>掌側傾斜角（Volar tilt）</strong></td><td>11°（側面）</td><td>背側成角 &gt;10° → 考慮手術</td></tr>
+                <tr><td><strong>橈骨高度（Radial height）</strong></td><td>11-12 mm</td><td>縮短 &gt;5 mm → 考慮手術</td></tr>
+                <tr><td><strong>關節內台階（Articular step-off）</strong></td><td>0 mm</td><td>&gt;2 mm → 手術適應症</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">治療</p>
+            <ul class="k-list">
+              <li><strong>非手術（穩定骨折）：</strong>閉合復位 + 短臂石膏（6 週）；老年患者輕微移位可接受保守</li>
+              <li><strong>手術適應症：</strong>關節內台階 &gt;2 mm；背側成角 &gt;10°；橈骨縮短 &gt;5 mm；不穩定骨折（閉合復位失敗）</li>
+              <li><strong>掌側鎖定鋼板（VLP，Volar locking plate）：</strong>目前主流手術方式；可早期活動</li>
+              <li class="note">注意合併傷：舟狀骨骨折（10%）；TFCC 損傷；正中神經急性卡壓（急性腕管症候群）→ 緊急減壓</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="proxhumerus-clavicle" data-bm-dept="骨科" data-bm-title="肱骨近端 + 鎖骨骨折">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">肱骨近端骨折（Neer 分型）+ 鎖骨骨折</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">肱骨近端骨折（Neer 分型）</p>
+            <ul class="k-list">
+              <li><strong>Neer 分型</strong>依骨折部分（Part）數分類：大結節（Greater tuberosity）、小結節（Lesser tuberosity）、肱骨頭（Head）、肱骨幹（Shaft）</li>
+              <li><strong>1-Part：</strong>無移位 or 移位 &lt;1 cm / &lt;45°；佔所有肱骨近端骨折 80%；保守治療（懸吊 + 早期鐘擺運動）</li>
+              <li><strong>2-Part：</strong>一個部分移位；外科頸骨折最常見；保守或手術（依移位程度）</li>
+              <li><strong>3-Part：</strong>兩個部分移位；肌腱旋轉力使骨折移位；手術（ORIF / 鎖定鋼板）</li>
+              <li><strong>4-Part：</strong>所有部分移位；肱骨頭缺血性壞死（AVN）風險高（&gt;30%）；老年人 → 半肩關節置換（Hemiarthroplasty）或反肩置換；年輕人 → 嘗試 ORIF</li>
+            </ul>
+            <ul class="k-list">
+              <li><strong>大結節骨折：</strong>肩關節前脫臼後最常見合併傷；移位 &gt;5 mm → 手術固定（否則外轉力量受損）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">鎖骨骨折（Clavicle Fracture）</p>
+            <ul class="k-list">
+              <li><strong>分段：</strong>中段（Midshaft，80%，最常見）；外側段（Lateral，15%，靠近肩鎖關節）；內側段（Medial，5%，罕見）</li>
+              <li><strong>中段鎖骨骨折：</strong>縮短 &gt;2 cm；粉碎；垂直移位 &gt;100%；開放性；神經血管損傷 → 手術（鋼板）；其餘多保守（懸吊 3-6 週）</li>
+              <li><strong>外側段骨折（Neer Type II）：</strong>喙鎖韌帶（Coracoclavicular ligament）斷裂 → 不穩定 → 手術固定率高</li>
+              <li class="note">注意合併傷：氣胸（鎖骨骨折端穿刺）；臂神經叢損傷；鎖骨下血管損傷（少見但危急）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">其他上肢重要骨折</p>
+            <ul class="k-list">
+              <li><strong>舟狀骨骨折（Scaphoid）：</strong>解剖鼻煙盒（Anatomic snuffbox）壓痛；X 光可能正常（早期）→ MRI 或 CT 確診；腰部骨折（Waist）血供差 → 不癒合 / AVN 風險；移位 → 手術（headless compression screw）</li>
+              <li><strong>肱骨幹骨折：</strong>橈神經（Radial nerve）損傷 20%（中下 1/3 交界）→ 垂腕；多數保守（functional brace）；橈神經多觀察 3 個月（多數自行恢復）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ortho-lower -->
+    <div class="topic-block" id="ortho-lower">
+      <div class="topic-block-head">
+        <span class="topic-block-title">下肢骨折 Lower Extremity Fractures（股骨頸 + 髖關節脫臼 + 脛骨 + 踝關節）</span>
+        <div data-bm-id="ortho-lower" data-bm-dept="骨科" data-bm-title="下肢骨折"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>股骨頸骨折</strong>是老年人最重要的骨折，死亡率高（1 年死亡率 20-30%），需在 24-48 小時內手術。<strong>髖關節後脫臼</strong>= 骨科急症，需在 6 小時內復位（↓ 股骨頭壞死風險）。<strong>脛骨骨折</strong>是最常見需要髓內釘固定的骨折。<strong>踝關節骨折</strong>依 Lauge-Hansen 分型決定穩定性和手術適應症。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="hip-fracture-dislocation" data-bm-dept="骨科" data-bm-title="髖部骨折 + 脫臼">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">股骨頸骨折（Garden 分型）+ 髖關節脫臼</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">股骨近端骨折分類</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>骨折類型</th><th>位置</th><th>特徵</th></tr></thead>
+              <tbody>
+                <tr><td><strong>股骨頸骨折（Femoral neck）</strong></td><td>囊內（Intracapsular）</td><td>股骨頭血供受損 → AVN 風險；Garden 分型；外旋短縮</td></tr>
+                <tr><td><strong>轉子間骨折（Intertrochanteric）</strong></td><td>囊外（Extracapsular）</td><td>血供好；出血較多；Evans 分型；外旋縮短更明顯</td></tr>
+                <tr><td><strong>轉子下骨折（Subtrochanteric）</strong></td><td>囊外</td><td>肌肉牽拉使骨折端移位；髓內釘治療</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Garden 分型（股骨頸骨折）</p>
+            <ul class="k-list">
+              <li><strong>Garden I（嵌插型）：</strong>不完全骨折；外翻嵌插；穩定；可保守 or 螺釘固定</li>
+              <li><strong>Garden II（完全無移位）：</strong>完全骨折但無移位；螺釘固定</li>
+              <li><strong>Garden III（部分移位）：</strong>部分位移；小梁線不連續；AVN 風險↑</li>
+              <li><strong>Garden IV（完全移位）：</strong>完全移位；AVN 風險最高</li>
+              <li class="note">實務簡化：Garden I/II = 未移位（保留頭，螺釘固定）；Garden III/IV = 移位（老年 → 半髖置換；年輕 → 嘗試 ORIF）</li>
+            </ul>
+            <ul class="k-list">
+              <li><strong>手術時機：</strong>&lt;24-48 小時內（↓ AVN 風險；↓ 臥床併發症）；老年人延遲手術 → 肺炎 / DVT 風險↑</li>
+              <li><strong>轉子間骨折：</strong>DHS（Dynamic hip screw）= 穩定型首選；PFNA（髓內釘）= 不穩定型；半髖置換（嚴重粉碎）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">髖關節脫臼（急症！）</p>
+            <ul class="k-list">
+              <li><strong>後脫臼（90%）：</strong>屈曲 + 內收 + 內旋姿勢（如坐車膝蓋撞儀表板）；坐骨神經損傷（10-15%）</li>
+              <li><strong>前脫臼（10%）：</strong>伸展 + 外旋 + 外展姿勢；股神經 / 血管損傷</li>
+              <li><strong>緊急閉合復位（Allis / Stimson 法）：</strong>&lt;6 小時 AVN 風險 &lt;10%；&gt;6 小時風險急增；復位後 X 光確認 + CT 評估合併骨折</li>
+              <li><strong>合併股骨頭骨折（Pipkin 分型）：</strong>復位後若關節面不整 → 手術取出或固定骨折片</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="tibia-ankle-fx" data-bm-dept="骨科" data-bm-title="脛骨 + 踝關節骨折">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">脛骨骨折 + 踝關節骨折（Lauge-Hansen）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">脛骨骨折</p>
+            <ul class="k-list">
+              <li><strong>脛骨幹骨折：</strong>最常見需要髓內釘固定的骨折；筋膜室症候群最常見（36% 的 ACS 來自脛骨幹骨折）；開放性骨折多見（脛骨前方皮下缺乏軟組織保護）</li>
+              <li><strong>髓內釘（IMN）：</strong>首選治療；閉合性骨幹骨折；允許早期負重</li>
+              <li><strong>脛骨平台骨折（Schatzker 分型）：</strong>I-VI 型；外側（最常見，Schatzker I-III）；雙髁（Schatzker V-VI，高能量）；CT 評估壓陷程度（&gt;2 mm → 手術）；注意合併韌帶損傷（LCL / ACL）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">踝關節骨折（Lauge-Hansen 分型）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>受傷機轉</th><th>骨折型態</th></tr></thead>
+              <tbody>
+                <tr><td><strong>SA（Supination-Adduction）</strong></td><td>旋後 + 內收</td><td>腓骨橫向骨折（下脛腓韌帶以下）+ 可能內踝縱向骨折（Vertical）</td></tr>
+                <tr><td><strong>SER（Supination-External Rotation，最常見）</strong></td><td>旋後 + 外旋</td><td>前下脛腓韌帶損傷 → 腓骨斜型骨折（下脛腓韌帶水平）→ 後踝 → 內踝（4 期）</td></tr>
+                <tr><td><strong>PA（Pronation-Abduction）</strong></td><td>旋前 + 外展</td><td>內踝 / 三角韌帶 → 脛腓韌帶 → 腓骨粉碎（下脛腓韌帶水平）</td></tr>
+                <tr><td><strong>PER（Pronation-External Rotation）</strong></td><td>旋前 + 外旋</td><td>內踝 → 下脛腓韌帶 → 腓骨高位骨折（Maisonneuve 骨折）</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li><strong>Maisonneuve 骨折：</strong>腓骨近端骨折 + 內踝 / 三角韌帶損傷 + 下脛腓韌帶損傷 → 踝關節不穩定；若只照踝關節 X 光會漏診 → <strong>必須照全長腓骨</strong></li>
+              <li><strong>穩定性評估：</strong>Weber A（下脛腓韌帶以下）= 穩定；Weber B（水平）= 可穩定或不穩定；Weber C（以上）= 不穩定；重力壓力試驗 / 外旋壓力試驗判斷</li>
+              <li><strong>治療：</strong>穩定骨折 → 石膏；不穩定（移位 &gt;2 mm 或下脛腓分離）→ 手術（ORIF + 下脛腓螺釘）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ortho-spine -->
+    <div class="topic-block" id="ortho-spine">
+      <div class="topic-block-head">
+        <span class="topic-block-title">脊椎骨折 Spine Fractures（頸椎 + 胸腰椎 + 骨質疏鬆）</span>
+        <div data-bm-id="ortho-spine" data-bm-dept="骨科" data-bm-title="脊椎骨折"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">脊椎骨折的穩定性評估依 Denis 三柱理論：<strong>前柱（前 2/3 椎體）+ 中柱（後 1/3 椎體 + 後縱韌帶）+ 後柱（椎弓 + 棘突韌帶）</strong>，中柱是穩定性的關鍵——中柱受損 → 不穩定。<strong>骨質疏鬆性壓迫性骨折（VCF）</strong>是最常見的脊椎骨折，需注意排除病理性骨折。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="thoracolumbar-fx" data-bm-dept="骨科" data-bm-title="胸腰椎骨折">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">胸腰椎骨折（Denis 分類）+ 骨質疏鬆 VCF</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Denis 骨折分類</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>受傷機轉</th><th>穩定性</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>壓迫型（Compression）</strong></td><td>軸向負荷 + 屈曲；前柱受損；中柱完整</td><td>穩定</td><td>保守（支架 / 保守）；前柱高度喪失 &gt;50% → 手術</td></tr>
+                <tr><td><strong>爆裂型（Burst）</strong></td><td>軸向壓縮；前 + 中柱受損；骨片可能後移壓迫脊髓</td><td>部分不穩定</td><td>無神經症狀 + 穩定 → 保守；有神經症狀或椎管狹窄 → 手術</td></tr>
+                <tr><td><strong>屈曲-分離型（Flexion-distraction / Chance）</strong></td><td>安全帶傷害；後柱張力傷害；穿越椎體或椎間盤</td><td>不穩定</td><td>骨性 Chance → 石膏；韌帶性 Chance → 手術融合</td></tr>
+                <tr><td><strong>骨折-脫臼型（Fracture-dislocation）</strong></td><td>高能量；三柱全損；脊髓損傷風險最高</td><td>極不穩定</td><td>手術（後路或前後路聯合）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">TLICS 評分（胸腰椎損傷分類和嚴重度評分）</p>
+            <ul class="k-list">
+              <li><strong>骨折型態：</strong>壓迫型 1 分；爆裂型 2 分；旋轉 / 平移 3 分；分離型 4 分</li>
+              <li><strong>後韌帶複合體（PLC）：</strong>完整 0 分；懷疑 2 分；損傷 3 分</li>
+              <li><strong>神經功能：</strong>完整 0 分；神經根 2 分；完全脊髓損傷 2 分；不完全脊髓損傷 3 分</li>
+              <li><strong>判斷：</strong>≤3 分 → 保守；4 分 → 個別化；≥5 分 → 手術</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">骨質疏鬆性椎體壓迫骨折（VCF）</p>
+            <ul class="k-list">
+              <li><strong>好發：</strong>T12-L1 交界；停經後女性；骨質疏鬆；可無明顯外傷史</li>
+              <li><strong>排除病理性骨折：</strong>MRI（水腫訊號）；骨掃描；若惡性腫瘤病史 → 切片</li>
+              <li><strong>治療：</strong>急性期止痛 + 臥床（短期）+ 支架；骨鬆治療（Bisphosphonate / Denosumab）；椎體成形術（Vertebroplasty）/ 後凸成形術（Kyphoplasty）= 頑固疼痛 or 後凸進行性增加</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="cervical-fx" data-bm-dept="骨科" data-bm-title="頸椎骨折">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">頸椎骨折 + NEXUS / Canadian C-spine Rule</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">頸椎骨折臨床評估（何時需要影像）</p>
+            <ul class="k-list">
+              <li><strong>NEXUS 低風險標準（全部符合才可不照 X 光）：</strong>無後頸中線壓痛；無意識改變；無中毒；無局部神經缺損；無分散注意力的疼痛傷害</li>
+              <li><strong>Canadian C-Spine Rule（更高敏感度）：</strong>高風險因素（年齡≥65、危險機轉、肢端感覺異常）→ 一定要照；低風險因素 + 能主動旋轉頸部 45° → 可不照</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">重要頸椎骨折類型（見神經外科 neuro-spine 更完整）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>骨折</th><th>機轉</th><th>穩定性 + 處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Jefferson 骨折（C1）</strong></td><td>軸向壓縮</td><td>韌帶完整 → 穩定；Halo brace；橫韌帶斷裂 → 不穩定 → 手術</td></tr>
+                <tr><td><strong>Odontoid（齒狀突）骨折</strong></td><td>屈曲 / 過伸</td><td>Type II（齒突基部）= 最常見不穩定型 → 手術（螺釘固定 or 後路融合）；老年骨質疏鬆高不癒合率</td></tr>
+                <tr><td><strong>Hangman 骨折（C2 椎弓）</strong></td><td>過伸 + 軸向壓縮</td><td>多數穩定（椎管減壓）；Cervical collar or Halo；嚴重移位 → 手術</td></tr>
+                <tr><td><strong>下頸椎（C3-C7）骨折脫臼</strong></td><td>屈曲 + 壓縮</td><td>MRI 評估韌帶和脊髓；不穩定 → 手術；小面關節（Facet）脫臼 → 牽引復位後固定</td></tr>
+              </tbody>
+            </table>
+            <div class="alert alert-red">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>任何外傷患者有頸部疼痛 / 神經症狀 → 立刻頸椎固定（Cervical collar）！確認影像前不可移除。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ortho-emergency -->
+    <div class="topic-block" id="ortho-emergency">
+      <div class="topic-block-head">
+        <span class="topic-block-title">骨科急症 Orthopaedic Emergencies（筋膜室症候群 + 開放性骨折 + 骨髓炎）</span>
+        <div data-bm-id="ortho-emergency" data-bm-dept="骨科" data-bm-title="骨科急症"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>急性筋膜室症候群（ACS）</strong>是骨科最重要的急症，Rockwood &amp; Green 強調：<em>唯一正確治療是緊急筋膜切開術</em>。關鍵診斷標準：ΔP（舒張壓 - 筋膜室內壓）&lt;30 mmHg = 手術適應症。<strong>開放性骨折</strong>需在 6 小時內清創（Gustilo-Anderson 分型決定是否一期縫合）。<strong>化膿性關節炎</strong>是真正的急症，需 24-48 小時內沖洗。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="compartment-syndrome" data-bm-dept="骨科" data-bm-title="急性筋膜室症候群">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性筋膜室症候群（ACS）— 參考 Rockwood &amp; Green Ch.16</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>ACS → 立刻筋膜切開術！延誤是導致治療失敗的唯一原因。<strong>脈搏存在不能排除 ACS！</strong></span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">好發骨折（Rockwood &amp; Green 數據）</p>
+            <ul class="k-list">
+              <li>脛骨幹骨折（36%，最常見）；軟組織傷（23%）；橈骨遠端骨折（9.8%）；前臂骨折（7.9%）；股骨骨折（3%）</li>
+              <li><strong>高風險族群：</strong>年輕男性（肌肉量大，筋膜室空間相對小）；閉鎖性骨折（比開放性更易）；低 Gustilo 級別開放性骨折</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床診斷（5P + 1P）</p>
+            <ul class="k-list">
+              <li><strong>Pain（疼痛）：</strong>與損傷不成比例（Out-of-proportion pain）= <strong>最早、最重要的症狀</strong></li>
+              <li><strong>Pain on passive stretch（被動伸展疼痛）：</strong>被動拉伸受影響筋膜室肌肉時疼痛加劇 = 最敏感的體徵</li>
+              <li><strong>Pressure（筋膜室腫脹）：</strong>筋膜室緊繃感</li>
+              <li><strong>Paresthesia（感覺異常）：</strong>麻木、針刺感（神經缺血）</li>
+              <li><strong>Paralysis（麻痺）：</strong>晚期；運動功能喪失</li>
+              <li><strong>⚠️ Pulselessness（無脈搏）：</strong>極晚期；<strong>脈搏存在不能排除 ACS！</strong></li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">筋膜室壓力測量（Rockwood &amp; Green 標準）</p>
+            <ul class="k-list">
+              <li><strong>ΔP = 舒張壓（DBP）- 筋膜室內壓（ICP）</strong></li>
+              <li><strong>ΔP ≤ 30 mmHg = 手術適應症（緊急筋膜切開術）</strong></li>
+              <li><strong>絕對壓力 &gt; 30 mmHg：</strong>過去常用閾值，但 McQueen 等研究顯示 ΔP 更可靠（考慮個體灌流差異）</li>
+              <li><strong>適用情況：</strong>昏迷患者；區域麻醉；無法配合的患者；臨床診斷不確定時</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">小腿四個筋膜室切開</p>
+            <ul class="k-list">
+              <li><strong>前室（Anterior）：</strong>脛前動脈；腓深神經（foot drop 風險）</li>
+              <li><strong>外側室（Lateral）：</strong>腓淺神經</li>
+              <li><strong>後淺室（Superficial posterior）：</strong>腓腸肌 / 比目魚肌</li>
+              <li><strong>後深室（Deep posterior）：</strong>脛後動靜脈；脛神經；最常被遺漏！需完整切開</li>
+              <li><strong>切開後：</strong>傷口開放（VAC 或 wet dressing）→ 3-5 天腫脹消退後延遲縫合或植皮</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="open-fracture-osteomyelitis" data-bm-dept="骨科" data-bm-title="開放性骨折 + 骨髓炎">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">開放性骨折（Gustilo-Anderson）+ 骨髓炎 + 化膿性關節炎</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Gustilo-Anderson 開放性骨折分類</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>傷口</th><th>污染</th><th>軟組織</th><th>感染率</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Type I</strong></td><td>&lt;1 cm；清潔</td><td>最少</td><td>最少剝脫</td><td>&lt;2%</td></tr>
+                <tr><td><strong>Type II</strong></td><td>1-10 cm；輕度污染</td><td>中等</td><td>中等剝脫；無廣泛損傷</td><td>5-10%</td></tr>
+                <tr><td><strong>Type IIIa</strong></td><td>&gt;10 cm；高能量</td><td>嚴重</td><td>廣泛剝脫但可直接覆蓋</td><td>~20%</td></tr>
+                <tr><td><strong>Type IIIb</strong></td><td>&gt;10 cm；高能量</td><td>嚴重</td><td>需皮瓣覆蓋（骨骼暴露）</td><td>~30%</td></tr>
+                <tr><td><strong>Type IIIc</strong></td><td>任何大小</td><td>嚴重</td><td>合併主要血管損傷</td><td>&gt;40%；截肢率高</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">開放性骨折處置（MESS 評分 / 保肢 vs 截肢）</p>
+            <ul class="k-list">
+              <li><strong>急性處置：</strong>用生理食鹽水濕紗布覆蓋（現場）；止血；固定；緊急送往手術室</li>
+              <li><strong>抗生素：</strong>Type I/II → Cefazolin；Type III → Cefazolin + Gentamicin；農業傷 / 污水 → 加 Penicillin（涵蓋 Clostridium）；越早越好（傷後 3 小時內）</li>
+              <li><strong>清創（Debridement）：</strong>&lt;6 小時（傳統黃金時間，現已有爭議但仍建議早期）；徹底切除壞死組織；大量生理食鹽水沖洗（&gt;9L）</li>
+              <li><strong>骨折固定：</strong>Type I/II → 一期髓內釘 or 鋼板；Type III → 外固定器（暫時）→ 軟組織穩定後轉換</li>
+              <li><strong>一期縫合：</strong>Type I → 可；Type II/III → 不宜（延遲縫合或皮瓣）</li>
+              <li><strong>破傷風預防：</strong>確認接種史；未接種或不確定 → Tetanus toxoid + TIG</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">化膿性關節炎（Septic Arthritis）</p>
+            <ul class="k-list">
+              <li><strong>臨床：</strong>發燒 + 單關節紅腫熱痛 + 活動度↓；膝關節最常見；S. aureus 最常見（成人）；淋球菌（年輕性活躍成人）</li>
+              <li><strong>診斷：</strong>關節液穿刺：WBC &gt;50,000（高度懷疑）；&gt;100,000（幾乎確定）；革蘭氏染色 + 培養；血液培養</li>
+              <li><strong>Kocher criteria（兒童）：</strong>發燒 + 不負重 + ESR &gt;40 + WBC &gt;12,000；4 項全中 = 化膿性關節炎機率 &gt;99%</li>
+              <li><strong>治療：</strong><strong>關節沖洗（Arthroscopic lavage / Open washout）= 緊急；24-48 小時內</strong>；靜脈抗生素（S. aureus → Vancomycin 直到藥敏）；延遲處置 → 關節軟骨破壞 → 骨關節炎</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ortho-joint -->
+    <div class="topic-block" id="ortho-joint">
+      <div class="topic-block-head">
+        <span class="topic-block-title">關節疾病 Joint Diseases（退化性關節炎 + TKR/THR + 類風濕）</span>
+        <div data-bm-id="ortho-joint" data-bm-dept="骨科" data-bm-title="關節疾病"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">骨科最常見的擇期手術是<strong>全膝關節置換（TKR）</strong>和<strong>全髖關節置換（THR）</strong>，主要適應症是終末期骨關節炎（OA）。術後最重要的急性併發症是<strong>人工關節感染（PJI）</strong>和<strong>DVT/PE</strong>。<strong>缺血性股骨頭壞死（AVN）</strong>需要早期診斷（MRI），否則股骨頭塌陷後只能換關節。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="oa-arthroplasty" data-bm-dept="骨科" data-bm-title="骨關節炎 + 人工關節">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">骨關節炎（OA）+ 全關節置換（TKR/THR）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">骨關節炎（Osteoarthritis）治療階梯</p>
+            <ul class="k-list">
+              <li><strong>非藥物：</strong>體重控制（最重要）；有氧運動 + 肌力訓練；物理治療；輔具（手杖）；避免過度負重活動</li>
+              <li><strong>藥物：</strong>乙醯胺酚（Acetaminophen，輕度）；NSAIDs（口服 or 外用，中度）；關節內類固醇注射（短期疼痛緩解）；Duloxetine（SNRIs，慢性疼痛）；關節內 Hyaluronic acid（HA）注射（效果爭議）</li>
+              <li><strong>手術適應症：</strong>嚴重疼痛影響日常生活 + 藥物治療失敗 + X 光顯示終末期關節炎（關節間隙消失）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">TKR（全膝關節置換）+ THR（全髖關節置換）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>TKR</th><th>THR</th></tr></thead>
+              <tbody>
+                <tr><td><strong>適應症</strong></td><td>終末期膝 OA；RA；創傷後關節炎</td><td>終末期髖 OA；AVN；RA；股骨頸骨折（老年）</td></tr>
+                <tr><td><strong>壽命</strong></td><td>15-20 年（85-90% 存活率）</td><td>15-20 年（>90% 存活率）</td></tr>
+                <tr><td><strong>術後活動</strong></td><td>術後第一天 / 立刻部分負重</td><td>術後立刻負重（非水泥型）；避免髖脫臼姿勢</td></tr>
+                <tr><td><strong>主要禁忌</strong></td><td>活動性感染；嚴重軟組織條件差；血管疾病</td><td>同左；嚴重肌肉無力（神經肌肉疾病）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">人工關節感染（Periprosthetic Joint Infection，PJI）</p>
+            <ul class="k-list">
+              <li><strong>分類：</strong>早期（&lt;3 個月）= S. aureus；遲發（3-24 個月）= CoNS（生物膜）；晚期（&gt;24 個月）= 血行性</li>
+              <li><strong>診斷：</strong>ESR + CRP + 關節液 WBC（&gt;1700，TKR；&gt;4200，THR）+ 培養；Alpha-defensin 測試（高特異性）</li>
+              <li><strong>治療：</strong>早期（&lt;3-4 週）→ 清創 + 更換內襯（DAIR）；確立感染 → 二階段翻修（移除 + 抗生素骨水泥墊片 → 6 週抗生素 → 重新置換）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="avascular-necrosis" data-bm-dept="骨科" data-bm-title="缺血性骨頭壞死 + RA 骨科處置">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">缺血性骨頭壞死（AVN）+ 類風濕性關節炎骨科處置</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">股骨頭缺血性壞死（AVN）— Ficat 分期</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>分期</th><th>影像</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Stage I</strong></td><td>X 光正常；MRI 有訊號改變（Band sign）</td><td>保守；Core decompression；避免負重</td></tr>
+                <tr><td><strong>Stage II</strong></td><td>X 光有硬化或囊性改變；股骨頭輪廓正常</td><td>Core decompression ± 骨移植；Bisphosphonate（爭議）</td></tr>
+                <tr><td><strong>Stage III</strong></td><td><strong>新月徵（Crescent sign）= 軟骨下骨折；股骨頭尚未塌陷</strong></td><td>Core decompression 效果差；考慮保頭手術（年輕人）</td></tr>
+                <tr><td><strong>Stage IV</strong></td><td>股骨頭塌陷；關節面不整</td><td>全髖關節置換（THR）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">AVN 危險因素（記憶：CAST）</p>
+            <ul class="k-list">
+              <li><strong>C — Corticosteroids：</strong>最常見的非外傷性原因；劑量和時間相關</li>
+              <li><strong>A — Alcohol：</strong>酒精中毒；脂肪栓塞理論</li>
+              <li><strong>S — Sickle cell / SLE：</strong>鐮狀細胞貧血；自體免疫（合併類固醇使用）</li>
+              <li><strong>T — Trauma：</strong>股骨頸骨折（移位）；髖關節脫臼；減壓症（潛水員）</li>
+              <li>其他：痛風；Gaucher disease；放射線治療；化療</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">類風濕性關節炎（RA）骨科相關重點</p>
+            <ul class="k-list">
+              <li><strong>頸椎不穩定（C1-C2）：</strong>橫韌帶侵蝕 → 寰樞椎半脫臼（Atlantoaxial subluxation）；術前麻醉需評估（頸椎 X 光 / CT）；頸椎屈曲 X 光 ADI &gt;3.5 mm（成人）→ 警訊</li>
+              <li><strong>前足（Forefoot）變形：</strong>蹠趾關節半脫臼；拇指外翻（Hallux valgus）；爪狀趾；手術矯正</li>
+              <li><strong>腕關節：</strong>橈腕關節侵蝕；尺骨頭背側半脫臼；屈肌腱鞘炎；腕隧道症候群</li>
+              <li><strong>術前注意：</strong>MTX 術前可繼續（現已更新建議）；類固醇患者需補充應激劑量（Stress dose）；術後感染風險↑（免疫抑制）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'ortho-approach',  dept:'骨科', title:'骨科評估（骨折分類 + AO 分型 + 手術原則）',          url:'#ortho-approach',  text:'' },
+    { id:'ortho-fracture',  dept:'骨科', title:'上肢常見骨折（Colles + 肱骨近端 + 鎖骨 + 肘關節）',  url:'#ortho-fracture',  text:'' },
+    { id:'ortho-lower',     dept:'骨科', title:'下肢骨折（股骨頸 + 髖關節脫臼 + 脛骨 + 踝關節）',    url:'#ortho-lower',     text:'' },
+    { id:'ortho-spine',     dept:'骨科', title:'脊椎骨折（頸椎 + 胸腰椎 + 骨質疏鬆壓迫性骨折）',    url:'#ortho-spine',     text:'' },
+    { id:'ortho-emergency', dept:'骨科', title:'骨科急症（筋膜室症候群 + 開放性骨折 + 骨髓炎）',     url:'#ortho-emergency', text:'' },
+    { id:'ortho-joint',     dept:'骨科', title:'關節疾病（退化性關節炎 + TKR/THR + 化膿性關節炎）',  url:'#ortho-joint',     text:'' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else { initSearch(SEARCH_INDEX); }
+</script>
+</body>
+</html>
