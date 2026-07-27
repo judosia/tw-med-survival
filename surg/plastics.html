@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>整形外科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .score-modal-overlay.open{display:flex;}
+    .score-modal{background:var(--white);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .score-modal-head{position:sticky;top:0;background:var(--white);padding:18px 22px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .score-modal-head h2{font-size:1rem;font-weight:800;}
+    .score-modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;}
+    .score-modal-body{padding:20px 22px;}
+    .img-placeholder{background:var(--light);border:2px dashed var(--border);border-radius:8px;padding:24px;text-align:center;color:var(--muted);font-size:0.8rem;margin:12px 0;}
+    .img-placeholder svg{display:block;margin:0 auto 8px;opacity:0.4;}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#plastics" class="nav-back">整形外科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">整形外科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">X</button></div>
+  <div id="bm-list"></div>
+</div>
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">整形外科</div>
+    <div class="sidebar-section-title">基礎評估</div>
+    <a href="#plastics-approach" class="sidebar-link">整形評估（傷口分類 + 重建階梯）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">傷口</div>
+    <a href="#plastics-wound" class="sidebar-link">傷口照護（急慢性傷口 + 負壓治療）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">燒燙傷</div>
+    <a href="#plastics-burn" class="sidebar-link">燒燙傷（分度 + TBSA + Parkland）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">移植 + 皮瓣</div>
+    <a href="#plastics-flap" class="sidebar-link">皮膚移植 + 皮瓣 + 顯微重建</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">手部</div>
+    <a href="#plastics-hand" class="sidebar-link">手部外傷（肌腱 + 神經 + 斷指）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急症</div>
+    <a href="#plastics-emergency" class="sidebar-link">整形急症（壓瘡 + 化學燒傷）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../er/trauma.html" class="sidebar-link">外傷急診 →</a>
+    <a href="../surg/gs.html" class="sidebar-link">一般外科 →</a>
+  </aside>
+  <main class="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#fff5f0 0%,#fff0f5 100%);color:var(--navy);">
+      <div class="page-hero-text">
+        <h1>整形外科</h1>
+        <p>傷口照護、燒燙傷處置、皮膚移植與皮瓣重建、手部外傷，涵蓋各科 PGY 必備的整形外科臨床知識。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#plastics">整形外科</a> › 整形外科
+    </div>
+
+
+    <!-- plastics-approach -->
+    <div class="topic-block" id="plastics-approach">
+      <div class="topic-block-head">
+        <span class="topic-block-title">整形外科評估基礎 Plastic Surgery Assessment</span>
+        <div data-bm-id="plastics-approach" data-bm-dept="整形外科" data-bm-title="整形外科評估基礎"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">整形外科的核心理念是<strong>用最簡單有效的方式重建缺損</strong>。<strong>重建階梯（Reconstructive Ladder）</strong>從最簡單到最複雜依序選擇；<strong>重建電梯（Reconstructive Elevator）</strong>= 直接選擇最適合的方式，不一定從最低階開始。傷口評估的三大要素：<strong>大小、深度、血管供應</strong>。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="wound-classification" data-bm-dept="整形外科" data-bm-title="傷口分類 + 縫合時機">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">傷口分類 + 縫合時機</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">傷口污染分類（CDC 手術傷口分類）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>分類</th><th>定義</th><th>感染率</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Class I 清潔（Clean）</strong></td><td>無感染；無開腔；無技術缺失；擇期手術</td><td>&lt;2%</td><td>一期縫合（Primary closure）</td></tr>
+                <tr><td><strong>Class II 清潔污染（Clean-contaminated）</strong></td><td>開腔（消化道 / 呼吸道 / 泌尿道）但無污染；輕微技術缺失</td><td>5-10%</td><td>一期縫合；預防性抗生素</td></tr>
+                <tr><td><strong>Class III 污染（Contaminated）</strong></td><td>急性炎症（無膿）；消化道溢漏；新鮮外傷傷口（&lt;4 小時）</td><td>20-30%</td><td>考慮延遲縫合；抗生素</td></tr>
+                <tr><td><strong>Class IV 骯髒感染（Dirty-infected）</strong></td><td>舊的外傷傷口（&gt;4 小時）；穿孔伴糞便污染；膿瘍</td><td>&gt;30%</td><td>開放引流；不縫合；抗生素</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">縫合時機分類</p>
+            <ul class="k-list">
+              <li><strong>一期縫合（Primary closure）：</strong>傷後立刻縫合；適合乾淨傷口；&lt;6-8 小時（臉部可延長至 12-24 小時，血供豐富）</li>
+              <li><strong>延遲一期縫合（Delayed primary closure）：</strong>傷後 3-5 天等待確認無感染後縫合；適合污染傷口</li>
+              <li><strong>二期癒合（Secondary intention）：</strong>讓傷口自然肉芽組織填充癒合；適合感染傷口 / 小缺損；會留疤痕</li>
+              <li><strong>三期縫合（Tertiary / Delayed closure）：</strong>觀察一段時間後確認乾淨再縫合</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">縫合材料速查</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>材料</th><th>種類</th><th>適用</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Nylon（尼龍）</strong></td><td>不可吸收；單股</td><td>皮膚縫合首選；低反應性；需拆線</td></tr>
+                <tr><td><strong>Prolene（Polypropylene）</strong></td><td>不可吸收；單股；藍色</td><td>血管縫合；皮膚；低摩擦力</td></tr>
+                <tr><td><strong>Vicryl（Polyglactin）</strong></td><td>可吸收；多股；紫色</td><td>皮下組織；黏膜；筋膜；約 6 週吸收</td></tr>
+                <tr><td><strong>PDS（Polydioxanone）</strong></td><td>可吸收；單股；紫色</td><td>筋膜；深部縫合；6 個月吸收；較強</td></tr>
+                <tr><td><strong>Chromic gut</strong></td><td>可吸收；天然；褐色</td><td>黏膜；陰道；口腔；10-14 天吸收</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="reconstructive-ladder" data-bm-dept="整形外科" data-bm-title="重建階梯">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">重建階梯（Reconstructive Ladder）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">由簡至繁（優先選最簡單可行的方式）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>層級</th><th>方式</th><th>適應症</th></tr></thead>
+              <tbody>
+                <tr><td><strong>1（最簡單）</strong></td><td>直接縫合（Direct closure）</td><td>小缺損；可以無張力縫合</td></tr>
+                <tr><td><strong>2</strong></td><td>二期癒合（Secondary intention）</td><td>小的淺層缺損；感染傷口；血供好的部位（臉、頭皮）</td></tr>
+                <tr><td><strong>3</strong></td><td>皮膚移植（Skin graft，STSG/FTSG）</td><td>中等缺損；血管床良好；不需立體重建</td></tr>
+                <tr><td><strong>4</strong></td><td>局部皮瓣（Local flap）</td><td>缺損附近有充足組織；需要帶血供的組織</td></tr>
+                <tr><td><strong>5</strong></td><td>區域皮瓣（Regional flap）</td><td>局部組織不足；需要更大的皮瓣</td></tr>
+                <tr><td><strong>6（最複雜）</strong></td><td>游離皮瓣（Free flap，顯微手術）</td><td>大型缺損；特殊部位；需要特定組織成分</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">傷口癒合基本生理</p>
+            <ul class="k-list">
+              <li><strong>止血期（0-幾分鐘）：</strong>血小板聚集；纖維蛋白網；血管收縮</li>
+              <li><strong>炎症期（1-5 天）：</strong>中性球（1-2 天）→ 巨噬細胞（清除壞死組織）；紅腫熱痛；生長因子釋放</li>
+              <li><strong>增殖期（5-21 天）：</strong>肉芽組織形成；膠原蛋白（Type III 早期）；血管新生；傷口收縮（肌纖維母細胞）</li>
+              <li><strong>重塑期（21 天-2 年）：</strong>Type III → Type I 膠原蛋白轉換；傷口強度增加；瘢痕成熟（由紅變白、變平）</li>
+              <li class="note">傷口最終強度只有正常皮膚的 80%（無論如何都無法完全恢復）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">傷口癒合不良的危險因素</p>
+            <ul class="k-list">
+              <li><strong>全身：</strong>糖尿病（高血糖抑制白血球功能）；類固醇（抑制炎症期）；化療 / 放療；營養不良（低蛋白、Vit C / Zinc 缺乏）；周邊血管疾病；吸菸（尼古丁 → 血管收縮）；老年</li>
+              <li><strong>局部：</strong>感染；血腫；缺血 / 壞死組織；異物；張力過大；放射性傷口</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- plastics-wound -->
+    <div class="topic-block" id="plastics-wound">
+      <div class="topic-block-head">
+        <span class="topic-block-title">傷口照護 Wound Care（急慢性傷口 + 負壓治療）</span>
+        <div data-bm-id="plastics-wound" data-bm-dept="整形外科" data-bm-title="傷口照護"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">傷口照護的原則：<strong>濕潤環境有利癒合</strong>（濕潤敷料比乾燥更好）；<strong>清除壞死組織（Debridement）</strong>是慢性傷口處置的核心；<strong>負壓傷口治療（NPWT / VAC）</strong>適合大型複雜傷口，可促進肉芽組織生長和減少細菌負荷。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="wound-dressing" data-bm-dept="整形外科" data-bm-title="傷口敷料選擇">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">傷口敷料選擇（依傷口狀態）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>傷口狀態</th><th>適合敷料</th><th>特性</th></tr></thead>
+              <tbody>
+                <tr><td><strong>乾淨肉芽組織（Granulating）</strong></td><td>泡棉敷料（Foam）；藻酸鹽（Alginate）；水膠體（Hydrocolloid）</td><td>維持濕潤；促進肉芽；適度吸收滲液</td></tr>
+                <tr><td><strong>大量滲液（Heavy exudate）</strong></td><td>藻酸鹽（Alginate）；泡棉（Foam）；超強吸收敷料</td><td>高吸收力；避免浸潤周圍皮膚</td></tr>
+                <tr><td><strong>黑色焦痂（Necrotic / Eschar）</strong></td><td>水膠體（Hydrocolloid）；水凝膠（Hydrogel）</td><td>自溶性清創（Autolytic debridement）；軟化焦痂</td></tr>
+                <tr><td><strong>感染傷口</strong></td><td>銀離子敷料（Silver-containing）；碘敷料（Iodine）；抗菌泡棉</td><td>抗菌；控制細菌負荷；不適合長期使用</td></tr>
+                <tr><td><strong>乾燥 / 上皮化中</strong></td><td>矽膠薄膜（Silicone）；薄水膠體；透明薄膜（Film）</td><td>保護嫩皮；低黏著性；透明可觀察</td></tr>
+                <tr><td><strong>骨骼 / 肌腱暴露</strong></td><td>NPWT（負壓治療）；生物敷料；皮瓣覆蓋</td><td>傳統敷料無效；需要外科介入</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">清創方式（Debridement）</p>
+            <ul class="k-list">
+              <li><strong>手術清創（Surgical）：</strong>最快速有效；刀剪直接去除壞死組織；適合大量壞死或感染性傷口</li>
+              <li><strong>自溶性清創（Autolytic）：</strong>濕潤敷料讓體內酵素自然溶解壞死組織；最溫和；適合少量壞死；禁止感染傷口</li>
+              <li><strong>酵素清創（Enzymatic）：</strong>Collagenase 藥膏（Santyl）；選擇性清除壞死組織；緩慢</li>
+              <li><strong>機械清創（Mechanical）：</strong>濕→乾紗布（Wet-to-dry）；沖洗；非選擇性（可能傷及正常組織）；現較少用</li>
+              <li><strong>蛆蟲療法（Maggot therapy）：</strong>綠頭蒼蠅幼蟲；高選擇性清創；適合頑固性慢性傷口；台灣較少用</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="npwt-chronic-wound" data-bm-dept="整形外科" data-bm-title="負壓傷口治療 + 慢性傷口">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">負壓傷口治療（NPWT / VAC）+ 慢性傷口</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">負壓傷口治療（NPWT = Negative Pressure Wound Therapy / VAC = Vacuum-Assisted Closure）</p>
+            <ul class="k-list">
+              <li><strong>適應症：</strong>大型急慢性傷口；開放性腹腔（Open abdomen）；皮膚移植固定（Bolster）；骨骼 / 肌腱暴露的橋接；深部感染傷口清創後；糖尿病足部傷口；壓瘡</li>
+              <li><strong>禁忌：</strong>未清創的壞死組織；惡性腫瘤在傷口內；未處理的骨髓炎；裸露血管 / 神經（直接接觸）；瘻管</li>
+              <li><strong>壓力設定：</strong>連續模式 -125 mmHg（一般）；間歇模式（促進肉芽，但較不舒適）；敏感部位 / 皮膚移植 → -75 to -100 mmHg</li>
+              <li><strong>機轉：</strong>移除過多滲液；↓ 組織水腫；↑ 局部血流；促進肉芽組織生長；↓ 細菌負荷；傷口邊緣拉近</li>
+              <li><strong>換藥頻率：</strong>感染傷口 q24-48h；乾淨傷口 q48-72h；皮膚移植固定 q4-7 天</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">慢性傷口常見類型</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>類型</th><th>特徵</th><th>關鍵處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>糖尿病足（Diabetic foot ulcer）</strong></td><td>蹠骨頭 / 足跟；神經病變（感覺↓）；血管病變；感染快速擴散；可能骨髓炎</td><td>血糖控制；減壓（Off-loading）= 最重要；清創；血管重建評估；ABI 測定</td></tr>
+                <tr><td><strong>靜脈性潰瘍（Venous ulcer）</strong></td><td>小腿內側（Gaiter area）；不規則形；滲液多；周圍皮膚色素沉著（Lipodermatosclerosis）；不太痛</td><td>壓迫治療（Compression therapy，4-layer bandage）= 最重要；潰瘍敷料；靜脈手術（重度）</td></tr>
+                <tr><td><strong>動脈性潰瘍（Arterial ulcer）</strong></td><td>足趾 / 足跟；邊緣清楚；基底蒼白 / 壞死；疼痛（尤其夜間和抬高時）；ABI &lt;0.6</td><td>血管重建（Revascularization）= 根本治療；避免壓迫治療；保護足部</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- plastics-burn -->
+    <div class="topic-block" id="plastics-burn">
+      <div class="topic-block-head">
+        <span class="topic-block-title">燒燙傷 Burns（分度 + TBSA 估算 + Parkland Formula）</span>
+        <div data-bm-id="plastics-burn" data-bm-dept="整形外科" data-bm-title="燒燙傷"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">燒燙傷處置的三大核心：<strong>燒傷深度評估</strong>（決定是否自行癒合）；<strong>TBSA 估算</strong>（決定輸液量和轉介標準）；<strong>Parkland formula</strong>（急性期輸液計算）。<strong>吸入性傷害</strong>是燒燙傷死亡的最主要原因之一，需早期插管保護氣道。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="burn-depth-tbsa" data-bm-dept="整形外科" data-bm-title="燒傷深度 + TBSA 估算">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">燒傷深度 + TBSA 估算（Rule of 9）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">燒傷深度分類</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>深度</th><th>舊分類</th><th>外觀</th><th>疼痛</th><th>癒合</th></tr></thead>
+              <tbody>
+                <tr><td><strong>表淺（Superficial）</strong></td><td>一度（1st degree）</td><td>紅、乾、無水泡（如曬傷）</td><td>非常痛</td><td>3-5 天；不計入 TBSA</td></tr>
+                <tr><td><strong>表淺部分皮層（Superficial partial-thickness）</strong></td><td>淺二度（Superficial 2nd）</td><td>紅、濕潤、水泡（基底粉紅）</td><td>非常痛（神經末梢暴露）</td><td>7-14 天；無疤痕或輕微</td></tr>
+                <tr><td><strong>深部分皮層（Deep partial-thickness）</strong></td><td>深二度（Deep 2nd）</td><td>白/紅混合；乾或潮濕；水泡（基底蒼白）</td><td>較不痛（神經受損）</td><td>&gt;21 天；需植皮；留疤痕</td></tr>
+                <tr><td><strong>全皮層（Full-thickness）</strong></td><td>三度（3rd degree）</td><td>白色革狀 / 棕黑色焦痂；乾、硬、無彈性</td><td>無痛（神經完全破壞）</td><td>不會自行癒合；需植皮</td></tr>
+                <tr><td><strong>皮下組織（Subdermal）</strong></td><td>四度（4th degree）</td><td>炭化；露出肌肉 / 骨骼 / 肌腱</td><td>無痛</td><td>需截肢或大型重建</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">TBSA 估算（成人，Rule of 9）</p>
+            <div class="img-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Rule of 9 示意圖<br/>
+              <span style="font-size:0.7rem">（可放置 assets/images/rule-of-9.png）</span>
+            </div>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>部位</th><th>成人 TBSA%</th><th>兒童（Lund-Browder）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>頭部</strong></td><td>9%</td><td>年齡越小比例越高（嬰兒 18%）</td></tr>
+                <tr><td><strong>上肢（每側）</strong></td><td>9%</td><td>各 9%</td></tr>
+                <tr><td><strong>軀幹前面</strong></td><td>18%</td><td>18%</td></tr>
+                <tr><td><strong>軀幹後面</strong></td><td>18%</td><td>18%</td></tr>
+                <tr><td><strong>下肢（每側）</strong></td><td>18%</td><td>年齡越小比例越低（嬰兒 14%）</td></tr>
+                <tr><td><strong>會陰</strong></td><td>1%</td><td>1%</td></tr>
+                <tr><td><strong>手掌法（Palm rule）</strong></td><td>患者手掌面積 ≈ 1% TBSA</td><td>適合小面積或不規則估算</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="parkland-burn-care" data-bm-dept="整形外科" data-bm-title="Parkland Formula + 燒傷處置">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">Parkland Formula + 急性燒傷處置</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Parkland Formula（急性期輸液）</p>
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span><strong>Parkland：4 mL × 體重（kg）× TBSA% = 前 24 小時 LR 總量</strong><br/>前 8 小時給一半；後 16 小時給另一半（從燒傷時間起算，不是從入院起算）</span>
+            </div>
+            <ul class="k-list">
+              <li><strong>液體選擇：</strong>Lactated Ringer's（LR）= 首選；不用葡萄糖水（低滲 → 加重水腫）；不用膠體（前 24 小時）</li>
+              <li><strong>輸液目標：</strong>尿液輸出 0.5-1 mL/kg/h（成人）；1 mL/kg/h（兒童）= 最重要的監測指標</li>
+              <li><strong>Modified Brooke Formula：</strong>2 mL × kg × TBSA%（較 Parkland 保守；現多數燒傷中心使用）</li>
+              <li class="note">過度輸液（Fluid creep）是現代燒傷的主要問題 → 腹腔室症候群、肺水腫、筋膜室症候群 → 「允許性少輸液」趨勢</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">急性燒傷處置（ABC 優先）</p>
+            <ul class="k-list">
+              <li><strong>A — 氣道：</strong>吸入性傷害高風險（臉部燒傷、眉毛睫毛燒焦、喉嚨嘶啞、鼻毛燒焦、密閉空間）→ 早期插管（水腫進展後更困難）</li>
+              <li><strong>B — 呼吸：</strong>環形胸部全皮層燒傷 → 限制胸廓擴張 → 焦痂切開術（Escharotomy）</li>
+              <li><strong>C — 循環：</strong>Parkland formula；建立兩條大號 IV（可穿過燒傷部位）；環形肢體燒傷 → Escharotomy（預防筋膜室症候群）</li>
+              <li><strong>D — 止痛：</strong>Morphine / Fentanyl IV（燒傷非常痛）；Ketamine（換藥時）</li>
+              <li><strong>其他：</strong>破傷風預防；NGT（腸麻痺）；Foley（尿量監測）；保溫（燒傷患者低體溫風險高）；避免冰塊（加重組織損傷）；沖水（涼水，非冷水）&gt;20 分鐘</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">燒傷中心轉介標準（ABA 指引）</p>
+            <ul class="k-list">
+              <li>TBSA &gt;10%（部分皮層）或任何全皮層燒傷</li>
+              <li>臉、手、足、生殖器、會陰、主要關節燒傷</li>
+              <li>吸入性傷害；電氣燒傷；化學燒傷</li>
+              <li>合併重大外傷；老年人、兒童、合併症患者</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- plastics-flap -->
+    <div class="topic-block" id="plastics-flap">
+      <div class="topic-block-head">
+        <span class="topic-block-title">皮膚移植 + 皮瓣 + 顯微重建 Skin Grafts & Flaps</span>
+        <div data-bm-id="plastics-flap" data-bm-dept="整形外科" data-bm-title="皮膚移植 + 皮瓣"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">皮膚移植和皮瓣是整形外科的兩大重建工具。<strong>皮膚移植（Graft）</strong>= 完全切除後移植，依賴受床血管新生存活；<strong>皮瓣（Flap）</strong>= 保留血供，自帶循環，適合血管床不良或需要立體重建的缺損。<strong>游離皮瓣（Free flap）</strong>需要顯微手術吻合血管，是重建階梯最高階。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="skin-graft" data-bm-dept="整形外科" data-bm-title="皮膚移植種類">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">皮膚移植（Skin Graft）+ 其他移植種類</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">STSG vs FTSG</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th></th><th>STSG（Split-thickness）</th><th>FTSG（Full-thickness）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>取皮深度</strong></td><td>表皮 + 部分真皮（0.012-0.018 吋）</td><td>表皮 + 全層真皮</td></tr>
+                <tr><td><strong>存活率</strong></td><td>較高（薄，較易血管化）</td><td>較低（需要更好的受床）</td></tr>
+                <tr><td><strong>收縮程度</strong></td><td>較多（Primary + Secondary contracture）</td><td>較少（真皮抑制收縮）</td></tr>
+                <tr><td><strong>外觀質地</strong></td><td>較差（光滑、薄、顏色不符）</td><td>較好（接近正常皮膚）</td></tr>
+                <tr><td><strong>供皮區癒合</strong></td><td>自行癒合（真皮附屬器殘留）</td><td>需要縫合（缺損大）</td></tr>
+                <tr><td><strong>供皮區</strong></td><td>大腿前外側（最常用）；臀部；頭皮（可重複取）</td><td>腹股溝；耳後（Retroauricular）；上眼瞼；前臂</td></tr>
+                <tr><td><strong>適應症</strong></td><td>大面積缺損；燒傷植皮；血管床尚可</td><td>臉部；手部；關節附近；外觀要求高；較小缺損</td></tr>
+                <tr><td><strong>Meshing（網狀擴展）</strong></td><td>可 Mesh（1.5:1 到 3:1）→ 擴大覆蓋面積；適合大面積燒傷</td><td>通常不 Mesh（外觀差）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">移植存活三階段</p>
+            <ul class="k-list">
+              <li><strong>1. Imbibition（血漿滲透，0-48 小時）：</strong>移植片從受床滲出的血漿和淋巴液中獲得營養</li>
+              <li><strong>2. Inosculation（血管吻合，48-72 小時）：</strong>供體和受床血管端端對接，血流建立</li>
+              <li><strong>3. Revascularization（血管新生，72 小時後）：</strong>受床血管長入移植片；完成血供重建</li>
+            </ul>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">移植失敗原因（記憶：SHIM）</p>
+            <ul class="k-list">
+              <li><strong>S — Seroma / Hematoma：</strong>移植片和受床之間積血積液 → 阻斷血管化 → 最常見失敗原因 → NPWT Bolster 預防</li>
+              <li><strong>H — High bacterial load（感染）：</strong>細菌 &gt;10⁵/g → 移植失敗；β-溶血性鏈球菌少量即可造成失敗</li>
+              <li><strong>I — Inadequate blood supply（受床血管不良）：</strong>放射性傷口；缺血組織；骨骼 / 軟骨暴露</li>
+              <li><strong>M — Motion / Shear（剪切力）：</strong>移植片位移 → 打破血管連結 → 固定和 Tie-over 敷料很重要</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">其他移植種類</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>移植種類</th><th>內容</th><th>常見供體 / 適應症</th></tr></thead>
+              <tbody>
+                <tr><td><strong>複合移植（Composite graft）</strong></td><td>含多種組織成分（皮膚 + 軟骨 / 脂肪）</td><td>耳廓組織 → 鼻翼重建；指尖截斷再植</td></tr>
+                <tr><td><strong>骨移植（Bone graft）</strong></td><td>自體骨（Autograft）= 金標準；異體骨（Allograft）；合成骨</td><td>自體：髂骨嵴（最常用）；腓骨；肋骨；顱骨板</td></tr>
+                <tr><td><strong>神經移植（Nerve graft）</strong></td><td>橋接神經缺損（&gt;2-3 cm 無法直接縫合）</td><td>腓腸神經（Sural nerve）= 最常用供體；前臂內側皮神經</td></tr>
+                <tr><td><strong>肌腱移植（Tendon graft）</strong></td><td>橋接肌腱缺損</td><td>掌長肌（Palmaris longus，20% 缺如）；趾長伸肌；股薄肌</td></tr>
+                <tr><td><strong>脂肪移植（Fat grafting / Lipofilling）</strong></td><td>自體脂肪注射填充</td><td>乳房重建；顏面輪廓；疤痕改善；存活率約 40-60%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="flap-classification" data-bm-dept="整形外科" data-bm-title="皮瓣分類">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">皮瓣分類（依血供 + 依移動方式）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">依血供分類</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>血供</th><th>特性</th></tr></thead>
+              <tbody>
+                <tr><td><strong>隨意型皮瓣（Random pattern）</strong></td><td>真皮下叢（Subdermal plexus）</td><td>無固定血管蒂；長寬比 ≤1.5:1（超過則遠端壞死）；局部小皮瓣常用</td></tr>
+                <tr><td><strong>軸型皮瓣（Axial pattern）</strong></td><td>有固定的軸向血管（動脈 + 靜脈）</td><td>可做較長的皮瓣（長寬比不受限）；穿支皮瓣（Perforator flap）屬此類</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">依移動方式分類</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>移動方式</th><th>常見皮瓣</th></tr></thead>
+              <tbody>
+                <tr><td><strong>推進皮瓣（Advancement flap）</strong></td><td>沿單一方向推進覆蓋缺損</td><td>V-Y flap；Burrow's triangle 切除</td></tr>
+                <tr><td><strong>旋轉皮瓣（Rotation flap）</strong></td><td>圍繞支點旋轉覆蓋缺損</td><td>頭皮重建；骶部壓瘡</td></tr>
+                <tr><td><strong>轉位皮瓣（Transposition flap）</strong></td><td>跨越正常皮膚轉移至缺損</td><td>Z-plasty（疤痕攣縮）；Rhomboid flap；Bilobed flap（鼻部）</td></tr>
+                <tr><td><strong>島狀皮瓣（Island flap）</strong></td><td>僅保留血管蒂，完全游離皮島</td><td>指固有動脈島狀皮瓣（手指）；鼻唇溝皮瓣</td></tr>
+                <tr><td><strong>游離皮瓣（Free flap）</strong></td><td>完全切斷後顯微手術吻合至受區血管</td><td>DIEP（乳房）；ALT（大腿前外側）；腓骨皮瓣（下頜骨）；背闊肌皮瓣</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">游離皮瓣術後監測（Free Flap Monitoring）</p>
+            <ul class="k-list">
+              <li><strong>監測頻率：</strong>術後 24-48 小時 q1h；之後逐漸降低頻率</li>
+              <li><strong>正常皮瓣：</strong>溫暖；粉紅；毛細血管充填 1-2 秒；針刺出鮮紅血</li>
+              <li><strong>動脈阻塞：</strong>蒼白；冰冷；無毛細血管充填；針刺無血 → 緊急返回手術室（6 小時內）</li>
+              <li><strong>靜脈阻塞（更常見）：</strong>紫藍色；腫脹；毛細血管充填過快（&lt;1 秒）；針刺出暗紅血 → 緊急返回手術室</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- plastics-hand -->
+    <div class="topic-block" id="plastics-hand">
+      <div class="topic-block-head">
+        <span class="topic-block-title">手部外傷 Hand Injuries（肌腱 + 神經 + 斷指再植）</span>
+        <div data-bm-id="plastics-hand" data-bm-dept="整形外科" data-bm-title="手部外傷"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">手部外傷評估必須系統性：<strong>骨骼（X 光）→ 肌腱（主動活動）→ 神經（感覺 + 運動）→ 血管（Allen test + 毛細血管充填）</strong>。<strong>屈肌腱損傷</strong>需要在 12-24 小時內修復（一期縫合）；延遲修復結果較差。<strong>斷指再植</strong>適應症嚴格，並非所有斷指都適合。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="tendon-nerve-injury" data-bm-dept="整形外科" data-bm-title="肌腱 + 神經損傷">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">肌腱損傷 + 神經損傷評估</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">屈肌腱分區（Flexor Tendon Zone，I-V）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>Zone</th><th>位置</th><th>臨床重要性</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Zone I</strong></td><td>FDP 止點 → 指淺屈肌（FDS）止點以遠</td><td>只有 FDP；Jersey finger（撕脫傷）</td></tr>
+                <tr><td><strong>Zone II（No man's land）</strong></td><td>A1 滑車 → FDS 止點</td><td>FDP + FDS 同在滑車內；修復最困難；術後粘連高風險</td></tr>
+                <tr><td><strong>Zone III</strong></td><td>腕橫韌帶遠端 → A1 滑車</td><td>手掌區域；預後較好</td></tr>
+                <tr><td><strong>Zone IV</strong></td><td>腕管（Carpal tunnel）內</td><td>多條肌腱 + 正中神經同行</td></tr>
+                <tr><td><strong>Zone V</strong></td><td>前臂</td><td>肌腱 + 神經 + 血管多結構損傷</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">手部神經評估</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>神經</th><th>感覺區</th><th>運動功能</th><th>損傷特徵</th></tr></thead>
+              <tbody>
+                <tr><td><strong>正中神經（Median）</strong></td><td>拇指 / 食指 / 中指 / 無名指橈側（3.5 指）</td><td>大魚際肌（拇指對掌）；屈肌</td><td>腕管症候群；「猿手」（Ape hand）；對掌困難</td></tr>
+                <tr><td><strong>尺神經（Ulnar）</strong></td><td>無名指尺側 + 小指（1.5 指）</td><td>骨間肌（手指外展/內收）；小魚際；4th/5th 指屈肌</td><td>「爪形手（Claw hand）」= 4th/5th 指 MCP 過伸 + PIP 屈曲；夾紙試驗（+）</td></tr>
+                <tr><td><strong>橈神經（Radial）</strong></td><td>手背橈側（拇指背）</td><td>伸腕（最重要）；伸指</td><td>「垂腕（Wrist drop）」；握力↓（伸腕位才能有力握拳）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="replantation" data-bm-dept="整形外科" data-bm-title="斷指再植 + 手部急症">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">斷指再植（Replantation）+ 手部急症</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">斷指再植適應症（優先再植）</p>
+            <ul class="k-list">
+              <li><strong>強烈建議再植：</strong>拇指（最重要，功能最關鍵）；多指離斷；兒童（再生能力強）；手掌 / 腕部 / 前臂離斷；單指 Zone I 或 II</li>
+              <li><strong>相對禁忌（可考慮不再植）：</strong>單指 Zone II（功能恢復有限，活動度差）；嚴重壓碾傷；多發傷患者（優先救命）；長時間熱缺血（&gt;6 小時）；進階年齡 + 嚴重全身疾病</li>
+            </ul>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">斷指保存和時間限制</p>
+            <ul class="k-list">
+              <li><strong>保存方式：</strong>斷指用濕紗布包裹 → 放入塑膠袋密封 → 放入裝有冰塊的容器（間接冷卻，不直接接觸冰塊）；避免浸泡（組織水腫）</li>
+              <li><strong>缺血時間限制：</strong>溫缺血（Warm ischemia）&lt;6 小時；冷缺血（Cold ischemia，4°C）&lt;12-24 小時；近端（含肌肉）時間更短</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">手部其他急症</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>急症</th><th>特徵</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>屈肌腱鞘感染（Flexor tenosynovitis）</strong></td><td>Kanavel's 四徵：(1) 手指梭形腫脹；(2) 屈曲休息位；(3) 沿腱鞘壓痛；(4) 被動伸展時劇痛；S. aureus 最常見</td><td>緊急手術清洗（Irrigation）+ 抗生素；延誤 → 肌腱壞死</td></tr>
+                <tr><td><strong>高壓注射傷（High-pressure injection）</strong></td><td>外觀看起來輕微（小入口），但注射物（油漆、油脂）廣泛播散 → 壞死；非常危險</td><td>緊急廣泛清創；截指率高；不要被外觀輕微欺騙</td></tr>
+                <tr><td><strong>捶碾傷（Crush injury）</strong></td><td>評估筋膜室症候群；骨折；血管神經損傷</td><td>筋膜切開術（Fasciotomy）；重建</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- plastics-emergency -->
+    <div class="topic-block" id="plastics-emergency">
+      <div class="topic-block-head">
+        <span class="topic-block-title">整形急症 Plastic Surgery Emergencies（壓瘡 + 化學燒傷）</span>
+        <div data-bm-id="plastics-emergency" data-bm-dept="整形外科" data-bm-title="整形急症"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>壓瘡（Pressure ulcer / Pressure injury）</strong>是預防重於治療——適當的翻身、減壓設備和皮膚照護可以預防大多數壓瘡。<strong>化學燒傷</strong>的關鍵是大量清水沖洗（&gt;30 分鐘），中和劑反而可能加重傷害（產熱）。<strong>疤痕處置</strong>需要時間——6-18 個月等疤痕成熟後再評估手術。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="pressure-ulcer" data-bm-dept="整形外科" data-bm-title="壓瘡分級 + 處置">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">壓瘡分級（NPUAP）+ 預防與處置</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">NPUAP 壓瘡分期（2016）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>分期</th><th>描述</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Stage 1</strong></td><td>皮膚完整；不可褪色的紅斑（Non-blanchable erythema）；深色皮膚可能難以辨識</td><td>減壓；保護皮膚；保濕；翻身 q2h</td></tr>
+                <tr><td><strong>Stage 2</strong></td><td>部分皮層缺損；淺表開放傷口；可能有完整或破裂的水泡；無焦痂</td><td>濕性敷料（Hydrocolloid / Foam）；減壓；保護；勿清創（水泡完整時）</td></tr>
+                <tr><td><strong>Stage 3</strong></td><td>全皮層皮膚缺損；皮下脂肪可見；無骨骼 / 肌腱暴露；可能有潛行（Undermining）</td><td>清創；NPWT；敷料；考慮手術（皮瓣）</td></tr>
+                <tr><td><strong>Stage 4</strong></td><td>全皮層缺損 + 骨骼 / 肌腱 / 肌肉暴露；常有潛行和竇道</td><td>骨髓炎評估（MRI）；手術清創；皮瓣重建（旋轉皮瓣）</td></tr>
+                <tr><td><strong>Unstageable</strong></td><td>全皮層缺損但被焦痂或腐肉覆蓋，無法評估深度</td><td>清創後重新分期；腳跟穩定的焦痂可保留（不清創）</td></tr>
+                <tr><td><strong>Deep Tissue Injury（DTI）</strong></td><td>完整皮膚下的深部組織損傷；紫色或栗色；可能快速進展至 Stage 3/4</td><td>立刻解除壓力；密切監測；保護</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">壓瘡預防（最重要！）</p>
+            <ul class="k-list">
+              <li><strong>翻身：</strong>每 2 小時翻身一次（最重要）；側臥 30° 而非 90°（↓ 骨突壓力）</li>
+              <li><strong>減壓設備：</strong>氣墊床（Active pressure redistribution）；記憶泡棉；足跟保護</li>
+              <li><strong>皮膚照護：</strong>保持乾燥（尿 / 糞失禁處理）；失禁性皮膚炎（IAD）≠ 壓瘡</li>
+              <li><strong>營養：</strong>蛋白質 1.25-1.5 g/kg/天；Vit C + Zinc 補充；Albumin &gt;3.5 g/dL</li>
+              <li><strong>好發位置：</strong>骶部（最常見）；足跟；坐骨結節；大轉子；後枕部（臥床）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="chemical-burn-scar" data-bm-dept="整形外科" data-bm-title="化學燒傷 + 疤痕處置">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">化學燒傷 + 疤痕處置</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">化學燒傷（Chemical Burns）</p>
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>化學燒傷 → 立刻大量清水沖洗 &gt;30 分鐘！不要用中和劑（產熱加重傷害）。先脫去沾染衣物。</span>
+            </div>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>化學物質</th><th>機轉</th><th>特殊處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>強酸（Acid）</strong></td><td>凝固性壞死（Coagulative necrosis）→ 自限性焦痂形成（限制深層滲透）</td><td>大量清水沖洗；氫氟酸（HF）= 特殊：Ca²⁺ 螯合 → 低血鈣 → 心律不整 → 葡萄糖酸鈣局部注射 / IV</td></tr>
+                <tr><td><strong>強鹼（Alkali）</strong></td><td>液化性壞死（Liquefactive necrosis）→ 持續深層滲透（比酸更危險）</td><td>大量清水沖洗；時間更長；水泥燒傷常被低估；眼睛沖洗至 pH 7</td></tr>
+                <tr><td><strong>磷（White phosphorus）</strong></td><td>持續燃燒（接觸空氣即燃）；系統毒性（肝、腎、心）</td><td>保持傷口濕潤（隔絕空氣）；硫酸銅溶液（使磷變色以利識別）；暗室下可見磷的發光</td></tr>
+              </tbody>
+            </table>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">疤痕處置</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>疤痕類型</th><th>特徵</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>正常疤痕（Mature scar）</strong></td><td>平坦；白色；界限清楚；無症狀</td><td>保濕；防曬；等待成熟（6-18 個月）</td></tr>
+                <tr><td><strong>肥大性疤痕（Hypertrophic）</strong></td><td>隆起；紅；癢；<strong>限於原傷口範圍</strong>；多在 1-2 年後自行改善</td><td>矽膠貼片（首選）；壓力治療；類固醇注射（Triamcinolone）；雷射</td></tr>
+                <tr><td><strong>蟹足腫（Keloid）</strong></td><td>隆起；超過原傷口範圍；好發胸骨 / 耳垂 / 肩膀；不會自行消退；色素深者好發</td><td>類固醇注射（一線）；手術切除 + 術後立刻放療 or 類固醇注射；冷凍治療；5-FU 注射；高復發率</td></tr>
+                <tr><td><strong>疤痕攣縮（Contracture）</strong></td><td>跨關節 / 功能性部位疤痕攣縮 → 活動受限</td><td>Z-plasty（改變張力方向）；皮膚移植；皮瓣；復健物理治療</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'plastics-approach',  dept:'整形外科', title:'整形評估（傷口分類 + 重建階梯）',          url:'#plastics-approach',  text:'' },
+    { id:'plastics-wound',     dept:'整形外科', title:'傷口照護（急慢性傷口 + 負壓治療）',         url:'#plastics-wound',     text:'' },
+    { id:'plastics-burn',      dept:'整形外科', title:'燒燙傷（分度 + TBSA + Parkland formula）', url:'#plastics-burn',      text:'' },
+    { id:'plastics-flap',      dept:'整形外科', title:'皮膚移植（STSG/FTSG）+ 皮瓣 + 顯微重建',  url:'#plastics-flap',      text:'' },
+    { id:'plastics-hand',      dept:'整形外科', title:'手部外傷（肌腱 + 神經 + 斷指再植）',        url:'#plastics-hand',      text:'' },
+    { id:'plastics-emergency', dept:'整形外科', title:'整形急症（壓瘡分級 + 化學燒傷）',           url:'#plastics-emergency', text:'' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else { initSearch(SEARCH_INDEX); }
+</script>
+</body>
+</html>
