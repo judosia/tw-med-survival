@@ -433,7 +433,7 @@ const heroSearchClear = document.getElementById('hero-search-clear');
 let searchIndex = [];
 
 // 載入 search-index.json
-fetch('search-index.json')
+fetch('/tw-med-survival/search-index.json')
   .then(r => r.json())
   .then(data => { searchIndex = data; })
   .catch(() => {});
