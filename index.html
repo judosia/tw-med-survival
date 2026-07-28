@@ -7,419 +7,209 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --navy:   #0D1F3C;
-      --red:    #E63946;
-      --green:  #6BAA75;
-      --amber:  #F4A261;
-      --blue:   #457B9D;
-      --light:  #F8FAFB;
-      --muted:  #8899AA;
-      --border: #DDE3EA;
-      --white:  #FFFFFF;
+      --navy:#0D1F3C; --red:#E63946; --green:#6BAA75; --amber:#F4A261;
+      --blue:#457B9D; --light:#F8FAFB; --muted:#8899AA; --border:#DDE3EA; --white:#FFFFFF;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family:'Noto Sans TC','Inter',sans-serif; background:var(--light); color:var(--navy); line-height:1.7; overflow-x:hidden; }
 
-    body {
-      font-family: 'Noto Sans TC', 'Inter', sans-serif;
-      background: var(--light);
-      color: var(--navy);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(13,31,60,0.96); backdrop-filter:blur(10px); padding:0 4%; display:flex; align-items:center; justify-content:space-between; height:60px; border-bottom:1px solid rgba(255,255,255,0.08); }
+    .nav-logo { color:var(--white); font-weight:700; font-size:0.95rem; letter-spacing:0.03em; display:flex; align-items:center; gap:8px; white-space:nowrap; }
+    .nav-logo span { color:var(--red); }
+    .nav-links { display:flex; gap:16px; list-style:none; flex-wrap:nowrap; }
+    .nav-links a { color:rgba(255,255,255,0.7); text-decoration:none; font-size:0.78rem; font-weight:500; letter-spacing:0.02em; transition:color 0.2s; white-space:nowrap; }
+    .nav-links a:hover { color:var(--white); }
+    .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; margin-left:8px; }
+    .hamburger span { display:block; width:22px; height:2px; background:rgba(255,255,255,0.8); border-radius:2px; transition:all 0.25s; }
+    .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity:0; }
+    .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+    .mobile-nav { display:none; position:fixed; top:60px; left:0; right:0; z-index:99; background:rgba(13,31,60,0.98); border-bottom:1px solid rgba(255,255,255,0.1); padding:8px 0 16px; flex-direction:column; }
+    .mobile-nav.open { display:flex; }
+    .mobile-nav a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:0.9rem; font-weight:500; padding:12px 6%; transition:background 0.15s,color 0.15s; }
+    .mobile-nav a:hover { background:rgba(255,255,255,0.06); color:#fff; }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(13, 31, 60, 0.96);
-      backdrop-filter: blur(10px);
-      padding: 0 4%;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .nav-logo {
-      color: var(--white);
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.03em;
-      display: flex; align-items: center; gap: 8px;
-      white-space: nowrap;
-    }
-    .nav-logo span { color: var(--red); }
-    .nav-links {
-      display: flex; gap: 16px; list-style: none;
-      flex-wrap: nowrap;
-    }
-    .nav-links a {
-      color: rgba(255,255,255,0.7);
-      text-decoration: none;
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      transition: color 0.2s;
-      white-space: nowrap;
-    }
-    .nav-links a:hover { color: var(--white); }
+    /* HERO */
+    .hero { min-height:100vh; background:var(--navy); display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:120px 8% 80px; position:relative; overflow:hidden; }
+    .ekg-container { position:absolute; bottom:60px; left:0; right:0; height:80px; overflow:hidden; opacity:0.3; }
+    .ekg-svg { width:200%; height:100%; animation:scroll-ekg 6s linear infinite; }
+    @keyframes scroll-ekg { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .hero-eyebrow { display:inline-block; background:rgba(230,57,70,0.15); border:1px solid rgba(230,57,70,0.35); color:#ff6b78; font-size:0.75rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; padding:5px 14px; border-radius:20px; margin-bottom:28px; }
+    .hero h1 { font-family:'Noto Sans TC',sans-serif; font-weight:900; font-size:clamp(2.4rem,5vw,4.2rem); color:var(--white); line-height:1.15; max-width:700px; margin-bottom:12px; }
+    .hero h1 .accent { color:var(--red); }
+    .hero-sub-en { font-family:'Playfair Display',serif; font-size:clamp(1rem,2vw,1.35rem); color:rgba(255,255,255,0.45); font-style:italic; margin-bottom:28px; }
+    .hero-desc { color:rgba(255,255,255,0.65); max-width:520px; font-size:0.95rem; font-weight:300; margin-bottom:40px; }
+    .hero-cta { display:flex; gap:14px; flex-wrap:wrap; }
+    .btn-primary { background:var(--red); color:var(--white); padding:13px 28px; border-radius:6px; font-size:0.88rem; font-weight:600; text-decoration:none; letter-spacing:0.02em; transition:background 0.2s,transform 0.15s; }
+    .btn-primary:hover { background:#c62834; transform:translateY(-1px); }
+    .btn-ghost { background:transparent; color:rgba(255,255,255,0.75); padding:13px 28px; border-radius:6px; font-size:0.88rem; font-weight:500; text-decoration:none; border:1px solid rgba(255,255,255,0.2); transition:border-color 0.2s,color 0.2s; }
+    .btn-ghost:hover { border-color:rgba(255,255,255,0.5); color:var(--white); }
+    .hero-stats { margin-top:60px; display:flex; gap:40px; flex-wrap:wrap; }
+    .stat { color:var(--white); }
+    .stat-num { font-size:2rem; font-weight:900; line-height:1; color:var(--amber); }
+    .stat-label { font-size:0.75rem; color:rgba(255,255,255,0.45); margin-top:4px; letter-spacing:0.06em; }
 
-    /* ── MOBILE MENU ── */
-    .hamburger {
-      display: none;
-      flex-direction: column; gap: 5px;
-      background: none; border: none; cursor: pointer;
-      padding: 6px; margin-left: 8px;
-    }
-    .hamburger span {
-      display: block; width: 22px; height: 2px;
-      background: rgba(255,255,255,0.8); border-radius: 2px;
-      transition: all 0.25s;
-    }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    /* SECTIONS */
+    section { padding:90px 8%; }
+    .section-eyebrow { font-size:0.72rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+    .section-title { font-weight:900; font-size:clamp(1.6rem,3vw,2.4rem); color:var(--navy); line-height:1.2; margin-bottom:12px; }
+    .section-desc { color:#5a6a7a; font-size:0.93rem; max-width:520px; margin-bottom:48px; }
 
-    .mobile-nav {
-      display: none;
-      position: fixed; top: 60px; left: 0; right: 0; z-index: 99;
-      background: rgba(13,31,60,0.98);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding: 8px 0 16px;
-      flex-direction: column;
-    }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a {
-      color: rgba(255,255,255,0.75);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      padding: 12px 6%;
-      transition: background 0.15s, color 0.15s;
-    }
-    .mobile-nav a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    /* CARDS */
+    .card { background:var(--white); border-radius:10px; border:1.5px solid var(--border); padding:24px; transition:box-shadow 0.2s,transform 0.15s; }
+    .card:hover { box-shadow:0 8px 28px rgba(13,31,60,0.09); transform:translateY(-2px); }
+    .card-tag { display:inline-block; font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:3px 9px; border-radius:4px; margin-bottom:10px; }
+    .tag-red { background:#fdecea; color:var(--red); }
+    .tag-green { background:#eaf4ec; color:#3d8a4a; }
+    .tag-amber { background:#fef3e8; color:#c47d2b; }
+    .tag-blue { background:#e8f2f8; color:var(--blue); }
+    .tag-navy { background:#e8ebf0; color:var(--navy); }
+    .card h3 { font-size:1.02rem; font-weight:700; margin-bottom:8px; color:var(--navy); }
+    .card p { font-size:0.85rem; color:#5a6a7a; line-height:1.65; }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      background: var(--navy);
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start;
-      padding: 120px 8% 80px;
-      position: relative;
-      overflow: hidden;
+    /* SEARCH BOX — hero 版 */
+    .hero-search-wrap {
+      width:100%; max-width:620px;
+      margin:36px 0 0;
+      position:relative;
     }
+    .hero-search-wrap input {
+      width:100%; padding:18px 54px 18px 56px;
+      font-size:1.05rem; font-family:'Noto Sans TC','Inter',sans-serif;
+      border:2px solid rgba(255,255,255,0.18);
+      border-radius:14px;
+      background:rgba(255,255,255,0.08);
+      color:#fff;
+      outline:none;
+      transition:border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      backdrop-filter:blur(8px);
+    }
+    .hero-search-wrap input::placeholder { color:rgba(255,255,255,0.4); }
+    .hero-search-wrap input:focus {
+      border-color:rgba(255,255,255,0.5);
+      background:rgba(255,255,255,0.13);
+      box-shadow:0 0 0 4px rgba(230,57,70,0.18);
+    }
+    .hero-search-icon {
+      position:absolute; left:18px; top:50%; transform:translateY(-50%);
+      pointer-events:none; opacity:0.55;
+    }
+    .hero-search-clear {
+      position:absolute; right:16px; top:50%; transform:translateY(-50%);
+      background:none; border:none; color:rgba(255,255,255,0.5);
+      cursor:pointer; font-size:1rem; display:none; padding:4px;
+    }
+    .hero-search-hint {
+      margin-top:10px;
+      font-size:0.76rem;
+      color:rgba(255,255,255,0.35);
+      letter-spacing:0.03em;
+    }
+    .hero-search-hint span {
+      display:inline-block;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:4px;
+      padding:2px 8px;
+      margin:2px 3px;
+      cursor:pointer;
+      transition:background 0.15s;
+    }
+    .hero-search-hint span:hover { background:rgba(255,255,255,0.16); }
 
-    /* EKG signature animation */
-    .ekg-container {
-      position: absolute;
-      bottom: 60px; left: 0; right: 0;
-      height: 80px;
-      overflow: hidden;
-      opacity: 0.3;
+    /* SYMPTOM SECTION */
+    .symptom-section { background:var(--white); }
+    .symptom-tags { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:0; }
+    .symptom-tag {
+      display:inline-flex; align-items:center; gap:6px;
+      padding:10px 18px; border-radius:8px;
+      border:1.5px solid var(--border);
+      background:var(--white);
+      font-size:0.88rem; font-weight:600;
+      color:var(--navy); cursor:pointer;
+      transition:all 0.18s;
+      font-family:'Noto Sans TC','Inter',sans-serif;
     }
-    .ekg-svg { width: 200%; height: 100%; animation: scroll-ekg 6s linear infinite; }
-    @keyframes scroll-ekg {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
+    .symptom-tag:hover { border-color:var(--navy); background:var(--navy); color:#fff; transform:translateY(-1px); box-shadow:0 4px 12px rgba(13,31,60,0.12); }
+    .symptom-tag .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .dot-red { background:var(--red); }
+    .dot-amber { background:var(--amber); }
+    .dot-blue { background:var(--blue); }
+    .dot-green { background:var(--green); }
 
-    .hero-eyebrow {
-      display: inline-block;
-      background: rgba(230, 57, 70, 0.15);
-      border: 1px solid rgba(230, 57, 70, 0.35);
-      color: #ff6b78;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 20px;
-      margin-bottom: 28px;
-    }
-    .hero h1 {
-      font-family: 'Noto Sans TC', sans-serif;
-      font-weight: 900;
-      font-size: clamp(2.4rem, 5vw, 4.2rem);
-      color: var(--white);
-      line-height: 1.15;
-      max-width: 700px;
-      margin-bottom: 12px;
-    }
-    .hero h1 .accent { color: var(--red); }
-    .hero-sub-en {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1rem, 2vw, 1.35rem);
-      color: rgba(255,255,255,0.45);
-      font-style: italic;
-      margin-bottom: 28px;
-    }
-    .hero-desc {
-      color: rgba(255,255,255,0.65);
-      max-width: 520px;
-      font-size: 0.95rem;
-      font-weight: 300;
-      margin-bottom: 40px;
-    }
-    .hero-cta {
-      display: flex; gap: 14px; flex-wrap: wrap;
-    }
-    .btn-primary {
-      background: var(--red);
-      color: var(--white);
-      padding: 13px 28px;
-      border-radius: 6px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover { background: #c62834; transform: translateY(-1px); }
-    .btn-ghost {
-      background: transparent;
-      color: rgba(255,255,255,0.75);
-      padding: 13px 28px;
-      border-radius: 6px;
-      font-size: 0.88rem;
-      font-weight: 500;
-      text-decoration: none;
-      border: 1px solid rgba(255,255,255,0.2);
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+    /* SYMPTOM MODAL */
+    .sym-modal-overlay { display:none; position:fixed; inset:0; z-index:500; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:20px; }
+    .sym-modal-overlay.open { display:flex; }
+    .sym-modal { background:var(--white); border-radius:14px; width:100%; max-width:600px; max-height:88vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.22); }
+    .sym-modal-head { position:sticky; top:0; background:var(--white); padding:18px 22px 14px; border-bottom:1.5px solid var(--border); display:flex; align-items:center; justify-content:space-between; z-index:1; }
+    .sym-modal-title { font-size:1.05rem; font-weight:800; color:var(--navy); display:flex; align-items:center; gap:8px; }
+    .sym-modal-close { background:none; border:none; cursor:pointer; color:var(--muted); font-size:1.1rem; padding:4px 8px; border-radius:6px; }
+    .sym-modal-close:hover { background:var(--light); }
+    .sym-modal-body { padding:20px 22px; }
+    .sym-section-label { font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin:16px 0 8px; }
+    .sym-section-label:first-child { margin-top:0; }
+    .sym-ddx-list { display:flex; flex-direction:column; gap:6px; }
+    .sym-ddx-item { display:flex; align-items:center; justify-content:space-between; padding:9px 12px; border-radius:7px; border:1.5px solid var(--border); background:var(--light); text-decoration:none; transition:all 0.15s; }
+    .sym-ddx-item:hover { border-color:var(--navy); background:var(--navy); }
+    .sym-ddx-item:hover .sym-ddx-name, .sym-ddx-item:hover .sym-ddx-arrow { color:#fff; }
+    .sym-ddx-name { font-size:0.88rem; font-weight:600; color:var(--navy); }
+    .sym-ddx-sub { font-size:0.76rem; color:var(--muted); margin-top:1px; }
+    .sym-ddx-item:hover .sym-ddx-sub { color:rgba(255,255,255,0.65); }
+    .sym-ddx-arrow { color:var(--muted); font-size:0.9rem; }
+    .sym-urgent { border-color:rgba(230,57,70,0.3); background:#fff8f8; }
+    .sym-urgent .sym-ddx-name { color:var(--red); }
+    .sym-urgent:hover { border-color:var(--red); background:var(--red); }
+    .sym-urgent:hover .sym-ddx-name, .sym-urgent:hover .sym-ddx-sub, .sym-urgent:hover .sym-ddx-arrow { color:#fff; }
+    .sym-action-box { background:var(--light); border-radius:8px; padding:14px 16px; margin-top:16px; }
+    .sym-action-box ul { list-style:none; display:flex; flex-direction:column; gap:6px; }
+    .sym-action-box li { font-size:0.84rem; color:#3a4a5a; display:flex; align-items:flex-start; gap:8px; }
+    .sym-action-box li::before { content:"→"; color:var(--blue); font-weight:700; flex-shrink:0; }
 
-    .hero-stats {
-      margin-top: 60px;
-      display: flex; gap: 40px; flex-wrap: wrap;
-    }
-    .stat { color: var(--white); }
-    .stat-num {
-      font-size: 2rem;
-      font-weight: 900;
-      line-height: 1;
-      color: var(--amber);
-    }
-    .stat-label {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.45);
-      margin-top: 4px;
-      letter-spacing: 0.06em;
-    }
+    /* ONCALL BLOCK */
+    .oncall-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
+    .oncall-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:20px; }
+    .oncall-card h3 { color:var(--white); font-size:0.9rem; font-weight:700; margin-bottom:8px; }
+    .oncall-card p { color:rgba(255,255,255,0.6); font-size:0.82rem; line-height:1.6; }
+    .oncall-tag { display:inline-block; font-size:0.65rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-bottom:8px; }
+    .oncall-tag-red { background:rgba(230,57,70,0.2); color:#ff6b78; }
+    .oncall-tag-amber { background:rgba(244,162,97,0.2); color:var(--amber); }
+    .oncall-tag-green { background:rgba(107,170,117,0.2); color:#8fcf97; }
+    .oncall-tag-blue { background:rgba(69,123,157,0.2); color:#7eb5d4; }
 
-    /* ── SECTIONS ── */
-    section { padding: 90px 8%; }
-    .section-eyebrow {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-    .section-title {
-      font-weight: 900;
-      font-size: clamp(1.6rem, 3vw, 2.4rem);
-      color: var(--navy);
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-    .section-desc {
-      color: #5a6a7a;
-      font-size: 0.93rem;
-      max-width: 520px;
-      margin-bottom: 48px;
-    }
+    /* RESOURCES */
+    .resources-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+    .resource-link { display:flex; align-items:center; gap:14px; background:var(--white); border:1.5px solid var(--border); border-radius:8px; padding:18px 20px; text-decoration:none; transition:border-color 0.2s,box-shadow 0.2s; }
+    .resource-link:hover { border-color:var(--blue); box-shadow:0 4px 16px rgba(69,123,157,0.1); }
+    .resource-emoji { font-size:1.4rem; flex-shrink:0; }
+    .resource-text h4 { font-size:0.9rem; font-weight:700; color:var(--navy); margin-bottom:2px; }
+    .resource-text p { font-size:0.75rem; color:var(--muted); }
 
-    /* ── TABS (survival topics) ── */
-    .tabs-nav {
-      display: flex; flex-wrap: wrap; gap: 8px;
-      margin-bottom: 36px;
-    }
-    .tab-btn {
-      padding: 9px 20px;
-      border-radius: 6px;
-      border: 1.5px solid var(--border);
-      background: var(--white);
-      color: var(--muted);
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'Noto Sans TC', sans-serif;
-    }
-    .tab-btn:hover { border-color: var(--navy); color: var(--navy); }
-    .tab-btn.active {
-      background: var(--navy);
-      border-color: var(--navy);
-      color: var(--white);
-    }
-    .tab-panel { display: none; }
-    .tab-panel.active { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    footer { background:#060f1f; color:rgba(255,255,255,0.4); text-align:center; padding:36px 8%; font-size:0.8rem; }
+    footer a { color:rgba(255,255,255,0.5); text-decoration:none; }
+    footer a:hover { color:rgba(255,255,255,0.8); }
 
-    /* ── CARDS ── */
-    .card {
-      background: var(--white);
-      border-radius: 10px;
-      border: 1.5px solid var(--border);
-      padding: 24px;
-      transition: box-shadow 0.2s, transform 0.15s;
+    @media(max-width:700px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      section { padding:64px 5%; }
+      .hero { padding:100px 5% 60px; }
+      .hero-stats { gap:28px; }
+      .hero-search-wrap { max-width:100%; }
     }
-    .card:hover { box-shadow: 0 8px 28px rgba(13,31,60,0.09); transform: translateY(-2px); }
-    .card-icon {
-      font-size: 1.5rem;
-      margin-bottom: 14px;
-      display: block;
-    }
-    .card-tag {
-      display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-    .tag-red    { background: #fdecea; color: var(--red); }
-    .tag-green  { background: #eaf4ec; color: #3d8a4a; }
-    .tag-amber  { background: #fef3e8; color: #c47d2b; }
-    .tag-blue   { background: #e8f2f8; color: var(--blue); }
-    .tag-navy   { background: #e8ebf0; color: var(--navy); }
-
-    .card h3 {
-      font-size: 1.02rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--navy);
-    }
-    .card p {
-      font-size: 0.85rem;
-      color: #5a6a7a;
-      line-height: 1.65;
-    }
-
-    /* ── CHECKLIST SECTION ── */
-    .checklist-section { background: var(--navy); }
-    .checklist-section .section-title { color: var(--white); }
-    .checklist-section .section-desc  { color: rgba(255,255,255,0.55); }
-    .checklist-section .section-eyebrow { color: rgba(255,255,255,0.4); }
-
-    .checklist-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-    }
-    .checklist-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      padding: 24px;
-    }
-    .checklist-card h3 {
-      color: var(--white);
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .checklist-card ul {
-      list-style: none;
-      display: flex; flex-direction: column; gap: 10px;
-    }
-    .checklist-card li {
-      color: rgba(255,255,255,0.65);
-      font-size: 0.83rem;
-      display: flex; align-items: flex-start; gap: 10px;
-    }
-    .check-dot {
-      width: 16px; height: 16px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(255,255,255,0.25);
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    /* ── EMOTIONAL SUPPORT / QUOTE ── */
-    .quote-section {
-      background: var(--white);
-      text-align: center;
-      padding: 80px 8%;
-    }
-    .big-quote {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.4rem, 3vw, 2.2rem);
-      color: var(--navy);
-      max-width: 700px;
-      margin: 0 auto 20px;
-      line-height: 1.45;
-    }
-    .big-quote span { color: var(--red); }
-    .quote-attr {
-      font-size: 0.8rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 600;
-    }
-
-    /* ── RESOURCES ── */
-    .resources-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 16px;
-    }
-    .resource-link {
-      display: flex; align-items: center; gap: 14px;
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 18px 20px;
-      text-decoration: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .resource-link:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(69,123,157,0.1); }
-    .resource-emoji { font-size: 1.4rem; flex-shrink: 0; }
-    .resource-text h4 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
-    .resource-text p  { font-size: 0.75rem; color: var(--muted); }
-
-    /* ── FOOTER ── */
-    footer {
-      background: #060f1f;
-      color: rgba(255,255,255,0.4);
-      text-align: center;
-      padding: 36px 8%;
-      font-size: 0.8rem;
-    }
-    footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
-    footer a:hover { color: rgba(255,255,255,0.8); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 700px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      section { padding: 64px 5%; }
-      .hero { padding: 100px 5% 60px; }
-      .hero-stats { gap: 28px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .ekg-svg { animation: none; }
-    }
+    @media(prefers-reduced-motion:reduce) { .ekg-svg { animation:none; } }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <span>♥</span> Med note
-  </div>
+  <div class="nav-logo"><span>♥</span> Med note</div>
   <ul class="nav-links">
-    <li><a href="#survival">生存技能</a></li>
+    <li><a href="#symptoms">症狀快查</a></li>
     <li><a href="specialty.html">分科知識</a></li>
     <li><a href="flashcards.html">⚡ 字卡</a></li>
-    <li><a href="#wellbeing">身心健康</a></li>
+    <li><a href="#oncall">值班小撇步</a></li>
     <li><a href="#resources">資源</a></li>
     <li><a href="contribute.html" style="color:#6BAA75;">✍️ 貢獻</a></li>
   </ul>
@@ -428,12 +218,11 @@
   </button>
 </nav>
 
-<!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobile-nav">
-  <a href="#survival" class="mobile-link">生存技能</a>
+  <a href="#symptoms" class="mobile-link">症狀快查</a>
   <a href="specialty.html" class="mobile-link">分科知識</a>
   <a href="flashcards.html" class="mobile-link">⚡ 字卡</a>
-  <a href="#wellbeing" class="mobile-link">身心健康</a>
+  <a href="#oncall" class="mobile-link">值班小撇步</a>
   <a href="#resources" class="mobile-link">資源</a>
 </div>
 
@@ -442,591 +231,513 @@
   <div class="hero-eyebrow">For Anyone</div>
   <h1>Go on and<br/><span class="accent">Save</span> someone</h1>
   <p class="hero-sub-en">The unofficial survival guide to hospital life</p>
-  <p class="hero-desc">
-    這裡有一些小知識，希望能夠幫助到任何需要的人們。
-  </p>
+  <p class="hero-desc">這裡有一些小知識，希望能夠幫助到任何需要的人們。</p>
   <div class="hero-cta">
-    <a href="#survival" class="btn-primary">開始瀏覽 →</a>
+    <a href="#symptoms" class="btn-primary">症狀快查 →</a>
     <a href="specialty.html" class="btn-ghost">分科知識</a>
   </div>
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num">hr</div>
-      <div class="stat-label">Hr</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">+</div>
-      <div class="stat-label">+++</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">∞</div>
-      <div class="stat-label">Experience</div>
+
+  <!-- 大型搜尋框 -->
+  <div class="hero-search-wrap">
+    <svg class="hero-search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="hero-search" placeholder="搜尋疾病、科別、藥物、評分⋯（如：胸痛、Troponin、CHADS2）" autocomplete="off"/>
+    <button class="hero-search-clear" id="hero-search-clear">✕</button>
+    <div class="hero-search-hint">
+      常用：<span onclick="doSearch('胸痛')">胸痛</span><span onclick="doSearch('心肌梗塞')">心肌梗塞</span><span onclick="doSearch('肺炎')">肺炎</span><span onclick="doSearch('腦中風')">腦中風</span><span onclick="doSearch('敗血症')">敗血症</span><span onclick="doSearch('腎功能')">腎功能</span>
     </div>
   </div>
 
-  <!-- EKG animation -->
+  <div class="hero-stats" style="margin-top:44px;">
+    <div class="stat"><div class="stat-num">15+</div><div class="stat-label">科別</div></div>
+    <div class="stat"><div class="stat-num">100+</div><div class="stat-label">臨床主題</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-label">持續更新</div></div>
+  </div>
+
   <div class="ekg-container">
     <svg class="ekg-svg" viewBox="0 0 1400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <polyline
-        points="0,40 50,40 58,36 62,40 68,40 72,5 76,70 80,40 90,40 98,28 104,40 160,40 168,36 172,40 178,40 182,5 186,70 190,40 200,40 208,28 214,40 270,40 278,36 282,40 288,40 292,5 296,70 300,40 310,40 318,28 324,40 380,40 388,36 392,40 398,40 402,5 406,70 410,40 420,40 428,28 434,40 490,40 498,36 502,40 508,40 512,5 516,70 520,40 530,40 538,28 544,40 600,40 608,36 612,40 618,40 622,5 626,70 630,40 640,40 648,28 654,40 710,40 718,36 722,40 728,40 732,5 736,70 740,40 750,40 758,28 764,40 820,40 828,36 832,40 838,40 842,5 846,70 850,40 860,40 868,28 874,40 930,40 938,36 942,40 948,40 952,5 956,70 960,40 970,40 978,28 984,40 1040,40 1048,36 1052,40 1058,40 1062,5 1066,70 1070,40 1080,40 1088,28 1094,40 1150,40 1158,36 1162,40 1168,40 1172,5 1176,70 1180,40 1190,40 1198,28 1204,40 1260,40 1268,36 1272,40 1278,40 1282,5 1286,70 1290,40 1300,40 1308,28 1314,40 1370,40 1378,36 1382,40 1388,40 1392,5 1396,70 1400,40"
-        fill="none" stroke="#E63946" stroke-width="2.5" stroke-linejoin="round"
-      />
+      <polyline points="0,40 50,40 58,36 62,40 68,40 72,5 76,70 80,40 90,40 98,28 104,40 160,40 168,36 172,40 178,40 182,5 186,70 190,40 200,40 208,28 214,40 270,40 278,36 282,40 288,40 292,5 296,70 300,40 310,40 318,28 324,40 380,40 388,36 392,40 398,40 402,5 406,70 410,40 420,40 428,28 434,40 490,40 498,36 502,40 508,40 512,5 516,70 520,40 530,40 538,28 544,40 600,40 608,36 612,40 618,40 622,5 626,70 630,40 640,40 648,28 654,40 710,40 718,36 722,40 728,40 732,5 736,70 740,40 750,40 758,28 764,40 820,40 828,36 832,40 838,40 842,5 846,70 850,40 860,40 868,28 874,40 930,40 938,36 942,40 948,40 952,5 956,70 960,40 970,40 978,28 984,40 1040,40 1048,36 1052,40 1058,40 1062,5 1066,70 1070,40 1080,40 1088,28 1094,40 1150,40 1158,36 1162,40 1168,40 1172,5 1176,70 1180,40 1190,40 1198,28 1204,40 1260,40 1268,36 1272,40 1278,40 1282,5 1286,70 1290,40 1300,40 1308,28 1314,40 1370,40 1378,36 1382,40 1388,40 1392,5 1396,70 1400,40"
+        fill="none" stroke="#E63946" stroke-width="2.5" stroke-linejoin="round"/>
     </svg>
   </div>
-
-  <!-- SEARCH BAR CONTAINER -->
-<div class="search-container" style="max-width: 540px; margin: 32px auto 0 auto; position: relative;">
-  <div style="position: relative; display: flex; align-items: center;">
-    <!-- 搜尋放大鏡圖標 -->
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" style="position: absolute; left: 16px; pointer-events: none;">
-      <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-    </svg>
-    <!-- 搜尋輸入框 -->
-    <input type="text" id="main-search" placeholder="輸入疾病、科別或臨床評分... (如: 內科, CV, Stroke)" 
-           style="width: 100%; padding: 14px 16px 14px 46px; font-size: 1rem; border: 2px solid #cbd5e1; border-radius: 12px; background: #ffffff; color: #1e293b; outline: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: all 0.2s ease;">
-    <!-- 清除輸入按鈕 (預設隱藏) -->
-    <button id="search-clear" style="position: absolute; right: 16px; background: none; border: none; color: #94a3b8; cursor: pointer; display: none; font-size: 1.1rem; padding: 0;">✕</button>
-  </div>
-</div>
-
-<!-- 注意：為了讓 JavaScript 能夠篩選，請幫你的網格加上 id="specialty-grid" -->
-<div id="specialty-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 40px;">
-  <!-- 以下維持你原本的 內、外、急、兒 卡片 HTML 不變 -->
 </section>
-  
-<!-- SURVIVAL TIPS TABS
-<section id="survival">
-  <div class="section-eyebrow">核心生存技能</div>
-  <h2 class="section-title">你一定要知道的事</h2>
-  <p class="section-desc">從病歷書寫到和主治醫師說話的方式，每個環節都是你在醫院存活的關鍵。</p>
 
-  <div class="tabs-nav">
-    <button class="tab-btn active" data-tab="clinical"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> 臨床技能</button>
-    <button class="tab-btn" data-tab="culture"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 醫院文化</button>
-    <button class="tab-btn" data-tab="communication">💬 溝通技巧</button>
-    <button class="tab-btn" data-tab="oncall"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> 值班求生</button>
-    <button class="tab-btn" data-tab="admin"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg> 行政地雷</button>
-  </div>
-
-  <!-- CLINICAL 
-  <div class="tab-panel active" id="tab-clinical">
-    <div class="card">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
-      <div class="card-tag tag-blue">病歷書寫</div>
-      <h3>SOAP Note 寫法不踩雷</h3>
-      <p>S（主訴）要用病人自己說的話，O（客觀）只寫你看到量到的，A（評估）才是你的診斷印象，P（計畫）要清楚可追蹤。新手最常把 A 和 O 搞混。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🔬</span>
-      <div class="card-tag tag-green">抽血判讀</div>
-      <h3>常見 critical value 要記住</h3>
-      <p>K⁺ &lt;2.5 或 &gt;6.5、Na⁺ &lt;120 或 &gt;160、血糖 &lt;50 或 &gt;500、Hb &lt;7——這些值一出現，第一件事是打電話給 attending，不是查書。</p>
-    </div>
-    <div class="card">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.5 20H4a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2h3.93a2 2 0 0 1 1.66.9l.82 1.2a2 2 0 0 0 1.66.9H20a2 2 0 0 1 2 2v3"/><circle cx="17" cy="17" r="5"/><path d="M14 17h6"/></svg></div>
-      <div class="card-tag tag-amber">開藥常識</div>
-      <h3>開藥前的五個確認</h3>
-      <p>病人體重、腎功能（eGFR）、藥物過敏史、目前用藥交互作用、劑型（口服還是靜脈）——這五個確認養成習慣，能避掉八成的開藥失誤。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">📡</span>
-      <div class="card-tag tag-red">緊急應變</div>
-      <h3>Code Blue 第一步永遠是叫人</h3>
-      <p>發現病人無反應，先大聲叫人啟動急救系統，再開始 CPR。你一個人做 CPR 不是英雄，是在做無效的急救。叫人才是對的。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🩻</span>
-      <div class="card-tag tag-blue">影像判讀</div>
-      <h3>胸部 X 光的系統性看法</h3>
-      <p>每次看片都走同樣的流程：氣管位置→縱膈腔→心臟大小→肺野→肋膜→骨骼→軟組織。系統性看才不會漏掉東西，和 attending 報告時也更有組織。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🩸</span>
-      <div class="card-tag tag-green">技術操作</div>
-      <h3>打針抽血前先說話</h3>
-      <p>操作前先和病人說明你要做什麼、大概幾分鐘、可能有什麼感覺。這不只是態度問題——清楚的溝通能讓病人配合度提高，讓操作更順利。</p>
-    </div>
-  </div>
-  
-  <!-- CULTURE 
-  <div class="tab-panel" id="tab-culture">
-    <div class="card">
-      <span class="card-icon">👨‍⚕️</span>
-      <div class="card-tag tag-navy">階層文化</div>
-      <h3>台灣醫院的階層現實</h3>
-      <p>從 Intern → PGY → R1→R2→R3 → CR → VS，每一層都有它的眉角。對上要謙遜，但不代表要無條件服從——當你覺得病人有危險，你有責任說出來。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">📣</span>
-      <div class="card-tag tag-amber">交班文化</div>
-      <h3>交班要讓接手的人能睡著</h3>
-      <p>交班不是交「我不想處理的事」，是讓接手的同事清楚知道：哪個病人穩定、哪個在觀察、哪個隨時可能出事。你希望怎麼被交班，就怎麼交班別人。</p>
-    </div>
-    <div class="card">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 11h1a3 3 0 0 1 0 6h-1"/><path d="M9 12H4a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1"/><path d="M14 7H6a2 2 0 0 0-2 2v1"/><path d="M22 7h-8"/><path d="M18 4l4 3-4 3"/></svg></div>
-      <div class="card-tag tag-green">跨科會診</div>
-      <h3>打 consult 電話的藝術</h3>
-      <p>先說科別和病人床號，再說為什麼打、問題是什麼、你已經做了什麼——讓對方在 30 秒內知道情況。被掛電話通常是因為資訊太混亂，不是因為問題太多。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🙏</span>
-      <div class="card-tag tag-red">家屬溝通</div>
-      <h3>面對家屬永遠要先傾聽</h3>
-      <p>家屬情緒化不是在攻擊你，是因為恐懼和無力感。先說「我了解您很擔心」，讓情緒有出口，再說明病情。解釋再多，比不上感受到有人在聽。</p>
-    </div>
-    <div class="card">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="2"/><path d="M15 14l-3-3-3 3"/><path d="M9 14v6"/><path d="M15 14v6"/></svg></div>
-      <div class="card-tag tag-blue">輪科節奏</div>
-      <h3>每科的「生存速度」不一樣</h3>
-      <p>外科早上 6:30 要進 OR，內科查房可能持續到中午。每換一科前，先問學長姊幾點要到、病歷要提前準備什麼——不問，可能第一天就掛掉。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">💡</span>
-      <div class="card-tag tag-navy">護理關係</div>
-      <h3>護理師是你最好的老師</h3>
-      <p>他們每天在病房，比你更熟悉病人狀況。對護理師態度好、把他們當夥伴——你會得到更多資訊、更多提醒，和更多在困境中被拉一把的機會。</p>
-    </div>
-  </div>
-
-  <!-- COMMUNICATION 
-  <div class="tab-panel" id="tab-communication">
-    <div class="card">
-      <span class="card-icon">📞</span>
-      <div class="card-tag tag-blue">電話報告</div>
-      <h3>SBAR 報告法不求人</h3>
-      <p>S（Situation）：現在狀況是什麼。B（Background）：病人背景。A（Assessment）：你的判斷。R（Recommendation）：你想要什麼支援。說清楚，主治不會讓你重說三次。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🤐</span>
-      <div class="card-tag tag-amber">說不知道</div>
-      <h3>說「我不確定，我去查」是誠實</h3>
-      <p>亂答不如不答。說「我不確定，我去確認後回報您」不是弱點，是負責任。主治最怕的不是你不知道，是你給了錯的答案還不知道自己錯了。</p>
-    </div>
-    <div class="card">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-      <div class="card-tag tag-red">說出問題</div>
-      <h3>擔心病人時，要主動說</h3>
-      <p>如果你覺得某個病人的狀況不對，就算說不清楚為什麼，也要說「我覺得這個病人有點怪，你有時間可以來看一下嗎？」你的直覺可能救了病人。</p>
-    </div>
-    <div class="card">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg></div>
-      <div class="card-tag tag-green">Morning Report</div>
-      <h3>準備 morning report 要有重點</h3>
-      <p>不要把所有數值都念一遍。只說「有變化的」和「你在擔心的」。其他的說「穩定，詳見病歷」就好。讓聽的人知道你有判斷力，比讓人知道你查了很多更重要。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🫂</span>
-      <div class="card-tag tag-navy">同理心語言</div>
-      <h3>幾句話能讓氣氛完全不同</h3>
-      <p>「您一定很辛苦了」「這段時間照顧他，謝謝您」「您有什麼問題都可以問我」——這些話只要幾秒鐘，卻可以讓家屬的防禦心降低一半。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">✍️</span>
-      <div class="card-tag tag-blue">書面溝通</div>
-      <h3>病歷寫的是法律文件</h3>
-      <p>不要寫「病人不配合」，要寫「說明後病人表示拒絕，已告知風險並記錄」。不要寫「家屬吵鬧」，要寫「家屬情緒激動，已安撫並說明病情」。</p>
-    </div>
-  </div>
-
-  <!-- ON CALL 
-  <div class="tab-panel" id="tab-oncall">
-    <div class="card">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
-      <div class="card-tag tag-navy">值班準備</div>
-      <h3>值班前三件必做的事</h3>
-      <p>①確認你的 pager 和電話可以通；②和白班交班時問清楚「今晚最可能出事的是哪個病人」；③找到AED在哪、急救車在哪。其他的，遇到再說。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">☕</span>
-      <div class="card-tag tag-amber">熬夜策略</div>
-      <h3>咖啡因不是萬能的</h3>
-      <p>夜班最累的時間是凌晨 2–4 點。在那之前就要補眠。超商咖啡可以讓你撐過凌晨，但早上 8 點查房還要判斷病情，靠的不是咖啡因，是前一天有沒有好好睡。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🍱</span>
-      <div class="card-tag tag-green">飲食生存</div>
-      <h3>值班飲食的現實</h3>
-      <p>把便當放在你能隨時拿到的地方。被叫走前先扒幾口。隨身帶幾包餅乾或能量棒——不是為了好吃，是為了讓血糖不要在最需要判斷力的時候崩潰。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">😮‍💨</span>
-      <div class="card-tag tag-red">緊急狀況</div>
-      <h3>深夜出事時，先深呼吸</h3>
-      <p>凌晨 3 點被叫去看病人，你的第一個反應可能是恐慌。先深呼吸，然後問：「病人意識清楚嗎？生命徵象穩定嗎？」——兩個問題，決定你接下來五分鐘要做什麼。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">📲</span>
-      <div class="card-tag tag-blue">呼叫主治</div>
-      <h3>何時該叫醒主治？</h3>
-      <p>生命徵象嚴重異常、你要做的處置超出你的能力、你不確定但覺得不對勁——這三種情況，打電話不是打擾，是你的責任。不打電話，出事才叫真的麻煩。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🛏️</span>
-      <div class="card-tag tag-green">休息哲學</div>
-      <h3>有機會躺就躺，哪怕 15 分鐘</h3>
-      <p>值班室的床不是給睡好覺的，是讓你不要站著撐完 36 小時。15 分鐘的打盹可以讓你之後的 2 小時比沒睡的清醒。不用有罪惡感。</p>
-    </div>
-  </div>
-
-  <!-- ADMIN 
-  <div class="tab-panel" id="tab-admin">
-    <div class="card">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-      <div class="card-tag tag-red">死亡診斷書</div>
-      <h3>開死亡診斷書前先確認</h3>
-      <p>確認你有開立資格（實習醫師通常不能單獨開）、確認死亡時間和地點記錄正確、確認死因要和病歷一致。每個醫院流程不同，第一次開一定要問 CR 或 VS 帶你走一遍。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">✍️</span>
-      <div class="card-tag tag-amber">同意書</div>
-      <h3>手術同意書的常見誤區</h3>
-      <p>同意書要病人或合法代理人簽，不能只有家屬。要確認病人有充分理解——不是你說完就算，是病人能重複說出手術目的和風險。這件事如果出了問題，法律責任很重。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">💻</span>
-      <div class="card-tag tag-blue">HIS 系統</div>
-      <h3>HIS 系統錯了就改，不要蓋掉</h3>
-      <p>電子病歷系統的紀錄要修改，必須用正確的更正程序（附上原因），不能直接覆蓋。覆蓋過的紀錄在法律上看起來像是在掩蓋，後果比寫錯本身嚴重得多。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">📊</span>
-      <div class="card-tag tag-green">報告繳交</div>
-      <h3>輪科報告不要拖到最後一天</h3>
-      <p>輪科結束前的報告和考核是正式記錄。拖稿或缺交會影響你的評分，有些醫院還會影響輪訓認可。開始輪科的第一週就問清楚繳交規則。</p>
-    </div>
-    <div class="card">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-      <div class="card-tag tag-navy">特殊申報</div>
-      <h3>傳染病通報不能晚</h3>
-      <p>法定傳染病的通報有嚴格時限——第一類 24 小時內，第二類 24 小時，第三類 1 週。漏報或遲報在法律上是醫師責任，不是行政失誤。遇到的時候直接問感控護理師。</p>
-    </div>
-    <div class="card">
-      <span class="card-icon">🔐</span>
-      <div class="card-tag tag-red">醫療糾紛</div>
-      <h3>發生事故，第一步是告訴 VS</h3>
-      <p>任何醫療不良事件或家屬明確表示要申訴，第一件事是讓主治和病歷室知道，不是自己去處理。醫院有標準流程和法律支援，你不需要也不應該獨自面對。</p>
-    </div>
+<!-- SYMPTOM SECTION -->
+<section class="symptom-section" id="symptoms">
+  <div class="section-eyebrow">症狀快查</div>
+  <h2 class="section-title">常見主訴 → DDx + 初步處置</h2>
+  <p class="section-desc">點擊症狀標籤，快速查看鑑別診斷和第一步處置，連結直達對應科別頁面。</p>
+  <div class="symptom-tags">
+    <button class="symptom-tag" onclick="openSym('chest-pain')"><span class="dot dot-red"></span>胸痛</button>
+    <button class="symptom-tag" onclick="openSym('dyspnea')"><span class="dot dot-red"></span>呼吸困難</button>
+    <button class="symptom-tag" onclick="openSym('abdominal-pain')"><span class="dot dot-amber"></span>腹痛</button>
+    <button class="symptom-tag" onclick="openSym('headache')"><span class="dot dot-red"></span>頭痛</button>
+    <button class="symptom-tag" onclick="openSym('ams')"><span class="dot dot-red"></span>意識改變</button>
+    <button class="symptom-tag" onclick="openSym('fever')"><span class="dot dot-amber"></span>發燒</button>
+    <button class="symptom-tag" onclick="openSym('syncope')"><span class="dot dot-amber"></span>暈厥</button>
+    <button class="symptom-tag" onclick="openSym('palpitation')"><span class="dot dot-blue"></span>心悸</button>
+    <button class="symptom-tag" onclick="openSym('back-pain')"><span class="dot dot-blue"></span>背痛</button>
+    <button class="symptom-tag" onclick="openSym('edema')"><span class="dot dot-blue"></span>水腫</button>
+    <button class="symptom-tag" onclick="openSym('jaundice')"><span class="dot dot-amber"></span>黃疸</button>
+    <button class="symptom-tag" onclick="openSym('gi-bleed')"><span class="dot dot-red"></span>血便</button>
+    <button class="symptom-tag" onclick="openSym('oliguria')"><span class="dot dot-red"></span>少尿</button>
+    <button class="symptom-tag" onclick="openSym('neck-stiff')"><span class="dot dot-red"></span>頸部僵硬</button>
+    <button class="symptom-tag" onclick="openSym('hypotension')"><span class="dot dot-red"></span>低血壓</button>
+    <button class="symptom-tag" onclick="openSym('glucose')"><span class="dot dot-amber"></span>血糖異常</button>
   </div>
 </section>
 
 <!-- SPECIALTY SECTION -->
-<section id="specialty" style="background: var(--light); padding: 90px 8%;">
+<section id="specialty" style="background:var(--light); padding:90px 8%;">
   <div class="section-eyebrow">分科知識</div>
   <h2 class="section-title">依科別快速查找</h2>
   <p class="section-desc">從內科到急診，把各科最核心的臨床知識整理成可快速查閱的格式。</p>
-
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 40px;">
-
+  <div id="specialty-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; margin-top:40px;">
     <a href="specialty.html" style="text-decoration:none;">
-      <div class="card" style="border-left: 3px solid #457B9D; display:flex; align-items:flex-start; gap:14px;">
-        <div style="width:36px; height:36px; border-radius:8px; background:rgba(69,123,157,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#457B9D" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </div>
-        <div>
-          <h3 style="font-size:0.95rem; margin-bottom:4px;">內科</h3>
-          <p style="font-size:0.78rem; color:var(--muted);">CV、ID、Chest、Nephro、GI、一般內科</p>
-        </div>
+      <div class="card" style="border-left:3px solid #457B9D; display:flex; align-items:flex-start; gap:14px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(69,123,157,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#457B9D" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div><h3 style="font-size:0.95rem;margin-bottom:4px;">內科</h3><p style="font-size:0.78rem;color:var(--muted);">心臟、感染、腎臟、腸胃、內分泌、神經⋯</p></div>
       </div>
     </a>
-
     <a href="specialty.html" style="text-decoration:none;">
-      <div class="card" style="border-left: 3px solid #E63946; display:flex; align-items:flex-start; gap:14px;">
-        <div style="width:36px; height:36px; border-radius:8px; background:rgba(230,57,70,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E63946" stroke-width="2"><path d="M14.5 2.5c0 1.5-1.5 7-1.5 7h-2C10 9.5 8.5 4 8.5 2.5a3 3 0 0 1 6 0z"/><path d="M12 9.5V21"/><path d="M9 15h6"/></svg>
-        </div>
-        <div>
-          <h3 style="font-size:0.95rem; margin-bottom:4px;">外科</h3>
-          <p style="font-size:0.78rem; color:var(--muted);">一般外科、OR、術前術後</p>
-        </div>
+      <div class="card" style="border-left:3px solid #E63946; display:flex; align-items:flex-start; gap:14px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(230,57,70,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E63946" stroke-width="2"><path d="M14.5 2.5c0 1.5-1.5 7-1.5 7h-2C10 9.5 8.5 4 8.5 2.5a3 3 0 0 1 6 0z"/><path d="M12 9.5V21"/><path d="M9 15h6"/></svg></div>
+        <div><h3 style="font-size:0.95rem;margin-bottom:4px;">外科</h3><p style="font-size:0.78rem;color:var(--muted);">一般外科、心臟血管、骨科、神外、整形⋯</p></div>
       </div>
     </a>
-
     <a href="specialty.html" style="text-decoration:none;">
-      <div class="card" style="border-left: 3px solid #F4A261; display:flex; align-items:flex-start; gap:14px;">
-        <div style="width:36px; height:36px; border-radius:8px; background:rgba(244,162,97,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c47d2b" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <div>
-          <h3 style="font-size:0.95rem; margin-bottom:4px;">急診</h3>
-          <p style="font-size:0.78rem; color:var(--muted);">急診核心、ABCDE、外傷 ATLS</p>
-        </div>
+      <div class="card" style="border-left:3px solid #F4A261; display:flex; align-items:flex-start; gap:14px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(244,162,97,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c47d2b" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div><h3 style="font-size:0.95rem;margin-bottom:4px;">急診</h3><p style="font-size:0.78rem;color:var(--muted);">急診核心、外傷 ATLS、毒物、環境傷害⋯</p></div>
       </div>
     </a>
-
     <a href="specialty.html" style="text-decoration:none;">
-      <div class="card" style="border-left: 3px solid #6BAA75; display:flex; align-items:flex-start; gap:14px;">
-        <div style="width:36px; height:36px; border-radius:8px; background:rgba(107,170,117,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d8a4a" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
-        </div>
-        <div>
-          <h3 style="font-size:0.95rem; margin-bottom:4px;">兒科</h3>
-          <p style="font-size:0.78rem; color:var(--muted);">一般兒科、發燒、急救公式</p>
-        </div>
+      <div class="card" style="border-left:3px solid #6BAA75; display:flex; align-items:flex-start; gap:14px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(107,170,117,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3d8a4a" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg></div>
+        <div><h3 style="font-size:0.95rem;margin-bottom:4px;">兒科</h3><p style="font-size:0.78rem;color:var(--muted);">一般兒科、新生兒、發燒、急救公式⋯</p></div>
       </div>
     </a>
-
+    <a href="specialty.html" style="text-decoration:none;">
+      <div class="card" style="border-left:3px solid #9c6baa; display:flex; align-items:flex-start; gap:14px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(156,107,170,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9c6baa" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div><h3 style="font-size:0.95rem;margin-bottom:4px;">婦產科</h3><p style="font-size:0.78rem;color:var(--muted);">產科急症、婦科腫瘤、避孕⋯</p></div>
+      </div>
+    </a>
+    <a href="specialty.html" style="text-decoration:none;">
+      <div class="card" style="border-left:3px solid #6b8caa; display:flex; align-items:flex-start; gap:14px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(107,140,170,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b8caa" stroke-width="2"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/></svg></div>
+        <div><h3 style="font-size:0.95rem;margin-bottom:4px;">其他科別</h3><p style="font-size:0.78rem;color:var(--muted);">精神科、皮膚科、耳鼻喉、眼科、家醫⋯</p></div>
+      </div>
+    </a>
   </div>
-
   <div style="text-align:center; margin-top:32px;">
-    <a href="specialty.html" class="btn-ghost" style="display:inline-flex; align-items:center; gap:6px; color:#1e293b">查看所有科別
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+    <a href="specialty.html" class="btn-ghost" style="display:inline-flex;align-items:center;gap:6px;color:#1e293b;">查看所有科別 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
   </div>
 </section>
 
-<!-- QUOTE 
-<section class="quote-section" id="wellbeing">
-  <p class="big-quote">
-    「你不需要完美，<br/>你只需要<span>夠好</span>——<br/>然後明天比今天進步一點點。」
-  </p>
-  <p class="quote-attr">—— 我們都這樣走過來的</p>
-</section>
-
-<!-- WELLBEING SECTION 
-<section style="background: var(--white); padding-top: 0; padding-bottom: 90px; padding-left: 8%; padding-right: 8%;">
-  <div class="section-eyebrow">身心健康</div>
-  <h2 class="section-title">你的狀態，也是病人的安全</h2>
-  <p class="section-desc">疲憊、焦慮、失眠——這些不是「個人問題」，是整個醫療體系需要面對的事。</p>
-
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-    <div class="card" style="border-left: 3px solid var(--red);">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 18a5 5 0 0 0-10 0"/><line x1="12" y1="9" x2="12" y2="2"/><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"/><line x1="1" y1="18" x2="3" y2="18"/><line x1="21" y1="18" x2="23" y2="18"/><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"/></svg></div>
-      <div class="card-tag tag-red">睡眠</div>
-      <h3>睡眠剝奪會讓你變成另一個人</h3>
-      <p>超過 24 小時沒睡，判斷力和輕度酒醉差不多。值班後不要逞強開車，打電話家人接或搭計程車。你的疲憊不是榮耀，照顧好自己才能照顧病人。</p>
+<!-- ONCALL BLOCK -->
+<section id="oncall" style="background:var(--navy); padding:90px 8%;">
+  <div class="section-eyebrow" style="color:rgba(255,255,255,0.4);">值班小撇步</div>
+  <h2 class="section-title" style="color:var(--white);">值班時最需要知道的事</h2>
+  <p class="section-desc" style="color:rgba(255,255,255,0.5);">精選最實用的值班生存原則，其他的交給各科頁面。</p>
+  <div class="oncall-grid">
+    <div class="oncall-card">
+      <div class="oncall-tag oncall-tag-red">緊急判斷</div>
+      <h3>深夜接到叫喚：先問兩件事</h3>
+      <p>「意識清楚嗎？生命徵象穩定嗎？」——這兩個問題決定你接下來五分鐘要做什麼。穩定 → 電話先處理；不穩定 → 立刻跑去。</p>
     </div>
-    <div class="card" style="border-left: 3px solid var(--amber);">
-      <span class="card-icon">🧘</span>
-      <div class="card-tag tag-amber">壓力管理</div>
-      <h3>找到你的解壓閥，不管是什麼</h3>
-      <p>有人跑步、有人打遊戲、有人和朋友吃飯。不需要很「健康」，只要能讓你從醫院模式裡切換出來。定期切換是長期做這份工作的必要條件。</p>
+    <div class="oncall-card">
+      <div class="oncall-tag oncall-tag-amber">叫主治</div>
+      <h3>何時該叫醒主治？就現在</h3>
+      <p>生命徵象嚴重異常、處置超出你能力範圍、你覺得不對勁——這三種情況打電話不是打擾，是你的責任。不打才是真的麻煩。</p>
     </div>
-    <div class="card" style="border-left: 3px solid var(--green);">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-      <div class="card-tag tag-green">求助文化</div>
-      <h3>說「我需要幫助」不是失敗</h3>
-      <p>醫生的職業文化讓人很難開口求助——但你不需要一個人承受所有事。如果你感覺自己快撐不住，告訴主任、總醫師，或使用醫院的諮商資源。這是勇氣，不是弱點。</p>
+    <div class="oncall-card">
+      <div class="oncall-tag oncall-tag-blue">交班</div>
+      <h3>交班讓接手的人能睡著</h3>
+      <p>哪個穩定、哪個在觀察、哪個隨時可能出事——三分鐘說清楚。你希望怎麼被交班，就怎麼交班別人。</p>
     </div>
-    <div class="card" style="border-left: 3px solid var(--blue);">
-      <span class="card-icon">💔</span>
-      <div class="card-tag tag-blue">病人死亡</div>
-      <h3>第一次失去病人，需要被好好照顧</h3>
-      <p>病人過世後的情緒是真實的，不應該被壓下去繼續工作。如果有機會，和同事或前輩說說你的感受。有些醫院有 debriefing 的機制，可以主動要求。</p>
+    <div class="oncall-card">
+      <div class="oncall-tag oncall-tag-green">體力</div>
+      <h3>有機會躺就躺，哪怕 15 分鐘</h3>
+      <p>值班室的床是讓你不要站著撐完 36 小時用的。15 分鐘打盹讓你接下來兩小時比沒睡清醒。不用有罪惡感。</p>
     </div>
-    <div class="card" style="border-left: 3px solid var(--red);">
-      <span class="card-icon">🔴</span>
-      <div class="card-tag tag-red">警示訊號</div>
-      <h3>這些是你需要立刻找人談的信號</h3>
-      <p>持續 2 週以上的情緒低落、失去對任何事的興趣、出現傷害自己的念頭——如果你或你認識的同事有這些狀況，請立刻聯繫衛福部安心專線 1925，或醫院精神科。</p>
+    <div class="oncall-card">
+      <div class="oncall-tag oncall-tag-red">Code Blue</div>
+      <h3>Code Blue 第一步：叫人</h3>
+      <p>發現無反應，先啟動急救系統再開始 CPR。一個人做 CPR 是無效的急救，叫人才是對的。</p>
     </div>
-    <div class="card" style="border-left: 3px solid var(--green);">
-      <span class="card-icon">🌱</span>
-      <div class="card-tag tag-green">長期心態</div>
-      <h3>這是馬拉松，不是百米衝刺</h3>
-      <p>PGY 很辛苦，但它有終點。每一個值班、每一次犯錯再修正、每一個你救過的病人——都在讓你成為更好的醫生。撐下去，是值得的。</p>
+    <div class="oncall-card">
+      <div class="oncall-tag oncall-tag-amber">critical value</div>
+      <h3>Critical value 出現先打電話</h3>
+      <p>K⁺ &lt;2.5 或 &gt;6.5、Na⁺ &lt;120 或 &gt;160、血糖 &lt;50 或 &gt;500、Hb &lt;7——出現時第一件事是通知主治，不是查書。</p>
     </div>
   </div>
 </section>
 
 <!-- RESOURCES -->
-<section id="resources" style="background: #f0f4f8; padding: 80px 8%;">
+<section id="resources" style="background:#f0f4f8; padding:80px 8%;">
   <div class="section-eyebrow">實用資源</div>
   <h2 class="section-title">你可能需要的連結</h2>
   <p class="section-desc">台灣住院醫師生涯常用的官方資源、工具和支援管道。</p>
-
   <div class="resources-grid">
-    <a href="https://www.mohw.gov.tw" target="_blank" class="resource-link">
-      <div class="resource-emoji">🏛️</div>
-      <div class="resource-text">
-        <h4>衛生福利部</h4>
-        <p>政策、傳染病通報、醫療法規</p>
-      </div>
-    </a>
-    <a href="https://www.cdc.gov.tw" target="_blank" class="resource-link">
-      <div class="resource-emoji">🦠</div>
-      <div class="resource-text">
-        <h4>疾管署 CDC</h4>
-        <p>法定傳染病通報與防疫指引</p>
-      </div>
-    </a>
-    <a href="https://www.tma.tw" target="_blank" class="resource-link">
-      <div class="resource-emoji">⚕️</div>
-      <div class="resource-text">
-        <h4>台灣醫師公會</h4>
-        <p>醫師權益與繼續教育資訊</p>
-      </div>
-    </a>
-    <a href="https://www.twrr.org.tw" target="_blank" class="resource-link">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-      <div class="resource-text">
-        <h4>台灣住院醫師協會</h4>
-        <p>住院醫師勞權與資源</p>
-      </div>
-    </a>
-    <a href="tel:1925" class="resource-link">
-      <div class="resource-emoji">📞</div>
-      <div class="resource-text">
-        <h4>安心專線 1925</h4>
-        <p>24 小時心理健康諮詢，免費</p>
-      </div>
-    </a>
-    <a href="https://www.uptodate.com" target="_blank" class="resource-link">
-      <div class="card-icon">
-       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="28" height="28" viewBox="0 0 48 48">
-        <rect width="36" height="36" x="6" y="6" fill="#9ccc65"></rect>
-        <rect width="8" height="8" x="6" y="6" fill="#ff3d00"></rect>
-        <rect width="28" height="28" x="14" y="14" fill="#7cb342"></rect>
-        <rect width="8" height="8" x="34" y="6" fill="#1e88e5"></rect>
-        <rect width="8" height="8" x="34" y="34" fill="#616161"></rect>
-        <rect width="8" height="8" x="6" y="34" fill="#1e88e5"></rect>
-        <rect width="8" height="20" x="34" y="14" fill="#1565c0"></rect>
-        <rect width="8" height="20" x="20" y="28" fill="#1565c0" transform="rotate(90 24 38)"></rect>
-        <path fill="#fff" d="M22.5,34h-1c-4.142,0-7.5-3.358-7.5-7.5V14h16v12.5C30,30.642,26.642,34,22.5,34z"></path>
-        <path fill="#7cb342" d="M22,31L22,31c-2.761,0-5-2.239-5-5V14h10v12C27,28.761,24.761,31,22,31z"></path>
-       </svg>
-      </div>
-      <div class="resource-text">
-        <h4>UpToDate</h4>
-        <p>臨床決策最快速的參考來源</p>
-      </div>
-    </a>
-    <a href="https://reference.medscape.com" target="_blank" class="resource-link">
-      <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="17" cy="17" r="5"/><path d="M14 17h6"/><path d="M4 15V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v6"/></svg></div>
-      <div class="resource-text">
-        <h4>Medscape Drug Reference</h4>
-        <p>藥物查詢、交互作用、劑量</p>
-      </div>
-    </a>
-    <a href="https://www.mdcalc.com" target="_blank" class="resource-link">
-      <div class="resource-emoji">🧮</div>
-      <div class="resource-text">
-        <h4>MDCalc</h4>
-        <p>臨床計算工具，eGFR、CHADS2 等</p>
-      </div>
-    </a>
+    <a href="https://www.mohw.gov.tw" target="_blank" class="resource-link"><div class="resource-emoji">🏛️</div><div class="resource-text"><h4>衛生福利部</h4><p>政策、傳染病通報、醫療法規</p></div></a>
+    <a href="https://www.cdc.gov.tw" target="_blank" class="resource-link"><div class="resource-emoji">🦠</div><div class="resource-text"><h4>疾管署 CDC</h4><p>法定傳染病通報與防疫指引</p></div></a>
+    <a href="https://www.tma.tw" target="_blank" class="resource-link"><div class="resource-emoji">⚕️</div><div class="resource-text"><h4>台灣醫師公會</h4><p>醫師權益與繼續教育資訊</p></div></a>
+    <a href="https://www.twrr.org.tw" target="_blank" class="resource-link"><div class="resource-emoji">🏥</div><div class="resource-text"><h4>台灣住院醫師協會</h4><p>住院醫師勞權與資源</p></div></a>
+    <a href="tel:1925" class="resource-link"><div class="resource-emoji">📞</div><div class="resource-text"><h4>安心專線 1925</h4><p>24 小時心理健康諮詢，免費</p></div></a>
+    <a href="https://www.uptodate.com" target="_blank" class="resource-link"><div class="resource-emoji">📖</div><div class="resource-text"><h4>UpToDate</h4><p>臨床決策最快速的參考來源</p></div></a>
+    <a href="https://reference.medscape.com" target="_blank" class="resource-link"><div class="resource-emoji">💊</div><div class="resource-text"><h4>Medscape Drug Reference</h4><p>藥物查詢、交互作用、劑量</p></div></a>
+    <a href="https://www.mdcalc.com" target="_blank" class="resource-link"><div class="resource-emoji">🧮</div><div class="resource-text"><h4>MDCalc</h4><p>臨床計算工具，eGFR、CHADS2 等</p></div></a>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <p style="margin-bottom: 10px; color: rgba(255,255,255,0.6); font-size: 0.9rem; font-weight: 500;">
-    Med note | Med Survival Guide
-  </p>
-  <p>本網站內容僅供學習與臨床輔助參考，不取代正式醫學教育與臨床判斷。為維護醫療資訊安全，本站僅統計匿名使用流量與功能點擊率，絕不收集任何病人隱私資料（Patient-Identifiable Information）。</p>
-  <p style="margin-top: 8px;">
-    <a href="https://github.com" target="_blank">GitHub</a> ·
-    歡迎一起貢獻內容，讓更多人受益
-  </p>
+  <p style="margin-bottom:10px;color:rgba(255,255,255,0.6);font-size:0.9rem;font-weight:500;">Med note | Med Survival Guide</p>
+  <p>本網站內容僅供學習與臨床輔助參考，不取代正式醫學教育與臨床判斷。本站僅統計匿名使用流量，絕不收集任何病人隱私資料。</p>
+  <p style="margin-top:8px;"><a href="https://github.com" target="_blank">GitHub</a> · 歡迎一起貢獻內容，讓更多人受益</p>
 </footer>
 
+<!-- SYMPTOM MODALS -->
+<div class="sym-modal-overlay" id="sym-modal-overlay" onclick="if(event.target===this)closeSym()">
+  <div class="sym-modal">
+    <div class="sym-modal-head">
+      <div class="sym-modal-title" id="sym-modal-title">症狀</div>
+      <button class="sym-modal-close" onclick="closeSym()">✕</button>
+    </div>
+    <div class="sym-modal-body" id="sym-modal-body"></div>
+  </div>
+</div>
+
 <script>
-  // Hamburger menu
-  const hamburger = document.getElementById('hamburger');
-  const mobileNav = document.getElementById('mobile-nav');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileNav.classList.toggle('open');
+// ── Hamburger ──
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+});
+document.querySelectorAll('.mobile-link').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
   });
-  document.querySelectorAll('.mobile-link').forEach(a => {
-    a.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileNav.classList.remove('open');
-    });
-  });
+});
 
-  // Tab switching
-  const tabBtns   = document.querySelectorAll('.tab-btn');
-  const tabPanels = document.querySelectorAll('.tab-panel');
-
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      tabBtns.forEach(b => b.classList.remove('active'));
-      tabPanels.forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById('tab-' + target).classList.add('active');
-    });
-  });
-
-  // Checklist interactivity
-  document.querySelectorAll('.check-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      if (dot.style.background === 'var(--green)' || dot.style.background === 'rgb(107, 170, 117)') {
-        dot.style.background = 'transparent';
-        dot.style.borderColor = 'rgba(255,255,255,0.25)';
-        dot.parentElement.style.textDecoration = 'none';
-        dot.parentElement.style.opacity = '1';
-      } else {
-        dot.style.background = '#6BAA75';
-        dot.style.borderColor = '#6BAA75';
-        dot.parentElement.style.opacity = '0.5';
-      }
-    });
-  });
-
-  // Nav active scroll highlight
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 100) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current
-        ? 'rgba(255,255,255,1)'
-        : 'rgba(255,255,255,0.7)';
-    });
-  });
-  // ==========================================
-// 關鍵字即時搜尋與卡片聯動過濾機制
-// ==========================================
-const searchInput = document.getElementById('main-search');
-const searchClear = document.getElementById('search-clear');
-const gridCards = document.querySelectorAll('#specialty-grid > a');
-
-if (searchInput) {
-  searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase().trim();
-    
-    // 控制清除按鈕的顯示/隱藏
-    searchClear.style.display = query.length > 0 ? 'block' : 'none';
-
-    gridCards.forEach(cardAnchor => {
-      // 抓取卡片內的標題 (如: 內科) 與 描述 (如: CV, ID...)
-      const title = cardAnchor.querySelector('h3').textContent.toLowerCase();
-      const desc = cardAnchor.querySelector('p').textContent.toLowerCase();
-
-      // 如果標題或副標包含關鍵字，就顯示，否則隱藏
-      if (title.includes(query) || desc.includes(query)) {
-        cardAnchor.style.display = 'block';
-        setTimeout(() => {
-          cardAnchor.style.opacity = '1';
-          cardAnchor.style.transform = 'scale(1)';
-        }, 10);
-      } else {
-        cardAnchor.style.opacity = '0';
-        cardAnchor.style.transform = 'scale(0.98)';
-        // 動態等待淡出動畫結束後再隱藏佔位，保持流暢感
-        setTimeout(() => {
-          if (cardAnchor.style.opacity === '0') {
-            cardAnchor.style.display = 'none';
-          }
-        }, 200);
-      }
-    });
-  });
-
-  // 點擊 ✕ 按鈕清除搜尋內容
-  searchClear.addEventListener('click', () => {
-    searchInput.value = '';
-    searchClear.style.display = 'none';
-    searchInput.focus();
-    // 觸發 input 事件以重設所有卡片狀態
-    searchInput.dispatchEvent(new Event('input'));
-  });
+// ── Hero Search ──
+const heroSearch = document.getElementById('hero-search');
+const heroSearchClear = document.getElementById('hero-search-clear');
+function doSearch(q) {
+  heroSearch.value = q;
+  heroSearchClear.style.display = 'block';
+  heroSearch.focus();
+  // 跳到分科區讓使用者繼續
+  document.getElementById('specialty').scrollIntoView({behavior:'smooth'});
 }
+heroSearch.addEventListener('input', e => {
+  heroSearchClear.style.display = e.target.value ? 'block' : 'none';
+});
+heroSearch.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && heroSearch.value.trim()) {
+    doSearch(heroSearch.value.trim());
+  }
+});
+heroSearchClear.addEventListener('click', () => {
+  heroSearch.value = '';
+  heroSearchClear.style.display = 'none';
+  heroSearch.focus();
+});
+
+// ── Symptom Modal Data ──
+const SYM_DATA = {
+  'chest-pain': {
+    title: '🔴 胸痛 Chest Pain',
+    urgent: [
+      { name:'急性冠心症（ACS）', sub:'STEMI / NSTEMI / 不穩定心絞痛', url:'im/cardio.html' },
+      { name:'主動脈剝離', sub:'突發撕裂感、前後背放射、兩側血壓差', url:'surg/cardiac-surg.html#cardiac-aorta' },
+      { name:'肺栓塞（PE）', sub:'呼吸困難 + 低血氧 + D-dimer↑', url:'im/pulm.html' },
+      { name:'張力性氣胸', sub:'氣管偏移、呼吸音消失、血壓↓', url:'er/trauma.html' },
+      { name:'心包填塞', sub:'Beck triad：低血壓 + 頸靜脈怒張 + 心音遠', url:'im/cardio.html' },
+    ],
+    other: [
+      { name:'穩定型心絞痛', sub:'用力誘發、休息緩解', url:'im/cardio.html' },
+      { name:'GERD / 食道痙攣', sub:'燒心、與飲食相關', url:'im/gi.html#esophageal-gastric' },
+      { name:'肌肉骨骼（胸壁）', sub:'局部壓痛、呼吸時加重', url:'' },
+      { name:'肺炎 / 胸膜炎', sub:'發燒、咳嗽、呼吸時加重', url:'im/pulm.html' },
+    ],
+    actions: ['立刻 12-lead ECG（10 分鐘內）', 'Troponin + CXR + ABG', '建立 IV + 心電圖監測', '疼痛評估：特性 / 放射 / 誘因 / 緩解']
+  },
+  'dyspnea': {
+    title: '🔴 呼吸困難 Dyspnea',
+    urgent: [
+      { name:'急性心衰竭 / 肺水腫', sub:'端坐呼吸、濕囉音、BNP↑', url:'im/cardio.html' },
+      { name:'肺栓塞（PE）', sub:'突發、低血氧、心跳過速', url:'im/pulm.html' },
+      { name:'氣胸', sub:'單側呼吸音↓、叩診過清', url:'er/trauma.html' },
+      { name:'嚴重氣喘 / COPD 急性惡化', sub:'喘鳴、呼氣困難、使用輔助呼吸肌', url:'im/pulm.html' },
+      { name:'上呼吸道阻塞', sub:'喘鳴（Stridor）、吞嚥困難', url:'er/general.html' },
+    ],
+    other: [
+      { name:'肺炎', sub:'發燒、咳嗽、局部叩診濁音', url:'im/pulm.html' },
+      { name:'貧血', sub:'Hb↓、心跳過速、蒼白', url:'im/hema.html' },
+      { name:'代謝性酸中毒', sub:'Kussmaul 呼吸、DM / 腎衰竭', url:'im/nephro.html' },
+      { name:'焦慮 / 過度換氣', sub:'肢端麻木、手足抽搐、排除器質性', url:'' },
+    ],
+    actions: ['SpO₂ + ABG + CXR', '4L O₂鼻導管先給（低血氧時）', '評估呼吸速率 / 輔助呼吸肌 / 三腳架坐姿', 'ECG + BNP + D-dimer（依臨床懷疑）']
+  },
+  'abdominal-pain': {
+    title: '🟡 腹痛 Abdominal Pain',
+    urgent: [
+      { name:'腸繫膜缺血（AMI）', sub:'疼痛與體徵不成比例、心房顫動病史', url:'im/gi.html#intestinal-ischemia' },
+      { name:'主動脈瘤破裂（AAA）', sub:'突發腰腹痛 + 血壓↓ + 腹部搏動性腫塊', url:'surg/cardiac-surg.html#cardiac-aorta' },
+      { name:'腸穿孔 / 瀰漫性腹膜炎', sub:'板狀腹、反彈痛、CXR 見游離氣體', url:'surg/gs.html' },
+      { name:'急性闌尾炎', sub:'McBurney 壓痛、Rovsing sign', url:'surg/gs.html' },
+    ],
+    other: [
+      { name:'急性胰臟炎', sub:'上腹放射背部、Lipase↑、酒精 / 膽石', url:'im/gi.html#pancreatitis' },
+      { name:'膽囊炎 / 膽管炎', sub:'Murphy sign、發燒、Charcot triad', url:'im/gi.html#biliary' },
+      { name:'消化性潰瘍', sub:'上腹痛、與飲食相關', url:'im/gi.html#esophageal-gastric' },
+      { name:'腸阻塞', sub:'脹氣、無排便排氣、CXR 見氣液面', url:'surg/gs.html' },
+      { name:'婦科急症（異位妊娠）', sub:'育齡女性 + 下腹痛 → 一定要驗孕', url:'obgyn/obgyn.html' },
+    ],
+    actions: ['NPO + IV access', 'CBC + CMP + Lipase + Lactate + hCG（女性）', '腹部 X 光 / CT（依臨床懷疑）', '外科 / 婦科會診時機：腹膜炎徵象、血流動力學不穩']
+  },
+  'headache': {
+    title: '🔴 頭痛 Headache',
+    urgent: [
+      { name:'蜘蛛網膜下腔出血（SAH）', sub:'「一生中最嚴重的頭痛」、突發、頸部僵硬', url:'im/neuro.html#stroke' },
+      { name:'腦膜炎 / 腦炎', sub:'發燒 + 頸部僵硬 + 意識改變', url:'im/infect.html' },
+      { name:'顱內壓升高', sub:'體位性、視乳突水腫、早晨嘔吐', url:'im/neuro.html' },
+      { name:'顳動脈炎（GCA）', sub:'年齡 &gt;50、顳部壓痛、ESR↑、視力喪失風險', url:'im/rheum.html' },
+    ],
+    other: [
+      { name:'偏頭痛', sub:'單側搏動性、畏光畏聲、前兆', url:'im/neuro.html#headache' },
+      { name:'叢集性頭痛', sub:'眼周劇痛、自律神經症狀、週期性', url:'im/neuro.html#headache' },
+      { name:'緊張型頭痛', sub:'雙側壓迫感、無搏動性', url:'im/neuro.html#headache' },
+      { name:'藥物過度使用頭痛', sub:'止痛藥使用 &gt;10-15 天/月', url:'im/neuro.html#headache' },
+    ],
+    actions: ['Red flags：Thunder clap / 發燒 / 神經學缺損 / 乳突水腫 → CT + LP', '顳動脈炎懷疑 → 立刻 Prednisolone（不等切片）', 'ESR / CRP（&gt;50 歲新發頭痛）', '血壓（高血壓緊急症）']
+  },
+  'ams': {
+    title: '🔴 意識改變 AMS',
+    urgent: [
+      { name:'低血糖', sub:'最快排除！立刻 fingerstick glucose', url:'im/endo.html' },
+      { name:'腦中風', sub:'局部神經學缺損、FAST', url:'im/neuro.html#stroke' },
+      { name:'腦膜炎 / 腦炎', sub:'發燒 + 頸部僵硬', url:'im/infect.html' },
+      { name:'顱內出血', sub:'突發、血壓極高、CT 確認', url:'im/neuro.html#stroke' },
+      { name:'非痙攣性癲癇持續狀態（NCSE）', sub:'無明顯抽搐但意識模糊 → EEG', url:'im/neuro.html#seizure' },
+    ],
+    other: [
+      { name:'譫妄（Delirium）', sub:'急性波動性、老年人、找誘因（感染 / 藥物 / 代謝）', url:'er/general.html' },
+      { name:'代謝性腦病變', sub:'Na / Glucose / 氨 / CO₂ / 肝衰竭 / 尿毒症', url:'im/nephro.html' },
+      { name:'藥物 / 中毒', sub:'Opioid（縮瞳）、Benzo、酒精', url:'er/toxicology.html' },
+      { name:'Wernicke 腦病變', sub:'酒精 / 營養不良 → Thiamine 先給再葡萄糖', url:'er/toxicology.html' },
+    ],
+    actions: ['立刻 Glucose fingerstick', 'AEIOU TIPS 鑑別框架', 'ABC + GCS 評估', 'CT 腦部（局部神經學缺損 / 外傷 / 嚴重頭痛）', 'Labs：Na / Glucose / NH3 / TSH / 藥物濃度']
+  },
+  'fever': {
+    title: '🟡 發燒 Fever',
+    urgent: [
+      { name:'敗血症（Sepsis）', sub:'感染 + qSOFA ≥2 → 1 小時抗生素', url:'im/infect.html' },
+      { name:'腦膜炎', sub:'頸部僵硬 + 頭痛 + 畏光', url:'im/infect.html' },
+      { name:'壞死性筋膜炎', sub:'皮膚不成比例的劇痛、進展快速', url:'surg/gs.html' },
+      { name:'中性白血球減少性發燒', sub:'化療後 ANC &lt;500 → 緊急抗生素', url:'im/onco.html' },
+    ],
+    other: [
+      { name:'泌尿道感染 / 腎盂腎炎', sub:'頻尿 / 排尿痛 / 腰痛 / CVA tenderness', url:'im/infect.html' },
+      { name:'肺炎', sub:'咳嗽 / 痰 / 呼吸困難 / CXR 浸潤', url:'im/pulm.html' },
+      { name:'蜂窩組織炎', sub:'皮膚紅腫熱痛、邊界不清', url:'im/infect.html' },
+      { name:'藥物熱', sub:'排除其他原因、停藥後退燒', url:'im/infect.html' },
+    ],
+    actions: ['Blood culture × 2 套（抗生素前）', 'CBC + CMP + Lactate + CRP / PCT', 'Urine culture + UA', '找感染源：CXR + 皮膚 + 傷口 + 導管', 'Sepsis → Hour-1 bundle']
+  },
+  'syncope': {
+    title: '🟡 暈厥 Syncope',
+    urgent: [
+      { name:'心律不整（VT / 完全性 AVB）', sub:'ECG 立刻！尤其有心臟病史', url:'im/cardio.html' },
+      { name:'主動脈狹窄', sub:'用力時暈厥 + 心雜音', url:'im/cardio.html' },
+      { name:'肺栓塞', sub:'暈厥 + 呼吸困難 + 低血氧', url:'im/pulm.html' },
+      { name:'主動脈剝離', sub:'劇烈胸痛 + 暈厥', url:'surg/cardiac-surg.html#cardiac-aorta' },
+    ],
+    other: [
+      { name:'血管迷走性暈厥（最常見）', sub:'誘因（疼痛 / 站立 / 情緒）、前驅症狀、快速恢復', url:'' },
+      { name:'直立性低血壓', sub:'站起時血壓↓ &gt;20/10 mmHg', url:'im/cardio.html' },
+      { name:'情境性暈厥', sub:'咳嗽 / 排尿 / 排便後', url:'' },
+      { name:'低血糖', sub:'Glucose fingerstick 立刻確認', url:'im/endo.html' },
+    ],
+    actions: ['立刻 ECG', 'Glucose fingerstick', '臥立血壓（直立性低血壓）', '心臟結構性病變評估（心超）', 'San Francisco Syncope Rule：高風險 → 住院監測']
+  },
+  'palpitation': {
+    title: '🔵 心悸 Palpitation',
+    urgent: [
+      { name:'室性心搏過速（VT）', sub:'血流動力學不穩定 → 立刻電擊', url:'im/cardio.html' },
+      { name:'WPW 合併 AF', sub:'不規則寬 QRS → 不可用 AV node blockers', url:'im/cardio.html' },
+      { name:'尖端扭轉（Torsades）', sub:'長 QT + 多形性 VT', url:'im/cardio.html' },
+    ],
+    other: [
+      { name:'心房顫動（AF）', sub:'不規則心律 + 無 P 波', url:'im/cardio.html' },
+      { name:'SVT（陣發性室上心搏過速）', sub:'突發突止、規則、迷走刺激可終止', url:'im/cardio.html' },
+      { name:'PVC（早期心室收縮）', sub:'間歇性不規則、「心跳停頓」感', url:'im/cardio.html' },
+      { name:'甲狀腺亢進', sub:'TSH↓ + 心跳過速 + 手抖', url:'im/endo.html' },
+      { name:'焦慮 / 貧血 / 咖啡因', sub:'排除器質性後考慮', url:'' },
+    ],
+    actions: ['立刻 12-lead ECG（最重要）', '血壓 + SpO₂', 'TSH / T4（甲狀腺）', 'CBC（貧血）', 'Holter monitor（間歇性症狀）']
+  },
+  'back-pain': {
+    title: '🔵 背痛 Back Pain',
+    urgent: [
+      { name:'馬尾症候群', sub:'雙側神經根症狀 + 大小便失禁 + 鞍區麻木 → 緊急 MRI', url:'surg/ortho.html#ortho-spine' },
+      { name:'主動脈剝離 / 動脈瘤', sub:'突發撕裂感、腹部搏動性腫塊', url:'surg/cardiac-surg.html#cardiac-aorta' },
+      { name:'脊椎硬膜外膿瘍', sub:'發燒 + 背痛 + 神經學缺損', url:'im/infect.html' },
+      { name:'脊椎轉移性腫瘤', sub:'癌症病史 + 夜間背痛 + 體重下降', url:'im/onco.html' },
+    ],
+    other: [
+      { name:'非特異性下背痛（最常見）', sub:'90%；活動後加重、無神經學缺損', url:'others/rehab.html#rehab-msk' },
+      { name:'神經根病變', sub:'放射至下肢、SLR test（+）', url:'others/rehab.html#rehab-msk' },
+      { name:'腎盂腎炎', sub:'CVA 壓痛 + 發燒 + 泌尿道症狀', url:'im/infect.html' },
+      { name:'椎管狹窄', sub:'神經性跛行、彎腰緩解、老年人', url:'others/rehab.html#rehab-msk' },
+    ],
+    actions: ['Red flags 篩查（發燒 / 體重下降 / 癌症史 / 大小便失禁）', '神經學檢查（肌力 / 反射 / 感覺）', 'X 光（外傷 / 骨質疏鬆）', 'MRI（神經學缺損 / 懷疑馬尾）', 'UA（排除腎臟來源）']
+  },
+  'edema': {
+    title: '🔵 水腫 Edema',
+    urgent: [
+      { name:'急性心衰竭', sub:'雙側下肢水腫 + 端坐呼吸 + BNP↑', url:'im/cardio.html' },
+      { name:'深層靜脈血栓（DVT）', sub:'單側下肢腫脹壓痛 → 超音波', url:'surg/cardiac-surg.html#cardiac-vein' },
+      { name:'腎病症候群', sub:'大量蛋白尿 + 低白蛋白 + 全身水腫', url:'im/nephro.html' },
+    ],
+    other: [
+      { name:'肝硬化 / 低白蛋白血症', sub:'腹水 + 蜘蛛痣 + 黃疸', url:'im/gi.html#cirrhosis' },
+      { name:'慢性靜脈功能不全', sub:'雙側、下午加重、靜脈曲張', url:'surg/cardiac-surg.html#cardiac-vein' },
+      { name:'藥物（CCB / NSAIDs）', sub:'對稱性、無壓痛', url:'' },
+      { name:'甲狀腺功能低下', sub:'黏液水腫、非凹陷性', url:'im/endo.html' },
+    ],
+    actions: ['凹陷性 vs 非凹陷性鑑別', 'BNP / NT-proBNP', '白蛋白 + 肝腎功能 + UA（蛋白尿）', '超音波（DVT / 腹水 / 心功能）', '單側 → DVT 優先排除']
+  },
+  'jaundice': {
+    title: '🟡 黃疸 Jaundice',
+    urgent: [
+      { name:'膽管炎（Charcot triad / Reynolds pentad）', sub:'發燒 + 黃疸 + 右上腹痛 → 緊急 ERCP', url:'im/gi.html#biliary' },
+      { name:'急性肝衰竭', sub:'INR &gt;1.5 + 肝性腦病變 + 黃疸', url:'im/gi.html#alf' },
+      { name:'溶血危象', sub:'Hb 急速↓ + 間接膽紅素↑ + 血紅素尿', url:'im/hema.html' },
+    ],
+    other: [
+      { name:'肝炎（病毒性 / 藥物性 / 酒精性）', sub:'ALT / AST ↑↑', url:'im/gi.html#hepatitis' },
+      { name:'肝硬化', sub:'慢性進展、合併腹水', url:'im/gi.html#cirrhosis' },
+      { name:'胰臟癌 / 膽管癌', sub:'無痛性黃疸 + 體重下降 + CA19-9↑', url:'im/gi.html#pancreatitis' },
+      { name:'Gilbert syndrome', sub:'輕度間接膽紅素↑、壓力 / 禁食誘發、良性', url:'im/gi.html#liver-tests' },
+    ],
+    actions: ['直接 vs 間接膽紅素鑑別', 'LFT + INR + CBC', '腹部超音波（膽道擴張 / 肝臟結構）', 'Hepatitis serology（A / B / C）', '膽管炎 → NPO + 抗生素 + 緊急 ERCP']
+  },
+  'gi-bleed': {
+    title: '🔴 血便 GI Bleeding',
+    urgent: [
+      { name:'靜脈曲張出血', sub:'肝硬化患者 → Octreotide + 預防性抗生素 + 緊急 EGD', url:'im/gi.html#gi-bleed' },
+      { name:'大量上消化道出血（UGIB）', sub:'黑便 + 血壓↓ + 心跳↑', url:'im/gi.html#gi-bleed' },
+      { name:'下消化道大量出血', sub:'鮮紅色血便 + 血流動力學不穩', url:'im/gi.html#gi-bleed' },
+    ],
+    other: [
+      { name:'消化性潰瘍出血', sub:'Forrest Ia/IIa → 內視鏡止血', url:'im/gi.html#gi-bleed' },
+      { name:'憩室出血', sub:'無痛性大量血便、多自止', url:'im/gi.html#colon' },
+      { name:'大腸癌', sub:'慢性隱血 + 排便習慣改變 + 貧血', url:'im/gi.html#colon' },
+      { name:'痔瘡', sub:'排便後鮮血、與糞便分離、肛門不適', url:'' },
+    ],
+    actions: ['兩條大號 IV + 輸液', '輸血目標 Hb &gt;7（穩定）/ &gt;8（心血管）', 'Glasgow-Blatchford Score（GBS）', 'UGIB：Pantoprazole 80 mg IV + EGD &lt;24h', '靜脈曲張 → Octreotide + Ceftriaxone + EVL']
+  },
+  'oliguria': {
+    title: '🔴 少尿 Oliguria',
+    urgent: [
+      { name:'急性腎損傷（AKI）', sub:'Cr 上升 + 少尿（&lt;0.5 mL/kg/h）', url:'im/nephro.html' },
+      { name:'尿路阻塞（腎後）', sub:'膀胱叩診濁音、超音波氫腎 → 導尿 / 腎瘻管', url:'surg/uro.html' },
+      { name:'休克（腎前）', sub:'血壓↓ + 心跳↑ + 末梢灌流差', url:'er/general.html' },
+    ],
+    other: [
+      { name:'藥物性腎損傷', sub:'NSAIDs / ACEi / 造影劑 / Aminoglycoside', url:'im/nephro.html' },
+      { name:'腎絲球腎炎', sub:'血尿 + 蛋白尿 + 高血壓', url:'im/nephro.html' },
+      { name:'橫紋肌溶解', sub:'CK↑↑ + 茶色尿 + 肌肉症狀', url:'im/nephro.html' },
+    ],
+    actions: ['Foley catheter（排除尿滯留）', 'BUN / Cr + 電解質 + UA', 'FENa（腎前 &lt;1% / 腎因 &gt;2%）', '大量補液（腎前性）', '停腎毒性藥物', '超音波（排除阻塞）']
+  },
+  'neck-stiff': {
+    title: '🔴 頸部僵硬 Neck Stiffness',
+    urgent: [
+      { name:'細菌性腦膜炎', sub:'發燒 + 頸部僵硬 + 頭痛 + 意識改變 → 立刻抗生素', url:'im/infect.html' },
+      { name:'蜘蛛網膜下腔出血（SAH）', sub:'Thunder clap headache + 頸部僵硬', url:'im/neuro.html#stroke' },
+      { name:'腦炎（HSV）', sub:'發燒 + 意識改變 + 癲癇 → Acyclovir', url:'im/infect.html' },
+    ],
+    other: [
+      { name:'病毒性腦膜炎', sub:'較輕、無細菌感染跡象', url:'im/infect.html' },
+      { name:'頸椎病變 / 肌肉緊張', sub:'無發燒、局部壓痛', url:'surg/ortho.html#ortho-spine' },
+      { name:'Kernig / Brudzinski sign', sub:'（+）高度懷疑腦膜刺激', url:'im/infect.html' },
+    ],
+    actions: ['立刻血液培養 × 2 套', '立刻廣效抗生素（Ceftriaxone + Dexamethasone）', 'CT 腦部（有局部神經學缺損 → LP 前先 CT）', 'LP（腦壓 / 細胞 / 蛋白 / 糖 / 培養）', '不要為了等 CT 而延誤抗生素']
+  },
+  'hypotension': {
+    title: '🔴 低血壓 Hypotension',
+    urgent: [
+      { name:'敗血性休克', sub:'感染源 + MAP &lt;65 + 升壓劑依賴', url:'im/infect.html' },
+      { name:'過敏性休克', sub:'接觸過敏原 + 皮膚 / 呼吸 / 循環症狀 → Epinephrine', url:'er/general.html' },
+      { name:'心因性休克', sub:'AMI / 心衰竭 + 低血壓 + 肺水腫', url:'im/cardio.html' },
+      { name:'大量出血 / 低血容性休克', sub:'外傷 / GI 出血 + 心跳快 + 末梢冷', url:'er/trauma.html' },
+      { name:'心包填塞 / 張力性氣胸', sub:'阻塞性休克：頸靜脈怒張 + 低血壓', url:'im/cardio.html' },
+    ],
+    other: [
+      { name:'肺栓塞', sub:'低血壓 + 低血氧 + 心電圖右心負荷', url:'im/pulm.html' },
+      { name:'腎上腺危象', sub:'類固醇使用史 + 壓力情況 + 低鈉 / 高鉀', url:'im/endo.html' },
+      { name:'藥物 / 神經源性', sub:'脊髓損傷 / 過量降壓藥', url:'' },
+    ],
+    actions: ['立刻 IV × 2 + 輸液 500 mL bolus', '床邊 POCUS（心包積液 / 氣胸 / 下腔靜脈）', 'ECG + CXR + 血液培養', '升壓劑：Norepinephrine 首選（敗血性休克）', '過敏 → Epinephrine 0.3 mg IM 大腿外側']
+  },
+  'glucose': {
+    title: '🟡 血糖異常 Glucose Abnormality',
+    urgent: [
+      { name:'低血糖（&lt;50 mg/dL）', sub:'意識改變 / 冒汗 / 心跳快 → 立刻補糖', url:'im/endo.html' },
+      { name:'DKA（糖尿病酮酸中毒）', sub:'血糖↑ + AG↑ + 酮體↑ + 代謝性酸中毒', url:'im/endo.html' },
+      { name:'HHS（高血糖高滲性狀態）', sub:'血糖 &gt;600 + 高滲透壓 + 意識改變、無顯著酮酸', url:'im/endo.html' },
+    ],
+    other: [
+      { name:'應激性高血糖', sub:'住院病人無 DM 病史、感染 / 手術後', url:'im/endo.html' },
+      { name:'類固醇引起高血糖', sub:'用藥後血糖↑、尤其餐後', url:'im/endo.html' },
+    ],
+    actions: ['低血糖：意識清 → 口服 15g 糖；意識不清 → 50% Glucose 25 mL IV', 'DKA：IV 輸液 + Insulin drip + K⁺ 補充（K⁺ &gt;3.5 才給 Insulin）', 'HHS：緩慢補液（避免腦水腫）', '血糖目標住院：140-180 mg/dL', 'DKA 解除標準：AG 正常 + 可進食']
+  }
+};
+
+function openSym(id) {
+  const d = SYM_DATA[id];
+  if (!d) return;
+  document.getElementById('sym-modal-title').textContent = d.title;
+  let html = '';
+  if (d.urgent && d.urgent.length) {
+    html += '<div class="sym-section-label">🚨 需立刻排除（危險 DDx）</div><div class="sym-ddx-list">';
+    d.urgent.forEach(i => {
+      html += `<a class="sym-ddx-item sym-urgent" href="${i.url || '#'}" ${i.url ? 'target="_blank"' : ''}>
+        <div><div class="sym-ddx-name">${i.name}</div><div class="sym-ddx-sub">${i.sub}</div></div>
+        <span class="sym-ddx-arrow">${i.url ? '→' : ''}</span></a>`;
+    });
+    html += '</div>';
+  }
+  if (d.other && d.other.length) {
+    html += '<div class="sym-section-label">其他鑑別診斷</div><div class="sym-ddx-list">';
+    d.other.forEach(i => {
+      html += `<a class="sym-ddx-item" href="${i.url || '#'}" ${i.url ? 'target="_blank"' : ''}>
+        <div><div class="sym-ddx-name">${i.name}</div><div class="sym-ddx-sub">${i.sub}</div></div>
+        <span class="sym-ddx-arrow">${i.url ? '→' : ''}</span></a>`;
+    });
+    html += '</div>';
+  }
+  if (d.actions && d.actions.length) {
+    html += '<div class="sym-section-label">初步處置 Workup</div><div class="sym-action-box"><ul>';
+    d.actions.forEach(a => { html += `<li>${a}</li>`; });
+    html += '</ul></div>';
+  }
+  document.getElementById('sym-modal-body').innerHTML = html;
+  document.getElementById('sym-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSym() {
+  document.getElementById('sym-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSym(); });
 </script>
-  <script src="./notion-notes.js"></script>
+<script src="./notion-notes.js"></script>
 </body>
 </html>
