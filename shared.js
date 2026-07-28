@@ -250,7 +250,7 @@ function scrollToAndHighlight(targetId, query) {
       }, 6000);
     });
   }
-
+}
 // ── SIDEBAR ACTIVE ON SCROLL ──
 function initScrollSpy() {
   const blocks = document.querySelectorAll('.topic-block');
