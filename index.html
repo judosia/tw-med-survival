@@ -299,13 +299,13 @@
       </div>
     </a>
     <a href="specialty.html" style="text-decoration:none;">
-      <div class="card" style="border-left:3px solid #c47d2b; display:flex; align-items:flex-start; gap:14px;">
+      <div class="card" style="border-left:3px solid #E63946; display:flex; align-items:flex-start; gap:14px;">
         <div style="width:36px;height:36px;border-radius:8px;background:rgba(230,57,70,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E63946" stroke-width="2"><path d="M14.5 2.5c0 1.5-1.5 7-1.5 7h-2C10 9.5 8.5 4 8.5 2.5a3 3 0 0 1 6 0z"/><path d="M12 9.5V21"/><path d="M9 15h6"/></svg></div>
         <div><h3 style="font-size:0.95rem;margin-bottom:4px;">外科</h3><p style="font-size:0.78rem;color:var(--muted);">一般外科、心臟血管、骨科、神外、整形⋯</p></div>
       </div>
     </a>
     <a href="specialty.html" style="text-decoration:none;">
-      <div class="card" style="border-left:3px solid #E63946; display:flex; align-items:flex-start; gap:14px;">
+      <div class="card" style="border-left:3px solid #F4A261; display:flex; align-items:flex-start; gap:14px;">
         <div style="width:36px;height:36px;border-radius:8px;background:rgba(244,162,97,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c47d2b" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <div><h3 style="font-size:0.95rem;margin-bottom:4px;">急診</h3><p style="font-size:0.78rem;color:var(--muted);">急診核心、外傷 ATLS、毒物、環境傷害⋯</p></div>
       </div>
@@ -451,33 +451,33 @@ const SYM_DATA = {
   'chest-pain': {
     title: '🔴 胸痛 Chest Pain',
     urgent: [
-      { name:'急性冠心症（ACS）', sub:'STEMI / NSTEMI / 不穩定心絞痛', url:'im/cardio.html' },
+      { name:'急性冠心症（ACS）', sub:'STEMI / NSTEMI / 不穩定心絞痛', url:'im/cardio.html#ami' },
       { name:'主動脈剝離', sub:'突發撕裂感、前後背放射、兩側血壓差', url:'surg/cardiac-surg.html#cardiac-aorta' },
-      { name:'肺栓塞（PE）', sub:'呼吸困難 + 低血氧 + D-dimer↑', url:'im/pulm.html' },
-      { name:'張力性氣胸', sub:'氣管偏移、呼吸音消失、血壓↓', url:'er/trauma.html' },
-      { name:'心包填塞', sub:'Beck triad：低血壓 + 頸靜脈怒張 + 心音遠', url:'im/cardio.html' },
+      { name:'肺栓塞（PE）', sub:'呼吸困難 + 低血氧 + D-dimer↑', url:'im/pulm.html#pe' },
+      { name:'張力性氣胸', sub:'氣管偏移、呼吸音消失、血壓↓', url:'er/chest-trauma.html#chest-trauma' },
+      { name:'心包填塞', sub:'Beck triad：低血壓 + 頸靜脈怒張 + 心音遠', url:'im/cardio.html#ad' },
     ],
     other: [
-      { name:'穩定型心絞痛', sub:'用力誘發、休息緩解', url:'im/cardio.html' },
+      { name:'穩定型心絞痛', sub:'用力誘發、休息緩解', url:'im/cardio.html#ami' },
       { name:'GERD / 食道痙攣', sub:'燒心、與飲食相關', url:'im/gi.html#esophageal-gastric' },
       { name:'肌肉骨骼（胸壁）', sub:'局部壓痛、呼吸時加重', url:'' },
-      { name:'肺炎 / 胸膜炎', sub:'發燒、咳嗽、呼吸時加重', url:'im/pulm.html' },
+      { name:'肺炎 / 胸膜炎', sub:'發燒、咳嗽、呼吸時加重', url:'im/pulm.html#pneumonia' },
     ],
     actions: ['立刻 12-lead ECG（10 分鐘內）', 'Troponin + CXR + ABG', '建立 IV + 心電圖監測', '疼痛評估：特性 / 放射 / 誘因 / 緩解']
   },
   'dyspnea': {
     title: '🔴 呼吸困難 Dyspnea',
     urgent: [
-      { name:'急性心衰竭 / 肺水腫', sub:'端坐呼吸、濕囉音、BNP↑', url:'im/cardio.html' },
-      { name:'肺栓塞（PE）', sub:'突發、低血氧、心跳過速', url:'im/pulm.html' },
-      { name:'氣胸', sub:'單側呼吸音↓、叩診過清', url:'er/trauma.html' },
-      { name:'嚴重氣喘 / COPD 急性惡化', sub:'喘鳴、呼氣困難、使用輔助呼吸肌', url:'im/pulm.html' },
-      { name:'上呼吸道阻塞', sub:'喘鳴（Stridor）、吞嚥困難', url:'er/general.html' },
+      { name:'急性心衰竭 / 肺水腫', sub:'端坐呼吸、濕囉音、BNP↑', url:'im/cardio.html#hf' },
+      { name:'肺栓塞（PE）', sub:'突發、低血氧、心跳過速', url:'im/pulm.html#pe' },
+      { name:'氣胸', sub:'單側呼吸音↓、叩診過清', url:'er/trauma.html#chest-trauma' },
+      { name:'嚴重氣喘 / COPD 急性惡化', sub:'喘鳴、呼氣困難、使用輔助呼吸肌', url:'im/pulm.html#asthma' },
+      { name:'上呼吸道阻塞', sub:'喘鳴（Stridor）、吞嚥困難', url:'er/general.html#abcde' },
     ],
     other: [
-      { name:'肺炎', sub:'發燒、咳嗽、局部叩診濁音', url:'im/pulm.html' },
+      { name:'肺炎', sub:'發燒、咳嗽、局部叩診濁音', url:'im/pulm.html#pneumonia' },
       { name:'貧血', sub:'Hb↓、心跳過速、蒼白', url:'im/hema.html' },
-      { name:'代謝性酸中毒', sub:'Kussmaul 呼吸、DM / 腎衰竭', url:'im/nephro.html' },
+      { name:'代謝性酸中毒', sub:'Kussmaul 呼吸、DM / 腎衰竭', url:'im/nephro.html#aki' },
       { name:'焦慮 / 過度換氣', sub:'肢端麻木、手足抽搐、排除器質性', url:'' },
     ],
     actions: ['SpO₂ + ABG + CXR', '4L O₂鼻導管先給（低血氧時）', '評估呼吸速率 / 輔助呼吸肌 / 三腳架坐姿', 'ECG + BNP + D-dimer（依臨床懷疑）']
@@ -503,30 +503,30 @@ const SYM_DATA = {
     title: '🔴 頭痛 Headache',
     urgent: [
       { name:'蜘蛛網膜下腔出血（SAH）', sub:'「一生中最嚴重的頭痛」、突發、頸部僵硬', url:'im/neuro.html#stroke' },
-      { name:'腦膜炎 / 腦炎', sub:'發燒 + 頸部僵硬 + 意識改變', url:'im/infect.html' },
-      { name:'顱內壓升高', sub:'體位性、視乳突水腫、早晨嘔吐', url:'im/neuro.html' },
-      { name:'顳動脈炎（GCA）', sub:'年齡 &gt;50、顳部壓痛、ESR↑、視力喪失風險', url:'im/rheum.html' },
+      { name:'腦膜炎 / 腦炎', sub:'發燒 + 頸部僵硬 + 意識改變', url:'im/infect.html#neuro-infxn' },
+      { name:'顱內壓升高', sub:'體位性、視乳突水腫、早晨嘔吐', url:'im/neuro.html#mental-status' },
+      { name:'顳動脈炎（GCA）', sub:'年齡 >50、顳部壓痛、ESR↑、視力喪失風險', url:'im/rheum.html' },
     ],
     other: [
       { name:'偏頭痛', sub:'單側搏動性、畏光畏聲、前兆', url:'im/neuro.html#headache' },
       { name:'叢集性頭痛', sub:'眼周劇痛、自律神經症狀、週期性', url:'im/neuro.html#headache' },
       { name:'緊張型頭痛', sub:'雙側壓迫感、無搏動性', url:'im/neuro.html#headache' },
-      { name:'藥物過度使用頭痛', sub:'止痛藥使用 &gt;10-15 天/月', url:'im/neuro.html#headache' },
+      { name:'藥物過度使用頭痛', sub:'止痛藥使用 >10-15 天/月', url:'im/neuro.html#headache' },
     ],
-    actions: ['Red flags：Thunder clap / 發燒 / 神經學缺損 / 乳突水腫 → CT + LP', '顳動脈炎懷疑 → 立刻 Prednisolone（不等切片）', 'ESR / CRP（&gt;50 歲新發頭痛）', '血壓（高血壓緊急症）']
+    actions: ['Red flags：Thunder clap / 發燒 / 神經學缺損 / 乳突水腫 → CT + LP', '顳動脈炎懷疑 → 立刻 Prednisolone（不等切片）', 'ESR / CRP（>50 歲新發頭痛）', '血壓（高血壓緊急症）']
   },
   'ams': {
     title: '🔴 意識改變 AMS',
     urgent: [
       { name:'低血糖', sub:'最快排除！立刻 fingerstick glucose', url:'im/endo.html' },
       { name:'腦中風', sub:'局部神經學缺損、FAST', url:'im/neuro.html#stroke' },
-      { name:'腦膜炎 / 腦炎', sub:'發燒 + 頸部僵硬', url:'im/infect.html' },
+      { name:'腦膜炎 / 腦炎', sub:'發燒 + 頸部僵硬', url:'im/infect.html#neuro-infxn' },
       { name:'顱內出血', sub:'突發、血壓極高、CT 確認', url:'im/neuro.html#stroke' },
       { name:'非痙攣性癲癇持續狀態（NCSE）', sub:'無明顯抽搐但意識模糊 → EEG', url:'im/neuro.html#seizure' },
     ],
     other: [
-      { name:'譫妄（Delirium）', sub:'急性波動性、老年人、找誘因（感染 / 藥物 / 代謝）', url:'er/general.html' },
-      { name:'代謝性腦病變', sub:'Na / Glucose / 氨 / CO₂ / 肝衰竭 / 尿毒症', url:'im/nephro.html' },
+      { name:'譫妄（Delirium）', sub:'急性波動性、老年人、找誘因（感染 / 藥物 / 代謝）', url:'er/general.html#ams-er' },
+      { name:'代謝性腦病變', sub:'Na / Glucose / 氨 / CO₂ / 肝衰竭 / 尿毒症', url:'im/nephro.html#aki' },
       { name:'藥物 / 中毒', sub:'Opioid（縮瞳）、Benzo、酒精', url:'er/toxicology.html' },
       { name:'Wernicke 腦病變', sub:'酒精 / 營養不良 → Thiamine 先給再葡萄糖', url:'er/toxicology.html' },
     ],
@@ -535,14 +535,14 @@ const SYM_DATA = {
   'fever': {
     title: '🟡 發燒 Fever',
     urgent: [
-      { name:'敗血症（Sepsis）', sub:'感染 + qSOFA ≥2 → 1 小時抗生素', url:'im/infect.html' },
-      { name:'腦膜炎', sub:'頸部僵硬 + 頭痛 + 畏光', url:'im/infect.html' },
+      { name:'敗血症（Sepsis）', sub:'感染 + qSOFA ≥2 → 1 小時抗生素', url:'im/infect.html#sepsis' },
+      { name:'腦膜炎', sub:'頸部僵硬 + 頭痛 + 畏光', url:'im/infect.html#neuro-infxn' },
       { name:'壞死性筋膜炎', sub:'皮膚不成比例的劇痛、進展快速', url:'surg/gs.html' },
-      { name:'中性白血球減少性發燒', sub:'化療後 ANC &lt;500 → 緊急抗生素', url:'im/onco.html' },
+      { name:'中性白血球減少性發燒', sub:'化療後 ANC <500 → 緊急抗生素', url:'im/onco.html' },
     ],
     other: [
       { name:'泌尿道感染 / 腎盂腎炎', sub:'頻尿 / 排尿痛 / 腰痛 / CVA tenderness', url:'im/infect.html' },
-      { name:'肺炎', sub:'咳嗽 / 痰 / 呼吸困難 / CXR 浸潤', url:'im/pulm.html' },
+      { name:'肺炎', sub:'咳嗽 / 痰 / 呼吸困難 / CXR 浸潤', url:'im/pulm.html#pneumonia' },
       { name:'蜂窩組織炎', sub:'皮膚紅腫熱痛、邊界不清', url:'im/infect.html' },
       { name:'藥物熱', sub:'排除其他原因、停藥後退燒', url:'im/infect.html' },
     ],
@@ -551,14 +551,14 @@ const SYM_DATA = {
   'syncope': {
     title: '🟡 暈厥 Syncope',
     urgent: [
-      { name:'心律不整（VT / 完全性 AVB）', sub:'ECG 立刻！尤其有心臟病史', url:'im/cardio.html' },
-      { name:'主動脈狹窄', sub:'用力時暈厥 + 心雜音', url:'im/cardio.html' },
-      { name:'肺栓塞', sub:'暈厥 + 呼吸困難 + 低血氧', url:'im/pulm.html' },
+      { name:'心律不整（VT / 完全性 AVB）', sub:'ECG 立刻！尤其有心臟病史', url:'im/cardio.html#arrhythmia' },
+      { name:'主動脈狹窄', sub:'用力時暈厥 + 心雜音', url:'im/cardio.html#ad' },
+      { name:'肺栓塞', sub:'暈厥 + 呼吸困難 + 低血氧', url:'im/pulm.html#pe' },
       { name:'主動脈剝離', sub:'劇烈胸痛 + 暈厥', url:'surg/cardiac-surg.html#cardiac-aorta' },
     ],
     other: [
       { name:'血管迷走性暈厥（最常見）', sub:'誘因（疼痛 / 站立 / 情緒）、前驅症狀、快速恢復', url:'' },
-      { name:'直立性低血壓', sub:'站起時血壓↓ &gt;20/10 mmHg', url:'im/cardio.html' },
+      { name:'直立性低血壓', sub:'站起時血壓↓ >20/10 mmHg', url:'im/cardio.html' },
       { name:'情境性暈厥', sub:'咳嗽 / 排尿 / 排便後', url:'' },
       { name:'低血糖', sub:'Glucose fingerstick 立刻確認', url:'im/endo.html' },
     ],
@@ -567,14 +567,14 @@ const SYM_DATA = {
   'palpitation': {
     title: '🔵 心悸 Palpitation',
     urgent: [
-      { name:'室性心搏過速（VT）', sub:'血流動力學不穩定 → 立刻電擊', url:'im/cardio.html' },
-      { name:'WPW 合併 AF', sub:'不規則寬 QRS → 不可用 AV node blockers', url:'im/cardio.html' },
-      { name:'尖端扭轉（Torsades）', sub:'長 QT + 多形性 VT', url:'im/cardio.html' },
+      { name:'室性心搏過速（VT）', sub:'血流動力學不穩定 → 立刻電擊', url:'im/cardio.html#arrhythmia' },
+      { name:'WPW 合併 AF', sub:'不規則寬 QRS → 不可用 AV node blockers', url:'im/cardio.html#arrhythmia' },
+      { name:'尖端扭轉（Torsades）', sub:'長 QT + 多形性 VT', url:'im/cardio.html#arrhythmia' },
     ],
     other: [
-      { name:'心房顫動（AF）', sub:'不規則心律 + 無 P 波', url:'im/cardio.html' },
-      { name:'SVT（陣發性室上心搏過速）', sub:'突發突止、規則、迷走刺激可終止', url:'im/cardio.html' },
-      { name:'PVC（早期心室收縮）', sub:'間歇性不規則、「心跳停頓」感', url:'im/cardio.html' },
+      { name:'心房顫動（AF）', sub:'不規則心律 + 無 P 波', url:'im/cardio.html#arrhythmia' },
+      { name:'SVT（陣發性室上心搏過速）', sub:'突發突止、規則、迷走刺激可終止', url:'im/cardio.html#arrhythmia' },
+      { name:'PVC（早期心室收縮）', sub:'間歇性不規則、「心跳停頓」感', url:'im/cardio.html#arrhythmia' },
       { name:'甲狀腺亢進', sub:'TSH↓ + 心跳過速 + 手抖', url:'im/endo.html' },
       { name:'焦慮 / 貧血 / 咖啡因', sub:'排除器質性後考慮', url:'' },
     ],
@@ -599,9 +599,9 @@ const SYM_DATA = {
   'edema': {
     title: '🔵 水腫 Edema',
     urgent: [
-      { name:'急性心衰竭', sub:'雙側下肢水腫 + 端坐呼吸 + BNP↑', url:'im/cardio.html' },
+      { name:'急性心衰竭', sub:'雙側下肢水腫 + 端坐呼吸 + BNP↑', url:'im/cardio.html#hf' },
       { name:'深層靜脈血栓（DVT）', sub:'單側下肢腫脹壓痛 → 超音波', url:'surg/cardiac-surg.html#cardiac-vein' },
-      { name:'腎病症候群', sub:'大量蛋白尿 + 低白蛋白 + 全身水腫', url:'im/nephro.html' },
+      { name:'腎病症候群', sub:'大量蛋白尿 + 低白蛋白 + 全身水腫', url:'im/nephro.html#ckd' },
     ],
     other: [
       { name:'肝硬化 / 低白蛋白血症', sub:'腹水 + 蜘蛛痣 + 黃疸', url:'im/gi.html#cirrhosis' },
@@ -615,7 +615,7 @@ const SYM_DATA = {
     title: '🟡 黃疸 Jaundice',
     urgent: [
       { name:'膽管炎（Charcot triad / Reynolds pentad）', sub:'發燒 + 黃疸 + 右上腹痛 → 緊急 ERCP', url:'im/gi.html#biliary' },
-      { name:'急性肝衰竭', sub:'INR &gt;1.5 + 肝性腦病變 + 黃疸', url:'im/gi.html#alf' },
+      { name:'急性肝衰竭', sub:'INR >1.5 + 肝性腦病變 + 黃疸', url:'im/gi.html#alf' },
       { name:'溶血危象', sub:'Hb 急速↓ + 間接膽紅素↑ + 血紅素尿', url:'im/hema.html' },
     ],
     other: [
@@ -639,47 +639,47 @@ const SYM_DATA = {
       { name:'大腸癌', sub:'慢性隱血 + 排便習慣改變 + 貧血', url:'im/gi.html#colon' },
       { name:'痔瘡', sub:'排便後鮮血、與糞便分離、肛門不適', url:'' },
     ],
-    actions: ['兩條大號 IV + 輸液', '輸血目標 Hb &gt;7（穩定）/ &gt;8（心血管）', 'Glasgow-Blatchford Score（GBS）', 'UGIB：Pantoprazole 80 mg IV + EGD &lt;24h', '靜脈曲張 → Octreotide + Ceftriaxone + EVL']
+    actions: ['兩條大號 IV + 輸液', '輸血目標 Hb >7（穩定）/ >8（心血管）', 'Glasgow-Blatchford Score（GBS）', 'UGIB：Pantoprazole 80 mg IV + EGD <24h', '靜脈曲張 → Octreotide + Ceftriaxone + EVL']
   },
   'oliguria': {
     title: '🔴 少尿 Oliguria',
     urgent: [
-      { name:'急性腎損傷（AKI）', sub:'Cr 上升 + 少尿（&lt;0.5 mL/kg/h）', url:'im/nephro.html' },
+      { name:'急性腎損傷（AKI）', sub:'Cr 上升 + 少尿（<0.5 mL/kg/h）', url:'im/nephro.html#aki' },
       { name:'尿路阻塞（腎後）', sub:'膀胱叩診濁音、超音波氫腎 → 導尿 / 腎瘻管', url:'surg/uro.html' },
-      { name:'休克（腎前）', sub:'血壓↓ + 心跳↑ + 末梢灌流差', url:'er/general.html' },
+      { name:'休克（腎前）', sub:'血壓↓ + 心跳↑ + 末梢灌流差', url:'er/general.html#shock' },
     ],
     other: [
-      { name:'藥物性腎損傷', sub:'NSAIDs / ACEi / 造影劑 / Aminoglycoside', url:'im/nephro.html' },
-      { name:'腎絲球腎炎', sub:'血尿 + 蛋白尿 + 高血壓', url:'im/nephro.html' },
-      { name:'橫紋肌溶解', sub:'CK↑↑ + 茶色尿 + 肌肉症狀', url:'im/nephro.html' },
+      { name:'藥物性腎損傷', sub:'NSAIDs / ACEi / 造影劑 / Aminoglycoside', url:'im/nephro.html#aki' },
+      { name:'腎絲球腎炎', sub:'血尿 + 蛋白尿 + 高血壓', url:'im/nephro.html#aki' },
+      { name:'橫紋肌溶解', sub:'CK↑↑ + 茶色尿 + 肌肉症狀', url:'im/nephro.html#aki' },
     ],
-    actions: ['Foley catheter（排除尿滯留）', 'BUN / Cr + 電解質 + UA', 'FENa（腎前 &lt;1% / 腎因 &gt;2%）', '大量補液（腎前性）', '停腎毒性藥物', '超音波（排除阻塞）']
+    actions: ['Foley catheter（排除尿滯留）', 'BUN / Cr + 電解質 + UA', 'FENa（腎前 <1% / 腎因 >2%）', '大量補液（腎前性）', '停腎毒性藥物', '超音波（排除阻塞）']
   },
   'neck-stiff': {
     title: '🔴 頸部僵硬 Neck Stiffness',
     urgent: [
-      { name:'細菌性腦膜炎', sub:'發燒 + 頸部僵硬 + 頭痛 + 意識改變 → 立刻抗生素', url:'im/infect.html' },
+      { name:'細菌性腦膜炎', sub:'發燒 + 頸部僵硬 + 頭痛 + 意識改變 → 立刻抗生素', url:'im/infect.html#neuro-infxn' },
       { name:'蜘蛛網膜下腔出血（SAH）', sub:'Thunder clap headache + 頸部僵硬', url:'im/neuro.html#stroke' },
-      { name:'腦炎（HSV）', sub:'發燒 + 意識改變 + 癲癇 → Acyclovir', url:'im/infect.html' },
+      { name:'腦炎（HSV）', sub:'發燒 + 意識改變 + 癲癇 → Acyclovir', url:'im/infect.html#neuro-infxn' },
     ],
     other: [
-      { name:'病毒性腦膜炎', sub:'較輕、無細菌感染跡象', url:'im/infect.html' },
+      { name:'病毒性腦膜炎', sub:'較輕、無細菌感染跡象', url:'im/infect.html#neuro-infxn' },
       { name:'頸椎病變 / 肌肉緊張', sub:'無發燒、局部壓痛', url:'surg/ortho.html#ortho-spine' },
-      { name:'Kernig / Brudzinski sign', sub:'（+）高度懷疑腦膜刺激', url:'im/infect.html' },
+      { name:'Kernig / Brudzinski sign', sub:'（+）高度懷疑腦膜刺激', url:'im/infect.html#neuro-infxn' },
     ],
     actions: ['立刻血液培養 × 2 套', '立刻廣效抗生素（Ceftriaxone + Dexamethasone）', 'CT 腦部（有局部神經學缺損 → LP 前先 CT）', 'LP（腦壓 / 細胞 / 蛋白 / 糖 / 培養）', '不要為了等 CT 而延誤抗生素']
   },
   'hypotension': {
     title: '🔴 低血壓 Hypotension',
     urgent: [
-      { name:'敗血性休克', sub:'感染源 + MAP &lt;65 + 升壓劑依賴', url:'im/infect.html' },
-      { name:'過敏性休克', sub:'接觸過敏原 + 皮膚 / 呼吸 / 循環症狀 → Epinephrine', url:'er/general.html' },
-      { name:'心因性休克', sub:'AMI / 心衰竭 + 低血壓 + 肺水腫', url:'im/cardio.html' },
-      { name:'大量出血 / 低血容性休克', sub:'外傷 / GI 出血 + 心跳快 + 末梢冷', url:'er/trauma.html' },
-      { name:'心包填塞 / 張力性氣胸', sub:'阻塞性休克：頸靜脈怒張 + 低血壓', url:'im/cardio.html' },
+      { name:'敗血性休克', sub:'感染源 + MAP <65 + 升壓劑依賴', url:'im/infect.html#sepsis' },
+      { name:'過敏性休克', sub:'接觸過敏原 + 皮膚 / 呼吸 / 循環症狀 → Epinephrine', url:'er/general.html#shock' },
+      { name:'心因性休克', sub:'AMI / 心衰竭 + 低血壓 + 肺水腫', url:'im/cardio.html#hf' },
+      { name:'大量出血 / 低血容性休克', sub:'外傷 / GI 出血 + 心跳快 + 末梢冷', url:'er/general.html#shock' },
+      { name:'心包填塞 / 張力性氣胸', sub:'阻塞性休克：頸靜脈怒張 + 低血壓', url:'er/general.html#shock' },
     ],
     other: [
-      { name:'肺栓塞', sub:'低血壓 + 低血氧 + 心電圖右心負荷', url:'im/pulm.html' },
+      { name:'肺栓塞', sub:'低血壓 + 低血氧 + 心電圖右心負荷', url:'im/pulm.html#pe' },
       { name:'腎上腺危象', sub:'類固醇使用史 + 壓力情況 + 低鈉 / 高鉀', url:'im/endo.html' },
       { name:'藥物 / 神經源性', sub:'脊髓損傷 / 過量降壓藥', url:'' },
     ],
@@ -688,17 +688,24 @@ const SYM_DATA = {
   'glucose': {
     title: '🟡 血糖異常 Glucose Abnormality',
     urgent: [
-      { name:'低血糖（&lt;50 mg/dL）', sub:'意識改變 / 冒汗 / 心跳快 → 立刻補糖', url:'im/endo.html' },
+      { name:'低血糖（<50 mg/dL）', sub:'意識改變 / 冒汗 / 心跳快 → 立刻補糖', url:'im/endo.html' },
       { name:'DKA（糖尿病酮酸中毒）', sub:'血糖↑ + AG↑ + 酮體↑ + 代謝性酸中毒', url:'im/endo.html' },
-      { name:'HHS（高血糖高滲性狀態）', sub:'血糖 &gt;600 + 高滲透壓 + 意識改變、無顯著酮酸', url:'im/endo.html' },
+      { name:'HHS（高血糖高滲性狀態）', sub:'血糖 >600 + 高滲透壓 + 意識改變、無顯著酮酸', url:'im/endo.html' },
     ],
     other: [
       { name:'應激性高血糖', sub:'住院病人無 DM 病史、感染 / 手術後', url:'im/endo.html' },
       { name:'類固醇引起高血糖', sub:'用藥後血糖↑、尤其餐後', url:'im/endo.html' },
     ],
-    actions: ['低血糖：意識清 → 口服 15g 糖；意識不清 → 50% Glucose 25 mL IV', 'DKA：IV 輸液 + Insulin drip + K⁺ 補充（K⁺ &gt;3.5 才給 Insulin）', 'HHS：緩慢補液（避免腦水腫）', '血糖目標住院：140-180 mg/dL', 'DKA 解除標準：AG 正常 + 可進食']
+    actions: ['低血糖：意識清 → 口服 15g 糖；意識不清 → 50% Glucose 25 mL IV', 'DKA：IV 輸液 + Insulin drip + K⁺ 補充（K⁺ >3.5 才給 Insulin）', 'HHS：緩慢補液（避免腦水腫）', '血糖目標住院：140-180 mg/dL', 'DKA 解除標準：AG 正常 + 可進食']
   }
 };
+
+function goToPage(url) {
+  if (!url) return;
+  closeSym();
+  // 短暫延遲讓 modal 關閉動畫完成
+  setTimeout(() => { window.location.href = url; }, 80);
+}
 
 function openSym(id) {
   const d = SYM_DATA[id];
@@ -708,7 +715,8 @@ function openSym(id) {
   if (d.urgent && d.urgent.length) {
     html += '<div class="sym-section-label">🚨 需立刻排除（危險 DDx）</div><div class="sym-ddx-list">';
     d.urgent.forEach(i => {
-      html += `<a class="sym-ddx-item sym-urgent" href="${i.url || '#'}" ${i.url ? 'target="_blank"' : ''}>
+      const click = i.url ? `onclick="event.preventDefault();goToPage('${i.url}')"` : '';
+      html += `<a class="sym-ddx-item sym-urgent" href="${i.url || '#'}" ${click}>
         <div><div class="sym-ddx-name">${i.name}</div><div class="sym-ddx-sub">${i.sub}</div></div>
         <span class="sym-ddx-arrow">${i.url ? '→' : ''}</span></a>`;
     });
@@ -717,7 +725,8 @@ function openSym(id) {
   if (d.other && d.other.length) {
     html += '<div class="sym-section-label">其他鑑別診斷</div><div class="sym-ddx-list">';
     d.other.forEach(i => {
-      html += `<a class="sym-ddx-item" href="${i.url || '#'}" ${i.url ? 'target="_blank"' : ''}>
+      const click2 = i.url ? `onclick="event.preventDefault();goToPage('${i.url}')"` : '';
+      html += `<a class="sym-ddx-item" href="${i.url || '#'}" ${click2}>
         <div><div class="sym-ddx-name">${i.name}</div><div class="sym-ddx-sub">${i.sub}</div></div>
         <span class="sym-ddx-arrow">${i.url ? '→' : ''}</span></a>`;
     });
