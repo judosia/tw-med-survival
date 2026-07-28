@@ -485,4 +485,18 @@ nav {
   .sidebar { transform: translateX(-240px); width: 240px; transition: transform 0.3s; }
   .sidebar.open { transform: translateX(0); }
   .main-content { margin-left: 0; max-width: 100%; padding: 28px 5% 80px; }
+
+mark.search-hl {
+  background: rgba(69,123,157,0.25);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+  transition: background 1.2s ease;
+}
+mark.search-hl-active {
+  background: rgba(230,57,70,0.35);
+}
+mark.search-hl-fade {
+  background: rgba(69,123,157,0.08);
+}
 }
