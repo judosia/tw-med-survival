@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>家庭醫學科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .score-modal-overlay.open{display:flex;}
+    .score-modal{background:var(--white);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .score-modal-head{position:sticky;top:0;background:var(--white);padding:18px 22px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .score-modal-head h2{font-size:1rem;font-weight:800;}
+    .score-modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;}
+    .score-modal-body{padding:20px 22px;}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#family" class="nav-back">家庭醫學科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">家庭醫學科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">家庭醫學科</div>
+    <div class="sidebar-section-title">預防醫學</div>
+    <a href="#family-preventive" class="sidebar-link">預防醫學（癌篩 + 健檢 + 疫苗）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">慢性病</div>
+    <a href="#family-chronic" class="sidebar-link">慢性病管理（DM + HTN + 高血脂）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">生活型態</div>
+    <a href="#family-lifestyle" class="sidebar-link">生活型態介入（戒菸 + 戒酒 + 肥胖）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">老年醫學</div>
+    <a href="#family-geriatric" class="sidebar-link">老年醫學（衰弱症 + 跌倒 + 多重用藥）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">安寧緩和</div>
+    <a href="#family-palliative" class="sidebar-link">安寧緩和（預立醫療 + 症狀控制）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">基層心理衛生</div>
+    <a href="#family-mental" class="sidebar-link">心理衛生（憂鬱 + 焦慮 + 轉介）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../im/endo.html" class="sidebar-link">內分泌科（DM）→</a>
+    <a href="../others/psych.html" class="sidebar-link">精神科 →</a>
+    <a href="../others/rehab.html" class="sidebar-link">復健科 →</a>
+  </aside>
+  <main class="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#f0fff4 0%,#f0f9ff 100%);color:var(--navy);">
+      <div class="page-hero-text">
+        <h1>家庭醫學科</h1>
+        <p>預防醫學、慢性病管理、老年醫學與安寧緩和，以台灣 NHI 框架和基層醫療視角整理 PGY 必備知識。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#family">家庭醫學科</a> › 家庭醫學科
+    </div>
+
+
+    <!-- family-preventive -->
+    <div class="topic-block" id="family-preventive">
+      <div class="topic-block-head">
+        <span class="topic-block-title">預防醫學 Preventive Medicine（癌症篩查 + 成人健檢 + 疫苗）</span>
+        <div data-bm-id="family-preventive" data-bm-dept="家庭醫學科" data-bm-title="預防醫學"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">台灣國健署提供<strong>四大癌症免費篩查</strong>（乳癌、子宮頸癌、大腸癌、口腔癌）和<strong>成人健康檢查</strong>，是家醫科門診最重要的預防醫學工作。疫苗接種是最有成本效益的預防措施，成人疫苗常被忽略。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="cancer-screening" data-bm-dept="家庭醫學科" data-bm-title="癌症篩查">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">台灣四大癌症篩查 + 其他篩查建議</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">國健署四大癌症免費篩查（2024）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>癌症</th><th>對象</th><th>篩查工具</th><th>頻率</th></tr></thead>
+              <tbody>
+                <tr><td><strong>大腸癌</strong></td><td>50-74 歲</td><td>糞便潛血（FIT）</td><td>每 2 年</td></tr>
+                <tr><td><strong>乳癌</strong></td><td>45-69 歲女性；40-44 歲一等親有乳癌</td><td>乳房攝影（Mammography）</td><td>每 2 年</td></tr>
+                <tr><td><strong>子宮頸癌</strong></td><td>30 歲以上曾有性行為女性</td><td>子宮頸抹片（Pap smear）</td><td>每 3 年</td></tr>
+                <tr><td><strong>口腔癌</strong></td><td>30 歲以上有嚼檳榔或吸菸習慣；18 歲以上原住民</td><td>口腔黏膜檢查</td><td>每 2 年</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">其他重要篩查（非國健署常規但臨床重要）</p>
+            <ul class="k-list">
+              <li><strong>肺癌（低劑量 CT，LDCT）：</strong>50-80 歲；每年 &gt;20 包-年吸菸史；目前戒菸 &lt;15 年；台灣 2022 年起納入補助（高風險族群）</li>
+              <li><strong>腹主動脈瘤（AAA）：</strong>65-75 歲曾吸菸男性；超音波一次篩查</li>
+              <li><strong>骨質疏鬆（DXA）：</strong>65 歲以上女性；70 歲以上男性；較早停經 / 類固醇使用 / 脆弱性骨折史 → 提早</li>
+              <li><strong>糖尿病前期：</strong>45 歲以上或有危險因素（肥胖 / 家族史 / 高血壓）→ FPG 或 HbA1c</li>
+              <li><strong>HIV：</strong>15-65 歲常規篩查（USPSTF）；高風險族群更頻繁</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">台灣成人健康檢查（國健署）</p>
+            <ul class="k-list">
+              <li><strong>40-64 歲：</strong>每 3 年一次；血壓、BMI、腰圍、空腹血糖、血脂、腎功能、尿液</li>
+              <li><strong>65 歲以上：</strong>每年一次；加入老年功能評估（ADL / 憂鬱篩查 / 跌倒風險）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="adult-vaccines" data-bm-dept="家庭醫學科" data-bm-title="成人疫苗">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">成人疫苗接種建議（台灣）</span></div>
+          <div class="k-card-body">
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>疫苗</th><th>對象</th><th>劑次</th><th>重點</th></tr></thead>
+              <tbody>
+                <tr><td><strong>流感（每年）</strong></td><td>所有成人；高風險優先（老年 / 慢性病 / 醫護）</td><td>每年一劑</td><td>台灣每年 10 月開始；孕婦可施打</td></tr>
+                <tr><td><strong>COVID-19</strong></td><td>所有成人；老年 / 免疫缺陷追加</td><td>依當年建議</td><td>每年更新配方</td></tr>
+                <tr><td><strong>肺炎鏈球菌（PCV15/PCV20 或 PPSV23）</strong></td><td>65 歲以上；慢性病患者；免疫缺陷</td><td>序列接種</td><td>PCV → PPSV23（間隔 1 年）或 PCV20 單獨</td></tr>
+                <tr><td><strong>帶狀皰疹（Shingrix，重組）</strong></td><td>50 歲以上</td><td>2 劑（間隔 2-6 個月）</td><td>效果 97%；優於舊型活性疫苗；免疫缺陷者也可</td></tr>
+                <tr><td><strong>Tdap（破傷風 + 白喉 + 百日咳）</strong></td><td>所有成人；孕婦每次懷孕；與嬰兒密切接觸者</td><td>Tdap × 1；之後每 10 年 Td</td><td>繭式策略（Cocooning）保護嬰兒</td></tr>
+                <tr><td><strong>HPV（Gardasil 9）</strong></td><td>26 歲以下常規；27-45 歲個別化決策</td><td>3 劑（0, 2, 6 個月）</td><td>男女皆可；預防子宮頸癌 / 生殖器疣</td></tr>
+                <tr><td><strong>B 型肝炎</strong></td><td>未接種成人；醫護人員；高風險（多重性伴侶 / 針具使用）</td><td>3 劑（0, 1, 6 個月）</td><td>接種後檢測抗體（Anti-HBs &gt;10 IU/L）</td></tr>
+                <tr><td><strong>A 型肝炎</strong></td><td>未接種 / 無抗體；出國旅遊；慢性肝病</td><td>2 劑（間隔 6-12 個月）</td><td>旅遊前至少 2 週接種</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li><strong>活性疫苗禁忌：</strong>懷孕；嚴重免疫缺陷（CD4 &lt;200 / 化療 / 高劑量類固醇）；包括 MMR、水痘、帶狀皰疹舊型（Zostavax）</li>
+              <li><strong>不活化疫苗（流感 / 肺炎 / Shingrix）：</strong>免疫缺陷者可施打（但效果可能↓）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- family-chronic -->
+    <div class="topic-block" id="family-chronic">
+      <div class="topic-block-head">
+        <span class="topic-block-title">慢性病管理 Chronic Disease Management（DM + HTN + 高血脂）</span>
+        <div data-bm-id="family-chronic" data-bm-dept="家庭醫學科" data-bm-title="慢性病管理"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">台灣慢性病管理以<strong>NHI 慢性病連續處方箋</strong>為框架，最常見的三高（高血壓、高血糖、高血脂）往往同時存在。家醫科的核心任務是<strong>目標達成率追蹤</strong>和<strong>用藥調整</strong>，以及識別需要轉介專科的時機。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="dm-htn-management" data-bm-dept="家庭醫學科" data-bm-title="DM + HTN 管理">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">糖尿病（DM）+ 高血壓（HTN）基層管理</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">第二型糖尿病基層管理目標</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>指標</th><th>一般目標</th><th>個別化調整</th></tr></thead>
+              <tbody>
+                <tr><td><strong>HbA1c</strong></td><td>&lt;7.0%</td><td>老年 / 低血糖高風險 → &lt;8.0%；年輕 / 新診斷 → &lt;6.5%</td></tr>
+                <tr><td><strong>血壓</strong></td><td>&lt;130/80 mmHg</td><td>老年（&gt;65）→ &lt;140/90 可接受</td></tr>
+                <tr><td><strong>LDL-C</strong></td><td>&lt;100 mg/dL</td><td>有 ASCVD → &lt;70 mg/dL；極高風險 → &lt;55 mg/dL</td></tr>
+                <tr><td><strong>BMI</strong></td><td>&lt;24（台灣標準）</td><td>體重減少 5-10% = 顯著改善血糖</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">DM 追蹤項目（家醫科定期）</p>
+            <ul class="k-list">
+              <li><strong>每次門診：</strong>血壓、體重、足部檢查、用藥依從性、低血糖評估</li>
+              <li><strong>每 3 個月：</strong>HbA1c</li>
+              <li><strong>每年：</strong>空腹血脂、腎功能（eGFR + 尿液 ACR）、眼底檢查、足部神經病變（10-g monofilament）、牙科</li>
+              <li><strong>轉介時機：</strong>HbA1c 持續 &gt;8% 難以控制；eGFR &lt;30（腎臟科）；蛋白尿（腎臟科）；視網膜病變（眼科）；足部潰瘍（血管外科）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">高血壓基層管理</p>
+            <ul class="k-list">
+              <li><strong>診斷：</strong>非同日兩次測量 SBP ≥140 或 DBP ≥90；居家血壓（HBPM）目標 &lt;130/80</li>
+              <li><strong>生活型態優先（Stage 1 可試 3 個月）：</strong>DASH 飲食；鈉 &lt;2.3 g/天；有氧運動 150 分/週；戒菸；限酒；體重控制</li>
+              <li><strong>一線藥物（四大類）：</strong>ACEi / ARB（DM / 蛋白尿首選）；CCB（老年人 / 黑人）；Thiazide diuretics；β-blocker（心衰竭 / 心絞痛時優先）</li>
+              <li><strong>難治性高血壓（Resistant HTN）：</strong>使用 ≥3 種藥物（含利尿劑）仍未達標 → 加 Spironolactone；排除白袍高血壓（ABPM）/ 繼發性原因（腎動脈狹窄 / 原醛 / 睡眠呼吸中止）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="dyslipidemia-metabolic" data-bm-dept="家庭醫學科" data-bm-title="高血脂 + 代謝症候群">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">高血脂 + 代謝症候群 + ASCVD 風險分層</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">ASCVD 風險分層（決定 LDL 目標）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>風險</th><th>定義</th><th>LDL 目標</th></tr></thead>
+              <tbody>
+                <tr><td><strong>極高風險</strong></td><td>確診 ASCVD（心肌梗塞 / 中風 / 周邊動脈疾病）；或 DM + 靶器官損傷</td><td>&lt;55 mg/dL（ESC）；&lt;70 mg/dL（AHA）</td></tr>
+                <tr><td><strong>高風險</strong></td><td>DM 無靶器官損傷；10 年 ASCVD 風險 &gt;10%；重度高血壓；慢性腎病</td><td>&lt;70 mg/dL</td></tr>
+                <tr><td><strong>中風險</strong></td><td>10 年風險 5-10%；多重危險因子</td><td>&lt;100 mg/dL</td></tr>
+                <tr><td><strong>低風險</strong></td><td>10 年風險 &lt;5%</td><td>&lt;116 mg/dL</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">降血脂藥物</p>
+            <ul class="k-list">
+              <li><strong>Statin（首選）：</strong>高強度（Atorvastatin 40-80 mg / Rosuvastatin 20-40 mg）= ASCVD 或極高風險；中強度（其他劑量）= 一般預防；副作用：肌肉病變（CK 監測）；肝毒性（轉氨酶）</li>
+              <li><strong>Ezetimibe（腸道吸收抑制劑）：</strong>Statin 基礎上 LDL 未達標；加用可再降 15-20%</li>
+              <li><strong>PCSK9 抑制劑（Evolocumab / Alirocumab）：</strong>極高風險 Statin + Ezetimibe 仍未達標；注射型；降 LDL 50-60%；台灣健保部分給付</li>
+              <li><strong>Fibrate：</strong>主要降三酸甘油脂（TG）；TG &gt;500 mg/dL → 急性胰臟炎風險 → 優先使用</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">代謝症候群（台灣標準）</p>
+            <ul class="k-list">
+              <li>符合以下 3 項以上：腰圍（男 &gt;90 cm；女 &gt;80 cm）；TG ≥150 mg/dL；HDL-C（男 &lt;40；女 &lt;50 mg/dL）；血壓 ≥130/85 mmHg；空腹血糖 ≥100 mg/dL</li>
+              <li><strong>治療：</strong>生活型態改變為主；個別危險因子處置；代謝症候群本身不需藥物</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- family-lifestyle -->
+    <div class="topic-block" id="family-lifestyle">
+      <div class="topic-block-head">
+        <span class="topic-block-title">生活型態介入 Lifestyle Intervention（戒菸 + 戒酒 + 肥胖）</span>
+        <div data-bm-id="family-lifestyle" data-bm-dept="家庭醫學科" data-bm-title="生活型態介入"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">生活型態介入是預防醫學的核心，也是家醫科的日常。<strong>戒菸</strong>是單一最有效的健康介入；<strong>5A 模型</strong>是結構化戒菸諮詢的標準框架。<strong>酒精使用障礙</strong>常被漏診，CAGE / AUDIT 是篩查工具。<strong>肥胖</strong>在台灣以 BMI ≥27 定義，GLP-1 受體促效劑已改變肥胖治療格局。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="smoking-cessation" data-bm-dept="家庭醫學科" data-bm-title="戒菸">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">戒菸介入（5A + 藥物）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">5A 戒菸諮詢框架</p>
+            <ul class="k-list">
+              <li><strong>Ask（詢問）：</strong>每次門診詢問吸菸狀況；記錄於病歷</li>
+              <li><strong>Advise（建議）：</strong>明確、強烈建議戒菸（「最重要的健康改變」）；30 秒即有效</li>
+              <li><strong>Assess（評估）：</strong>評估戒菸意願；Prochaska 改變階段（前思考 / 思考 / 準備 / 行動 / 維持）</li>
+              <li><strong>Assist（協助）：</strong>設定戒菸日期；處方戒菸藥物；提供資源（戒菸專線 0800-636363）</li>
+              <li><strong>Arrange（追蹤）：</strong>1 週後回診；持續支持；預防復發</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">戒菸藥物</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>藥物</th><th>機轉</th><th>療程</th><th>重點</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Varenicline（Champix）</strong></td><td>部分 α4β2 nAChR 促效劑；↓ 戒斷症狀 + ↓ 吸菸滿足感</td><td>12 週（可延長）</td><td>最有效單一藥物（戒菸率 ~33%）；噁心（飯後服）；精神科症狀監測；台灣健保給付</td></tr>
+                <tr><td><strong>Bupropion（Wellbutrin SR）</strong></td><td>多巴胺 / 正腎上腺素再回收抑制；↓ 尼古丁渴望</td><td>7-12 週</td><td>戒菸率 ~24%；有抗憂鬱效果；癲癇 / 飲食障礙禁忌；台灣健保給付</td></tr>
+                <tr><td><strong>尼古丁替代療法（NRT）</strong></td><td>尼古丁貼片 / 口嚼錠 / 噴劑；緩慢補充尼古丁</td><td>8-12 週</td><td>最安全；可在懷孕期間考慮；組合療法（貼片 + 即時型）效果更好</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li><strong>台灣戒菸補助：</strong>健保給付 Varenicline + Bupropion（每年 2 療程）+ NRT；戒菸門診 + 電話諮詢</li>
+              <li><strong>電子菸（ENDS）：</strong>尼古丁成癮風險；台灣禁止銷售但廣泛使用；不建議作為戒菸工具（FDA 未核准）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="alcohol-obesity" data-bm-dept="家庭醫學科" data-bm-title="戒酒 + 肥胖">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">酒精使用障礙（CAGE / AUDIT）+ 肥胖</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">酒精使用障礙篩查</p>
+            <ul class="k-list">
+              <li><strong>CAGE（4 題，≥2 陽性 = 高風險）：</strong>
+                <ul>
+                  <li>C — Cut down：曾想要減少飲酒？</li>
+                  <li>A — Annoyed：被批評飲酒而惱怒？</li>
+                  <li>G — Guilty：對飲酒感到罪惡？</li>
+                  <li>E — Eye-opener：早晨需要飲酒提神？</li>
+                </ul>
+              </li>
+              <li><strong>AUDIT（10 題）：</strong>≥8 分 = 有害飲酒；≥16 = 酒精依賴；更完整的量化評估</li>
+              <li><strong>安全飲酒量：</strong>男性 ≤2 標準杯/天；女性 ≤1 標準杯/天（1 標準杯 = 約 14 g 酒精）；無安全量（癌症風險）</li>
+            </ul>
+            <ul class="k-list">
+              <li><strong>酒精戒斷處置：</strong>Benzodiazepine（Diazepam / Lorazepam）= 預防戒斷性癲癇；Thiamine 100 mg IM 或 IV（預防 Wernicke encephalopathy，優先於葡萄糖）；CIWA-Ar 量表監測</li>
+              <li><strong>維持戒酒：</strong>Naltrexone（↓ 飲酒渴望）；Acamprosate（↓ 戒斷症狀）；Disulfiram（飲酒後不適反應，依從性差）；戒酒無名會（AA）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">肥胖管理（台灣標準：BMI ≥27）</p>
+            <ul class="k-list">
+              <li><strong>台灣定義：</strong>過重 BMI 24-27；肥胖 BMI ≥27；腰圍（男 &gt;90 cm；女 &gt;80 cm）= 中央型肥胖</li>
+              <li><strong>藥物治療適應症（台灣）：</strong>BMI ≥30；或 BMI ≥27 合併合併症（DM / HTN / 高血脂 / 睡眠呼吸中止）</li>
+              <li><strong>GLP-1 受體促效劑：</strong>Semaglutide（Ozempic / Wegovy）= 最有效；平均減重 15-17%；同時改善心血管預後（SELECT trial）；副作用：噁心嘔吐；胰臟炎（罕見）；甲狀腺 C 細胞腫瘤（動物，人類不確定）</li>
+              <li><strong>Tirzepatide（GIP/GLP-1 雙重促效劑）：</strong>減重 20-22%（SURMOUNT trial）；目前台灣仍以 DM 適應症為主</li>
+              <li><strong>手術（Bariatric surgery）：</strong>BMI ≥37.5；或 BMI ≥32.5 合併 DM / HTN；Sleeve gastrectomy / RYGB；可緩解 DM（~70%）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- family-geriatric -->
+    <div class="topic-block" id="family-geriatric">
+      <div class="topic-block-head">
+        <span class="topic-block-title">老年醫學 Geriatric Medicine（衰弱症 + 跌倒 + 多重用藥）</span>
+        <div data-bm-id="family-geriatric" data-bm-dept="家庭醫學科" data-bm-title="老年醫學"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">台灣 2025 年正式進入<strong>超高齡社會</strong>（65 歲以上 &gt;20%）。老年醫學的核心概念是<strong>老年症候群（Geriatric syndromes）</strong>——跌倒、失智、衰弱、失禁、譫妄，這些問題相互交織且不能用單一疾病模型解釋。<strong>多重用藥（Polypharmacy）</strong>是老年病人最常見的問題之一，Beers list 是識別潛在不適當用藥（PIM）的工具。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="frailty-falls" data-bm-dept="家庭醫學科" data-bm-title="衰弱症 + 跌倒">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">衰弱症（Frailty）+ 跌倒評估</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">衰弱症（Frailty）— Fried Phenotype</p>
+            <ul class="k-list">
+              <li>符合以下 3 項以上 = 衰弱；1-2 項 = 衰弱前期</li>
+              <li><strong>體重減輕：</strong>過去一年非刻意減重 &gt;4.5 kg 或 &gt;5%</li>
+              <li><strong>握力下降：</strong>握力計測量低於性別 / BMI 校正下限</li>
+              <li><strong>疲憊感：</strong>CES-D 問卷「幾乎每天感到疲憊」</li>
+              <li><strong>步行速度慢：</strong>4 公尺步行 &gt;6 秒（男）/ &gt;7 秒（女）</li>
+              <li><strong>低活動量：</strong>每週消耗熱量低於標準（MLTA 問卷）</li>
+            </ul>
+            <ul class="k-list">
+              <li><strong>快速篩查（FRAIL scale）：</strong>Fatigue / Resistance / Aerobic / Illnesses ≥5 / Loss of weight；≥3 = 衰弱</li>
+              <li><strong>介入：</strong>阻力運動（最有效）；蛋白質補充（1.2-1.5 g/kg/天）；維生素 D；多學科評估</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">跌倒評估 + 預防</p>
+            <ul class="k-list">
+              <li><strong>高風險：</strong>過去一年跌倒 ≥2 次；或跌倒合併受傷；或步態 / 平衡問題</li>
+              <li><strong>Timed Up and Go（TUG）test：</strong>&gt;12 秒 = 高跌倒風險；從椅子站起 + 走 3 m + 回坐</li>
+              <li><strong>跌倒原因評估（4D）：</strong>Drugs（藥物）；Disease（疾病）；Delirium（譫妄）；Dysfunction（功能）</li>
+              <li><strong>高風險藥物：</strong>Benzodiazepine；Opioid；抗組織胺；α-blocker；降血壓藥（直立性低血壓）</li>
+              <li><strong>預防介入：</strong>運動（太極拳高等級證據）；視力矯正；環境改造（浴室扶手、防滑墊）；維生素 D（&gt;800 IU/天）；骨質疏鬆治療；檢視藥物</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="polypharmacy-beers" data-bm-dept="家庭醫學科" data-bm-title="多重用藥 + Beers list">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">多重用藥（Polypharmacy）+ Beers List</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">多重用藥評估</p>
+            <ul class="k-list">
+              <li><strong>定義：</strong>同時使用 ≥5 種藥物（Polypharmacy）；≥10 種（Hyperpolypharmacy）</li>
+              <li><strong>問題：</strong>藥物交互作用；副作用累積；依從性↓；跌倒風險↑；認知功能↓</li>
+              <li><strong>Medication reconciliation（用藥調和）：</strong>每次入院 / 出院必做；核對所有藥物（含 OTC + 健康食品）</li>
+              <li><strong>去藥物化（Deprescribing）：</strong>定期檢視每種藥物是否仍有適應症；從最不必要的開始停；緩慢減量（避免戒斷）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Beers List 重點（AGS 2023，老年人潛在不適當用藥）</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>藥物類別</th><th>風險</th><th>替代方案</th></tr></thead>
+              <tbody>
+                <tr><td><strong>第一代抗組織胺（Diphenhydramine / Chlorpheniramine）</strong></td><td>抗膽鹼效應 → 譫妄、便秘、尿滯留、跌倒</td><td>第二代（Loratadine / Cetirizine）</td></tr>
+                <tr><td><strong>Benzodiazepine（所有）</strong></td><td>跌倒、骨折、認知障礙、依賴；老年人代謝慢</td><td>認知行為治療（失眠）；Melatonin</td></tr>
+                <tr><td><strong>Z-drugs（Zolpidem / Eszopiclone）</strong></td><td>同 Benzodiazepine；夢遊</td><td>睡眠衛生；CBT-I</td></tr>
+                <tr><td><strong>NSAIDs（口服）</strong></td><td>GI 出血；腎功能惡化；心血管風險；體液滯留</td><td>Acetaminophen；局部 NSAIDs；Tramadol（謹慎）</td></tr>
+                <tr><td><strong>Amitriptyline / TCA</strong></td><td>抗膽鹼；心律不整；直立性低血壓</td><td>SSRI（憂鬱）；Duloxetine（疼痛）</td></tr>
+                <tr><td><strong>Glibenclamide（Glyburide）</strong></td><td>長效 SU；低血糖風險高（尤其腎功能不全）</td><td>短效 SU / GLP-1RA / DPP-4i</td></tr>
+                <tr><td><strong>Digoxin &gt;0.125 mg/天</strong></td><td>毒性視窗窄；腎功能↓ → 蓄積；心律不整</td><td>Beta-blocker；Amiodarone（AF）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- family-palliative -->
+    <div class="topic-block" id="family-palliative">
+      <div class="topic-block-head">
+        <span class="topic-block-title">安寧緩和 Palliative Care（預立醫療 + 症狀控制）</span>
+        <div data-bm-id="family-palliative" data-bm-dept="家庭醫學科" data-bm-title="安寧緩和"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">台灣<strong>病人自主權利法（2019）</strong>是亞洲首部以病人為主體的自主權利法，讓民眾可以預先設定拒絕醫療的意願。安寧緩和不等於放棄治療，而是<strong>以症狀控制和生活品質為核心</strong>的整合性照護。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="advance-care-planning" data-bm-dept="家庭醫學科" data-bm-title="預立醫療">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">預立醫療（ACP）+ 台灣法律框架</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">台灣相關法規</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>法規</th><th>重點</th></tr></thead>
+              <tbody>
+                <tr><td><strong>安寧緩和醫療條例（2000）</strong></td><td>末期病人可簽署 DNR（不施行心肺復甦術）；需兩位醫師診斷末期；意識清楚本人簽署或委任代理人</td></tr>
+                <tr><td><strong>病人自主權利法（2019）</strong></td><td>預立醫療決定（AD）= 事先選擇接受或拒絕維生醫療；需預立醫療照護諮商（ACP）+ 公證 / 2 位見證人；適用 5 種臨床條件（末期 / 不可逆昏迷 / 永久植物人 / 極重度失智 / 其他中央主管機關公告）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">DNR vs 預立醫療決定（AD）差異</p>
+            <ul class="k-list">
+              <li><strong>DNR：</strong>針對末期病人；限心肺復甦術；需醫師診斷末期才生效</li>
+              <li><strong>預立醫療決定（AD）：</strong>健康成人即可簽署；涵蓋更廣（維生醫療 + 人工營養）；5 種臨床條件下生效</li>
+              <li><strong>ACP 諮商流程：</strong>醫療機構執行；本人 + 二親等 + 醫療委任代理人；說明病情預後和醫療選項；記錄於健保 IC 卡</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">安寧緩和照護對象</p>
+            <ul class="k-list">
+              <li><strong>台灣健保安寧給付：</strong>癌症末期；8 大非癌末期（心衰竭 / COPD / 慢性腎衰竭 / 慢性肝病 / 腦血管病變 / 神經退化疾病 / 老年期失智 / HIV）</li>
+              <li><strong>SPICT（支持性和緩和照護指標工具）：</strong>功能下降 + 疾病進展指標 → 識別需要安寧的患者；Surprise Question（「如果這個患者在一年內死亡，你會驚訝嗎？」= 不驚訝 → 考慮安寧）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="symptom-control" data-bm-dept="家庭醫學科" data-bm-title="末期症狀控制">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">末期症狀控制（疼痛 + 呼吸困難 + 噁心）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">疼痛控制（WHO 三階梯）</p>
+            <ul class="k-list">
+              <li><strong>第一階（輕度）：</strong>Acetaminophen ± NSAIDs；定時給藥（ATC）而非按需</li>
+              <li><strong>第二階（中度）：</strong>弱效 Opioid（Tramadol / Codeine）± 非 Opioid</li>
+              <li><strong>第三階（重度）：</strong>強效 Opioid（Morphine / Oxycodone / Fentanyl）± 非 Opioid；<strong>無天花板劑量</strong></li>
+              <li><strong>Morphine 使用原則：</strong>口服優先；定時 + PRN（突破性疼痛 = 每日量的 10-15%）；預防便秘（必給緩瀉劑）；滴定原則（每 24-48 小時增加 25-50%）</li>
+              <li><strong>Opioid 副作用：</strong>便秘（幾乎必發，不耐受）；噁心（前 1-2 週）；嗜睡；呼吸抑制（過量時）→ Naloxone</li>
+              <li><strong>輔助止痛（Adjuvants）：</strong>神經病變痛 → Gabapentin / Amitriptyline；骨轉移 → NSAIDs + Bisphosphonate + 放療；腦壓高 → Dexamethasone</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">其他末期症狀</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>症狀</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>呼吸困難</strong></td><td>低劑量 Morphine（最有效）；氧氣（有缺氧才用）；風扇吹臉；Lorazepam（焦慮成分）；不要過度給氧</td></tr>
+                <tr><td><strong>噁心嘔吐</strong></td><td>找原因（便秘 / 颱壓升高 / 藥物）；Metoclopramide（胃排空↓）；Ondansetron（化療後）；Haloperidol（中樞性）</td></tr>
+                <tr><td><strong>末期躁動（Terminal restlessness）</strong></td><td>Midazolam SC / IV；Haloperidol；排除可逆原因（尿滯留 / 疼痛 / 藥物）</td></tr>
+                <tr><td><strong>死前喉鳴（Death rattle）</strong></td><td>Scopolamine / Glycopyrrolate（↓ 分泌）；翻身；家屬衛教（不是痛苦，是正常過程）</td></tr>
+                <tr><td><strong>厭食 / 惡病質</strong></td><td>末期不強迫進食；Megestrol acetate（短期）；家屬溝通「不吃不是餓死」</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- family-mental -->
+    <div class="topic-block" id="family-mental">
+      <div class="topic-block-head">
+        <span class="topic-block-title">基層心理衛生 Primary Mental Health（憂鬱 + 焦慮 + 轉介）</span>
+        <div data-bm-id="family-mental" data-bm-dept="家庭醫學科" data-bm-title="基層心理衛生"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">台灣基層醫療是心理衛生的第一線，80% 以上的憂鬱症患者首先就診於非精神科。<strong>PHQ-9</strong> 和 <strong>GAD-7</strong> 是家醫科最實用的篩查工具。家醫科醫師需要識別、初步處置，並知道何時轉介精神科。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="depression-anxiety-screen" data-bm-dept="家庭醫學科" data-bm-title="憂鬱 + 焦慮篩查">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">憂鬱（PHQ-9）+ 焦慮（GAD-7）篩查</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">PHQ-9（過去兩週頻率，0-3 分 × 9 題）</p>
+            <ul class="k-list">
+              <li><strong>快篩（PHQ-2）：</strong>①情緒低落；②對事物失去興趣 → 任一 &gt;0 = 進行 PHQ-9</li>
+              <li><strong>PHQ-9 判讀：</strong>1-4 = 最低限度；5-9 = 輕度；10-14 = 中度；15-19 = 中重度；20-27 = 重度</li>
+              <li><strong>功能損害問題（第 10 題）：</strong>症狀對工作 / 日常生活的影響程度 → 決定是否需要治療</li>
+              <li><strong>自殺評估：</strong>PHQ-9 第 9 題（想死或自傷）= 任何分數都需進一步評估</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">GAD-7（廣泛性焦慮量表）</p>
+            <ul class="k-list">
+              <li><strong>判讀：</strong>5-9 = 輕度；10-14 = 中度；≥15 = 重度</li>
+              <li><strong>≥10 分：</strong>敏感度 89%、特異度 82% 診斷 GAD</li>
+              <li><strong>其他焦慮障礙：</strong>恐慌症（突發性、身體症狀 + 死亡恐懼）；社交焦慮；特定恐懼症；PTSD（創傷史 + 過度警覺 + 再體驗 + 逃避）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">排除身體疾病（繼發性憂鬱 / 焦慮）</p>
+            <ul class="k-list">
+              <li>甲狀腺功能（甲亢 / 甲低）；貧血；糖尿病；睡眠呼吸中止；腎上腺功能；藥物副作用（Beta-blocker / 類固醇 / Interferon）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="mental-treatment-referral" data-bm-dept="家庭醫學科" data-bm-title="基層心理治療 + 轉介">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">基層心理治療 + 轉介精神科標準</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">輕中度憂鬱處置（家醫科可處理）</p>
+            <ul class="k-list">
+              <li><strong>輕度（PHQ-9 5-9）：</strong>心理衛生教育；生活型態介入（運動最有效）；問題解決治療；2-4 週追蹤；可暫不用藥</li>
+              <li><strong>中度（PHQ-9 10-14）：</strong>藥物 + 心理治療（CBT）= 最有效組合</li>
+              <li><strong>SSRI（一線）：</strong>Sertraline / Escitalopram（副作用少，首選）；起效 2-4 週；至少用藥 6-9 個月（初次發作）；停藥需緩慢減量</li>
+              <li><strong>SNRI：</strong>Duloxetine（合併疼痛）；Venlafaxine（高劑量 → 血壓↑）</li>
+              <li><strong>Mirtazapine：</strong>失眠 + 食慾差 + 憂鬱（鎮靜效果；體重增加）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">轉介精神科時機</p>
+            <ul class="k-list">
+              <li>有自殺意念或自傷行為（立刻）</li>
+              <li>重度憂鬱（PHQ-9 ≥15）；精神病性症狀（幻覺 / 妄想）</li>
+              <li>雙極性障礙疑似（躁狂病史 / 家族史）= SSRI 可能誘發躁狂</li>
+              <li>藥物治療 2 個月無效 / 難治性（Treatment-resistant depression）</li>
+              <li>物質使用合併（酒精 / 毒品）</li>
+              <li>嚴重功能損害無法工作 / 照顧自己</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">台灣心理衛生資源</p>
+            <ul class="k-list">
+              <li><strong>1925（安心專線）：</strong>24 小時自殺防治；情緒支持</li>
+              <li><strong>1980（心理健康專線）：</strong>諮詢轉介</li>
+              <li><strong>衛福部心理健康司：</strong>15 次心理諮商補助（青壯世代）</li>
+              <li><strong>社區心理衛生中心：</strong>各縣市提供免費或低價心理諮商</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'family-preventive', dept:'家庭醫學科', title:'預防醫學（癌症篩查 + 成人健檢 + 疫苗接種）',          url:'#family-preventive', text:'' },
+    { id:'family-chronic',    dept:'家庭醫學科', title:'慢性病管理（DM + HTN + 高血脂，NHI 框架）',           url:'#family-chronic',    text:'' },
+    { id:'family-lifestyle',  dept:'家庭醫學科', title:'生活型態介入（戒菸 5A + 戒酒 CAGE + 肥胖）',          url:'#family-lifestyle',  text:'' },
+    { id:'family-geriatric',  dept:'家庭醫學科', title:'老年醫學（衰弱症 + 跌倒評估 + 多重用藥 Beers list）', url:'#family-geriatric',  text:'' },
+    { id:'family-palliative', dept:'家庭醫學科', title:'安寧緩和（預立醫療 + 疼痛控制 + 末期症狀）',          url:'#family-palliative', text:'' },
+    { id:'family-mental',     dept:'家庭醫學科', title:'基層心理衛生（PHQ-9 + GAD-7 + 轉介標準）',            url:'#family-mental',     text:'' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else { initSearch(SEARCH_INDEX); }
+</script>
+</body>
+</html>

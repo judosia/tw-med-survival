@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>眼科 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../shared.css"/>
+  <style>
+    .score-modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;}
+    .score-modal-overlay.open{display:flex;}
+    .score-modal{background:var(--white);border-radius:14px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .score-modal-head{position:sticky;top:0;background:var(--white);padding:18px 22px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .score-modal-head h2{font-size:1rem;font-weight:800;}
+    .score-modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1.1rem;padding:4px;border-radius:6px;}
+    .score-modal-body{padding:20px 22px;}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <a href="../specialty.html#ophth" class="nav-back">眼科</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">眼科</span>
+  <div class="nav-right">
+    <div class="nav-search-wrap">
+      <svg class="nav-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="nav-search-input" id="search-input" type="text" placeholder="搜尋…" autocomplete="off"/>
+      <div class="search-dropdown" id="search-dropdown"></div>
+    </div>
+    <button class="nav-bm-btn" id="nav-bm-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      書籤 <span class="nav-bm-count" id="bm-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="bm-panel" id="bm-panel">
+  <div class="bm-panel-head"><span>書籤</span><button class="bm-close" id="bm-close">✕</button></div>
+  <div id="bm-list"></div>
+</div>
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">眼科</div>
+    <div class="sidebar-section-title">基礎評估</div>
+    <a href="#ophth-approach" class="sidebar-link">眼科評估（視力 + 裂隙燈 + 眼壓）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">青光眼</div>
+    <a href="#ophth-glaucoma" class="sidebar-link">青光眼（急性閉角 + 開角型）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">視網膜</div>
+    <a href="#ophth-retina" class="sidebar-link">視網膜疾病（DR + 黃斑部 + 剝離）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">水晶體 + 角膜</div>
+    <a href="#ophth-lens" class="sidebar-link">白內障 + 角膜炎 + 乾眼症</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">急症</div>
+    <a href="#ophth-emergency" class="sidebar-link">眼科急症（CRAO + 化學燒傷 + 眼外傷）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">神經眼科</div>
+    <a href="#ophth-neuro" class="sidebar-link">神經眼科（瞳孔 + 複視 + 視神經炎）</a>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section-title">相關頁面</div>
+    <a href="../er/ophth.html" class="sidebar-link">急診眼科 →</a>
+    <a href="../im/neuro.html" class="sidebar-link">神經內科 →</a>
+    <a href="../im/endo.html" class="sidebar-link">內分泌科（DM）→</a>
+  </aside>
+  <main class="main-content">
+    <div class="page-hero" style="background:linear-gradient(135deg,#f0f4ff 0%,#f5faff 100%);color:var(--navy);">
+      <div class="page-hero-text">
+        <h1>眼科</h1>
+        <p>眼科評估、青光眼、視網膜疾病、眼科急症與神經眼科，涵蓋各科 PGY 必備的眼科臨床知識。</p>
+      </div>
+      <div class="page-hero-bg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="../index.html">首頁</a> › <a href="../specialty.html#ophth">眼科</a> › 眼科
+    </div>
+
+
+    <!-- ophth-approach -->
+    <div class="topic-block" id="ophth-approach">
+      <div class="topic-block-head">
+        <span class="topic-block-title">眼科評估基礎 Ophthalmic Assessment（視力 + 裂隙燈 + 眼壓）</span>
+        <div data-bm-id="ophth-approach" data-bm-dept="眼科" data-bm-title="眼科評估基礎"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">眼科評估的系統性順序：<strong>視力（VA）→ 瞳孔反應 → 眼球運動 → 視野 → 眼壓（IOP）→ 裂隙燈（前節）→ 眼底鏡（後節）</strong>。非眼科醫師最重要的技能是辨識<strong>需要緊急眼科會診的情況</strong>：急性視力喪失、急性眼痛合併充血、眼外傷。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="visual-acuity" data-bm-dept="眼科" data-bm-title="視力評估 + 瞳孔檢查">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">視力評估 + 瞳孔反應 + 視野</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">視力（Visual Acuity）</p>
+            <ul class="k-list">
+              <li><strong>Snellen chart：</strong>6/6（台灣）= 20/20（美國）= 正常；6/60 = 只能看到正常人在 60 m 看到的字；數手指（CF）→ 手動（HM）→ 光感（LP）→ 無光感（NLP）</li>
+              <li><strong>針孔測試（Pinhole test）：</strong>視力改善 → 屈光問題（近視/散光）；視力不改善 → 眼球本身病變（角膜/水晶體/視網膜/視神經）</li>
+              <li><strong>法定失明（Legal blindness）：</strong>較好眼矯正視力 &lt;6/60（20/200）或視野 &lt;20°</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">瞳孔檢查</p>
+            <ul class="k-list">
+              <li><strong>直接對光反射（Direct）：</strong>光照右眼 → 右眼縮小</li>
+              <li><strong>間接對光反射（Consensual）：</strong>光照右眼 → 左眼也縮小</li>
+              <li><strong>RAPD（Relative Afferent Pupillary Defect）= Marcus Gunn 瞳孔：</strong>搖擺手電筒測試（Swinging flashlight test）；患側眼照光時兩眼反而散大 → 患側視神經 / 視網膜嚴重病變；<strong>RAPD（+）= 重要的客觀視神經損傷指標</strong></li>
+              <li><strong>Horner syndrome：</strong>患側縮瞳（Miosis）+ 上眼瞼下垂（Ptosis）+ 下眼瞼上提 + 無汗；交感神經受損；需排除頸動脈剝離 / Pancoast 腫瘤</li>
+              <li><strong>CN III 麻痺：</strong>散瞳（Mydriasis）+ 完全上眼瞼下垂 + 眼球下外偏；後交通動脈瘤 → 緊急 CTA</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">視野（Visual Field）缺損定位</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th>缺損類型</th><th>病灶位置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>單眼全盲</strong></td><td>視神經（視交叉前）</td></tr>
+                <tr><td><strong>雙顳側偏盲（Bitemporal hemianopia）</strong></td><td>視交叉（如垂體瘤壓迫）</td></tr>
+                <tr><td><strong>同側偏盲（Homonymous hemianopia）</strong></td><td>視交叉後（視放射 / 枕葉）</td></tr>
+                <tr><td><strong>象限盲（Quadrantanopia）</strong></td><td>視放射（顳葉上方 → 下象限；頂葉 → 上象限）</td></tr>
+                <tr><td><strong>中心暗點（Central scotoma）</strong></td><td>黃斑部病變 / 視神經炎</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="iop-slit-lamp" data-bm-dept="眼科" data-bm-title="眼壓 + 裂隙燈 + 眼底">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">眼壓（IOP）+ 裂隙燈 + 眼底檢查</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">眼壓（Intraocular Pressure，IOP）</p>
+            <ul class="k-list">
+              <li><strong>正常：</strong>10-21 mmHg；平均 15 mmHg</li>
+              <li><strong>≥22 mmHg：</strong>高眼壓（Ocular hypertension）；青光眼風險↑</li>
+              <li><strong>急性閉角型青光眼：</strong>IOP 常 &gt;40-50 mmHg；眼球硬如石頭</li>
+              <li><strong>眼球破裂（Globe rupture）：</strong>IOP 極低（軟眼）；禁止壓迫量測</li>
+              <li><strong>量測方法：</strong>Goldmann applanation tonometry（金標準）；Non-contact tonometry（氣流，篩查用）；Tono-Pen（急診，可臥床）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">裂隙燈（Slit-lamp）前節評估</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>結構</th><th>評估重點</th></tr></thead>
+              <tbody>
+                <tr><td><strong>結膜</strong></td><td>充血（睫狀充血 vs 結膜充血）；乳突；濾泡；分泌物</td></tr>
+                <tr><td><strong>角膜</strong></td><td>透明度；Fluorescein 染色（上皮缺損）；Keratic precipitates（KP）= 葡萄膜炎；Seidel test（房水滲漏）</td></tr>
+                <tr><td><strong>前房（AC）</strong></td><td>深度（淺前房 = 閉角型青光眼風險）；Flare & Cell（葡萄膜炎）；Hyphema（積血）；Hypopyon（積膿）</td></tr>
+                <tr><td><strong>虹膜</strong></td><td>後粘連（Posterior synechiae）；新生血管（Rubeosis iridis）= 糖尿病 / CRVO</td></tr>
+                <tr><td><strong>水晶體</strong></td><td>混濁程度（白內障）；位置（脫位）</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">眼底（Fundus）重要所見</p>
+            <ul class="k-list">
+              <li><strong>視神經乳頭（Optic disc）：</strong>C/D ratio（正常 &lt;0.5）；Cupping（青光眼）；Papilledema（顱壓升高）= 邊緣模糊 + 靜脈怒張</li>
+              <li><strong>視網膜血管：</strong>A/V ratio（正常 2/3）；AV nicking（高血壓）；銅線 / 銀線（高血壓動脈硬化）</li>
+              <li><strong>黃斑部（Macula）：</strong>Cherry-red spot = CRAO；Drusen = AMD；黃斑部水腫</li>
+              <li><strong>視網膜出血類型：</strong>點狀（Dot）= 深層；火焰狀（Flame）= 表層（視神經纖維層）；船形（Subhyaloid）= 玻璃體下</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ophth-glaucoma -->
+    <div class="topic-block" id="ophth-glaucoma">
+      <div class="topic-block-head">
+        <span class="topic-block-title">青光眼 Glaucoma（急性閉角型 + 原發性開角型）</span>
+        <div data-bm-id="ophth-glaucoma" data-bm-dept="眼科" data-bm-title="青光眼"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>急性閉角型青光眼（AACG）</strong>是眼科急症，數小時內可造成永久視力喪失，需立刻降眼壓。<strong>原發性開角型青光眼（POAG）</strong>是最常見的青光眼（佔 90%），無症狀緩慢進展，是全球第二大失明原因。兩者治療核心都是<strong>降低眼壓</strong>。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="acute-angle-closure" data-bm-dept="眼科" data-bm-title="急性閉角型青光眼">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">急性閉角型青光眼（AACG）</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>急性閉角型青光眼 → 立刻眼科會診！數小時內不降眼壓 → 永久視力喪失。</span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">臨床表現</p>
+            <ul class="k-list">
+              <li><strong>症狀：</strong>突發劇烈眼痛 + 頭痛 + 噁心嘔吐（可誤診為偏頭痛或急腹症）；視力模糊；看燈光有彩虹光暈（Halos）</li>
+              <li><strong>誘發因素：</strong>暗室（瞳孔散大）；強烈情緒；散瞳劑；抗膽鹼藥物；抗組織胺</li>
+              <li><strong>危險族群：</strong>遠視眼（淺前房）；亞洲人；女性；年齡 &gt;50</li>
+              <li><strong>眼部表現：</strong>IOP &gt;40-50 mmHg；結膜睫狀充血；角膜水腫（霧狀）；瞳孔中度散大固定（約 4-6 mm）；淺前房</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">緊急處置（降眼壓）</p>
+            <ul class="k-list">
+              <li><strong>Acetazolamide（Diamox）500 mg IV/PO：</strong>抑制碳酸酐酶 → ↓ 房水生成；立刻給</li>
+              <li><strong>Timolol 0.5% 眼藥水：</strong>β-blocker；↓ 房水生成；每 30 分鐘一次 × 2 次</li>
+              <li><strong>Pilocarpine 2% 眼藥水：</strong>縮瞳 → 拉開虹膜角 → 開放房角；IOP &gt;50 時先降壓再用（太高時效果差）</li>
+              <li><strong>Mannitol 1-2 g/kg IV：</strong>高滲透壓劑；迅速降低玻璃體體積；IOP 極高時使用</li>
+              <li><strong>止痛止吐：</strong>減輕症狀；降低迷走神經反射</li>
+              <li><strong>根本治療：</strong>雷射周邊虹膜切開術（Laser Peripheral Iridotomy，LPI）= 急性期控制後 / 預防性（對側眼）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="poag" data-bm-dept="眼科" data-bm-title="原發性開角型青光眼">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">原發性開角型青光眼（POAG）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">診斷標準</p>
+            <ul class="k-list">
+              <li><strong>三要素：</strong>開放的前房角（Gonioscopy）+ 視神經損傷（C/D ratio 增大 / 視神經纖維層缺損）+ 視野缺損（弓形暗點、鼻側階梯）</li>
+              <li><strong>IOP：</strong>多數 &gt;21 mmHg，但正常眼壓性青光眼（NTG）IOP 正常也可有視神經損傷</li>
+              <li><strong>視野缺損（Humphrey 視野計）：</strong>弓形暗點（Arcuate scotoma）；鼻側階梯（Nasal step）；晚期管狀視野（Tunnel vision）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">降眼壓藥物（眼藥水）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>藥物</th><th>機轉</th><th>降壓效果</th><th>注意事項</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Prostaglandin analogues（Latanoprost / Travoprost）</strong></td><td>↑ 葡萄膜鞏膜房水外流</td><td>最強（↓ 25-35%）</td><td>一線首選；每日一次（睡前）；副作用：睫毛變長、虹膜色素沉著</td></tr>
+                <tr><td><strong>β-blocker（Timolol）</strong></td><td>↓ 房水生成</td><td>↓ 20-25%</td><td>禁忌：氣喘、COPD、心搏過緩、心臟傳導阻滯</td></tr>
+                <tr><td><strong>α2-agonist（Brimonidine）</strong></td><td>↓ 房水生成 + ↑ 外流</td><td>↓ 20-25%</td><td>可能有神經保護作用；嗜睡</td></tr>
+                <tr><td><strong>碳酸酐酶抑制劑（Dorzolamide / Brinzolamide）</strong></td><td>↓ 房水生成</td><td>↓ 15-20%</td><td>局部用；磺胺藥過敏者禁用</td></tr>
+                <tr><td><strong>縮瞳劑（Pilocarpine）</strong></td><td>↑ 小樑網外流</td><td>↓ 20%</td><td>現少用（視力模糊、頭痛）；閉角型有效</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li><strong>雷射治療（SLT）：</strong>選擇性雷射小樑成形術；可作為一線治療或藥物輔助</li>
+              <li><strong>手術（Trabeculectomy）：</strong>藥物控制不佳；建立新的房水外流通道</li>
+              <li><strong>追蹤：</strong>視野（Humphrey）+ OCT（視神經纖維層）每 6-12 個月；IOP 目標通常降低 30% 以上</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- ophth-retina -->
+    <div class="topic-block" id="ophth-retina">
+      <div class="topic-block-head">
+        <span class="topic-block-title">視網膜疾病 Retinal Diseases（糖尿病視網膜病變 + 黃斑部 + 視網膜剝離）</span>
+        <div data-bm-id="ophth-retina" data-bm-dept="眼科" data-bm-title="視網膜疾病"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>糖尿病視網膜病變（DR）</strong>是工作年齡成人失明的最常見原因；嚴格控制血糖和血壓是預防的關鍵。<strong>年齡相關黃斑部病變（AMD）</strong>是老年人失明的最常見原因；濕性 AMD 的抗 VEGF 注射是有效治療。<strong>視網膜剝離</strong>是眼科急症，需緊急手術。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="diabetic-retinopathy" data-bm-dept="眼科" data-bm-title="糖尿病視網膜病變">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">糖尿病視網膜病變（DR）分期 + 黃斑部病變</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">DR 分期（ETDRS / 國際分類）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>分期</th><th>眼底所見</th><th>處置</th></tr></thead>
+              <tbody>
+                <tr><td><strong>無 DR</strong></td><td>正常眼底</td><td>每年追蹤；嚴格控制血糖 + 血壓</td></tr>
+                <tr><td><strong>輕度非增殖性（NPDR）</strong></td><td>微血管瘤（Microaneurysm）</td><td>每年追蹤；血糖 / 血壓控制</td></tr>
+                <tr><td><strong>中度 NPDR</strong></td><td>出血點、硬性滲出、棉絮斑（Cotton-wool spots）</td><td>每 6 個月追蹤</td></tr>
+                <tr><td><strong>重度 NPDR（4-2-1 rule）</strong></td><td>4 象限出血 or 2 象限靜脈串珠 or 1 象限 IRMA</td><td>每 3-4 個月；考慮雷射</td></tr>
+                <tr><td><strong>增殖性 DR（PDR）</strong></td><td>新生血管（NVD / NVE）；玻璃體出血；牽引性視網膜剝離</td><td>緊急眼科；全視網膜雷射（PRP）或玻璃體切除術</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li><strong>糖尿病黃斑部水腫（DME）：</strong>任何分期均可發生；最常見視力下降原因；抗 VEGF 注射（Ranibizumab / Bevacizumab / Aflibercept）= 一線治療；雷射（Focal laser）= 輔助</li>
+              <li><strong>篩查建議：</strong>第一型 DM → 診斷後 5 年開始年度眼底檢查；第二型 DM → 診斷時立刻篩查；懷孕 DM → 孕前和孕期篩查</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">年齡相關黃斑部病變（AMD）</p>
+            <table class="data-table" style="margin-bottom:0">
+              <thead><tr><th></th><th>乾性 AMD（90%）</th><th>濕性 AMD（10%）</th></tr></thead>
+              <tbody>
+                <tr><td><strong>特徵</strong></td><td>Drusen（玻璃疣）；地圖狀萎縮；緩慢進展</td><td>脈絡膜新生血管（CNV）；急性視力下降；Amsler grid 扭曲</td></tr>
+                <tr><td><strong>治療</strong></td><td>AREDS2 補充劑（維生素 C/E + Zinc + Lutein）= 中重度乾性 AMD；無治癒</td><td>玻璃體內抗 VEGF 注射（Ranibizumab / Aflibercept）= 一線；每月注射</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="retinal-detachment-vein" data-bm-dept="眼科" data-bm-title="視網膜剝離 + 視網膜靜脈阻塞">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">視網膜剝離 + 視網膜靜脈阻塞（CRVO/BRVO）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">視網膜剝離（Retinal Detachment）</p>
+            <ul class="k-list">
+              <li><strong>類型：</strong>
+                <ul>
+                  <li><strong>裂孔性（Rhegmatogenous，最常見）：</strong>視網膜破裂 → 玻璃體液進入 → 剝離；近視眼 / 外傷 / 老化</li>
+                  <li><strong>牽引性（Tractional）：</strong>纖維膜牽拉（PDR / 外傷）</li>
+                  <li><strong>滲出性（Exudative）：</strong>液體滲出（腫瘤 / 葡萄膜炎）</li>
+                </ul>
+              </li>
+              <li><strong>前驅症狀：</strong>飛蚊症突然增加（玻璃體出血 / 視網膜撕裂）；閃光感（Photopsia）= 玻璃體牽拉視網膜</li>
+              <li><strong>視野缺損：</strong>「窗簾遮住視野」= 典型描述；從周邊向中央進展；黃斑部未剝離 → 中心視力尚存（緊急程度更高）</li>
+              <li><strong>治療：</strong>黃斑部未受累 → <strong>緊急手術（24 小時內）</strong>；已受累 → 盡快手術；術式：鞏膜扣壓術（Scleral buckling）/ 氣體填充（Pneumatic retinopexy）/ 玻璃體切除術（PPV）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">視網膜靜脈阻塞（CRVO / BRVO）</p>
+            <ul class="k-list">
+              <li><strong>危險因素：</strong>高血壓（最重要）；糖尿病；高血脂；青光眼；高凝狀態（年輕患者）</li>
+              <li><strong>CRVO（中央靜脈阻塞）：</strong>「番茄醬眼底」= 4 象限大量火焰狀出血 + 視乳頭水腫；急性視力下降</li>
+              <li><strong>BRVO（分支靜脈阻塞）：</strong>1 個象限出血；沿受累靜脈分布；視力下降（若累及黃斑）</li>
+              <li><strong>治療：</strong>黃斑部水腫 → 抗 VEGF 注射（一線）；新生血管性青光眼（Neovascular glaucoma）= 最嚴重併發症 → PRP 雷射</li>
+              <li><strong>全身評估：</strong>血壓、血糖、血脂、凝血功能（年輕患者 → 血栓篩查）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ophth-lens -->
+    <div class="topic-block" id="ophth-lens">
+      <div class="topic-block-head">
+        <span class="topic-block-title">水晶體 + 角膜 Lens & Cornea（白內障 + 角膜炎 + 乾眼症）</span>
+        <div data-bm-id="ophth-lens" data-bm-dept="眼科" data-bm-title="水晶體 + 角膜"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>白內障</strong>是全球失明的最常見原因（可治癒），手術是唯一有效治療。<strong>角膜炎</strong>需要區分感染性（細菌 / 病毒 / 真菌）和非感染性，細菌性角膜炎是角膜潰瘍最常見原因，需積極抗生素治療。<strong>乾眼症</strong>是門診最常見的眼科問題，台灣盛行率約 30%。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="cataract" data-bm-dept="眼科" data-bm-title="白內障">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">白內障（Cataract）+ 角膜炎</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">白內障</p>
+            <ul class="k-list">
+              <li><strong>危險因素：</strong>老化（最常見）；紫外線；類固醇（後囊下白內障）；糖尿病；外傷；先天性</li>
+              <li><strong>症狀：</strong>漸進性視力模糊；眩光（Glare）；夜間視力差；近視度數增加（核性白內障）；單眼複視</li>
+              <li><strong>手術適應症：</strong>視力影響日常生活（無絕對的視力數值）；需清楚看眼底（DR 追蹤）</li>
+              <li><strong>手術：</strong>超音波乳化術（Phacoemulsification）= 現代標準；人工水晶體（IOL）植入；術後視力多可恢復至 6/9 以上</li>
+              <li><strong>術後注意：</strong>眼藥水（抗生素 + 類固醇 + NSAIDs）4 週；避免揉眼；術後眼壓監測</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">感染性角膜炎（Infectious Keratitis）</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>類型</th><th>特徵</th><th>治療</th></tr></thead>
+              <tbody>
+                <tr><td><strong>細菌性（最常見）</strong></td><td>隱形眼鏡使用者（Pseudomonas 高風險）；角膜白色潰瘍；前房積膿</td><td>廣效氟喹諾酮（Moxifloxacin / Ciprofloxacin）眼藥水 q1-2h；切片 + 培養</td></tr>
+                <tr><td><strong>皰疹病毒（HSV）</strong></td><td>樹枝狀潰瘍（Dendritic ulcer）；Fluorescein 染色（+）；復發性</td><td>Acyclovir 眼藥膏 / 口服；<strong>禁止類固醇（加重）</strong></td></tr>
+                <tr><td><strong>真菌性</strong></td><td>植物外傷後；Aspergillus / Fusarium；羽毛狀邊緣；進展慢</td><td>Natamycin / Voriconazole 眼藥水；療程長（6-8 週）</td></tr>
+                <tr><td><strong>棘阿米巴（Acanthamoeba）</strong></td><td>隱形眼鏡 + 接觸污水；劇烈疼痛（與外觀不成比例）；環形浸潤</td><td>PHMB + Chlorhexidine；療程 &gt;3 個月</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="dry-eye-uveitis" data-bm-dept="眼科" data-bm-title="乾眼症 + 葡萄膜炎">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">乾眼症（Dry Eye）+ 葡萄膜炎（Uveitis）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">乾眼症（Dry Eye Disease）</p>
+            <ul class="k-list">
+              <li><strong>分類：</strong>水液缺乏型（ADDE，如 Sjögren syndrome）；蒸發過度型（EDE，瞼板腺功能障礙 MGD，最常見）；混合型</li>
+              <li><strong>症狀：</strong>異物感、乾澀、燒灼感、畏光；下午加重（淚膜蒸發累積）；矛盾性流淚</li>
+              <li><strong>診斷：</strong>Schirmer test（&lt;5 mm/5 min = 水液缺乏）；TBUT（淚膜破裂時間，&lt;5 秒 = 異常）；角膜 Fluorescein 染色</li>
+              <li><strong>治療：</strong>
+                <ul>
+                  <li>人工淚液（首選，無防腐劑效果更好）</li>
+                  <li>瞼板腺熱敷 + 按摩（MGD）</li>
+                  <li>Cyclosporine 0.05% 眼藥水（Restasis）= 中重度；抗炎</li>
+                  <li>Lifitegrast（Xiidra）= LFA-1 拮抗劑</li>
+                  <li>淚點封閉（Punctal plugs）= 保留淚液</li>
+                  <li>Omega-3 補充劑（輔助）</li>
+                </ul>
+              </li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">葡萄膜炎（Uveitis）</p>
+            <ul class="k-list">
+              <li><strong>前葡萄膜炎（前部 Uveitis / Iritis）：</strong>最常見；睫狀充血；裂隙燈見 Flare & Cell；KP（角膜後沉澱物）；後粘連；疼痛 + 畏光</li>
+              <li><strong>常見原因：</strong>HLA-B27 相關（AS、反應性關節炎、IBD、乾癬）；結節病；梅毒；TB；CMV（免疫缺陷）；特發性（50%）</li>
+              <li><strong>治療：</strong>局部類固醇眼藥水（Prednisolone acetate）；散瞳劑（Cyclopentolate = 放鬆睫狀肌 + 預防後粘連）；嚴重 / 後部 → 全身類固醇；免疫抑制劑</li>
+              <li class="note">HLA-B27（+）前葡萄膜炎：反覆發作；單側交替；和 AS 活動度不完全平行</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ophth-emergency -->
+    <div class="topic-block" id="ophth-emergency">
+      <div class="topic-block-head">
+        <span class="topic-block-title">眼科急症 Ocular Emergencies（CRAO + 化學燒傷 + 眼前房積血 + 眼眶骨折）</span>
+        <div data-bm-id="ophth-emergency" data-bm-dept="眼科" data-bm-title="眼科急症"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro"><strong>眼化學燒傷</strong>是最緊急的眼科急症——立刻大量清水沖洗，不要等眼科。<strong>CRAO（視網膜中央動脈阻塞）</strong>是眼科的中風，黃金治療窗口極短。<strong>眼球破裂</strong>不可壓迫眼球，立刻眼科手術。各科 PGY 需要識別這些急症並給予第一線處置。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="crao-chemical" data-bm-dept="眼科" data-bm-title="CRAO + 化學燒傷">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">CRAO（視網膜中央動脈阻塞）+ 眼化學燒傷</span></div>
+          <div class="k-card-body">
+            <div class="alert alert-red" style="margin-bottom:12px">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span>眼化學燒傷 → 立刻大量清水沖洗 &gt;30 分鐘！不要等眼科。</span>
+            </div>
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">視網膜中央動脈阻塞（CRAO）</p>
+            <ul class="k-list">
+              <li><strong>臨床：</strong>突發無痛性單眼視力喪失（數秒至數分鐘內）；RAPD（+）；眼底：視網膜蒼白水腫 + <strong>Cherry-red spot（黃斑部）</strong></li>
+              <li><strong>病因：</strong>血栓（頸動脈粥樣硬化最常見）；栓塞（AF 心臟栓子）；血管炎（GCA，老年人）</li>
+              <li><strong>黃金時間：</strong>視網膜缺血耐受約 90 分鐘；超過後不可逆損傷</li>
+              <li><strong>急性處置（目前缺乏確切有效治療）：</strong>眼球按摩（降低 IOP，嘗試移動栓子）；降眼壓（Acetazolamide / Timolol）；吸入高濃度 CO₂（血管擴張）；前房穿刺（Paracentesis）= 眼科執行；溶栓（僅選擇性患者）</li>
+              <li><strong>全身評估（重要！）：</strong>CRAO = 腦中風等效風險；立刻心臟和神經科評估；頸動脈超音波；心電圖；超音波心臟圖；GCA 排除（ESR/CRP，老年人）</li>
+              <li class="note">暫時性單眼視力喪失（Amaurosis fugax）= TIA 等效 → 緊急神經科評估 + 抗血小板</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">眼化學燒傷</p>
+            <ul class="k-list">
+              <li><strong>鹼燒傷（更危險）：</strong>液化性壞死；持續穿透；石灰 / 氨水 / NaOH</li>
+              <li><strong>酸燒傷：</strong>凝固性壞死；有自限性；電池酸液 / 氫氟酸</li>
+              <li><strong>立刻處置：</strong>大量清水 / 生理食鹽水沖洗 &gt;30 分鐘；翻開眼瞼確保沖洗到穹隆部；沖洗後測 pH（目標 7.0-7.4）；局部麻醉眼藥（Proparacaine）協助配合</li>
+              <li><strong>Roper-Hall 分級：</strong>I（預後佳，角膜清澈）→ IV（預後差，角膜混濁 + 肢部缺血 &gt;1/2）</li>
+              <li><strong>後續治療：</strong>類固醇眼藥（前 10 天）；Ascorbate（維生素 C，抑制角膜潰瘍）；Citrate；人工淚液；嚴重 → 羊膜移植</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="hyphema-globe" data-bm-dept="眼科" data-bm-title="眼前房積血 + 眼外傷">
+          <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+          <div class="k-card-head"><span class="k-card-title">眼前房積血（Hyphema）+ 眼球破裂 + 眼眶骨折</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">眼前房積血（Hyphema）</p>
+            <ul class="k-list">
+              <li><strong>原因：</strong>鈍傷（最常見）；術後；新生血管（Rubeosis）</li>
+              <li><strong>分級：</strong>Grade 1（&lt;1/3 前房）→ Grade 4（全前房 / 8-ball hyphema）</li>
+              <li><strong>處置：</strong>頭抬高 30-45°（積血沉降）；眼罩保護（不要壓迫）；限制活動；類固醇眼藥（↓ 炎症 + ↓ 再出血）；眼壓監測（特別注意鐮狀細胞患者）；Grade 3-4 或 IOP 無法控制 → 外科沖洗</li>
+              <li><strong>再出血：</strong>3-5 天後風險最高；更嚴重；Aminocaproic acid（抗纖溶）= 部分使用</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">眼球破裂（Globe Rupture）</p>
+            <ul class="k-list">
+              <li><strong>警示徵兆：</strong>眼球變形；IOP 極低（軟眼）；結膜下出血（massive）；玻璃體脫出；淚滴形瞳孔（指向破裂方向）</li>
+              <li><strong>立刻：</strong>眼罩保護（Fox shield）；<strong>禁止壓迫眼球</strong>；NPO；破傷風預防；抗生素；緊急手術</li>
+              <li><strong>Seidel test：</strong>Fluorescein 染色後見房水滲流 = 角膜 / 鞏膜破裂</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">眼眶骨折（Orbital Fracture）</p>
+            <ul class="k-list">
+              <li><strong>眶底骨折（Blowout fracture）：</strong>鈍傷 → 眶內壓↑ → 眶底骨折 → 下直肌嵌頓；垂直複視（上視困難）；眼球內陷；眶下神經麻木（臉頰 / 上唇）</li>
+              <li><strong>CT（冠狀切面）：</strong>確認骨折範圍和肌肉嵌頓；「Teardrop sign」= 軟組織疝入上顎竇</li>
+              <li><strong>緊急手術適應症：</strong>肌肉嵌頓（兒童尤其）；白眼破裂（White-eyed blowout）= 兒童可有迷走神經反應（嘔吐、心搏過緩）；大面積骨折 + 眼球內陷</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ophth-neuro -->
+    <div class="topic-block" id="ophth-neuro">
+      <div class="topic-block-head">
+        <span class="topic-block-title">神經眼科 Neuro-ophthalmology（瞳孔異常 + 複視 + 視神經炎）</span>
+        <div data-bm-id="ophth-neuro" data-bm-dept="眼科" data-bm-title="神經眼科"><button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button></div>
+      </div>
+      <div class="topic-intro">神經眼科是神經內科和眼科的交界。<strong>複視（Diplopia）</strong>需要區分單眼（眼球本身）vs 雙眼（神經肌肉問題）；<strong>視神經炎</strong>常是 MS 的首發症狀；<strong>乳突水腫（Papilledema）</strong>代表顱壓升高。各科 PGY 需要識別這些神經眼科徵象並適時轉介。</div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="diplopia-cn" data-bm-dept="眼科" data-bm-title="複視 + 顱神經麻痺">
+          <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+          <div class="k-card-head"><span class="k-card-title">複視（Diplopia）+ 顱神經麻痺</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">複視評估流程</p>
+            <ul class="k-list">
+              <li><strong>步驟 1：單眼 vs 雙眼複視</strong>
+                <ul>
+                  <li>遮住一眼複視消失 = <strong>雙眼複視</strong>（眼外肌 / 顱神經 / 神經肌肉接合部）</li>
+                  <li>遮住一眼仍有複視 = <strong>單眼複視</strong>（角膜 / 水晶體 / 黃斑部病變）= 眼球本身問題</li>
+                </ul>
+              </li>
+              <li><strong>步驟 2：哪個方向最嚴重</strong>（幫助定位受損肌肉 / 神經）</li>
+              <li><strong>步驟 3：其他神經學症狀</strong>（頭痛、眼瞼下垂、瞳孔異常）</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">顱神經麻痺鑑別</p>
+            <table class="data-table" style="margin-bottom:12px">
+              <thead><tr><th>神經</th><th>眼球位置</th><th>複視方向</th><th>重要原因</th></tr></thead>
+              <tbody>
+                <tr><td><strong>CN III（動眼神經）</strong></td><td>眼球下外偏（Down and out）</td><td>多方向</td><td>散瞳（+）→ 後交通動脈瘤（緊急 CTA）；散瞳（-）→ 糖尿病 / 微血管病變</td></tr>
+                <tr><td><strong>CN IV（滑車神經）</strong></td><td>患眼上偏；頭傾斜（向對側）</td><td>垂直複視（下視時）</td><td>外傷（最常見）；先天性；微血管</td></tr>
+                <tr><td><strong>CN VI（外展神經）</strong></td><td>內斜視；無法外展</td><td>水平複視（向患側看）</td><td>顱壓升高（假性定位徵）；微血管；橋腦病變</td></tr>
+              </tbody>
+            </table>
+            <ul class="k-list">
+              <li><strong>重症肌無力（MG）：</strong>變化性上眼瞼下垂 + 複視；下午加重；Tensilon test；AChR 抗體</li>
+              <li><strong>甲狀腺眼病（Thyroid Eye Disease）：</strong>雙側眼球突出；上直肌 / 下直肌受累最常見；垂直複視；TSH / T4 + 眼眶 CT</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="optic-neuritis-papilledema" data-bm-dept="眼科" data-bm-title="視神經炎 + 乳突水腫">
+          <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+          <div class="k-card-head"><span class="k-card-title">視神經炎（Optic Neuritis）+ 乳突水腫（Papilledema）</span></div>
+          <div class="k-card-body">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">視神經炎（Optic Neuritis）</p>
+            <ul class="k-list">
+              <li><strong>臨床：</strong>單眼視力下降（數天內進展）；眼球後方疼痛（眼動時加重）；色覺下降（紅色褪色）；RAPD（+）；眼底可正常（球後神經炎，65%）或視乳頭水腫</li>
+              <li><strong>最重要關聯：</strong>MS（多發性硬化症）= 50% 視神經炎患者最終診斷 MS；VEP（視覺誘發電位）延遲 = MS 客觀證據</li>
+              <li><strong>ONTT 試驗：</strong>高劑量 IV Methylprednisolone（1 g/天 × 3 天）加速恢復但不改善最終視力；口服 Prednisone 低劑量反而增加復發 → <strong>不建議口服類固醇</strong></li>
+              <li><strong>MRI 腦部：</strong>如有白質病變（Dawson fingers）→ 高風險 MS → DMT（疾病修飾治療）</li>
+              <li><strong>其他原因：</strong>NMO（神經脊髓炎，AQP4 抗體）；視神經脊髓炎譜系障礙（NMOSD）；感染後；結節病；梅毒</li>
+            </ul>
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+            <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">乳突水腫（Papilledema）</p>
+            <ul class="k-list">
+              <li><strong>定義：</strong>顱內壓升高引起的雙側視乳頭水腫（bilateral）；單側水腫 = 視神經炎 / 缺血性視神經病變</li>
+              <li><strong>眼底：</strong>視乳頭邊緣模糊；靜脈怒張；火焰狀出血；視杯消失；Paton lines（同心圓狀視網膜皺褶）</li>
+              <li><strong>原因：</strong>顱內占位；腦積水；靜脈竇血栓；特發性顱內高壓（IIH）= 肥胖年輕女性；腦膜炎</li>
+              <li><strong>IIH（特發性顱內高壓）：</strong>頭痛（體位性）+ 暫時性視力模糊（視力瞬間變黑）+ 搏動性耳鳴；腰椎穿刺（ICP &gt;25 cmH₂O）；治療：Acetazolamide；體重減輕；難治 → LP shunt / 視神經鞘開窗術</li>
+              <li class="note">乳突水腫本身不影響視力（初期）；長期 → 視神經萎縮 → 永久視力喪失 → 需定期視野追蹤</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../shared.js"></script>
+<script src="../notion-notes.js"></script>
+<script>
+  const SEARCH_INDEX = [
+    { id:'ophth-approach',  dept:'眼科', title:'眼科評估（視力 + 裂隙燈 + 眼壓 + 常用檢查）',            url:'#ophth-approach',  text:'' },
+    { id:'ophth-glaucoma',  dept:'眼科', title:'青光眼（急性閉角型 + 開角型 + 處置）',                    url:'#ophth-glaucoma',  text:'' },
+    { id:'ophth-retina',    dept:'眼科', title:'視網膜疾病（糖尿病視網膜病變 + 黃斑部 + 視網膜剝離）',    url:'#ophth-retina',    text:'' },
+    { id:'ophth-lens',      dept:'眼科', title:'白內障 + 角膜炎 + 乾眼症',                               url:'#ophth-lens',      text:'' },
+    { id:'ophth-emergency', dept:'眼科', title:'眼科急症（CRAO + 眼前房積血 + 化學燒傷 + 眼眶骨折）',    url:'#ophth-emergency', text:'' },
+    { id:'ophth-neuro',     dept:'眼科', title:'神經眼科（瞳孔異常 + 複視 + 視神經炎 + 視野缺損）',       url:'#ophth-neuro',     text:'' },
+  ];
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
+  } else { initSearch(SEARCH_INDEX); }
+</script>
+</body>
+</html>
