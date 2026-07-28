@@ -136,7 +136,7 @@ function initSearch(index) {
     return (s>0?'…':'') + text.slice(s,e) + (e<text.length?'…':'');
   }
  
-  input.addEventListener('input', () => {
+input.addEventListener('input', () => {
     const q = input.value.trim();
     if (!q) { dropdown.classList.remove('open'); return; }
     const results = index.filter(r =>
@@ -144,7 +144,7 @@ function initSearch(index) {
       r.text.toLowerCase().includes(q.toLowerCase())
     ).slice(0, 7);
     dropdown.innerHTML = results.length
-      ? results.map(r => `<a class="search-result-item" href="${r.url}">
+      ? results.map(r => `<a class="search-result-item" href="${r.url}" data-id="${r.id}" data-q="${q.replace(/"/g,'&quot;')}">
           <div class="search-result-dept">${r.dept}</div>
           <div class="search-result-title">${hl(r.title,q)}</div>
           <div class="search-result-excerpt">${hl(excerpt(r.text,q),q)}</div>
@@ -152,9 +152,104 @@ function initSearch(index) {
       : `<div class="search-empty">找不到「${q}」的相關內容</div>`;
     dropdown.classList.add('open');
   });
+
+  // 攔截結果點擊：同頁錨點手動捲動+高亮；跨頁連結先存 query 再放行
+  dropdown.addEventListener('click', e => {
+    const item = e.target.closest('.search-result-item');
+    if (!item) return;
+    const href = item.getAttribute('href');
+    const query = item.dataset.q;
+    const id = item.dataset.id;
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      dropdown.classList.remove('open');
+      input.value = '';
+      history.pushState(null, '', href);
+      scrollToAndHighlight(id, query);
+    } else {
+      sessionStorage.setItem('pendingSearchQuery', JSON.stringify({ id, query }));
+    }
+  });
+
+  // 從別頁搜尋跳轉過來時，載入後自動高亮
+  (function handlePendingSearchHighlight() {
+    const pending = sessionStorage.getItem('pendingSearchQuery');
+    if (!pending) return;
+    sessionStorage.removeItem('pendingSearchQuery');
+    try {
+      const { id, query } = JSON.parse(pending);
+      if (id && query && document.getElementById(id)) {
+        setTimeout(() => scrollToAndHighlight(id, query), 100);
+      }
+    } catch {}
+  })();
+
   input.addEventListener('keydown', e => { if (e.key==='Escape') { dropdown.classList.remove('open'); input.blur(); } });
   document.addEventListener('click', e => { if (!input.contains(e.target) && !dropdown.contains(e.target)) dropdown.classList.remove('open'); });
-}
+
+  // ── 高亮相關 ──
+  function clearHighlights() {
+    document.querySelectorAll('mark.search-hl').forEach(m => {
+      const parent = m.parentNode;
+      parent.replaceChild(document.createTextNode(m.textContent), m);
+      parent.normalize();
+    });
+  }
+
+  function highlightInElement(el, query) {
+    if (!el || !query) return [];
+    const re = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        if (!node.nodeValue.toLowerCase().includes(query.toLowerCase())) return NodeFilter.FILTER_REJECT;
+        if (node.parentElement.closest('script,style,mark')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    let n;
+    while (n = walker.nextNode()) nodes.push(n);
+
+    const marks = [];
+    nodes.forEach(node => {
+      const text = node.nodeValue;
+      let match, lastIndex = 0, found = false;
+      const frag = document.createDocumentFragment();
+      re.lastIndex = 0;
+      while ((match = re.exec(text)) !== null) {
+        found = true;
+        if (match.index > lastIndex) frag.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+        const mark = document.createElement('mark');
+        mark.className = 'search-hl';
+        mark.textContent = match[0];
+        frag.appendChild(mark);
+        marks.push(mark);
+        lastIndex = re.lastIndex;
+      }
+      if (found) {
+        if (lastIndex < text.length) frag.appendChild(document.createTextNode(text.slice(lastIndex)));
+        node.parentNode.replaceChild(frag, node);
+      }
+    });
+    return marks;
+  }
+function scrollToAndHighlight(targetId, query) {
+    const el = document.getElementById(targetId);
+    if (!el) return;
+    clearHighlights();
+
+    requestAnimationFrame(() => {
+      const marks = highlightInElement(el, query);
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (marks.length) {
+        marks[0].classList.add('search-hl-active');
+        setTimeout(() => marks[0].scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+      }
+      setTimeout(() => {
+        document.querySelectorAll('mark.search-hl').forEach(m => m.classList.add('search-hl-fade'));
+      }, 6000);
+    });
+  }
 
 // ── SIDEBAR ACTIVE ON SCROLL ──
 function initScrollSpy() {
