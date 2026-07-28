@@ -236,6 +236,7 @@
     <a href="#symptoms" class="btn-primary">症狀快查 →</a>
     <a href="specialty.html" class="btn-ghost">分科知識</a>
   </div>
+  
 <!-- 大型搜尋框 -->
   <div class="hero-search-wrap">
     <svg class="hero-search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -245,7 +246,6 @@
       常用：<span onclick="doSearch('胸痛')">胸痛</span><span onclick="doSearch('心肌梗塞')">心肌梗塞</span><span onclick="doSearch('肺炎')">肺炎</span><span onclick="doSearch('腦中風')">腦中風</span><span onclick="doSearch('敗血症')">敗血症</span><span onclick="doSearch('腎功能')">腎功能</span>
     </div>
   </div>
-   ── Hero Search ──
 
   <div class="hero-stats" style="margin-top:44px;">
     <div class="stat"><div class="stat-num">15+</div><div class="stat-label">科別</div></div>
@@ -425,25 +425,95 @@ document.querySelectorAll('.mobile-link').forEach(a => {
 // ── Hero Search ──
 const heroSearch = document.getElementById('hero-search');
 const heroSearchClear = document.getElementById('hero-search-clear');
+let searchIndex = [];
+
+// 載入 search-index.json
+fetch('search-index.json')
+  .then(r => r.json())
+  .then(data => { searchIndex = data; })
+  .catch(() => {});
+
+// 下拉結果容器（加在 hero-search-wrap 裡）
+const heroDropdown = document.createElement('div');
+heroDropdown.id = 'hero-search-dropdown';
+heroDropdown.style.cssText = `
+  position:absolute; top:calc(100% + 6px); left:0; right:0;
+  background:rgba(13,31,60,0.97); border:1px solid rgba(255,255,255,0.15);
+  border-radius:10px; max-height:340px; overflow-y:auto;
+  display:none; z-index:200; backdrop-filter:blur(10px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.35);
+`;
+document.querySelector('.hero-search-wrap').appendChild(heroDropdown);
+
 function doSearch(q) {
   heroSearch.value = q;
   heroSearchClear.style.display = 'block';
+  heroSearch.dispatchEvent(new Event('input'));
   heroSearch.focus();
-  // 跳到分科區讓使用者繼續
-  document.getElementById('specialty').scrollIntoView({behavior:'smooth'});
 }
+
+function renderResults(q) {
+  if (!q || q.length < 1) { heroDropdown.style.display = 'none'; return; }
+  const kw = q.toLowerCase();
+  const hits = searchIndex.filter(item =>
+    item.title.toLowerCase().includes(kw) ||
+    item.dept.toLowerCase().includes(kw) ||
+    item.id.toLowerCase().includes(kw)
+  ).slice(0, 12);
+
+  if (!hits.length) {
+    heroDropdown.innerHTML = `<div style="padding:16px 18px;color:rgba(255,255,255,0.4);font-size:0.85rem;">找不到「${q}」的結果</div>`;
+    heroDropdown.style.display = 'block';
+    return;
+  }
+
+  heroDropdown.innerHTML = hits.map(item => `
+    <a href="${item.url}" style="
+      display:flex; align-items:center; justify-content:space-between;
+      padding:11px 18px; text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.07);
+      transition:background 0.12s;
+    " onmouseover="this.style.background='rgba(255,255,255,0.08)'"
+       onmouseout="this.style.background='transparent'">
+      <div>
+        <div style="font-size:0.88rem;font-weight:600;color:#fff;">${item.title}</div>
+        <div style="font-size:0.74rem;color:rgba(255,255,255,0.4);margin-top:2px;">${item.dept}</div>
+      </div>
+      <span style="color:rgba(255,255,255,0.3);font-size:0.85rem;">→</span>
+    </a>
+  `).join('');
+  heroDropdown.style.display = 'block';
+}
+
 heroSearch.addEventListener('input', e => {
   heroSearchClear.style.display = e.target.value ? 'block' : 'none';
+  renderResults(e.target.value.trim());
 });
+
 heroSearch.addEventListener('keydown', e => {
   if (e.key === 'Enter' && heroSearch.value.trim()) {
-    doSearch(heroSearch.value.trim());
+    const hits = searchIndex.filter(item =>
+      item.title.toLowerCase().includes(heroSearch.value.toLowerCase()) ||
+      item.dept.toLowerCase().includes(heroSearch.value.toLowerCase())
+    );
+    if (hits.length) window.location.href = hits[0].url;
+  }
+  if (e.key === 'Escape') {
+    heroDropdown.style.display = 'none';
   }
 });
+
 heroSearchClear.addEventListener('click', () => {
   heroSearch.value = '';
   heroSearchClear.style.display = 'none';
+  heroDropdown.style.display = 'none';
   heroSearch.focus();
+});
+
+// 點擊外部關閉
+document.addEventListener('click', e => {
+  if (!e.target.closest('.hero-search-wrap')) {
+    heroDropdown.style.display = 'none';
+  }
 });
 
 // ── Symptom Modal Data ──
