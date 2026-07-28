@@ -1,0 +1,1649 @@
+python3 << 'EOF'
+import json, re, os
+
+pages = [
+  # 內科
+  ("im/cardio.html", "心臟內科"),
+  ("im/pulm.html", "胸腔內科"),
+  ("im/gi.html", "腸胃科"),
+  ("im/nephro.html", "腎臟內科"),
+  ("im/infect.html", "感染科"),
+  ("im/endo.html", "內分泌科"),
+  ("im/hema.html", "血液科"),
+  ("im/onco.html", "腫瘤科"),
+  ("im/neuro.html", "神經內科"),
+  ("im/rheum.html", "風濕免疫科"),
+  # 急診
+  ("er/general.html", "急診"),
+  ("er/trauma.html", "外傷急診"),
+  ("er/toxicology.html", "毒物科"),
+  ("er/environmental.html", "環境傷害"),
+  ("er/ophth.html", "急診眼科"),
+  # 外科
+  ("surg/gs.html", "一般外科"),
+  ("surg/uro.html", "泌尿外科"),
+  ("surg/neuro-surg.html", "神經外科"),
+  ("surg/thoracic-surg.html", "胸腔外科"),
+  ("surg/plastics.html", "整形外科"),
+  ("surg/cardiac-surg.html", "心臟血管外科"),
+  ("surg/ortho.html", "骨科"),
+  # 其他
+  ("obgyn/obgyn.html", "婦產科"),
+  ("peds/general.html", "兒科"),
+  ("peds/newborn.html", "新生兒科"),
+  ("others/psych.html", "精神科"),
+  ("others/anesthesia.html", "麻醉科"),
+  ("others/derma.html", "皮膚科"),
+  ("others/ent.html", "耳鼻喉科"),
+  ("others/rehab.html", "復健科"),
+  ("others/ophthalmology.html", "眼科"),
+  ("others/family.html", "家庭醫學科"),
+]
+
+results = []
+base = "/mnt/user-data/outputs"
+
+for (path, dept) in pages:
+  fpath = f"{base}/{path}"
+  if not os.path.exists(fpath):
+    continue
+  with open(fpath, encoding='utf-8') as f:
+    content = f.read()
+  # 找 SEARCH_INDEX
+  m = re.search(r'const SEARCH_INDEX\s*=\s*\[(.*?)\];', content, re.DOTALL)
+  if not m:
+    continue
+  raw = m.group(1)
+  # parse each entry
+  entries = re.findall(r'\{[^}]+\}', raw)
+  for entry in entries:
+    id_m = re.search(r"id:'([^']+)'", entry)
+    title_m = re.search(r"title:'([^']+)'", entry)
+    dept_m = re.search(r"dept:'([^']+)'", entry)
+    if id_m and title_m:
+      results.append({
+        "id": id_m.group(1),
+        "dept": dept_m.group(1) if dept_m else dept,
+        "title": title_m.group(1),
+        "url": f"{path}#{id_m.group(1)}"
+      })
+
+print(json.dumps(results, ensure_ascii=False, indent=2))
+print(f"\n// Total: {len(results)} entries", file=__import__('sys').stderr)
+EOF
+Output
+
+[
+  {
+    "id": "hf",
+    "dept": "心臟科",
+    "title": "心臟衰竭",
+    "url": "im/cardio.html#hf"
+  },
+  {
+    "id": "ami",
+    "dept": "心臟科",
+    "title": "急性心肌梗塞 AMI",
+    "url": "im/cardio.html#ami"
+  },
+  {
+    "id": "ad",
+    "dept": "心臟科",
+    "title": "主動脈剝離 AD",
+    "url": "im/cardio.html#ad"
+  },
+  {
+    "id": "arrhythmia",
+    "dept": "心臟科",
+    "title": "心律不整",
+    "url": "im/cardio.html#arrhythmia"
+  },
+  {
+    "id": "htn-drugs",
+    "dept": "心臟科",
+    "title": "高血壓用藥選擇",
+    "url": "im/cardio.html#htn-drugs"
+  },
+  {
+    "id": "dm-drugs",
+    "dept": "心臟科",
+    "title": "糖尿病用藥選擇",
+    "url": "im/cardio.html#dm-drugs"
+  },
+  {
+    "id": "copd",
+    "dept": "胸腔科",
+    "title": "COPD",
+    "url": "im/pulm.html#copd"
+  },
+  {
+    "id": "asthma",
+    "dept": "胸腔科",
+    "title": "氣喘",
+    "url": "im/pulm.html#asthma"
+  },
+  {
+    "id": "pneumonia",
+    "dept": "胸腔科",
+    "title": "肺炎",
+    "url": "im/pulm.html#pneumonia"
+  },
+  {
+    "id": "pe",
+    "dept": "胸腔科",
+    "title": "肺栓塞 PE",
+    "url": "im/pulm.html#pe"
+  },
+  {
+    "id": "effusion",
+    "dept": "胸腔科",
+    "title": "胸腔積液",
+    "url": "im/pulm.html#effusion"
+  },
+  {
+    "id": "resp-fail",
+    "dept": "胸腔科",
+    "title": "呼吸衰竭",
+    "url": "im/pulm.html#resp-fail"
+  },
+  {
+    "id": "esophageal-gastric",
+    "dept": "腸胃科",
+    "title": "食道與胃疾病",
+    "url": "im/gi.html#esophageal-gastric"
+  },
+  {
+    "id": "gi-bleed",
+    "dept": "腸胃科",
+    "title": "GI 出血",
+    "url": "im/gi.html#gi-bleed"
+  },
+  {
+    "id": "diarrhea",
+    "dept": "腸胃科",
+    "title": "腹瀉",
+    "url": "im/gi.html#diarrhea"
+  },
+  {
+    "id": "ibd",
+    "dept": "腸胃科",
+    "title": "炎症性腸病 IBD",
+    "url": "im/gi.html#ibd"
+  },
+  {
+    "id": "colon",
+    "dept": "腸胃科",
+    "title": "大腸疾病",
+    "url": "im/gi.html#colon"
+  },
+  {
+    "id": "intestinal-ischemia",
+    "dept": "腸胃科",
+    "title": "腸道缺血",
+    "url": "im/gi.html#intestinal-ischemia"
+  },
+  {
+    "id": "pancreatitis",
+    "dept": "腸胃科",
+    "title": "胰腺炎",
+    "url": "im/gi.html#pancreatitis"
+  },
+  {
+    "id": "liver-tests",
+    "dept": "腸胃科",
+    "title": "肝功能異常",
+    "url": "im/gi.html#liver-tests"
+  },
+  {
+    "id": "hepatitis",
+    "dept": "腸胃科",
+    "title": "病毒性肝炎",
+    "url": "im/gi.html#hepatitis"
+  },
+  {
+    "id": "other-hepatitis",
+    "dept": "腸胃科",
+    "title": "其他肝炎",
+    "url": "im/gi.html#other-hepatitis"
+  },
+  {
+    "id": "cirrhosis",
+    "dept": "腸胃科",
+    "title": "肝硬化",
+    "url": "im/gi.html#cirrhosis"
+  },
+  {
+    "id": "ascites",
+    "dept": "腸胃科",
+    "title": "腹水",
+    "url": "im/gi.html#ascites"
+  },
+  {
+    "id": "alf",
+    "dept": "腸胃科",
+    "title": "急性肝衰竭",
+    "url": "im/gi.html#alf"
+  },
+  {
+    "id": "other-cirrhosis",
+    "dept": "腸胃科",
+    "title": "其他肝硬化病因",
+    "url": "im/gi.html#other-cirrhosis"
+  },
+  {
+    "id": "biliary",
+    "dept": "腸胃科",
+    "title": "膽道疾病",
+    "url": "im/gi.html#biliary"
+  },
+  {
+    "id": "aki",
+    "dept": "腎臟科",
+    "title": "急性腎損傷 AKI",
+    "url": "im/nephro.html#aki"
+  },
+  {
+    "id": "ckd",
+    "dept": "腎臟科",
+    "title": "慢性腎臟病 CKD",
+    "url": "im/nephro.html#ckd"
+  },
+  {
+    "id": "potassium",
+    "dept": "腎臟科",
+    "title": "血鉀異常",
+    "url": "im/nephro.html#potassium"
+  },
+  {
+    "id": "sodium",
+    "dept": "腎臟科",
+    "title": "血鈉異常",
+    "url": "im/nephro.html#sodium"
+  },
+  {
+    "id": "calcium",
+    "dept": "腎臟科",
+    "title": "血鈣血鎂異常",
+    "url": "im/nephro.html#calcium"
+  },
+  {
+    "id": "abg",
+    "dept": "腎臟科",
+    "title": "酸鹼判讀",
+    "url": "im/nephro.html#abg"
+  },
+  {
+    "id": "dialysis",
+    "dept": "腎臟科",
+    "title": "透析時機",
+    "url": "im/nephro.html#dialysis"
+  },
+  {
+    "id": "sepsis",
+    "dept": "感染科",
+    "title": "敗血症 Sepsis",
+    "url": "im/infect.html#sepsis"
+  },
+  {
+    "id": "abx-choice",
+    "dept": "感染科",
+    "title": "抗生素選擇原則",
+    "url": "im/infect.html#abx-choice"
+  },
+  {
+    "id": "abx-common",
+    "dept": "感染科",
+    "title": "常用抗生素整理",
+    "url": "im/infect.html#abx-common"
+  },
+  {
+    "id": "pneumonia",
+    "dept": "感染科",
+    "title": "肺炎",
+    "url": "im/infect.html#pneumonia"
+  },
+  {
+    "id": "uti",
+    "dept": "感染科",
+    "title": "泌尿道感染 UTI",
+    "url": "im/infect.html#uti"
+  },
+  {
+    "id": "ssti",
+    "dept": "感染科",
+    "title": "皮膚軟組織感染",
+    "url": "im/infect.html#ssti"
+  },
+  {
+    "id": "meningitis",
+    "dept": "感染科",
+    "title": "細菌性腦膜炎",
+    "url": "im/infect.html#meningitis"
+  },
+  {
+    "id": "ie",
+    "dept": "感染科",
+    "title": "感染性心內膜炎",
+    "url": "im/infect.html#ie"
+  },
+  {
+    "id": "pituitary",
+    "dept": "內分泌科",
+    "title": "腦下垂體疾病",
+    "url": "im/endo.html#pituitary"
+  },
+  {
+    "id": "hypothyroid",
+    "dept": "內分泌科",
+    "title": "甲狀腺低下",
+    "url": "im/endo.html#hypothyroid"
+  },
+  {
+    "id": "hyperthyroid",
+    "dept": "內分泌科",
+    "title": "甲狀腺亢進",
+    "url": "im/endo.html#hyperthyroid"
+  },
+  {
+    "id": "thyroid-cancer",
+    "dept": "內分泌科",
+    "title": "甲狀腺癌",
+    "url": "im/endo.html#thyroid-cancer"
+  },
+  {
+    "id": "cushing",
+    "dept": "內分泌科",
+    "title": "庫欣症候群",
+    "url": "im/endo.html#cushing"
+  },
+  {
+    "id": "hyperaldo",
+    "dept": "內分泌科",
+    "title": "原發性醛固酮增多症",
+    "url": "im/endo.html#hyperaldo"
+  },
+  {
+    "id": "adrenal-insufficiency",
+    "dept": "內分泌科",
+    "title": "腎上腺功能不足",
+    "url": "im/endo.html#adrenal-insufficiency"
+  },
+  {
+    "id": "pheo",
+    "dept": "內分泌科",
+    "title": "嗜鉻細胞瘤 / 副神經節瘤",
+    "url": "im/endo.html#pheo"
+  },
+  {
+    "id": "adrenal-incidentaloma",
+    "dept": "內分泌科",
+    "title": "腎上腺結節",
+    "url": "im/endo.html#adrenal-incidentaloma"
+  },
+  {
+    "id": "hypercalcemia",
+    "dept": "內分泌科",
+    "title": "高鈣血症",
+    "url": "im/endo.html#hypercalcemia"
+  },
+  {
+    "id": "hypocalcemia",
+    "dept": "內分泌科",
+    "title": "低鈣血症",
+    "url": "im/endo.html#hypocalcemia"
+  },
+  {
+    "id": "dm",
+    "dept": "內分泌科",
+    "title": "糖尿病",
+    "url": "im/endo.html#dm"
+  },
+  {
+    "id": "dka",
+    "dept": "內分泌科",
+    "title": "DKA / HHS",
+    "url": "im/endo.html#dka"
+  },
+  {
+    "id": "hypoglycemia",
+    "dept": "內分泌科",
+    "title": "低血糖",
+    "url": "im/endo.html#hypoglycemia"
+  },
+  {
+    "id": "dyslipidemia",
+    "dept": "內分泌科",
+    "title": "血脂異常",
+    "url": "im/endo.html#dyslipidemia"
+  },
+  {
+    "id": "obesity",
+    "dept": "內分泌科",
+    "title": "肥胖",
+    "url": "im/endo.html#obesity"
+  },
+  {
+    "id": "anemia",
+    "dept": "血液科",
+    "title": "貧血",
+    "url": "im/hema.html#anemia"
+  },
+  {
+    "id": "rbc-disorders",
+    "dept": "血液科",
+    "title": "RBC 異常（溶血、鐮刀型、地中海貧血）",
+    "url": "im/hema.html#rbc-disorders"
+  },
+  {
+    "id": "platelet",
+    "dept": "血液科",
+    "title": "血小板異常（ITP、HIT、TTP）",
+    "url": "im/hema.html#platelet"
+  },
+  {
+    "id": "coagulation",
+    "dept": "血液科",
+    "title": "凝血障礙（DIC、高凝、APS）",
+    "url": "im/hema.html#coagulation"
+  },
+  {
+    "id": "transfusion",
+    "dept": "血液科",
+    "title": "輸血反應",
+    "url": "im/hema.html#transfusion"
+  },
+  {
+    "id": "mds-mpn",
+    "dept": "血液科",
+    "title": "MDS + MPN（PV、ET、骨髓纖維化）",
+    "url": "im/hema.html#mds-mpn"
+  },
+  {
+    "id": "leukemia",
+    "dept": "血液科",
+    "title": "白血病（AML、ALL、CML、CLL）",
+    "url": "im/hema.html#leukemia"
+  },
+  {
+    "id": "lymphoma",
+    "dept": "血液科",
+    "title": "淋巴瘤（HL + NHL）",
+    "url": "im/hema.html#lymphoma"
+  },
+  {
+    "id": "plasma-cell",
+    "dept": "血液科",
+    "title": "漿細胞疾病（MM、MGUS）",
+    "url": "im/hema.html#plasma-cell"
+  },
+  {
+    "id": "hsct",
+    "dept": "血液科",
+    "title": "造血幹細胞移植（HSCT）",
+    "url": "im/hema.html#hsct"
+  },
+  {
+    "id": "immunotherapy",
+    "dept": "血液科",
+    "title": "免疫治療（ICI + CAR-T）",
+    "url": "im/hema.html#immunotherapy"
+  },
+  {
+    "id": "lung-cancer",
+    "dept": "腫瘤科",
+    "title": "肺癌（NSCLC + SCLC）",
+    "url": "im/onco.html#lung-cancer"
+  },
+  {
+    "id": "breast-cancer",
+    "dept": "腫瘤科",
+    "title": "乳癌",
+    "url": "im/onco.html#breast-cancer"
+  },
+  {
+    "id": "ovarian-cancer",
+    "dept": "腫瘤科",
+    "title": "卵巢癌",
+    "url": "im/onco.html#ovarian-cancer"
+  },
+  {
+    "id": "prostate-cancer",
+    "dept": "腫瘤科",
+    "title": "攝護腺癌",
+    "url": "im/onco.html#prostate-cancer"
+  },
+  {
+    "id": "crc",
+    "dept": "腫瘤科",
+    "title": "大腸直腸癌（CRC）",
+    "url": "im/onco.html#crc"
+  },
+  {
+    "id": "pancreatic",
+    "dept": "腫瘤科",
+    "title": "胰臟癌",
+    "url": "im/onco.html#pancreatic"
+  },
+  {
+    "id": "hcc",
+    "dept": "腫瘤科",
+    "title": "肝細胞癌（HCC）+ 胃食道癌",
+    "url": "im/onco.html#hcc"
+  },
+  {
+    "id": "melanoma-cns",
+    "dept": "腫瘤科",
+    "title": "黑色素瘤 + CNS 腫瘤",
+    "url": "im/onco.html#melanoma-cns"
+  },
+  {
+    "id": "onc-emergency",
+    "dept": "腫瘤科",
+    "title": "腫瘤急症（FN + 脊髓壓迫 + TLS）",
+    "url": "im/onco.html#onc-emergency"
+  },
+  {
+    "id": "chemo-toxicity",
+    "dept": "腫瘤科",
+    "title": "化療副作用",
+    "url": "im/onco.html#chemo-toxicity"
+  },
+  {
+    "id": "mental-status",
+    "dept": "神經科",
+    "title": "意識改變、譫妄、昏迷",
+    "url": "im/neuro.html#mental-status"
+  },
+  {
+    "id": "seizure",
+    "dept": "神經科",
+    "title": "癲癇 + 酒精戒斷",
+    "url": "im/neuro.html#seizure"
+  },
+  {
+    "id": "dizziness",
+    "dept": "神經科",
+    "title": "頭暈",
+    "url": "im/neuro.html#dizziness"
+  },
+  {
+    "id": "stroke",
+    "dept": "神經科",
+    "title": "中風（缺血性 + ICH/SAH）",
+    "url": "im/neuro.html#stroke"
+  },
+  {
+    "id": "neuropathy",
+    "dept": "神經科",
+    "title": "周邊神經病變 + GBS",
+    "url": "im/neuro.html#neuropathy"
+  },
+  {
+    "id": "nmj-myopathy",
+    "dept": "神經科",
+    "title": "重症肌無力（MG）+ 肌病變",
+    "url": "im/neuro.html#nmj-myopathy"
+  },
+  {
+    "id": "headache",
+    "dept": "神經科",
+    "title": "頭痛（偏頭痛、叢集性、緊張型）",
+    "url": "im/neuro.html#headache"
+  },
+  {
+    "id": "ms",
+    "dept": "神經科",
+    "title": "多發性硬化症（MS）",
+    "url": "im/neuro.html#ms"
+  },
+  {
+    "id": "spine",
+    "dept": "神經科",
+    "title": "背痛 + 脊髓壓迫 + 神經根壓迫",
+    "url": "im/neuro.html#spine"
+  },
+  {
+    "id": "rheum-approach",
+    "dept": "風濕免疫科",
+    "title": "風濕病總論 + 自體抗體",
+    "url": "im/rheum.html#rheum-approach"
+  },
+  {
+    "id": "infect-arthritis",
+    "dept": "風濕免疫科",
+    "title": "感染性關節炎 + 滑囊炎",
+    "url": "im/rheum.html#infect-arthritis"
+  },
+  {
+    "id": "crystal-arthritis",
+    "dept": "風濕免疫科",
+    "title": "痛風 + 偽痛風（CPPD）",
+    "url": "im/rheum.html#crystal-arthritis"
+  },
+  {
+    "id": "ra",
+    "dept": "風濕免疫科",
+    "title": "類風濕性關節炎（RA）",
+    "url": "im/rheum.html#ra"
+  },
+  {
+    "id": "spa",
+    "dept": "風濕免疫科",
+    "title": "脊椎關節炎（AS、PsA、ReA）",
+    "url": "im/rheum.html#spa"
+  },
+  {
+    "id": "ssc",
+    "dept": "風濕免疫科",
+    "title": "全身性硬皮病 + Raynaud",
+    "url": "im/rheum.html#ssc"
+  },
+  {
+    "id": "myositis",
+    "dept": "風濕免疫科",
+    "title": "發炎性肌病（DM/PM/IBM）",
+    "url": "im/rheum.html#myositis"
+  },
+  {
+    "id": "sjogren",
+    "dept": "風濕免疫科",
+    "title": "修格連症候群 + MCTD",
+    "url": "im/rheum.html#sjogren"
+  },
+  {
+    "id": "sle",
+    "dept": "風濕免疫科",
+    "title": "全身性紅斑狼瘡（SLE）",
+    "url": "im/rheum.html#sle"
+  },
+  {
+    "id": "vasculitis",
+    "dept": "風濕免疫科",
+    "title": "血管炎",
+    "url": "im/rheum.html#vasculitis"
+  },
+  {
+    "id": "autoinflammatory",
+    "dept": "風濕免疫科",
+    "title": "自體發炎疾病 + 澱粉樣變",
+    "url": "im/rheum.html#autoinflammatory"
+  },
+  {
+    "id": "triage",
+    "dept": "急診",
+    "title": "檢傷分類 TTAS",
+    "url": "er/general.html#triage"
+  },
+  {
+    "id": "abcde",
+    "dept": "急診",
+    "title": "ABCDE 評估",
+    "url": "er/general.html#abcde"
+  },
+  {
+    "id": "cp-er",
+    "dept": "急診",
+    "title": "急診胸痛",
+    "url": "er/general.html#cp-er"
+  },
+  {
+    "id": "dysp-er",
+    "dept": "急診",
+    "title": "急診呼吸困難",
+    "url": "er/general.html#dysp-er"
+  },
+  {
+    "id": "ams-er",
+    "dept": "急診",
+    "title": "急診意識改變",
+    "url": "er/general.html#ams-er"
+  },
+  {
+    "id": "htn-emergency",
+    "dept": "急診",
+    "title": "高血壓急症",
+    "url": "er/general.html#htn-emergency"
+  },
+  {
+    "id": "abd-er",
+    "dept": "急診",
+    "title": "急診腹痛",
+    "url": "er/general.html#abd-er"
+  },
+  {
+    "id": "shock",
+    "dept": "急診",
+    "title": "休克",
+    "url": "er/general.html#shock"
+  },
+  {
+    "id": "stroke-er",
+    "dept": "急診",
+    "title": "急診中風",
+    "url": "er/general.html#stroke-er"
+  },
+  {
+    "id": "anaphylax",
+    "dept": "急診",
+    "title": "過敏性休克",
+    "url": "er/general.html#anaphylax"
+  },
+  {
+    "id": "dispo",
+    "dept": "急診",
+    "title": "收住院 vs 回家",
+    "url": "er/general.html#dispo"
+  },
+  {
+    "id": "atls-primary",
+    "dept": "外傷",
+    "title": "ATLS 初級評估",
+    "url": "er/trauma.html#atls-primary"
+  },
+  {
+    "id": "atls-secondary",
+    "dept": "外傷",
+    "title": "ATLS 次級評估",
+    "url": "er/trauma.html#atls-secondary"
+  },
+  {
+    "id": "hemorrhage",
+    "dept": "外傷",
+    "title": "出血控制",
+    "url": "er/trauma.html#hemorrhage"
+  },
+  {
+    "id": "head-trauma",
+    "dept": "外傷",
+    "title": "頭部外傷",
+    "url": "er/trauma.html#head-trauma"
+  },
+  {
+    "id": "chest-trauma",
+    "dept": "外傷",
+    "title": "胸部外傷",
+    "url": "er/trauma.html#chest-trauma"
+  },
+  {
+    "id": "abdo-trauma",
+    "dept": "外傷",
+    "title": "腹部外傷",
+    "url": "er/trauma.html#abdo-trauma"
+  },
+  {
+    "id": "spine",
+    "dept": "外傷",
+    "title": "脊椎外傷",
+    "url": "er/trauma.html#spine"
+  },
+  {
+    "id": "tox-approach",
+    "dept": "毒物學",
+    "title": "中毒總論 + Toxidrome",
+    "url": "er/toxicology.html#tox-approach"
+  },
+  {
+    "id": "tox-apap",
+    "dept": "毒物學",
+    "title": "Acetaminophen 過量",
+    "url": "er/toxicology.html#tox-apap"
+  },
+  {
+    "id": "tox-cardiac",
+    "dept": "毒物學",
+    "title": "心臟毒性藥物（TCA、CCB、β-blocker、Digoxin）",
+    "url": "er/toxicology.html#tox-cardiac"
+  },
+  {
+    "id": "tox-cns",
+    "dept": "毒物學",
+    "title": "CNS 抑制劑 + Serotonin syndrome / NMS",
+    "url": "er/toxicology.html#tox-cns"
+  },
+  {
+    "id": "tox-salicylate",
+    "dept": "毒物學",
+    "title": "水楊酸 + NSAIDs",
+    "url": "er/toxicology.html#tox-salicylate"
+  },
+  {
+    "id": "tox-alcohols",
+    "dept": "毒物學",
+    "title": "毒性酒精（乙二醇、甲醇、異丙醇）",
+    "url": "er/toxicology.html#tox-alcohols"
+  },
+  {
+    "id": "tox-toxic-gas",
+    "dept": "毒物學",
+    "title": "CO + 氰化物 + 有機磷",
+    "url": "er/toxicology.html#tox-toxic-gas"
+  },
+  {
+    "id": "tox-antidotes",
+    "dept": "毒物學",
+    "title": "解毒劑速查表",
+    "url": "er/toxicology.html#tox-antidotes"
+  },
+  {
+    "id": "heat",
+    "dept": "環境傷害",
+    "title": "熱傷害（熱痙攣、熱衰竭、熱中暑）",
+    "url": "er/environmental.html#heat"
+  },
+  {
+    "id": "hypothermia",
+    "dept": "環境傷害",
+    "title": "低體溫症",
+    "url": "er/environmental.html#hypothermia"
+  },
+  {
+    "id": "frostbite",
+    "dept": "環境傷害",
+    "title": "凍傷",
+    "url": "er/environmental.html#frostbite"
+  },
+  {
+    "id": "drowning",
+    "dept": "環境傷害",
+    "title": "溺水",
+    "url": "er/environmental.html#drowning"
+  },
+  {
+    "id": "altitude",
+    "dept": "環境傷害",
+    "title": "高山症（AMS、HACE、HAPE）",
+    "url": "er/environmental.html#altitude"
+  },
+  {
+    "id": "electrical",
+    "dept": "環境傷害",
+    "title": "電傷 + 雷擊",
+    "url": "er/environmental.html#electrical"
+  },
+  {
+    "id": "burns",
+    "dept": "環境傷害",
+    "title": "燒傷（熱傷 + 吸入性損傷）",
+    "url": "er/environmental.html#burns"
+  },
+  {
+    "id": "eye-chemical",
+    "dept": "眼科急症",
+    "title": "眼部化學灼傷",
+    "url": "er/ophth.html#eye-chemical"
+  },
+  {
+    "id": "acute-glaucoma",
+    "dept": "眼科急症",
+    "title": "急性閉角型青光眼",
+    "url": "er/ophth.html#acute-glaucoma"
+  },
+  {
+    "id": "retinal",
+    "dept": "眼科急症",
+    "title": "視網膜剝離 + 視網膜動脈阻塞",
+    "url": "er/ophth.html#retinal"
+  },
+  {
+    "id": "eye-trauma",
+    "dept": "眼科急症",
+    "title": "眼球外傷（破裂 + 異物）",
+    "url": "er/ophth.html#eye-trauma"
+  },
+  {
+    "id": "orbital-cellulitis",
+    "dept": "眼科急症",
+    "title": "眼眶蜂窩組織炎",
+    "url": "er/ophth.html#orbital-cellulitis"
+  },
+  {
+    "id": "uveitis",
+    "dept": "眼科急症",
+    "title": "葡萄膜炎 + 鞏膜炎",
+    "url": "er/ophth.html#uveitis"
+  },
+  {
+    "id": "red-eye",
+    "dept": "眼科急症",
+    "title": "紅眼鑑別診斷",
+    "url": "er/ophth.html#red-eye"
+  },
+  {
+    "id": "visual-loss",
+    "dept": "眼科急症",
+    "title": "急性視力喪失",
+    "url": "er/ophth.html#visual-loss"
+  },
+  {
+    "id": "acute-abdomen",
+    "dept": "一般外科",
+    "title": "急性腹痛評估",
+    "url": "surg/gs.html#acute-abdomen"
+  },
+  {
+    "id": "appendicitis",
+    "dept": "一般外科",
+    "title": "急性闌尾炎",
+    "url": "surg/gs.html#appendicitis"
+  },
+  {
+    "id": "bowel-obstruction",
+    "dept": "一般外科",
+    "title": "腸阻塞（SBO + LBO）",
+    "url": "surg/gs.html#bowel-obstruction"
+  },
+  {
+    "id": "peritonitis",
+    "dept": "一般外科",
+    "title": "腹膜炎 + 腸穿孔",
+    "url": "surg/gs.html#peritonitis"
+  },
+  {
+    "id": "biliary",
+    "dept": "一般外科",
+    "title": "膽道疾病（膽囊炎 + 膽管炎）",
+    "url": "surg/gs.html#biliary"
+  },
+  {
+    "id": "hernia",
+    "dept": "一般外科",
+    "title": "疝氣（腹股溝 + 嵌頓）",
+    "url": "surg/gs.html#hernia"
+  },
+  {
+    "id": "gi-bleed-sx",
+    "dept": "一般外科",
+    "title": "消化道出血外科處置",
+    "url": "surg/gs.html#gi-bleed-sx"
+  },
+  {
+    "id": "postop",
+    "dept": "一般外科",
+    "title": "術後常見併發症",
+    "url": "surg/gs.html#postop"
+  },
+  {
+    "id": "uro-approach",
+    "dept": "泌尿外科",
+    "title": "泌尿科評估（尿液分析 + 影像）",
+    "url": "surg/uro.html#uro-approach"
+  },
+  {
+    "id": "uro-uti",
+    "dept": "泌尿外科",
+    "title": "泌尿道感染（膀胱炎 + 腎盂腎炎 + 複雜性）",
+    "url": "surg/uro.html#uro-uti"
+  },
+  {
+    "id": "uro-stone",
+    "dept": "泌尿外科",
+    "title": "泌尿道結石（腎結石 + 輸尿管結石）",
+    "url": "surg/uro.html#uro-stone"
+  },
+  {
+    "id": "uro-bph",
+    "dept": "泌尿外科",
+    "title": "BPH + 急性尿滯留",
+    "url": "surg/uro.html#uro-bph"
+  },
+  {
+    "id": "uro-cancer",
+    "dept": "泌尿外科",
+    "title": "泌尿系統腫瘤（攝護腺癌 + 膀胱癌 + 腎細胞癌）",
+    "url": "surg/uro.html#uro-cancer"
+  },
+  {
+    "id": "uro-emergency",
+    "dept": "泌尿外科",
+    "title": "泌尿科急症（睪丸扭轉 + Fournier",
+    "url": "surg/uro.html#uro-emergency"
+  },
+  {
+    "id": "neuro-approach",
+    "dept": "神經外科",
+    "title": "神外評估（GCS + 瞳孔 + ICP 監測）",
+    "url": "surg/neuro-surg.html#neuro-approach"
+  },
+  {
+    "id": "neuro-head",
+    "dept": "神經外科",
+    "title": "顱內出血（硬膜外 + 硬膜下 + SAH + 腦內出血）",
+    "url": "surg/neuro-surg.html#neuro-head"
+  },
+  {
+    "id": "neuro-tbi",
+    "dept": "神經外科",
+    "title": "頭部外傷（輕中重度 TBI + ICP 處置）",
+    "url": "surg/neuro-surg.html#neuro-tbi"
+  },
+  {
+    "id": "neuro-spine",
+    "dept": "神經外科",
+    "title": "脊椎急症（脊髓損傷 + 馬尾症候群 + 頸椎骨折）",
+    "url": "surg/neuro-surg.html#neuro-spine"
+  },
+  {
+    "id": "neuro-tumor",
+    "dept": "神經外科",
+    "title": "顱內腫瘤（原發 + 轉移 + 腦水腫處置）",
+    "url": "surg/neuro-surg.html#neuro-tumor"
+  },
+  {
+    "id": "neuro-emergency",
+    "dept": "神經外科",
+    "title": "神外急症（腦疝 + 急性水腦症 + 術後處置）",
+    "url": "surg/neuro-surg.html#neuro-emergency"
+  },
+  {
+    "id": "thoracic-approach",
+    "dept": "胸腔外科",
+    "title": "胸腔評估（胸管適應症 + 置放技巧）",
+    "url": "surg/thoracic-surg.html#thoracic-approach"
+  },
+  {
+    "id": "thoracic-pneumo",
+    "dept": "胸腔外科",
+    "title": "氣胸（自發性 + 張力性 + 處置）",
+    "url": "surg/thoracic-surg.html#thoracic-pneumo"
+  },
+  {
+    "id": "thoracic-pleural",
+    "dept": "胸腔外科",
+    "title": "胸腔積液（Light’s criteria + 引流）",
+    "url": "surg/thoracic-surg.html#thoracic-pleural"
+  },
+  {
+    "id": "thoracic-lung",
+    "dept": "胸腔外科",
+    "title": "肺癌分期 + 手術適應症 + 縱膈腔腫瘤",
+    "url": "surg/thoracic-surg.html#thoracic-lung"
+  },
+  {
+    "id": "thoracic-esophagus",
+    "dept": "胸腔外科",
+    "title": "食道疾病（食道癌 + 食道穿孔 + Boerhaave）",
+    "url": "surg/thoracic-surg.html#thoracic-esophagus"
+  },
+  {
+    "id": "thoracic-emergency",
+    "dept": "胸腔外科",
+    "title": "胸腔急症（血胸 + 心包填塞 + 創傷性氣胸）",
+    "url": "surg/thoracic-surg.html#thoracic-emergency"
+  },
+  {
+    "id": "plastics-approach",
+    "dept": "整形外科",
+    "title": "整形評估（傷口分類 + 重建階梯）",
+    "url": "surg/plastics.html#plastics-approach"
+  },
+  {
+    "id": "plastics-wound",
+    "dept": "整形外科",
+    "title": "傷口照護（急慢性傷口 + 負壓治療）",
+    "url": "surg/plastics.html#plastics-wound"
+  },
+  {
+    "id": "plastics-burn",
+    "dept": "整形外科",
+    "title": "燒燙傷（分度 + TBSA + Parkland formula）",
+    "url": "surg/plastics.html#plastics-burn"
+  },
+  {
+    "id": "plastics-flap",
+    "dept": "整形外科",
+    "title": "皮膚移植（STSG/FTSG）+ 皮瓣 + 顯微重建",
+    "url": "surg/plastics.html#plastics-flap"
+  },
+  {
+    "id": "plastics-hand",
+    "dept": "整形外科",
+    "title": "手部外傷（肌腱 + 神經 + 斷指再植）",
+    "url": "surg/plastics.html#plastics-hand"
+  },
+  {
+    "id": "plastics-emergency",
+    "dept": "整形外科",
+    "title": "整形急症（壓瘡分級 + 化學燒傷）",
+    "url": "surg/plastics.html#plastics-emergency"
+  },
+  {
+    "id": "cardiac-approach",
+    "dept": "心臟外科",
+    "title": "心臟外科評估（術前評估 + 體外循環）",
+    "url": "surg/cardiac-surg.html#cardiac-approach"
+  },
+  {
+    "id": "cardiac-cad",
+    "dept": "心臟外科",
+    "title": "CABG（適應症 + 血管選擇 + Off-pump）",
+    "url": "surg/cardiac-surg.html#cardiac-cad"
+  },
+  {
+    "id": "cardiac-valve",
+    "dept": "心臟外科",
+    "title": "瓣膜手術（換瓣適應症 + 機械 vs 生物瓣）",
+    "url": "surg/cardiac-surg.html#cardiac-valve"
+  },
+  {
+    "id": "cardiac-aorta",
+    "dept": "心臟外科",
+    "title": "主動脈手術（Stanford A/B 剝離 + 主動脈瘤）",
+    "url": "surg/cardiac-surg.html#cardiac-aorta"
+  },
+  {
+    "id": "cardiac-rhythm",
+    "dept": "心臟外科",
+    "title": "心律手術（節律器 + AICD + 外科消融）",
+    "url": "surg/cardiac-surg.html#cardiac-rhythm"
+  },
+  {
+    "id": "cardiac-emergency",
+    "dept": "心臟外科",
+    "title": "心臟外科急症（IABP + ECMO + 術後照護）",
+    "url": "surg/cardiac-surg.html#cardiac-emergency"
+  },
+  {
+    "id": "cardiac-vascular",
+    "dept": "心臟外科",
+    "title": "周邊動脈疾病（PAD + ABI + 急性肢體缺血 + 頸動脈狹窄）",
+    "url": "surg/cardiac-surg.html#cardiac-vascular"
+  },
+  {
+    "id": "cardiac-vein",
+    "dept": "心臟外科",
+    "title": "靜脈疾病 + 透析廔管（DVT + 靜脈曲張 + AV Fistula）",
+    "url": "surg/cardiac-surg.html#cardiac-vein"
+  },
+  {
+    "id": "ortho-approach",
+    "dept": "骨科",
+    "title": "骨科評估（骨折分類 + AO 分型 + 手術原則）",
+    "url": "surg/ortho.html#ortho-approach"
+  },
+  {
+    "id": "ortho-fracture",
+    "dept": "骨科",
+    "title": "上肢常見骨折（Colles + 肱骨近端 + 鎖骨 + 肘關節）",
+    "url": "surg/ortho.html#ortho-fracture"
+  },
+  {
+    "id": "ortho-lower",
+    "dept": "骨科",
+    "title": "下肢骨折（股骨頸 + 髖關節脫臼 + 脛骨 + 踝關節）",
+    "url": "surg/ortho.html#ortho-lower"
+  },
+  {
+    "id": "ortho-spine",
+    "dept": "骨科",
+    "title": "脊椎骨折（頸椎 + 胸腰椎 + 骨質疏鬆壓迫性骨折）",
+    "url": "surg/ortho.html#ortho-spine"
+  },
+  {
+    "id": "ortho-emergency",
+    "dept": "骨科",
+    "title": "骨科急症（筋膜室症候群 + 開放性骨折 + 骨髓炎）",
+    "url": "surg/ortho.html#ortho-emergency"
+  },
+  {
+    "id": "ortho-joint",
+    "dept": "骨科",
+    "title": "關節疾病（退化性關節炎 + TKR/THR + 化膿性關節炎）",
+    "url": "surg/ortho.html#ortho-joint"
+  },
+  {
+    "id": "ob-emergency",
+    "dept": "婦產科",
+    "title": "產科急症（子癲前症 + 產後出血）",
+    "url": "obgyn/obgyn.html#ob-emergency"
+  },
+  {
+    "id": "ectopic",
+    "dept": "婦產科",
+    "title": "異位妊娠",
+    "url": "obgyn/obgyn.html#ectopic"
+  },
+  {
+    "id": "miscarriage",
+    "dept": "婦產科",
+    "title": "流產分類與處置",
+    "url": "obgyn/obgyn.html#miscarriage"
+  },
+  {
+    "id": "preterm",
+    "dept": "婦產科",
+    "title": "早產 + 胎膜早破",
+    "url": "obgyn/obgyn.html#preterm"
+  },
+  {
+    "id": "pelvic-pain",
+    "dept": "婦產科",
+    "title": "急性骨盆腔疼痛鑑別",
+    "url": "obgyn/obgyn.html#pelvic-pain"
+  },
+  {
+    "id": "aub",
+    "dept": "婦產科",
+    "title": "異常子宮出血（AUB）",
+    "url": "obgyn/obgyn.html#aub"
+  },
+  {
+    "id": "hyperemesis",
+    "dept": "婦產科",
+    "title": "妊娠劇吐",
+    "url": "obgyn/obgyn.html#hyperemesis"
+  },
+  {
+    "id": "contraception",
+    "dept": "婦產科",
+    "title": "避孕 + 緊急避孕",
+    "url": "obgyn/obgyn.html#contraception"
+  },
+  {
+    "id": "peds-vitals",
+    "dept": "兒科",
+    "title": "兒科生命徵象 + 體重公式",
+    "url": "peds/general.html#peds-vitals"
+  },
+  {
+    "id": "peds-development",
+    "dept": "兒科",
+    "title": "發育里程碑",
+    "url": "peds/general.html#peds-development"
+  },
+  {
+    "id": "peds-fever",
+    "dept": "兒科",
+    "title": "兒科發燒評估（依年齡分層）",
+    "url": "peds/general.html#peds-fever"
+  },
+  {
+    "id": "peds-croup",
+    "dept": "兒科",
+    "title": "哮吼（Croup）",
+    "url": "peds/general.html#peds-croup"
+  },
+  {
+    "id": "peds-bronchiolitis",
+    "dept": "兒科",
+    "title": "細支氣管炎（Bronchiolitis）",
+    "url": "peds/general.html#peds-bronchiolitis"
+  },
+  {
+    "id": "peds-asthma",
+    "dept": "兒科",
+    "title": "氣喘急性發作",
+    "url": "peds/general.html#peds-asthma"
+  },
+  {
+    "id": "peds-pneumonia",
+    "dept": "兒科",
+    "title": "兒科肺炎",
+    "url": "peds/general.html#peds-pneumonia"
+  },
+  {
+    "id": "peds-gastro",
+    "dept": "兒科",
+    "title": "腸胃炎與脫水",
+    "url": "peds/general.html#peds-gastro"
+  },
+  {
+    "id": "peds-gi-surgical",
+    "dept": "兒科",
+    "title": "腸套疊 + 幽門狹窄",
+    "url": "peds/general.html#peds-gi-surgical"
+  },
+  {
+    "id": "peds-seizure",
+    "dept": "兒科",
+    "title": "熱性痙攣 + 兒科癲癇",
+    "url": "peds/general.html#peds-seizure"
+  },
+  {
+    "id": "peds-meningitis",
+    "dept": "兒科",
+    "title": "兒科腦膜炎",
+    "url": "peds/general.html#peds-meningitis"
+  },
+  {
+    "id": "peds-uti",
+    "dept": "兒科",
+    "title": "兒科泌尿道感染",
+    "url": "peds/general.html#peds-uti"
+  },
+  {
+    "id": "peds-infection",
+    "dept": "兒科",
+    "title": "川崎病 + 出疹疾病",
+    "url": "peds/general.html#peds-infection"
+  },
+  {
+    "id": "peds-shock",
+    "dept": "兒科",
+    "title": "兒科休克 + PALS",
+    "url": "peds/general.html#peds-shock"
+  },
+  {
+    "id": "peds-vaccines",
+    "dept": "兒科",
+    "title": "台灣公費疫苗時程",
+    "url": "peds/general.html#peds-vaccines"
+  },
+  {
+    "id": "neo-assessment",
+    "dept": "新生兒科",
+    "title": "新生兒評估 + APGAR + NRP",
+    "url": "peds/newborn.html#neo-assessment"
+  },
+  {
+    "id": "neo-jaundice",
+    "dept": "新生兒科",
+    "title": "新生兒黃疸（光照治療 + 換血）",
+    "url": "peds/newborn.html#neo-jaundice"
+  },
+  {
+    "id": "neo-sepsis",
+    "dept": "新生兒科",
+    "title": "新生兒敗血症（EOS vs LOS）",
+    "url": "peds/newborn.html#neo-sepsis"
+  },
+  {
+    "id": "neo-respiratory",
+    "dept": "新生兒科",
+    "title": "新生兒呼吸窘迫（RDS + TTN + MAS）",
+    "url": "peds/newborn.html#neo-respiratory"
+  },
+  {
+    "id": "neo-metabolic",
+    "dept": "新生兒科",
+    "title": "新生兒代謝問題（低血糖 + 低鈣）",
+    "url": "peds/newborn.html#neo-metabolic"
+  },
+  {
+    "id": "neo-common",
+    "dept": "新生兒科",
+    "title": "新生兒常見問題 + 台灣新生兒篩查",
+    "url": "peds/newborn.html#neo-common"
+  },
+  {
+    "id": "psych-emergency",
+    "dept": "精神科",
+    "title": "精神科急診評估 + 強制住院",
+    "url": "others/psych.html#psych-emergency"
+  },
+  {
+    "id": "psych-agitation",
+    "dept": "精神科",
+    "title": "激動患者處置 + 自殺評估",
+    "url": "others/psych.html#psych-agitation"
+  },
+  {
+    "id": "psych-psychosis",
+    "dept": "精神科",
+    "title": "思覺失調症",
+    "url": "others/psych.html#psych-psychosis"
+  },
+  {
+    "id": "psych-mood",
+    "dept": "精神科",
+    "title": "情感性疾患（重鬱症 + 躁鬱症）",
+    "url": "others/psych.html#psych-mood"
+  },
+  {
+    "id": "psych-anxiety",
+    "dept": "精神科",
+    "title": "焦慮症 + PTSD + OCD",
+    "url": "others/psych.html#psych-anxiety"
+  },
+  {
+    "id": "psych-substance",
+    "dept": "精神科",
+    "title": "物質使用疾患（酒精 + 戒斷）",
+    "url": "others/psych.html#psych-substance"
+  },
+  {
+    "id": "psych-meds",
+    "dept": "精神科",
+    "title": "精神科藥物速查",
+    "url": "others/psych.html#psych-meds"
+  },
+  {
+    "id": "anesthesia-preop",
+    "dept": "麻醉科",
+    "title": "術前評估（ASA 分級 + 禁食 + 風險）",
+    "url": "others/anesthesia.html#anesthesia-preop"
+  },
+  {
+    "id": "anesthesia-agents",
+    "dept": "麻醉科",
+    "title": "麻醉藥物速查（誘導 + 吸入 + 肌鬆）",
+    "url": "others/anesthesia.html#anesthesia-agents"
+  },
+  {
+    "id": "anesthesia-airway",
+    "dept": "麻醉科",
+    "title": "氣道管理 + RSI + 困難氣道",
+    "url": "others/anesthesia.html#anesthesia-airway"
+  },
+  {
+    "id": "anesthesia-regional",
+    "dept": "麻醉科",
+    "title": "區域麻醉（脊椎 + 硬膜外 + 神經阻斷）",
+    "url": "others/anesthesia.html#anesthesia-regional"
+  },
+  {
+    "id": "anesthesia-monitoring",
+    "dept": "麻醉科",
+    "title": "術中監測 + 常見術中問題",
+    "url": "others/anesthesia.html#anesthesia-monitoring"
+  },
+  {
+    "id": "anesthesia-postop",
+    "dept": "麻醉科",
+    "title": "術後照護（PACU + PONV + 疼痛管理）",
+    "url": "others/anesthesia.html#anesthesia-postop"
+  },
+  {
+    "id": "anesthesia-emergency",
+    "dept": "麻醉科",
+    "title": "麻醉急症（惡性高熱 + 過敏性休克 + 氣道急症）",
+    "url": "others/anesthesia.html#anesthesia-emergency"
+  },
+  {
+    "id": "derm-approach",
+    "dept": "皮膚科",
+    "title": "皮膚評估 + Wood lamp + 外用類固醇分級",
+    "url": "others/derma.html#derm-approach"
+  },
+  {
+    "id": "derm-eczema",
+    "dept": "皮膚科",
+    "title": "濕疹 + 皮膚炎（異位性 + 接觸性 + 蕁麻疹）",
+    "url": "others/derma.html#derm-eczema"
+  },
+  {
+    "id": "derm-psoriasis",
+    "dept": "皮膚科",
+    "title": "乾癬 + 糠疹",
+    "url": "others/derma.html#derm-psoriasis"
+  },
+  {
+    "id": "derm-infection",
+    "dept": "皮膚科",
+    "title": "感染性皮膚病（細菌 + 病毒 + 黴菌 + 疥瘡）",
+    "url": "others/derma.html#derm-infection"
+  },
+  {
+    "id": "derm-blistering",
+    "dept": "皮膚科",
+    "title": "水泡病 + SJS/TEN（SCORTEN）",
+    "url": "others/derma.html#derm-blistering"
+  },
+  {
+    "id": "derm-pigment",
+    "dept": "皮膚科",
+    "title": "色素疾患（白斑 + 黑色素瘤 ABCDE）",
+    "url": "others/derma.html#derm-pigment"
+  },
+  {
+    "id": "derm-tumor",
+    "dept": "皮膚科",
+    "title": "皮膚腫瘤（BCC + SCC + 黑色素瘤 + 手術切緣）",
+    "url": "others/derma.html#derm-tumor"
+  },
+  {
+    "id": "derm-autoimmune",
+    "dept": "皮膚科",
+    "title": "自體免疫皮膚病（SLE + 皮肌炎 + 類肉瘤）",
+    "url": "others/derma.html#derm-autoimmune"
+  },
+  {
+    "id": "derm-signs",
+    "dept": "皮膚科",
+    "title": "皮膚科 Signs 速查",
+    "url": "others/derma.html#derm-signs"
+  },
+  {
+    "id": "ent-approach",
+    "dept": "耳鼻喉科",
+    "title": "耳鼻喉評估基礎（Weber / Rinne + 耳鏡）",
+    "url": "others/ent.html#ent-approach"
+  },
+  {
+    "id": "ent-ear",
+    "dept": "耳鼻喉科",
+    "title": "耳科（外耳炎 + 中耳炎 + 突發性聽損）",
+    "url": "others/ent.html#ent-ear"
+  },
+  {
+    "id": "ent-nose",
+    "dept": "耳鼻喉科",
+    "title": "鼻科（過敏性鼻炎 + 鼻竇炎 + 鼻出血）",
+    "url": "others/ent.html#ent-nose"
+  },
+  {
+    "id": "ent-throat",
+    "dept": "耳鼻喉科",
+    "title": "咽喉（扁桃腺炎 + 會厭炎 + 聲音嘶啞）",
+    "url": "others/ent.html#ent-throat"
+  },
+  {
+    "id": "ent-neck",
+    "dept": "耳鼻喉科",
+    "title": "頸部腫塊鑑別",
+    "url": "others/ent.html#ent-neck"
+  },
+  {
+    "id": "ent-emergency",
+    "dept": "耳鼻喉科",
+    "title": "ENT 急症（鼻出血填塞 + 異物 + 氣道）",
+    "url": "others/ent.html#ent-emergency"
+  },
+  {
+    "id": "rehab-approach",
+    "dept": "復健科",
+    "title": "復健評估（ICF 架構 + Barthel + FIM + MRC）",
+    "url": "others/rehab.html#rehab-approach"
+  },
+  {
+    "id": "rehab-stroke",
+    "dept": "復健科",
+    "title": "中風復健（Brunnstrom + 痙攣處置 + Botox）",
+    "url": "others/rehab.html#rehab-stroke"
+  },
+  {
+    "id": "rehab-neuro",
+    "dept": "復健科",
+    "title": "神經復健（脊髓損傷 ASIA + TBI + 帕金森復健）",
+    "url": "others/rehab.html#rehab-neuro"
+  },
+  {
+    "id": "rehab-msk",
+    "dept": "復健科",
+    "title": "肌肉骨骼復健（下背痛 + 肩關節 + 膝關節）",
+    "url": "others/rehab.html#rehab-msk"
+  },
+  {
+    "id": "rehab-cardiac",
+    "dept": "復健科",
+    "title": "心肺復健（心臟復健 Phase I-III + 肺復健）",
+    "url": "others/rehab.html#rehab-cardiac"
+  },
+  {
+    "id": "rehab-amputee",
+    "dept": "復健科",
+    "title": "截肢 + 義肢（截肢分類 + 義肢選擇 + 幻肢痛）",
+    "url": "others/rehab.html#rehab-amputee"
+  },
+  {
+    "id": "ophth-approach",
+    "dept": "眼科",
+    "title": "眼科評估（視力 + 裂隙燈 + 眼壓 + 常用檢查）",
+    "url": "others/ophthalmology.html#ophth-approach"
+  },
+  {
+    "id": "ophth-glaucoma",
+    "dept": "眼科",
+    "title": "青光眼（急性閉角型 + 開角型 + 處置）",
+    "url": "others/ophthalmology.html#ophth-glaucoma"
+  },
+  {
+    "id": "ophth-retina",
+    "dept": "眼科",
+    "title": "視網膜疾病（糖尿病視網膜病變 + 黃斑部 + 視網膜剝離）",
+    "url": "others/ophthalmology.html#ophth-retina"
+  },
+  {
+    "id": "ophth-lens",
+    "dept": "眼科",
+    "title": "白內障 + 角膜炎 + 乾眼症",
+    "url": "others/ophthalmology.html#ophth-lens"
+  },
+  {
+    "id": "ophth-emergency",
+    "dept": "眼科",
+    "title": "眼科急症（CRAO + 眼前房積血 + 化學燒傷 + 眼眶骨折）",
+    "url": "others/ophthalmology.html#ophth-emergency"
+  },
+  {
+    "id": "ophth-neuro",
+    "dept": "眼科",
+    "title": "神經眼科（瞳孔異常 + 複視 + 視神經炎 + 視野缺損）",
+    "url": "others/ophthalmology.html#ophth-neuro"
+  },
+  {
+    "id": "family-preventive",
+    "dept": "家庭醫學科",
+    "title": "預防醫學（癌症篩查 + 成人健檢 + 疫苗接種）",
+    "url": "others/family.html#family-preventive"
+  },
+  {
+    "id": "family-chronic",
+    "dept": "家庭醫學科",
+    "title": "慢性病管理（DM + HTN + 高血脂，NHI 框架）",
+    "url": "others/family.html#family-chronic"
+  },
+  {
+    "id": "family-lifestyle",
+    "dept": "家庭醫學科",
+    "title": "生活型態介入（戒菸 5A + 戒酒 CAGE + 肥胖）",
+    "url": "others/family.html#family-lifestyle"
+  },
+  {
+    "id": "family-geriatric",
+    "dept": "家庭醫學科",
+    "title": "老年醫學（衰弱症 + 跌倒評估 + 多重用藥 Beers list）",
+    "url": "others/family.html#family-geriatric"
+  },
+  {
+    "id": "family-palliative",
+    "dept": "家庭醫學科",
+    "title": "安寧緩和（預立醫療 + 疼痛控制 + 末期症狀）",
+    "url": "others/family.html#family-palliative"
+  },
+  {
+    "id": "family-mental",
+    "dept": "家庭醫學科",
+    "title": "基層心理衛生（PHQ-9 + GAD-7 + 轉介標準）",
+    "url": "others/family.html#family-mental"
+  }
+]
