@@ -485,7 +485,7 @@ nav {
   .sidebar { transform: translateX(-240px); width: 240px; transition: transform 0.3s; }
   .sidebar.open { transform: translateX(0); }
   .main-content { margin-left: 0; max-width: 100%; padding: 28px 5% 80px; }
-
+}
 mark.search-hl {
   background: rgba(69,123,157,0.25);
   color: inherit;
@@ -498,5 +498,4 @@ mark.search-hl-active {
 }
 mark.search-hl-fade {
   background: rgba(69,123,157,0.08);
-}
 }
