@@ -236,7 +236,15 @@
     <a href="#symptoms" class="btn-primary">症狀快查 →</a>
     <a href="specialty.html" class="btn-ghost">分科知識</a>
   </div>
-
+<!-- 大型搜尋框 -->
+  <div class="hero-search-wrap">
+    <svg class="hero-search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="hero-search" placeholder="搜尋疾病、科別、藥物、評分⋯（如：胸痛、Troponin、CHADS2）" autocomplete="off"/>
+    <button class="hero-search-clear" id="hero-search-clear">✕</button>
+    <div class="hero-search-hint">
+      常用：<span onclick="doSearch('胸痛')">胸痛</span><span onclick="doSearch('心肌梗塞')">心肌梗塞</span><span onclick="doSearch('肺炎')">肺炎</span><span onclick="doSearch('腦中風')">腦中風</span><span onclick="doSearch('敗血症')">敗血症</span><span onclick="doSearch('腎功能')">腎功能</span>
+    </div>
+  </div>
    ── Hero Search ──
 
   <div class="hero-stats" style="margin-top:44px;">
