@@ -267,8 +267,37 @@ function initScrollSpy() {
   blocks.forEach(b => obs.observe(b));
 }
 
+// ── DARK MODE ──
+const THEME_KEY = 'med-note-theme';
+
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+}
+
+function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  applyTheme(theme);
+
+  const btn = document.getElementById('theme-toggle-btn');
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem(THEME_KEY, next);
+    });
+  }
+}
+
 // ── INIT ALL ──
 function initAll() {
+  initTheme();
   initAccordion();
   initBookmark();
   initScrollSpy();
