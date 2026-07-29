@@ -2797,16 +2797,21 @@ document.addEventListener('keydown', e => {
   const total = c + h + d + s + v + age;
   document.getElementById('chadsva-total').textContent = total;
 
-  let interp = '';
-  if (total === 0) {
-    interp = '📗 <strong>0 分：</strong>合理不治療（不需抗凝）';
-  } else if (total === 1) {
-    interp = '📙 <strong>1 分：</strong>可考慮抗凝，依個別出血風險與病人意願決定';
-  } else {
-    interp = '📕 <strong>≥2 分：</strong>建議抗凝治療';
-  }
-  document.getElementById('chadsva-interp').innerHTML = interp;
+  // 建立產生顏色警報燈 SVG 的輔助函式
+function getSirenSvg(color) {
+  return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;" xmlns="http://www.w3.org/2000/svg"><path d="M7 18v-6a5 5 0 1 1 10 0v6"/><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z"/><path d="M21 12h1"/><path d="M18.5 4.5 18 5"/><path d="M2 12h1"/><path d="M12 2v1"/><path d="m4.929 4.929.707.707"/><path d="M12 12v6"/></svg>`;
 }
+
+let interp = '';
+if (total === 0) {
+  interp = `${getSirenSvg('#22c55e')} <strong>0 分：</strong>合理不治療（不需抗凝）`;
+} else if (total === 1) {
+  interp = `${getSirenSvg('#eab308')} <strong>1 分：</strong>可考慮抗凝，依個別出血風險與病人意願決定`;
+} else {
+  interp = `${getSirenSvg('#ef4444')} <strong>≥2 分：</strong>建議抗凝治療`;
+}
+
+document.getElementById('chadsva-interp').innerHTML = interp;
 calcCHADSVA();
   
   const SEARCH_INDEX = [
