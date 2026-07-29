@@ -2787,6 +2787,9 @@ document.addEventListener('keydown', e => {
   }
 });
 
+  function getSirenSvg(color) {
+  return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: ${color}; vertical-align: text-bottom; margin-right: 4px;" xmlns="http://www.w3.org/2000/svg"><path d="M7 18v-6a5 5 0 1 1 10 0v6"/><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z"/><path d="M21 12h1"/><path d="M18.5 4.5 18 5"/><path d="M2 12h1"/><path d="M12 2v1"/><path d="m4.929 4.929.707.707"/><path d="M12 12v6"/></svg>`;
+}
   function calcCHADSVA() {
   const c = document.getElementById('chadsva-c').checked ? 1 : 0;
   const h = document.getElementById('chadsva-h').checked ? 1 : 0;
@@ -2796,11 +2799,6 @@ document.addEventListener('keydown', e => {
   const age = parseInt(document.getElementById('chadsva-age').value);
   const total = c + h + d + s + v + age;
   document.getElementById('chadsva-total').textContent = total;
-
-  // 建立產生顏色警報燈 SVG 的輔助函式
-function getSirenSvg(color) {
-  return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;" xmlns="http://www.w3.org/2000/svg"><path d="M7 18v-6a5 5 0 1 1 10 0v6"/><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z"/><path d="M21 12h1"/><path d="M18.5 4.5 18 5"/><path d="M2 12h1"/><path d="M12 2v1"/><path d="m4.929 4.929.707.707"/><path d="M12 12v6"/></svg>`;
-}
 
 let interp = '';
 if (total === 0) {
