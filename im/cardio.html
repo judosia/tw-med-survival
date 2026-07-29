@@ -1384,16 +1384,17 @@
 
     <div class="k-card full" data-bm-id="afib-anticoag" data-bm-dept="心臟科" data-bm-title="心房顫動抗凝治療">
       <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
-      <div class="k-card-head"><span class="k-card-title">口服抗凝治療（OAC）— CHA₂DS₂-VASc</span></div>
+      <div class="k-card-head"><span class="k-card-title">口服抗凝治療（OAC）— CHA₂DS₂-VA</span></div>
       <div class="k-card-body">
         <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">
-          <button class="score-link" onclick="openModal('modal-chads')">CHA₂DS₂-VASc 評分表 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+          <button class="score-link" onclick="openModal('modal-chadsva')">CHA₂DS₂-VA 計算機 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
         </p>
         <ul class="k-list">
-          <li>男性 ≥2 分或女性 ≥3 分 → 建議抗凝</li>
-          <li>男性 1 分或女性 2 分 → 考慮抗凝或 ASA 或不治療</li>
-          <li>男性 0 分或女性 1 分 → 合理不治療</li>
+          <li>≥2 分 → 建議抗凝（不分性別統一標準）</li>
+          <li>1 分 → 考慮抗凝</li>
+          <li>0 分 → 合理不治療</li>
           <li><strong>無論分數高低均需抗凝：</strong>中重度風濕性二尖瓣狹窄、機械瓣、HCM、Amyloid</li>
+          <li class="note">2024 ESC/EACTS 指引已將 CHA₂DS₂-VASc 移除性別分項，改為 CHA₂DS₂-VA（滿分 8 分），理由是女性性別本身的中風風險增量已隨時代下降至不顯著，且統一標準更符合臨床實務與非二元性別者的適用性。延伸資源：<a href="https://chadsva.org/" target="_blank" style="color:var(--blue);text-decoration:underline;">chadsva.org</a></li>
         </ul>
         <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
         <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">藥物選擇</p>
@@ -2685,36 +2686,54 @@
   </div>
 </div>
 
-<!-- CHA₂DS₂-VASc Modal -->
-<div class="score-modal-overlay" id="modal-chads">
+<!-- CHA₂DS₂-VA Modal -->
+<div class="score-modal-overlay" id="modal-chadsva">
   <div class="score-modal">
     <div class="score-modal-head">
-      <h2>CHA₂DS₂-VASc 評分</h2>
-      <button class="score-modal-close" onclick="closeModal('modal-chads')">✕</button>
+      <h2>CHA₂DS₂-VA 計算機（2024 ESC 版）</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-chadsva')">✕</button>
     </div>
     <div class="score-modal-body">
-      <table class="data-table">
-        <thead><tr><th>項目</th><th>分數</th></tr></thead>
-        <tbody>
-          <tr><td><strong>C</strong> — CHF / LV 功能障礙（EF ≤40%）</td><td><strong>+1</strong></td></tr>
-          <tr><td><strong>H</strong> — 高血壓（HTN）</td><td><strong>+1</strong></td></tr>
-          <tr><td><strong>A₂</strong> — 年齡 ≥75 歲</td><td><strong>+2</strong></td></tr>
-          <tr><td><strong>D</strong> — 糖尿病（DM）</td><td><strong>+1</strong></td></tr>
-          <tr><td><strong>S₂</strong> — 中風 / TIA 病史</td><td><strong>+2</strong></td></tr>
-          <tr><td><strong>V</strong> — 血管疾病（MI、PAD、主動脈斑塊）</td><td><strong>+1</strong></td></tr>
-          <tr><td><strong>A</strong> — 年齡 65-74 歲</td><td><strong>+1</strong></td></tr>
-          <tr><td><strong>Sc</strong> — 女性（Sex category）</td><td><strong>+1</strong></td></tr>
-        </tbody>
-      </table>
+      <p style="font-size:0.78rem;color:var(--muted);margin-bottom:14px;line-height:1.6;">2024 ESC/EACTS 心房顫動指引正式版本，移除性別分項（Sc），適用標準不分性別統一。延伸資源：<a href="https://chadsva.org/" target="_blank" style="color:var(--blue);text-decoration:underline;">chadsva.org</a></p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;cursor:pointer;">
+          <span><strong>C</strong> — 心衰竭 / LV 功能障礙（EF ≤40%）</span>
+          <input type="checkbox" id="chadsva-c" onchange="calcCHADSVA()" style="width:18px;height:18px;">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;cursor:pointer;">
+          <span><strong>H</strong> — 高血壓</span>
+          <input type="checkbox" id="chadsva-h" onchange="calcCHADSVA()" style="width:18px;height:18px;">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;cursor:pointer;">
+          <span><strong>D</strong> — 糖尿病</span>
+          <input type="checkbox" id="chadsva-d" onchange="calcCHADSVA()" style="width:18px;height:18px;">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;cursor:pointer;">
+          <span><strong>S₂</strong> — 中風 / TIA / 血栓栓塞病史</span>
+          <input type="checkbox" id="chadsva-s" onchange="calcCHADSVA()" style="width:18px;height:18px;">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;cursor:pointer;">
+          <span><strong>V</strong> — 血管疾病（MI 病史、PAD、主動脈斑塊）</span>
+          <input type="checkbox" id="chadsva-v" onchange="calcCHADSVA()" style="width:18px;height:18px;">
+        </label>
+        <div style="padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;">
+          <span style="font-weight:700;">A</span> — 年齡
+          <select id="chadsva-age" onchange="calcCHADSVA()" style="width:100%;margin-top:6px;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:0.8rem;">
+            <option value="0">&lt;65 歲（0 分）</option>
+            <option value="1">65-74 歲（+1 分）</option>
+            <option value="2">≥75 歲（+2 分）</option>
+          </select>
+        </div>
+      </div>
+
       <div class="score-result">
-        <strong>男性 ≥2 分 / 女性 ≥3 分：</strong>建議抗凝治療<br/>
-        <strong>男性 1 分 / 女性 2 分：</strong>考慮抗凝<br/>
-        <strong>男性 0 分 / 女性 1 分：</strong>合理不治療<br/>
-        <span style="color:var(--muted)">女性性別本身不計入總分，需有其他危險因子才考慮抗凝；未治療中風年發生率約 4.5%，抗凝可降低 68%</span>
+        <strong>CHA₂DS₂-VA 總分：<span id="chadsva-total">0</span> / 8</strong>
+        <div id="chadsva-interp" style="margin-top:8px"></div>
       </div>
     </div>
   </div>
-</div>  
+</div>
 
 <!-- RCRI Modal（術前版）-->
 <div class="score-modal-overlay" id="modal-rcri-cardio">
@@ -2767,6 +2786,40 @@ document.addEventListener('keydown', e => {
     document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
   }
 });
+
+  function calcCHADSVA() {
+  const c = document.getElementById('chadsva-c').checked ? 1 : 0;
+  const h = document.getElementById('chadsva-h').checked ? 1 : 0;
+  const d = document.getElementById('chadsva-d').checked ? 1 : 0;
+  const s = document.getElementById('chadsva-s').checked ? 2 : 0;
+  const v = document.getElementById('chadsva-v').checked ? 1 : 0;
+  const age = parseInt(document.getElementById('chadsva-age').value);
+  const total = c + h + d + s + v + age;
+  document.getElementById('chadsva-total').textContent = total;
+
+  let interp = '';
+  if (total === 0) {
+    interp = '
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 18v-6a5 5 0 1 1 10 0v6"/>
+        <path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z"/>
+        <path d="M21 12h1"/>
+        <path d="M18.5 4.5 18 5"/>
+        <path d="M2 12h1"/>
+        <path d="M12 2v1"/>
+        <path d="m4.929 4.929.707.707"/>
+        <path d="M12 12v6"/>
+      </svg> 
+      <strong>0 分：</strong>合理不治療（不需抗凝）';
+  } else if (total === 1) {
+    interp = '📙 <strong>1 分：</strong>可考慮抗凝，依個別出血風險與病人意願決定';
+  } else {
+    interp = '📕 <strong>≥2 分：</strong>建議抗凝治療';
+  }
+  document.getElementById('chadsva-interp').innerHTML = interp;
+}
+calcCHADSVA();
+  
   const SEARCH_INDEX = [
   { id:'hf',               dept:'心臟科', title:'心臟衰竭',               url:'#hf',               text:'', modalIds:[] },
   { id:'ami',              dept:'心臟科', title:'急性心肌梗塞 AMI',        url:'#ami',              text:'', modalIds:[] },
