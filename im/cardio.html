@@ -2809,8 +2809,14 @@ if (total === 0) {
   interp = `${getSirenSvg('#ef4444')} <strong>≥2 分：</strong>建議抗凝治療`;
 }
 
-document.getElementById('chadsva-interp').innerHTML = interp;
-calcCHADSVA();
+    const interpElem = document.getElementById('chadsva-interp');
+    if (interpElem) interpElem.innerHTML = interp;
+  }
+
+  // 確保 DOM 載入完畢後才初始化執行一次，避免 Null Pointer 崩潰
+  document.addEventListener('DOMContentLoaded', () => {
+    calcCHADSVA();
+  });
   
   const SEARCH_INDEX = [
   { id:'hf',               dept:'心臟科', title:'心臟衰竭',               url:'#hf',               text:'', modalIds:[] },
