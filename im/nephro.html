@@ -6,6 +6,48 @@
   <title>腎臟科 | 醫院生存 note</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../shared.css"/>
+  <style>
+  .score-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--blue); cursor: pointer;
+    border-bottom: 1px dashed var(--blue);
+    background: none; border-top: none; border-left: none; border-right: none;
+    padding: 0; font-family: inherit; transition: color 0.15s;
+  }
+  .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+  .score-modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .score-modal-overlay.open { display: flex; }
+  .score-modal {
+    background: var(--white); border-radius: 14px;
+    width: 100%; max-width: 560px; max-height: 85vh;
+    overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .score-modal-head {
+    position: sticky; top: 0; background: var(--white);
+    padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+  .score-modal-close {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 1.1rem; padding: 4px;
+    border-radius: 6px; transition: background 0.15s;
+  }
+  .score-modal-close:hover { background: var(--light); }
+  .score-modal-body { padding: 20px 22px; }
+  .score-modal-body .data-table { margin-bottom: 16px; }
+  .score-result {
+    background: var(--light); border-radius: 8px;
+    padding: 14px 16px; margin-top: 8px;
+    font-size: 0.82rem; line-height: 1.65;
+  }
+  .score-result strong { color: var(--navy); }
+</style>
 </head>
 <body>
 
@@ -471,6 +513,11 @@
         <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
         <div class="k-card-head"><span class="k-card-title">CKD 分期（依 eGFR）</span></div>
         <div class="k-card-body">
+          <div class="k-card-body">
+          <p style="margin-bottom:10px;">
+            <button class="score-link" onclick="openModal('modal-egfr')">CKD-EPI 2021 eGFR 計算機 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+          </p>
+          <ul class="k-list">
           <ul class="k-list">
             <li><strong>G1</strong>：eGFR ≥90（腎損傷但功能正常）</li>
             <li><strong>G2</strong>：eGFR 60-89（輕度下降）</li>
@@ -1643,20 +1690,104 @@
   </div>
 </div>
 
-  </main>
+ </main>
+</div>
+  
+  <!-- eGFR (CKD-EPI 2021) Modal -->
+<div class="score-modal-overlay" id="modal-egfr">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>eGFR 計算機（CKD-EPI 2021）</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-egfr')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <p style="font-size:0.78rem;color:var(--muted);margin-bottom:14px;line-height:1.6;">現行標準公式，已移除種族分項；僅適用於穩定期腎功能（AKI 時不準確）。</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">血清肌酸酐 Scr（mg/dL）</label>
+          <input type="number" id="egfr-scr" step="0.01" min="0.1" value="1.0" oninput="calcEGFR()" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:0.85rem;">
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">年齡</label>
+          <input type="number" id="egfr-age" min="18" max="120" value="50" oninput="calcEGFR()" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:0.85rem;">
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">性別</label>
+          <select id="egfr-sex" onchange="calcEGFR()" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:0.85rem;">
+            <option value="male">男性</option>
+            <option value="female">女性</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="score-result">
+        <strong>eGFR：<span id="egfr-result">--</span> mL/min/1.73m²</strong>
+        <div id="egfr-interp" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="../shared.js"></script>
 <script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  function calcEGFR() {
+    const scr = parseFloat(document.getElementById('egfr-scr').value);
+    const age = parseFloat(document.getElementById('egfr-age').value);
+    const sex = document.getElementById('egfr-sex').value;
+    if (!scr || !age || scr <= 0 || age <= 0) {
+      document.getElementById('egfr-result').textContent = '--';
+      document.getElementById('egfr-interp').innerHTML = '';
+      return;
+    }
+    const kappa = sex === 'female' ? 0.7 : 0.9;
+    const alpha = sex === 'female' ? -0.241 : -0.302;
+    const minRatio = Math.min(scr / kappa, 1);
+    const maxRatio = Math.max(scr / kappa, 1);
+    let egfr = 142 * Math.pow(minRatio, alpha) * Math.pow(maxRatio, -1.200) * Math.pow(0.9938, age);
+    if (sex === 'female') egfr *= 1.012;
+    egfr = Math.round(egfr * 10) / 10;
+    document.getElementById('egfr-result').textContent = egfr;
+
+    let interp = '';
+    if (egfr >= 90) interp = '📗 <strong>G1：</strong>eGFR ≥90（正常或腎損傷但功能正常）';
+    else if (egfr >= 60) interp = '📗 <strong>G2：</strong>60-89（輕度下降）';
+    else if (egfr >= 45) interp = '📙 <strong>G3a：</strong>45-59（輕中度下降）';
+    else if (egfr >= 30) interp = '📙 <strong>G3b：</strong>30-44（中重度下降）';
+    else if (egfr >= 15) interp = '📕 <strong>G4：</strong>15-29（重度下降，準備透析）';
+    else interp = '📕 <strong>G5：</strong>&lt;15（腎衰竭，考慮透析或移植）';
+    document.getElementById('egfr-interp').innerHTML = interp;
+  }
+  calcEGFR();
+
   const SEARCH_INDEX = [
   { id:'acid-base',      dept:'腎內科', title:'酸鹼異常',    url:'#acid-base',      text:'', modalIds:[] },
   { id:'aki',         dept:'腎內科', title:'急性腎損傷 AKI',   url:'#aki',         text:'', modalIds:[] }, 
-  { id:'ckd',         dept:'腎內科', title:'慢性腎臟病 CKD',   url:'#ckd',         text:'', modalIds:[] }, 
-  { id:'renal-failure',  dept:'腎內科', title:'腎衰竭 Kidney disease',       url:'#renal-failure',  text:'', modalIds:[] },
+  { id:'ckd',         dept:'腎內科', title:'慢性腎臟病 CKD',   url:'#ckd',         text:'', modalIds:['modal-egfr'] }, 
+  { id:'renal-failure',  dept:'腎內科', title:'腎衰竭 Kidney disease',       url:'#renal-failure',  text:'', modalIds:['modal-egfr'] },
   { id:'diuretics', dept:'腎內科', title:'利尿劑', url:'#diuretics', text:'', modalIds:[] },
   { id:'sodium',         dept:'腎內科', title:'鈉水恆定性',   url:'#sodium',         text:'', modalIds:[] },
   { id:'potassium',      dept:'腎內科', title:'鉀恆定性',     url:'#potassium',      text:'', modalIds:[] },
-  { id:'calcium',       dept:'calcium', title:'血鈣/血鎂異常,     url:'#calcium',      text:'', modalIds:[] },
+  { id:'calcium',       dept:'calcium', title:'血鈣/血鎂異常',     url:'#calcium',      text:'', modalIds:[] },
   { id:'glomerular',     dept:'腎內科', title:'腎絲球疾病',   url:'#glomerular',     text:'', modalIds:[] },
   { id:'urinalysis',     dept:'腎內科', title:'尿液分析',     url:'#urinalysis',     text:'', modalIds:[] },
   { id:'nephrolithiasis',dept:'腎內科', title:'腎結石',       url:'#nephrolithiasis',text:'', modalIds:[] },
