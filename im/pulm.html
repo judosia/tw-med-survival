@@ -121,6 +121,7 @@
 
   <div class="sidebar-divider"></div>
   <div class="sidebar-section-title">重症</div>
+  <a href="#pneumonia"        class="sidebar-link">肺炎（Chest）</a>
   <a href="#respiratory-failure" class="sidebar-link">呼吸衰竭 / 呼吸器 / ARDS</a>
   <a href="#sepsis"           class="sidebar-link">敗血症與休克</a>
   <a href="#lung-transplant"  class="sidebar-link">肺移植</a>
@@ -129,7 +130,7 @@
   <div class="sidebar-section-title">其他科別</div>
   <a href="cardio.html#pa-catheter" class="sidebar-link">PA 導管 →（心臟科）</a>
   <a href="cardio.html#pulm-htn"    class="sidebar-link">肺高壓血管藥物 →（心臟科）</a>
-  <a href="infect.html#sepsis"      class="sidebar-link">敗血症抗生素原則 →（感染科）</a>
+  <a href="infect.html#pneumonia"   class="sidebar-link">肺炎 →（感染科）</a>
 </aside>
 
   <main class="main-content">
@@ -1429,6 +1430,25 @@
           </div>
         </div>
       </div>
+      <div class="card-grid col-2">
+        <div class="k-card full" data-bm-id="curb65" data-bm-dept="胸腔科" data-bm-title="CURB-65">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">CURB-65 肺炎嚴重度評分</span></div>
+          <div class="k-card-body">
+            <p style="margin-bottom:10px;">
+              <button class="score-link" onclick="openModal('modal-curb65')">CURB-65 計算機 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+            </p>
+            <ul class="k-list">
+              <li>用於社區型肺炎（CAP）的嚴重度分層，決定門診 / 住院 / ICU</li>
+              <li><strong>0-1 分：</strong>低風險，門診治療</li>
+              <li><strong>2 分：</strong>考慮住院或密切門診追蹤</li>
+              <li><strong>≥3 分：</strong>建議住院；<strong>≥3 分且情況允許時考慮 ICU 評估</strong></li>
+              <li class="note">CURB-65 是嚴重度篩查工具，不能取代臨床判斷；意識改變、快速惡化或多重共病時應更積極處置</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="k-card" data-bm-id="pna-complication" data-bm-dept="胸腔科" data-bm-title="肺炎併發症">
     </div>
 
     <!-- 呼吸衰竭 Respiratory Failure -->
@@ -1906,6 +1926,47 @@
   </main>
 </div>
 
+    <!-- CURB-65 Modal -->
+<div class="score-modal-overlay" id="modal-curb65">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>CURB-65 計算機</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-curb65')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <p style="font-size:0.78rem;color:var(--muted);margin-bottom:14px;line-height:1.6;">用於社區型肺炎（CAP）嚴重度分層與處置決策。</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;cursor:pointer;">
+          <span><strong>C</strong> — 意識混亂（Confusion）</span>
+          <input type="checkbox" id="curb-c" onchange="calcCURB65()" style="width:18px;height:18px;">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;cursor:pointer;">
+          <span><strong>U</strong> — 尿素氮 BUN &gt;19 mg/dL（Urea &gt;7 mmol/L）</span>
+          <input type="checkbox" id="curb-u" onchange="calcCURB65()" style="width:18px;height:18px;">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;cursor:pointer;">
+          <span><strong>R</strong> — 呼吸速率 ≥30 次/分（Respiratory rate）</span>
+          <input type="checkbox" id="curb-r" onchange="calcCURB65()" style="width:18px;height:18px;">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;cursor:pointer;">
+          <span><strong>B</strong> — 血壓（Blood pressure）SBP &lt;90 或 DBP ≤60 mmHg</span>
+          <input type="checkbox" id="curb-b" onchange="calcCURB65()" style="width:18px;height:18px;">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.82rem;cursor:pointer;">
+          <span><strong>65</strong> — 年齡 ≥65 歲</span>
+          <input type="checkbox" id="curb-65" onchange="calcCURB65()" style="width:18px;height:18px;">
+        </label>
+      </div>
+
+      <div class="score-result">
+        <strong>CURB-65 總分：<span id="curb65-total">0</span> / 5</strong>
+        <div id="curb65-interp" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- SOFA Score Modal -->
 <div class="score-modal-overlay" id="modal-sofa">
   <div class="score-modal">
@@ -2045,6 +2106,7 @@
   { id:'pleural',            dept:'胸腔科', title:'肋膜疾病',                 url:'#pleural',            text:'', modalIds:[] },
   { id:'vte',                dept:'胸腔科', title:'靜脈血栓栓塞 VTE',          url:'#vte',                text:'', modalIds:[] },
   { id:'pulm-htn',           dept:'胸腔科', title:'肺高壓',                   url:'#pulm-htn',           text:'', modalIds:[] },
+  { id:'pneumonia',          dept:'胸腔科', title:'肺炎（胸腔科重點）',        url:'#pneumonia',          text:'', modalIds:['modal-curb65'] },
   { id:'respiratory-failure',dept:'胸腔科', title:'呼吸衰竭、呼吸器管理與 ARDS', url:'#respiratory-failure', text:'', modalIds:[] },
   { id:'sepsis',             dept:'胸腔科', title:'敗血症與休克',              url:'#sepsis',             text:'', modalIds:['modal-sofa'] },
   { id:'lung-transplant',    dept:'胸腔科', title:'肺移植',                   url:'#lung-transplant',    text:'', modalIds:[] },
@@ -2084,6 +2146,26 @@ function closeModal(id) {
   document.getElementById('sofa-interp').innerHTML = interp;
 }
 calcSOFA();
+  function calcCURB65() {
+  const c = document.getElementById('curb-c').checked ? 1 : 0;
+  const u = document.getElementById('curb-u').checked ? 1 : 0;
+  const r = document.getElementById('curb-r').checked ? 1 : 0;
+  const b = document.getElementById('curb-b').checked ? 1 : 0;
+  const age = document.getElementById('curb-65').checked ? 1 : 0;
+  const total = c + u + r + b + age;
+  document.getElementById('curb65-total').textContent = total;
+
+  let interp = '';
+  if (total <= 1) {
+    interp = '📗 <strong>0-1 分：</strong>低風險，可門診治療（30 天死亡率 &lt;3%）';
+  } else if (total === 2) {
+    interp = '📙 <strong>2 分：</strong>考慮住院或密切門診追蹤（30 天死亡率 ~9%）';
+  } else {
+    interp = '📕 <strong>≥3 分：</strong>建議住院；情況允許時考慮 ICU 評估（30 天死亡率 ≥15%，5 分可達 40%+）';
+  }
+  document.getElementById('curb65-interp').innerHTML = interp;
+}
+calcCURB65();
 </script>
   <script src="../notion-notes.js"></script>
 </body>
