@@ -2282,10 +2282,20 @@ calcCURB65();
 
   function calcWellsDVT() {
   const ids = ['dvt-1','dvt-2','dvt-3','dvt-4','dvt-5','dvt-6','dvt-7','dvt-8','dvt-9'];
-  let total = ids.reduce((sum, id) => sum + (document.getElementById(id).checked ? 1 : 0), 0);
-  if (document.getElementById('dvt-minus').checked) total -= 2;
-  document.getElementById('wellsdvt-total').textContent = total;
+  
+  // 使用 Optional Chaining ?. 防止找不到元素時 JS 崩潰
+  let total = ids.reduce((sum, id) => {
+    const elem = document.getElementById(id);
+    return sum + (elem?.checked ? 1 : 0);
+  }, 0);
 
+  if (document.getElementById('dvt-minus')?.checked) total -= 2;
+
+  // 更新總分文字
+  const totalElem = document.getElementById('wellsdvt-total');
+  if (totalElem) totalElem.textContent = total;
+
+  // 判讀文字組合
   let interp = '';
   if (total <= 0) {
     interp = `${getSirenSvg('#22c55e')} <strong>低機率（≤0 分）：</strong>DVT 機率約 5%`;
@@ -2294,7 +2304,13 @@ calcCURB65();
   } else {
     interp = `${getSirenSvg('#ef4444')} <strong>高機率（≥3 分）：</strong>DVT 機率約 53%`;
   }
+
+  // 關鍵修復：將判讀結果寫入 HTML 容器中！
+  const interpElem = document.getElementById('wellsdvt-interp');
+  if (interpElem) interpElem.innerHTML = interp;
 }
+
+// 執行計算
 calcWellsDVT();
 
 function calcWellsPE() {
