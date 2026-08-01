@@ -901,6 +901,10 @@
   
 <script src="../shared.js"></script>
 <script>
+  // 全域 Helper：產生燈泡 SVG 圖示（預設黃色 #eab308，可傳入自訂顏色）
+function getLightbulbSvg(color = '#22c55e') {
+  return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: ${color} !important; display: inline-block !important; vertical-align: text-bottom; margin-right: 4px;" xmlns="http://www.w3.org/2000/svg"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`;
+}
   function openModal(id) {
     document.getElementById(id).classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -932,8 +936,8 @@
     const half = total / 2;
     document.getElementById('parkland-total').textContent = total.toLocaleString();
     document.getElementById('parkland-interp').innerHTML =
-      `📗 <strong>前 8 小時（自受傷時間起算）：</strong>${half.toLocaleString()} mL（速率約 ${(half/8).toFixed(0)} mL/h）<br/>` +
-      `📗 <strong>後 16 小時：</strong>${half.toLocaleString()} mL（速率約 ${(half/16).toFixed(0)} mL/h）<br/>` +
+      `${getLightbulbSvg()} <strong>前 8 小時（自受傷時間起算）：</strong>${half.toLocaleString()} mL（速率約 ${(half/8).toFixed(0)} mL/h）<br/>` +
+      `${getLightbulbSvg()} <strong>後 16 小時：</strong>${half.toLocaleString()} mL（速率約 ${(half/16).toFixed(0)} mL/h）<br/>` +
       `<span style="color:var(--muted)">起始估算值，之後依尿量（目標 0.5 mL/kg/h）動態調整</span>`;
   }
   calcParkland();
