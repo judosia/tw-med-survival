@@ -632,7 +632,7 @@
         </div>
         <div class="k-card full" data-bm-id="peds-fluid-calc" data-bm-dept="兒科" data-bm-title="輸液計算機">
           <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
-          <div class="k-card-head"><span class="k-card-title">互動計算機</span></div>
+          <div class="k-card-head"><span class="k-card-title">計算機</span></div>
           <div class="k-card-body">
             <p style="margin-bottom:0;">
               <button class="score-link" onclick="openModal('modal-peds-fluid')">小兒輸液計算機（維持性 + 脫水補充） <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
@@ -1043,6 +1043,9 @@
 <script src="../shared.js"></script>
 <script src="../notion-notes.js"></script>
 <script>
+  function getLightbulbSvg(color = '#22c55e') {
+  return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: ${color} !important; display: inline-block !important; vertical-align: text-bottom; margin-right: 4px;" xmlns="http://www.w3.org/2000/svg"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`;
+}
   
   function openModal(id) {
     document.getElementById(id).classList.add('open');
@@ -1063,9 +1066,7 @@
     }
   });
   
-  function getLightbulbSvg(color = '#22c55e') {
-  return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: ${color} !important; display: inline-block !important; vertical-align: text-bottom; margin-right: 4px;" xmlns="http://www.w3.org/2000/svg"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`;
-}
+  
   function calcPedsFluid() {
     const weight = parseFloat(document.getElementById('pf-weight').value);
     const pct = parseFloat(document.getElementById('pf-dehydration').value);
