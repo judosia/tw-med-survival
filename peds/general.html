@@ -7,6 +7,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../shared.css"/>
   <style>
+    .score-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--blue); cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+      background: none; border-top: none; border-left: none; border-right: none;
+      padding: 0; font-family: inherit; transition: color 0.15s;
+    }
+    .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
     .score-modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 500;
       background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
@@ -84,6 +93,7 @@
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">腸胃</div>
     <a href="#peds-gastro"        class="sidebar-link">腸胃炎與脫水</a>
+    <a href="#peds-fluids"        class="sidebar-link">小兒輸液計算</a>
     <a href="#peds-gi-surgical"   class="sidebar-link">腸套疊 + 幽門狹窄</a>
 
     <div class="sidebar-divider"></div>
@@ -577,6 +587,61 @@
       </div>
     </div>
 
+    <!-- ══ 小兒輸液計算 ══ -->
+    <div class="topic-block" id="peds-fluids">
+      <div class="topic-block-head">
+        <span class="topic-block-title">小兒輸液計算 Pediatric Fluid Calculation</span>
+        <div data-bm-id="peds-fluids" data-bm-dept="兒科" data-bm-title="小兒輸液計算">
+          <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+        </div>
+      </div>
+      <div class="topic-intro">
+        小兒輸液分兩部分：<strong>維持性輸液（Holliday-Segar 4-2-1 法則）</strong>提供正常代謝所需的每日基礎水分；<strong>脫水補充輸液</strong>則依脫水百分比計算缺水量，並分配於前 8 小時和後 16 小時給予。兩者相加才是實際 24 小時總輸液量。
+      </div>
+      <div class="card-grid col-2">
+        <div class="k-card" data-bm-id="peds-fluid-maintenance" data-bm-dept="兒科" data-bm-title="維持性輸液 4-2-1">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">維持性輸液（Holliday-Segar）</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>每小時速率（4-2-1 法則）：</strong></li>
+              <li>前 10 kg：4 mL/kg/hr</li>
+              <li>11-20 kg：加 2 mL/kg/hr</li>
+              <li>&gt;20 kg：每 kg 再加 1 mL/kg/hr</li>
+              <li><strong>每日總量（100-50-20 法則）：</strong></li>
+              <li>前 10 kg：100 mL/kg</li>
+              <li>11-20 kg：加 50 mL/kg</li>
+              <li>&gt;20 kg：每 kg 再加 20 mL/kg</li>
+              <li class="note">維持液通常含電解質（如 D5 0.45% NS + KCl 20 mEq/L），依臨床情境調整</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card" data-bm-id="peds-fluid-deficit" data-bm-dept="兒科" data-bm-title="脫水補充輸液">
+          <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+          <div class="k-card-head"><span class="k-card-title">脫水補充輸液</span></div>
+          <div class="k-card-body">
+            <ul class="k-list">
+              <li><strong>缺水量（mL）= 脫水百分比 × 體重(kg) × 10</strong></li>
+              <li>例：10 kg + 5% 脫水 → 缺水量 = 5×10×10 = 500 mL</li>
+              <li><strong>傳統分配法：</strong></li>
+              <li>前 8 小時：1/2 缺水量 + 1/3 每日維持量</li>
+              <li>後 16 小時：1/2 缺水量 + 2/3 每日維持量</li>
+              <li class="note">重度脫水（&gt;10%）先給 NS 20 mL/kg IV bolus 穩定血流動力學，之後才依此公式分配剩餘輸液</li>
+            </ul>
+          </div>
+        </div>
+        <div class="k-card full" data-bm-id="peds-fluid-calc" data-bm-dept="兒科" data-bm-title="輸液計算機">
+          <div class="k-card-tags"><span class="tag tag-drug">用藥指引</span></div>
+          <div class="k-card-head"><span class="k-card-title">互動計算機</span></div>
+          <div class="k-card-body">
+            <p style="margin-bottom:0;">
+              <button class="score-link" onclick="openModal('modal-peds-fluid')">小兒輸液計算機（維持性 + 脫水補充） <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ══ 腸套疊 + 幽門狹窄 ══ -->
     <div class="topic-block" id="peds-gi-surgical">
       <div class="topic-block-head">
@@ -936,9 +1001,49 @@
   </main>
 </div>
 
+
+  <!-- 小兒輸液計算 Modal -->
+<div class="score-modal-overlay" id="modal-peds-fluid">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>小兒輸液計算機</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-peds-fluid')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">體重（kg）</label>
+          <input type="number" id="pf-weight" step="0.1" min="0.5" value="10" oninput="calcPedsFluid()" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:0.85rem;">
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">脫水程度</label>
+          <select id="pf-dehydration" onchange="calcPedsFluid()" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:0.85rem;">
+            <option value="0">無脫水（僅算維持液）</option>
+            <option value="5">輕度（5%）</option>
+            <option value="10">中度（10%）</option>
+            <option value="15">重度（15%）</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="score-result">
+        <strong>維持性輸液</strong>
+        <div id="pf-maintenance" style="margin-top:6px"></div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <strong>脫水補充輸液</strong>
+        <div id="pf-deficit" style="margin-top:6px"></div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:10px 0">
+        <strong>總輸液分配</strong>
+        <div id="pf-total" style="margin-top:6px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="../shared.js"></script>
 <script src="../notion-notes.js"></script>
 <script>
+  
   function openModal(id) {
     document.getElementById(id).classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -957,6 +1062,60 @@
       document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
     }
   });
+  
+  function getLightbulbSvg(color = '#22c55e') {
+  return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: ${color} !important; display: inline-block !important; vertical-align: text-bottom; margin-right: 4px;" xmlns="http://www.w3.org/2000/svg"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`;
+}
+  function calcPedsFluid() {
+    const weight = parseFloat(document.getElementById('pf-weight').value);
+    const pct = parseFloat(document.getElementById('pf-dehydration').value);
+    if (!weight || weight <= 0) {
+      document.getElementById('pf-maintenance').innerHTML = '';
+      document.getElementById('pf-deficit').innerHTML = '';
+      document.getElementById('pf-total').innerHTML = '';
+      return;
+    }
+
+    // 維持性輸液（4-2-1 / 100-50-20）
+    let rate, daily;
+    if (weight <= 10) {
+      rate = 4 * weight;
+      daily = 100 * weight;
+    } else if (weight <= 20) {
+      rate = 40 + 2 * (weight - 10);
+      daily = 1000 + 50 * (weight - 10);
+    } else {
+      rate = 60 + 1 * (weight - 20);
+      daily = 1500 + 20 * (weight - 20);
+    }
+    document.getElementById('pf-maintenance').innerHTML =
+      `速率：<strong>${rate.toFixed(1)} mL/hr</strong>　每日總量：<strong>${daily.toFixed(0)} mL/天</strong>`;
+
+    // 脫水補充輸液
+    const deficit = pct * weight * 10;
+    if (pct > 0) {
+      document.getElementById('pf-deficit').innerHTML =
+        `脫水 ${pct}% → 缺水量：<strong>${deficit.toFixed(0)} mL</strong>`;
+    } else {
+      document.getElementById('pf-deficit').innerHTML = `未輸入脫水程度，僅計算維持性輸液`;
+    }
+
+    // 總分配（前 8h / 後 16h）
+    if (pct > 0) {
+      const first8 = deficit / 2 + daily / 3;
+      const next16 = deficit / 2 + daily * 2 / 3;
+      const rate1 = first8 / 8;
+      const rate2 = next16 / 16;
+      document.getElementById('pf-total').innerHTML =
+        `${getLightbulbSvg() <strong>前 8 小時：</strong>${first8.toFixed(0)} mL（速率約 ${rate1.toFixed(1)} mL/hr）<br/>` +
+        `${getLightbulbSvg() <strong>後 16 小時：</strong>${next16.toFixed(0)} mL（速率約 ${rate2.toFixed(1)} mL/hr）<br/>` +
+        `<span style="color:var(--muted)">24 小時總量：${(first8+next16).toFixed(0)} mL；重度脫水先給 NS 20 mL/kg bolus 穩定後再依此分配</span>`;
+    } else {
+      document.getElementById('pf-total').innerHTML =
+        `<span style="color:var(--muted)">維持性輸液速率即為每小時給予量，24 小時總量 ${daily.toFixed(0)} mL</span>`;
+    }
+  }
+  calcPedsFluid();
 
   const SEARCH_INDEX = [
     { id:'peds-vitals',       dept:'兒科', title:'兒科生命徵象 + 體重公式',              url:'#peds-vitals',       text:'' },
@@ -967,6 +1126,7 @@
     { id:'peds-asthma',       dept:'兒科', title:'氣喘急性發作',                        url:'#peds-asthma',       text:'' },
     { id:'peds-pneumonia',    dept:'兒科', title:'兒科肺炎',                            url:'#peds-pneumonia',    text:'' },
     { id:'peds-gastro',       dept:'兒科', title:'腸胃炎與脫水',                        url:'#peds-gastro',       text:'' },
+    { id:'peds-fluids',       dept:'兒科', title:'小兒輸液計算',                        url:'#peds-fluids',       text:'', modalIds:['modal-peds-fluid'] },
     { id:'peds-gi-surgical',  dept:'兒科', title:'腸套疊 + 幽門狹窄',                  url:'#peds-gi-surgical',  text:'' },
     { id:'peds-seizure',      dept:'兒科', title:'熱性痙攣 + 兒科癲癇',                url:'#peds-seizure',      text:'' },
     { id:'peds-meningitis',   dept:'兒科', title:'兒科腦膜炎',                          url:'#peds-meningitis',   text:'' },
