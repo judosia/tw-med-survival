@@ -2183,6 +2183,10 @@ function closeModal(id) {
   document.getElementById(id).classList.remove('open');
   document.body.style.overflow = '';
 }
+
+  function getSirenSvg(color) {
+  return `<svg ... stroke="${color}">...</svg>`;
+}
   
   function calcSOFA() {
   const scores = ['sofa-resp','sofa-coag','sofa-liver','sofa-cardio','sofa-cns','sofa-renal']
@@ -2192,13 +2196,13 @@ function closeModal(id) {
 
   let interp = '';
   if (total < 2) {
-    interp = '📗 低風險：ICU 死亡率 &lt;10%';
+    interp = `${getSirenSvg('#22c55e')} <strong>低風險：</strong>ICU 死亡率 &lt;10%`;
   } else if (total <= 5) {
-    interp = '📙 中等風險：ICU 死亡率 ~20-30%';
+    interp = `${getSirenSvg('#eab308')} <strong>中等風險：</strong>ICU 死亡率 ~20-30%`;
   } else if (total <= 9) {
-    interp = '📕 高風險：ICU 死亡率 ~40-50%';
+    interp = `${getSirenSvg('#ef4444')} <strong>高風險：</strong>ICU 死亡率 ~40-50%`;
   } else {
-    interp = '🔴 極高風險：ICU 死亡率 &gt;80%（分數 ≥11）';
+    interp = `${getSirenSvg('#dc2626')} <strong>極高風險：</strong>ICU 死亡率 &gt;80%（分數 ≥11）`;
   }
   document.getElementById('sofa-interp').innerHTML = interp;
 }
@@ -2214,11 +2218,11 @@ calcSOFA();
 
   let interp = '';
   if (total <= 1) {
-    interp = '📗 <strong>0-1 分：</strong>低風險，可門診治療（30 天死亡率 &lt;3%）';
+    interp = `${getSirenSvg('#22c55e')} <strong>0-1 分：</strong>低風險，可門診治療（30 天死亡率 &lt;3%）`;
   } else if (total === 2) {
-    interp = '📙 <strong>2 分：</strong>考慮住院或密切門診追蹤（30 天死亡率 ~9%）';
+    interp = `${getSirenSvg('#eab308')} <strong>2 分：</strong>考慮住院或密切門診追蹤（30 天死亡率 ~9%）`;
   } else {
-    interp = '📕 <strong>≥3 分：</strong>建議住院；情況允許時考慮 ICU 評估（30 天死亡率 ≥15%，5 分可達 40%+）';
+    interp = `${getSirenSvg('#ef4444')} <strong>≥3 分：</strong>建議住院；情況允許時考慮 ICU 評估（30 天死亡率 ≥15%，5 分可達 40%+）`;
   }
   document.getElementById('curb65-interp').innerHTML = interp;
 }
@@ -2231,10 +2235,13 @@ calcCURB65();
   document.getElementById('wellsdvt-total').textContent = total;
 
   let interp = '';
-  if (total <= 0) interp = '📗 <strong>低機率（≤0 分）：</strong>DVT 機率約 5%';
-  else if (total <= 2) interp = '📙 <strong>中機率（1-2 分）：</strong>DVT 機率約 17%';
-  else interp = '📕 <strong>高機率（≥3 分）：</strong>DVT 機率約 53%';
-  document.getElementById('wellsdvt-interp').innerHTML = interp;
+  if (total <= 0) {
+    interp = `${getSirenSvg('#22c55e')} <strong>低機率（≤0 分）：</strong>DVT 機率約 5%`;
+  } else if (total <= 2) {
+    interp = `${getSirenSvg('#eab308')} <strong>中機率（1-2 分）：</strong>DVT 機率約 17%`;
+  } else {
+    interp = `${getSirenSvg('#ef4444')} <strong>高機率（≥3 分）：</strong>DVT 機率約 53%`;
+  }
 }
 calcWellsDVT();
 
@@ -2247,8 +2254,11 @@ function calcWellsPE() {
   document.getElementById('wellspe-total').textContent = total;
 
   let interp = '';
-  if (total <= 4) interp = '📗 <strong>不可能（≤4 分）：</strong>PE 機率約 13% → 建議先做 D-dimer';
-  else interp = '📕 <strong>可能（&gt;4 分）：</strong>PE 機率約 39% → 建議直接 CTPA';
+  if (total <= 4) {
+    interp = `${getSirenSvg('#22c55e')} <strong>不可能（≤4 分）：</strong>PE 機率約 13% → 建議先做 D-dimer`;
+  } else {
+    interp = `${getSirenSvg('#ef4444')} <strong>可能（&gt;4 分）：</strong>PE 機率約 39% → 建議直接 CTPA`;
+  }
   document.getElementById('wellspe-interp').innerHTML = interp;
 }
 calcWellsPE();
