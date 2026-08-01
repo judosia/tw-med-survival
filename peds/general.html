@@ -1108,8 +1108,8 @@
       const rate1 = first8 / 8;
       const rate2 = next16 / 16;
       document.getElementById('pf-total').innerHTML =
-        `${getLightbulbSvg() <strong>前 8 小時：</strong>${first8.toFixed(0)} mL（速率約 ${rate1.toFixed(1)} mL/hr）<br/>` +
-        `${getLightbulbSvg() <strong>後 16 小時：</strong>${next16.toFixed(0)} mL（速率約 ${rate2.toFixed(1)} mL/hr）<br/>` +
+        `${getLightbulbSvg()} <strong>前 8 小時：</strong>${first8.toFixed(0)} mL（速率約 ${rate1.toFixed(1)} mL/hr）<br/>` +
+        `${getLightbulbSvg()} <strong>後 16 小時：</strong>${next16.toFixed(0)} mL（速率約 ${rate2.toFixed(1)} mL/hr）<br/>` +
         `<span style="color:var(--muted)">24 小時總量：${(first8+next16).toFixed(0)} mL；重度脫水先給 NS 20 mL/kg bolus 穩定後再依此分配</span>`;
     } else {
       document.getElementById('pf-total').innerHTML =
