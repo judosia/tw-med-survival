@@ -2008,20 +2008,71 @@
       <button class="score-modal-close" onclick="closeModal('modal-wells-pe')">✕</button>
     </div>
     <div class="score-modal-body">
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;"><span>DVT 臨床徵象與症狀（患肢腫脹、深靜脈壓痛）</span><input type="checkbox" id="pe-1" onchange="calcWellsPE()" style="width:18px;height:18px;"><span style="font-weight:700;color:var(--muted);">+3</span></label>
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;"><span>其他診斷可能性低於 PE</span><input type="checkbox" id="pe-2" onchange="calcWellsPE()" style="width:18px;height:18px;"><span style="font-weight:700;color:var(--muted);">+3</span></label>
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;"><span>心跳速率 &gt;100 bpm</span><input type="checkbox" id="pe-3" onchange="calcWellsPE()" style="width:18px;height:18px;"><span style="font-weight:700;color:var(--muted);">+1.5</span></label>
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;"><span>3 天內臥床或 4 週內手術</span><input type="checkbox" id="pe-4" onchange="calcWellsPE()" style="width:18px;height:18px;"><span style="font-weight:700;color:var(--muted);">+1.5</span></label>
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;"><span>先前有確診 DVT 或 PE 病史</span><input type="checkbox" id="pe-5" onchange="calcWellsPE()" style="width:18px;height:18px;"><span style="font-weight:700;color:var(--muted);">+1.5</span></label>
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;"><span>咳血</span><input type="checkbox" id="pe-6" onchange="calcWellsPE()" style="width:18px;height:18px;"><span style="font-weight:700;color:var(--muted);">+1</span></label>
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;"><span>活動性癌症（治療中、6 個月內或緩和性）</span><input type="checkbox" id="pe-7" onchange="calcWellsPE()" style="width:18px;height:18px;"><span style="font-weight:700;color:var(--muted);">+1</span></label>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;">
+      <span style="flex:1;min-width:0;">DVT 臨床徵象與症狀（患肢腫脹、深靜脈壓痛）</span>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <input type="checkbox" id="pe-1" onchange="calcWellsPE()" style="width:18px;height:18px;">
+        <span style="font-weight:700;color:var(--muted);min-width:30px;text-align:right;">+3</span>
       </div>
-      <div class="score-result">
-        <strong>總分：<span id="wellspe-total">0</span></strong>
-        <div id="wellspe-interp" style="margin-top:8px"></div>
+    </label>
+
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;">
+      <span style="flex:1;min-width:0;">其他診斷可能性低於 PE</span>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <input type="checkbox" id="pe-2" onchange="calcWellsPE()" style="width:18px;height:18px;">
+        <span style="font-weight:700;color:var(--muted);min-width:30px;text-align:right;">+3</span>
       </div>
-    </div>
+    </label>
+
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;">
+      <span style="flex:1;min-width:0;">心跳速率 &gt;100 bpm</span>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <input type="checkbox" id="pe-3" onchange="calcWellsPE()" style="width:18px;height:18px;">
+        <span style="font-weight:700;color:var(--muted);min-width:30px;text-align:right;">+1.5</span>
+      </div>
+    </label>
+
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;">
+      <span style="flex:1;min-width:0;">3 天內臥床或 4 週內手術</span>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <input type="checkbox" id="pe-4" onchange="calcWellsPE()" style="width:18px;height:18px;">
+        <span style="font-weight:700;color:var(--muted);min-width:30px;text-align:right;">+1.5</span>
+      </div>
+    </label>
+
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;">
+      <span style="flex:1;min-width:0;">先前有確診 DVT 或 PE 病史</span>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <input type="checkbox" id="pe-5" onchange="calcWellsPE()" style="width:18px;height:18px;">
+        <span style="font-weight:700;color:var(--muted);min-width:30px;text-align:right;">+1.5</span>
+      </div>
+    </label>
+
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;">
+      <span style="flex:1;min-width:0;">咳血</span>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <input type="checkbox" id="pe-6" onchange="calcWellsPE()" style="width:18px;height:18px;">
+        <span style="font-weight:700;color:var(--muted);min-width:30px;text-align:right;">+1</span>
+      </div>
+    </label>
+
+    <label style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--light);border-radius:8px;font-size:0.8rem;cursor:pointer;">
+      <span style="flex:1;min-width:0;">活動性癌症（治療中、6 個月內或緩和性）</span>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+        <input type="checkbox" id="pe-7" onchange="calcWellsPE()" style="width:18px;height:18px;">
+        <span style="font-weight:700;color:var(--muted);min-width:30px;text-align:right;">+1</span>
+      </div>
+    </label>
+
+  </div>
+  <div class="score-result">
+    <strong>總分：<span id="wellspe-total">0</span></strong>
+    <div id="wellspe-interp" style="margin-top:8px"></div>
+  </div>
+</div>
+   
   </div>
 </div>
 
