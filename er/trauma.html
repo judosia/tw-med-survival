@@ -6,6 +6,48 @@
   <title>外傷 | 醫院生存 note</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../shared.css"/>
+  <style>
+  .score-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--blue); cursor: pointer;
+    border-bottom: 1px dashed var(--blue);
+    background: none; border-top: none; border-left: none; border-right: none;
+    padding: 0; font-family: inherit; transition: color 0.15s;
+  }
+  .score-link:hover { color: var(--navy); border-bottom-color: var(--navy); }
+  .score-modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .score-modal-overlay.open { display: flex; }
+  .score-modal {
+    background: var(--white); border-radius: 14px;
+    width: 100%; max-width: 560px; max-height: 85vh;
+    overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .score-modal-head {
+    position: sticky; top: 0; background: var(--white);
+    padding: 18px 22px 14px; border-bottom: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .score-modal-head h2 { font-size: 1rem; font-weight: 800; }
+  .score-modal-close {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 1.1rem; padding: 4px;
+    border-radius: 6px; transition: background 0.15s;
+  }
+  .score-modal-close:hover { background: var(--light); }
+  .score-modal-body { padding: 20px 22px; }
+  .score-modal-body .data-table { margin-bottom: 16px; }
+  .score-result {
+    background: var(--light); border-radius: 8px;
+    padding: 14px 16px; margin-top: 8px;
+    font-size: 0.82rem; line-height: 1.65;
+  }
+  .score-result strong { color: var(--navy); }
+</style>
 </head>
 <body>
 
@@ -47,6 +89,7 @@
     <a href="#abdo-trauma"        class="sidebar-link">腹部外傷</a>
     <a href="#spine"              class="sidebar-link">脊椎外傷</a>
     <a href="#extremity-pelvis"   class="sidebar-link">四肢 / 骨盆外傷</a>
+    <a href="#burns"              class="sidebar-link">燒燙傷</a>
     <a href="#special-pop-trauma" class="sidebar-link">特殊族群外傷</a>
     <div class="sidebar-divider"></div>
     <div class="sidebar-section-title">急診核心</div>
@@ -647,6 +690,103 @@
   </div>
 </div>
 
+    <!-- 燒燙傷 -->
+<div class="topic-block" id="burns">
+  <div class="topic-block-head">
+    <span class="topic-block-title">燒燙傷 Burns</span>
+    <div data-bm-id="burns" data-bm-dept="外傷" data-bm-title="燒燙傷">
+      <button class="bm-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>
+    </div>
+  </div>
+
+  <div class="topic-intro">
+    燒燙傷處置先確認<strong>氣道</strong>（面部燒傷、鼻毛燒焦、聲音沙啞 → 懷疑吸入性損傷，及早插管），再評估<strong>燒傷深度和 TBSA（體表面積百分比）</strong>決定補液量。<strong>Parkland formula 只是起始估算</strong>，實際輸液速度須依尿量（目標 0.5-1 mL/kg/h）動態調整。
+  </div>
+
+  <div class="card-grid col-2">
+
+    <div class="k-card" data-bm-id="burn-depth" data-bm-dept="外傷" data-bm-title="燒傷深度分類">
+      <div class="k-card-tags"><span class="tag tag-patho">機轉說明</span></div>
+      <div class="k-card-head"><span class="k-card-title">燒傷深度分類</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>第一度（表皮層）：</strong>紅斑、疼痛、無水泡（如曬傷）；不計入 TBSA</li>
+          <li><strong>第二度淺層（真皮乳頭層）：</strong>水泡、濕潤、疼痛劇烈、壓之退色</li>
+          <li><strong>第二度深層（真皮網狀層）：</strong>較白 / 斑駁、較乾、痛覺遲鈍、壓之不完全退色</li>
+          <li><strong>第三度（全層）：</strong>皮革狀、白色或焦黑、無痛（神經末梢破壞）、無血管充盈</li>
+          <li><strong>第四度：</strong>深及肌肉、肌腱或骨骼</li>
+          <li class="note">第一度不計入 TBSA 計算；只有第二度以上（含）才算入補液公式</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="burn-tbsa" data-bm-dept="外傷" data-bm-title="TBSA 估算">
+      <div class="k-card-tags"><span class="tag tag-value">數值判讀</span></div>
+      <div class="k-card-head"><span class="k-card-title">體表面積估算（九分法）</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>頭頸部：</strong>9%</li>
+          <li><strong>單側上肢：</strong>各 9%</li>
+          <li><strong>軀幹前 / 後：</strong>各 18%</li>
+          <li><strong>單側下肢：</strong>各 18%</li>
+          <li><strong>會陰部：</strong>1%</li>
+          <li><strong>手掌法則：</strong>病人手掌（含手指）≈ 1% TBSA，適用零星 / 不規則分布的燒傷</li>
+          <li class="note">兒童頭部比例較大，需用兒童版九分法或 Lund-Browder 圖表，成人九分法會高估兒童頭部以外的體表面積</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card full" data-bm-id="burn-fluid" data-bm-dept="外傷" data-bm-title="燒傷補液">
+      <div class="k-card-tags"><span class="tag tag-urgent">緊急處置</span></div>
+      <div class="k-card-head"><span class="k-card-title">燒傷補液（Parkland Formula）</span></div>
+      <div class="k-card-body">
+        <p style="margin-bottom:10px;">
+          <button class="score-link" onclick="openModal('modal-parkland')">Parkland Formula 計算機 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+        </p>
+        <ul class="k-list">
+          <li><strong>公式：</strong>24 小時總輸液量（mL）= 4 mL × 體重(kg) × %TBSA（第二度以上燒傷）</li>
+          <li><strong>時間起算點是「受傷時間」，不是到院時間</strong>——若到院已延遲，前 8 小時的補液時間要相應縮短</li>
+          <li><strong>前 8 小時：</strong>給予總量的一半</li>
+          <li><strong>後 16 小時：</strong>給予剩餘一半</li>
+          <li><strong>輸液種類：</strong>Lactated Ringer's（首選，避免大量 NS 造成高氯性酸中毒）</li>
+          <li><strong>兒童加維持輸液：</strong>Parkland 公式未包含兒童基礎代謝需求，需另加含糖維持輸液</li>
+          <li class="note">Parkland 公式只是起始估算值，之後每小時依尿量（成人目標 0.5 mL/kg/h；兒童 1 mL/kg/h）動態調整輸液速度，不是固定不變</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="burn-inhalation" data-bm-dept="外傷" data-bm-title="吸入性損傷">
+      <div class="k-card-tags"><span class="tag tag-urgent">注意！</span></div>
+      <div class="k-card-head"><span class="k-card-title">吸入性損傷與氣道</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li><strong>警示徵象：</strong>密閉空間燒傷史；面部 / 頸部燒傷；鼻毛燒焦；口咽煤灰；聲音沙啞、喘鳴；痰中含碳灰</li>
+          <li>及早插管——氣道水腫會隨時間惡化，等到明顯呼吸窘迫才插管可能已來不及</li>
+          <li>懷疑一氧化碳中毒 → 查 COHb（脈搏血氧無法區分 COHb 和 HbO₂）；高流量 100% 氧氣</li>
+          <li>懷疑氰化物中毒（密閉空間燃燒塑膠 / 合成物）→ Hydroxocobalamin</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="k-card" data-bm-id="burn-referral" data-bm-dept="外傷" data-bm-title="燒傷中心轉診">
+      <div class="k-card-tags"><span class="tag tag-steps">判斷框架</span></div>
+      <div class="k-card-head"><span class="k-card-title">燒傷中心轉診標準</span></div>
+      <div class="k-card-body">
+        <ul class="k-list">
+          <li>第二度燒傷 &gt;10% TBSA</li>
+          <li>燒傷累及臉部、手、足、會陰、生殖器或跨關節部位</li>
+          <li>任何第三度燒傷</li>
+          <li>電燒傷（含閃電傷）；化學燒傷</li>
+          <li>吸入性損傷</li>
+          <li>有內科合併症可能影響照護或延長恢復期</li>
+          <li>合併其他外傷（燒傷風險最大者先處理，其餘依外傷處置原則）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
     <!-- 特殊族群外傷 -->
 <div class="topic-block" id="special-pop-trauma">
   <div class="topic-block-head">
@@ -730,8 +870,74 @@
   </main>
 </div>
 
+  <!-- Parkland Formula Modal -->
+<div class="score-modal-overlay" id="modal-parkland">
+  <div class="score-modal">
+    <div class="score-modal-head">
+      <h2>Parkland Formula 計算機</h2>
+      <button class="score-modal-close" onclick="closeModal('modal-parkland')">✕</button>
+    </div>
+    <div class="score-modal-body">
+      <p style="font-size:0.78rem;color:var(--muted);margin-bottom:14px;line-height:1.6;">僅計算第二度以上燒傷；請確認 %TBSA 已排除第一度燒傷面積。</p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">體重（kg）</label>
+          <input type="number" id="parkland-weight" step="0.1" min="1" value="70" oninput="calcParkland()" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:0.85rem;">
+        </div>
+        <div>
+          <label style="font-size:0.78rem;font-weight:600;color:var(--navy);display:block;margin-bottom:4px">%TBSA（第二度以上燒傷）</label>
+          <input type="number" id="parkland-tbsa" step="1" min="1" max="100" value="20" oninput="calcParkland()" style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:0.85rem;">
+        </div>
+      </div>
+
+      <div class="score-result">
+        <strong>24 小時總輸液量：<span id="parkland-total">--</span> mL</strong>
+        <div id="parkland-interp" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
 <script src="../shared.js"></script>
 <script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.score-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeModal(overlay.id);
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.score-modal-overlay.open').forEach(m => closeModal(m.id));
+    }
+  });
+
+  function calcParkland() {
+    const weight = parseFloat(document.getElementById('parkland-weight').value);
+    const tbsa = parseFloat(document.getElementById('parkland-tbsa').value);
+    if (!weight || !tbsa || weight <= 0 || tbsa <= 0) {
+      document.getElementById('parkland-total').textContent = '--';
+      document.getElementById('parkland-interp').innerHTML = '';
+      return;
+    }
+    const total = 4 * weight * tbsa;
+    const half = total / 2;
+    document.getElementById('parkland-total').textContent = total.toLocaleString();
+    document.getElementById('parkland-interp').innerHTML =
+      `📗 <strong>前 8 小時（自受傷時間起算）：</strong>${half.toLocaleString()} mL（速率約 ${(half/8).toFixed(0)} mL/h）<br/>` +
+      `📗 <strong>後 16 小時：</strong>${half.toLocaleString()} mL（速率約 ${(half/16).toFixed(0)} mL/h）<br/>` +
+      `<span style="color:var(--muted)">起始估算值，之後依尿量（目標 0.5 mL/kg/h）動態調整</span>`;
+  }
+  calcParkland();
+
   const SEARCH_INDEX = [
     { id:'atls-primary',   dept:'外傷', title:'ATLS 初級評估',   url:'#atls-primary',   text:'ABCDE 頸椎 氣道 止血 輸血 GCS 張力性氣胸 針刺減壓 開放性氣胸 三邊封閉 大口徑IV' },
     { id:'atls-secondary', dept:'外傷', title:'ATLS 次級評估',   url:'#atls-secondary', text:'AMPLE FAST 超音波 Morrison 骨盆 Log-roll 外傷三角 低體溫 酸中毒 凝血障礙 Damage control' },
@@ -742,7 +948,8 @@
     { id:'spine',          dept:'外傷', title:'脊椎外傷',         url:'#spine',          text:'頸椎 頸圈 脊椎板 Log-roll NEXUS Canadian C-spine 神經性休克 心跳過慢 Norepinephrine' },
     { id:'face-neck-trauma',  dept:'外傷', title:'臉部 + 頸部外傷',    url:'#face-neck-trauma',  text:'LeFort 顴弓 眼眶 下顎 鼻骨 頸部穿刺傷 Platysma Zone BCVI 頸動脈 椎動脈' },
     { id:'extremity-pelvis',  dept:'外傷', title:'四肢 + 骨盆外傷',    url:'#extremity-pelvis',  text:'骨盆帶 骨筋膜室 ACS 筋膜切開術 開放性骨折 Gustilo 血管損傷 ABI 止血帶 大轉子' },
-    { id:'special-trauma',    dept:'外傷', title:'特殊族群外傷（老年、孕婦）', url:'#special-trauma', text:'老年 抗凝血藥 SDH 骨質疏鬆 孕婦 胎心監測 胎盤早剝 Kleihauer Perimortem 剖腹產' },
+    { id:'burns',              dept:'外傷', title:'燒燙傷',           url:'#burns',   text:'Parkland formula TBSA 九分法 燒傷深度 吸入性損傷 燒傷中心轉診', modalIds:['modal-parkland'] },
+    { id:'special-trauma',    dept:'外傷', title:'特殊族群外傷（老年、孕婦）', url:'#special-pop-trauma', text:'老年 抗凝血藥 SDH 骨質疏鬆 孕婦 胎心監測 胎盤早剝 Kleihauer Perimortem 剖腹產' },
   ];
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initSearch(SEARCH_INDEX));
