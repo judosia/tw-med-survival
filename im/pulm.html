@@ -1032,12 +1032,13 @@
       <div class="k-card-body">
         <p style="font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">
           Wells DVT 預測分數
-          <button class="score-link" onclick="openModal('modal-wells-dvt')" style="margin-left:6px;">計算機 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+          <button class="score-link" onclick="openModal('modal-wells-dvt')" style="margin-left:6px;">Wells DVT 計算機 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
         </p>
         <ul class="k-list">
           <li>各 +1 分：
             <ul class="k-list">
             <li>活動性癌症；</li><li>下肢癱瘓或石膏固定；</li><li>臥床 ≥3 天或 12 週內大手術；</li><li>深靜脈壓痛；</li><li>整腿腫脹；</li><li>患腿小腿圍 &gt;3 cm；</li><li>凹陷性水腫（患肢）；</li><li>非曲張的表淺側支靜脈；</li><li>先前 DVT</li>
+            </ul>
           </li>
           <li>-2 分：替代診斷的可能性 ≥DVT</li>
           <li><strong>≤0 分：</strong>低機率 5%；<strong>1-2 分：</strong>中機率 17%；<strong>≥3 分：</strong>高機率 53%</li>
@@ -2184,8 +2185,8 @@ function closeModal(id) {
   document.body.style.overflow = '';
 }
 
-  function getSirenSvg(color) {
-  return `<svg ... stroke="${color}">...</svg>`;
+function getSirenSvg(color) {
+  return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="stroke: ${color} !important; display: inline-block !important; vertical-align: text-bottom; margin-right: 6px;" xmlns="http://www.w3.org/2000/svg"><path d="M7 18v-6a5 5 0 1 1 10 0v6"/><path d="M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z"/><path d="M21 12h1"/><path d="M18.5 4.5 18 5"/><path d="M2 12h1"/><path d="M12 2v1"/><path d="m4.929 4.929.707.707"/><path d="M12 12v6"/></svg>`;
 }
   
   function calcSOFA() {
