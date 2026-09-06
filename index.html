@@ -275,6 +275,7 @@
     <button class="symptom-tag" onclick="openSym('chest-pain')"><span class="dot dot-red"></span>胸痛</button>
     <button class="symptom-tag" onclick="openSym('dyspnea')"><span class="dot dot-red"></span>呼吸困難</button>
     <button class="symptom-tag" onclick="openSym('abdominal-pain')"><span class="dot dot-amber"></span>腹痛</button>
+    <button class="symptom-tag" onclick="openSym('vomit')"><span class="dot dot-amber"></span>嘔吐</button>
     <button class="symptom-tag" onclick="openSym('headache')"><span class="dot dot-red"></span>頭痛</button>
     <button class="symptom-tag" onclick="openSym('ams')"><span class="dot dot-red"></span>意識改變</button>
     <button class="symptom-tag" onclick="openSym('fever')"><span class="dot dot-amber"></span>發燒</button>
@@ -638,6 +639,20 @@ const SYM_DATA = {
       { name:'婦科急症（異位妊娠）', sub:'育齡女性 + 下腹痛 → 一定要驗孕', url:'obgyn/obgyn.html' },
     ],
     actions: ['NPO + IV access', 'CBC + CMP + Lipase + Lactate + hCG（女性）', '腹部 X 光 / CT（依臨床懷疑）', '外科 / 婦科會診時機：腹膜炎徵象、血流動力學不穩']
+  },
+  'vomit': {
+    title: '🟡 嘔吐 Vomit',
+    urgent: [
+      { name:'腸阻塞', sub:'腹脹、無排氣', url:'im/gi.html#intestinal-ischemia' },
+      { name:'顱內壓升高', sub:'噴射性嘔吐 + 頭痛 + 意識改變', url:'surg/neuro-surg#tbi' },
+      { name:'心肌梗塞(下壁 MI常以噁心表現)', sub:'板狀腹、反彈痛、CXR 見游離氣體', url:'im/cardio.html#ami' },
+      { name:'糖尿病酮酸中毒', sub:'McBurney 壓痛、Rovsing sign', url:'im/endo.html#dka' },
+    ],
+    other: [
+      { name:'高血鈣', sub:'上腹放射背部、Lipase↑、酒精 / 膽石', url:'im/nephro.html#calcium' },
+      { name:'藥物副作用', sub:'化療藥:Cisplatin、Opioid、抗生素:Macrolide、Metformin、Digoxin 中毒:噁心+厭食+看東西發黃是經典描述、麻醉術後(PONV)', url:'im/gi.html#biliary' },
+    ],
+    actions: ['新發生的嘔吐要先想以上urgent', '單純給止吐藥可能掩蓋病情', '值班好用：Ondansetron(Zofran): QTc prolong、便秘', 'Metoclopramide(Primperan): EPS，老人、腎功能不良者慎用']
   },
   'headache': {
     title: '🔴 頭痛 Headache',
