@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>會診檢查清單 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    body { padding-top: var(--nav-h); }
+    .simple-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      background: rgba(13,31,60,0.97);
+      backdrop-filter: blur(10px);
+      height: var(--nav-h); padding: 0 5%;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .entry-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 5% 100px;
+    }
+    .entry-hero { margin-bottom: 36px; }
+    .entry-hero h1 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 900; color: var(--navy); margin-bottom: 8px;
+    }
+    .entry-hero p {
+      font-size: 0.88rem; color: var(--muted); max-width: 560px; line-height: 1.7;
+    }
+
+    /* 科別卡片 grid */
+    .consult-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .consult-card {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 20px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-align: left;
+      font-family: inherit;
+    }
+    .consult-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 6px 20px rgba(69,123,157,0.14);
+      transform: translateY(-2px);
+    }
+    .consult-card-icon {
+      width: 38px; height: 38px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .consult-card-icon svg { width: 19px; height: 19px; }
+    .consult-card-name { font-size: 0.94rem; font-weight: 800; color: var(--navy); }
+    .consult-card-sub { font-size: 0.74rem; color: var(--muted); line-height: 1.5; }
+    .consult-card-progress {
+      margin-top: 4px;
+      font-size: 0.7rem; font-weight: 700; color: var(--blue);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .consult-card-progress-bar {
+      flex: 1; height: 4px; background: var(--border); border-radius: 4px; overflow: hidden;
+    }
+    .consult-card-progress-fill {
+      height: 100%; background: var(--blue); width: 0%; transition: width 0.2s;
+    }
+
+    /* 顏色系統 */
+    .c-ns   { background: rgba(163,171,189,0.12); color: #6b7488; }
+    .c-oph  { background: rgba(215,229,62,0.15);  color: #8a9418; }
+    .c-ent  { background: rgba(149,177,152,0.14); color: #4e7052; }
+    .c-prs  { background: rgba(230,57,70,0.1);    color: #E63946; }
+    .c-gi   { background: rgba(69,123,157,0.1);   color: #457B9D; }
+    .c-cv   { background: rgba(230,57,70,0.1);    color: #c62834; }
+    .c-neu  { background: rgba(123,94,167,0.12);  color: #7B5EA7; }
+
+    /* Modal */
+    .consult-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .consult-modal-overlay.open { display: flex; }
+    .consult-modal {
+      background: var(--white); border-radius: 16px;
+      width: 100%; max-width: 620px; max-height: 88vh;
+      overflow-y: auto; box-shadow: 0 24px 70px rgba(0,0,0,0.25);
+    }
+    .consult-modal-head {
+      position: sticky; top: 0; background: var(--white); z-index: 5;
+      padding: 20px 24px 16px; border-bottom: 1.5px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .consult-modal-head-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .consult-modal-head-icon svg { width: 17px; height: 17px; }
+    .consult-modal-head-text { flex: 1; }
+    .consult-modal-head h2 { font-size: 1.02rem; font-weight: 800; color: var(--navy); }
+    .consult-modal-head-sub { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+    .consult-modal-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: 4px;
+      border-radius: 6px; transition: background 0.15s; flex-shrink: 0;
+    }
+    .consult-modal-close:hover { background: var(--light); }
+    .consult-modal-body { padding: 18px 24px 24px; }
+
+    .consult-section-title {
+      font-size: 0.72rem; font-weight: 700; color: var(--muted);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      margin: 18px 0 8px;
+    }
+    .consult-section-title:first-child { margin-top: 0; }
+
+    .consult-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 8px 10px; border-radius: 8px;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .consult-item:hover { background: var(--light); }
+    .consult-item input[type="checkbox"] {
+      width: 17px; height: 17px; margin-top: 1px; flex-shrink: 0; cursor: pointer;
+    }
+    .consult-item-text {
+      font-size: 0.84rem; color: #3a4a5c; line-height: 1.55;
+    }
+    .consult-item-text strong { color: var(--navy); }
+    .consult-item.checked .consult-item-text {
+      color: var(--muted); text-decoration: line-through;
+    }
+
+    .consult-note {
+      margin-top: 16px; padding: 12px 14px;
+      background: #f0f6ff; border-left: 3px solid var(--blue);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.78rem; color: #1a3d5c; line-height: 1.6;
+    }
+    .consult-reset {
+      margin-top: 16px; display: flex; justify-content: flex-end;
+    }
+    .consult-reset button {
+      font-size: 0.72rem; color: var(--muted); background: none; border: none;
+      cursor: pointer; text-decoration: underline; padding: 4px;
+    }
+    .consult-reset button:hover { color: var(--navy); }
+  </style>
+</head>
+<body>
+
+<nav class="simple-nav">
+  <a href="index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">會診檢查清單</span>
+</nav>
+
+<div class="entry-wrap">
+  <div class="entry-hero">
+    <h1>會診檢查清單</h1>
+    <p>打會診前，先確認自己手上有沒有這些資訊——被會診的 CR 最常問的就是這些，準備好了電話那頭會順很多，也顯得專業。點卡片展開詳細清單。</p>
+  </div>
+
+  <div class="consult-grid">
+
+    <button class="consult-card" onclick="openConsult('ns')">
+      <div class="consult-card-icon c-ns">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2"/></svg>
+      </div>
+      <div class="consult-card-name">神經外科</div>
+      <div class="consult-card-sub">頭部外傷、ICH、脊髓壓迫、水腦</div>
+      <div class="consult-card-progress">
+        <div class="consult-card-progress-bar"><div class="consult-card-progress-fill" id="progress-ns"></div></div>
+        <span id="progress-text-ns">0/0</span>
+      </div>
+    </button>
+
+    <button class="consult-card" onclick="openConsult('oph')">
+      <div class="consult-card-icon c-oph">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div class="consult-card-name">眼科</div>
+      <div class="consult-card-sub">視力喪失、眼外傷、紅眼、複視</div>
+      <div class="consult-card-progress">
+        <div class="consult-card-progress-bar"><div class="consult-card-progress-fill" id="progress-oph"></div></div>
+        <span id="progress-text-oph">0/0</span>
+      </div>
+    </button>
+
+    <button class="consult-card" onclick="openConsult('ent')">
+      <div class="consult-card-icon c-ent">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7-9 8-9 15"/><circle cx="18" cy="16" r="3"/></svg>
+      </div>
+      <div class="consult-card-name">耳鼻喉科</div>
+      <div class="consult-card-sub">鼻出血、氣道、頸部腫塊、暈眩</div>
+      <div class="consult-card-progress">
+        <div class="consult-card-progress-bar"><div class="consult-card-progress-fill" id="progress-ent"></div></div>
+        <span id="progress-text-ent">0/0</span>
+      </div>
+    </button>
+
+    <button class="consult-card" onclick="openConsult('prs')">
+      <div class="consult-card-icon c-prs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
+      </div>
+      <div class="consult-card-name">整形外科</div>
+      <div class="consult-card-sub">傷口、燒燙傷、複雜撕裂傷</div>
+      <div class="consult-card-progress">
+        <div class="consult-card-progress-bar"><div class="consult-card-progress-fill" id="progress-prs"></div></div>
+        <span id="progress-text-prs">0/0</span>
+      </div>
+    </button>
+
+    <button class="consult-card" onclick="openConsult('gi')">
+      <div class="consult-card-icon c-gi">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3,18.7v9.2c0,1,1,1.6,1.9,1.1l7.4-4c2.5-1.3,5.1-2.2,7.9-2.5h0c2.9-0.3,5.4-2.3,6.3-5.1l2.1-6.4 c0.2-0.5-0.2-1-0.7-1H11.7C6.9,10,3,13.9,3,18.7z"/><path d="M18,10L18,10c1.8,4.2,1,9.7-2.7,13.6"/></svg>
+      </div>
+      <div class="consult-card-name">腸胃科</div>
+      <div class="consult-card-sub">GI 出血、肝功能異常、吞嚥困難</div>
+      <div class="consult-card-progress">
+        <div class="consult-card-progress-bar"><div class="consult-card-progress-fill" id="progress-gi"></div></div>
+        <span id="progress-text-gi">0/0</span>
+      </div>
+    </button>
+
+    <button class="consult-card" onclick="openConsult('cv')">
+      <div class="consult-card-icon c-cv">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23.3,19.3c0,0-1.7,0-2.8-0.8c-2.1-1.4-2.2-3.6-0.6-5.4s5.1-2.6,5.1-2.6V7l-1.2,0.4C18,9.1,12.8,12.7,9,17.6l0,0"/><path d="M21.1,12.5c1.2,1.3,2.1,3,2.4,5.1C24.1,21,28.3,29,19.2,29C14.3,29,6,24.6,6,17.6c0-4.4,3.1-7.9,7.9-7.9c1.2,0,2.4,0.2,3.5,0.5"/></svg>
+      </div>
+      <div class="consult-card-name">心臟內科</div>
+      <div class="consult-card-sub">胸痛、心律不整、ECG 異常、心衰竭</div>
+      <div class="consult-card-progress">
+        <div class="consult-card-progress-bar"><div class="consult-card-progress-fill" id="progress-cv"></div></div>
+        <span id="progress-text-cv">0/0</span>
+      </div>
+    </button>
+
+    <button class="consult-card" onclick="openConsult('neu')">
+      <div class="consult-card-icon c-neu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2"/></svg>
+      </div>
+      <div class="consult-card-name">神經內科</div>
+      <div class="consult-card-sub">中風、癲癇、意識改變、無力</div>
+      <div class="consult-card-progress">
+        <div class="consult-card-progress-bar"><div class="consult-card-progress-fill" id="progress-neu"></div></div>
+        <span id="progress-text-neu">0/0</span>
+      </div>
+    </button>
+
+  </div>
+</div>
+
+<!-- ══════════ 神經外科 ══════════ -->
+<div class="consult-modal-overlay" id="modal-ns">
+  <div class="consult-modal">
+    <div class="consult-modal-head">
+      <div class="consult-modal-head-icon c-ns"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2"/></svg></div>
+      <div class="consult-modal-head-text">
+        <h2>神經外科會診</h2>
+        <div class="consult-modal-head-sub">頭部外傷、顱內出血、脊髓壓迫、水腦</div>
+      </div>
+      <button class="consult-modal-close" onclick="closeConsult('ns')">✕</button>
+    </div>
+    <div class="consult-modal-body" data-group="ns">
+
+      <div class="consult-section-title">基本資訊</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ns')"><span class="consult-item-text"><strong>受傷 / 發作時間</strong>（愈精確愈好，影響手術時機判斷）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ns')"><span class="consult-item-text">受傷機轉（跌倒高度、車禍速度、有無安全帽等）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ns')"><span class="consult-item-text"><strong>目前用藥</strong>——尤其抗凝血藥 / 抗血小板藥（種類、最後一次服用時間）</span></label>
+
+      <div class="consult-section-title">神經學檢查</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ns')"><span class="consult-item-text"><strong>GCS 現在的分數 + 趨勢</strong>（E/V/M 分開報，有無變化）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ns')"><span class="consult-item-text">瞳孔大小、對光反應（兩側是否對稱）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ns')"><span class="consult-item-text">局灶性神經缺損（肢體無力、感覺異常、語言障礙）—— 若懷疑脊髓壓迫，需報告括約肌功能</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ns')"><span class="consult-item-text">是否有癲癇發作</span></label>
+
+      <div class="consult-section-title">影像 / 檢查</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ns')"><span class="consult-item-text"><strong>CT / MRI 有沒有做，結果如何</strong>（若未做，先講清楚目前狀況讓對方判斷是否需要）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ns')"><span class="consult-item-text">PT/INR、血小板（若有出血或準備手術）</span></label>
+
+      <div class="consult-section-title">生命徵象</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ns')"><span class="consult-item-text">目前血壓、心率趨勢（Cushing's triad：高血壓 + 心搏過緩 + 呼吸不規則 → 提示腦疝）</span></label>
+
+      <div class="consult-note">💡 頭部外傷合併意識改變，先確認有沒有做過 CT；若已知顱內壓升高徵象（瞳孔不對稱、GCS 快速下降），這通打電話前先讓值班主治醫師知道，不要拖。</div>
+      <div class="consult-reset"><button onclick="resetGroup('ns')">清空勾選</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 眼科 ══════════ -->
+<div class="consult-modal-overlay" id="modal-oph">
+  <div class="consult-modal">
+    <div class="consult-modal-head">
+      <div class="consult-modal-head-icon c-oph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <div class="consult-modal-head-text">
+        <h2>眼科會診</h2>
+        <div class="consult-modal-head-sub">視力喪失、眼外傷、紅眼、複視</div>
+      </div>
+      <button class="consult-modal-close" onclick="closeConsult('oph')">✕</button>
+    </div>
+    <div class="consult-modal-body" data-group="oph">
+
+      <div class="consult-section-title">症狀</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'oph')"><span class="consult-item-text"><strong>發作 / 受傷時間</strong>，症狀是突發還是漸進</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'oph')"><span class="consult-item-text">單眼還是雙眼；疼痛程度和性質</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'oph')"><span class="consult-item-text">受傷機轉（化學噴濺 / 鈍傷 / 穿刺傷；若為化學傷是否已沖洗、沖洗多久）</span></label>
+
+      <div class="consult-section-title">眼科檢查（能做的先做）</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'oph')"><span class="consult-item-text"><strong>視力（每眼分開測，含矯正視力）</strong>——這是最常被問、也最常沒準備的一項</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'oph')"><span class="consult-item-text">瞳孔大小、對光反應、有無相對性瞳孔傳入缺損（RAPD）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'oph')"><span class="consult-item-text">眼球運動是否受限；有無複視</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'oph')"><span class="consult-item-text">外觀（結膜充血、分泌物、角膜混濁、前房出血、眼瞼腫脹）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'oph')"><span class="consult-item-text">眼壓（若有測量工具且非疑似破裂眼球——懷疑破裂時禁止測眼壓）</span></label>
+
+      <div class="consult-section-title">病史</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'oph')"><span class="consult-item-text">既有眼科病史（青光眼、糖尿病視網膜病變）、是否配戴隱形眼鏡</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'oph')"><span class="consult-item-text">相關全身病史（DM、HTN、自體免疫疾病）</span></label>
+
+      <div class="consult-note">💡 懷疑化學傷，先沖洗再打電話（沖到 pH 中性），不要等會診才沖；懷疑眼球破裂，蓋眼罩保護、不要加壓、禁止測眼壓，直接聯絡。</div>
+      <div class="consult-reset"><button onclick="resetGroup('oph')">清空勾選</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 耳鼻喉科 ══════════ -->
+<div class="consult-modal-overlay" id="modal-ent">
+  <div class="consult-modal">
+    <div class="consult-modal-head">
+      <div class="consult-modal-head-icon c-ent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7-9 8-9 15"/><circle cx="18" cy="16" r="3"/></svg></div>
+      <div class="consult-modal-head-text">
+        <h2>耳鼻喉科會診</h2>
+        <div class="consult-modal-head-sub">鼻出血、氣道問題、頸部腫塊、暈眩</div>
+      </div>
+      <button class="consult-modal-close" onclick="closeConsult('ent')">✕</button>
+    </div>
+    <div class="consult-modal-body" data-group="ent">
+
+      <div class="consult-section-title">氣道優先</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ent')"><span class="consult-item-text"><strong>氣道是否受威脅</strong>（喘鳴、聲音改變、吞嚥困難、呼吸窘迫）—— 這個要最先講</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ent')"><span class="consult-item-text">SpO₂、呼吸速率</span></label>
+
+      <div class="consult-section-title">鼻出血相關</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ent')"><span class="consult-item-text">出血側別、出血量估計、持續時間</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ent')"><span class="consult-item-text">已嘗試的止血方式（加壓多久、有無用止血棉）及效果</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ent')"><span class="consult-item-text"><strong>抗凝血藥 / 抗血小板藥使用情形</strong>；血壓是否控制</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ent')"><span class="consult-item-text">Hb 趨勢（若已抽血）</span></label>
+
+      <div class="consult-section-title">其他常見情境</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ent')"><span class="consult-item-text">頸部腫塊：位置、大小、疼痛與否、多久了、有無發燒</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ent')"><span class="consult-item-text">暈眩：中樞或周邊特徵（有無合併複視、構音障礙、肢體無力 → 提示中樞性，需先排除中風）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'ent')"><span class="consult-item-text">聽力變化、耳漏、耳痛病史</span></label>
+
+      <div class="consult-note">💡 氣道受威脅的病人先評估要不要準備插管工具再打電話，不要讓對方以為是普通鼻血在慢慢等。</div>
+      <div class="consult-reset"><button onclick="resetGroup('ent')">清空勾選</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 整形外科 ══════════ -->
+<div class="consult-modal-overlay" id="modal-prs">
+  <div class="consult-modal">
+    <div class="consult-modal-head">
+      <div class="consult-modal-head-icon c-prs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg></div>
+      <div class="consult-modal-head-text">
+        <h2>整形外科會診</h2>
+        <div class="consult-modal-head-sub">傷口、燒燙傷、複雜撕裂傷、皮瓣問題</div>
+      </div>
+      <button class="consult-modal-close" onclick="closeConsult('prs')">✕</button>
+    </div>
+    <div class="consult-modal-body" data-group="prs">
+
+      <div class="consult-section-title">傷口基本資料</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'prs')"><span class="consult-item-text"><strong>受傷時間、機轉</strong>（銳器 / 鈍傷 / 咬傷 / 燒燙傷；若燒燙傷，燙傷原因與接觸時間）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'prs')"><span class="consult-item-text">傷口位置、大小（長寬深，或 %TBSA 若為燒燙傷）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'prs')"><span class="consult-item-text">污染程度（傷口環境、是否有異物殘留）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'prs')"><span class="consult-item-text">傷口照片（若能傳，比口述精準很多）</span></label>
+
+      <div class="consult-section-title">評估重點</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'prs')"><span class="consult-item-text">遠端血管 / 神經功能（脈搏、微血管充填、感覺、運動）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'prs')"><span class="consult-item-text">是否合併肌腱、骨骼、關節腔暴露</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'prs')"><span class="consult-item-text">破傷風疫苗接種狀態</span></label>
+
+      <div class="consult-section-title">已做處置</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'prs')"><span class="consult-item-text">已沖洗 / 清創程度；有無給予止痛及抗生素</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'prs')"><span class="consult-item-text">目前敷料處理方式</span></label>
+
+      <div class="consult-note">💡 傷口類會診，照片是最有效的溝通工具，先拍再打電話；燒燙傷記得先算 %TBSA 和有無吸入性損傷徵象。</div>
+      <div class="consult-reset"><button onclick="resetGroup('prs')">清空勾選</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 腸胃科 ══════════ -->
+<div class="consult-modal-overlay" id="modal-gi">
+  <div class="consult-modal">
+    <div class="consult-modal-head">
+      <div class="consult-modal-head-icon c-gi"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3,18.7v9.2c0,1,1,1.6,1.9,1.1l7.4-4c2.5-1.3,5.1-2.2,7.9-2.5h0c2.9-0.3,5.4-2.3,6.3-5.1l2.1-6.4 c0.2-0.5-0.2-1-0.7-1H11.7C6.9,10,3,13.9,3,18.7z"/><path d="M18,10L18,10c1.8,4.2,1,9.7-2.7,13.6"/></svg></div>
+      <div class="consult-modal-head-text">
+        <h2>腸胃科會診</h2>
+        <div class="consult-modal-head-sub">GI 出血、肝功能異常、吞嚥困難</div>
+      </div>
+      <button class="consult-modal-close" onclick="closeConsult('gi')">✕</button>
+    </div>
+    <div class="consult-modal-body" data-group="gi">
+
+      <div class="consult-section-title">GI 出血（最常見會診原因）</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'gi')"><span class="consult-item-text"><strong>出血型態</strong>（吐血 / 咖啡渣 / 黑便 / 血便）與發生時間</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'gi')"><span class="consult-item-text"><strong>生命徵象</strong>（血壓、心率，含臥站姿勢變化）；是否有休克表現</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'gi')"><span class="consult-item-text"><strong>Hb 現在數值 + 趨勢</strong>；已輸血量</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'gi')"><span class="consult-item-text">PT/INR、血小板；抗凝血 / 抗血小板藥使用情形</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'gi')"><span class="consult-item-text">肝硬化病史（懷疑靜脈曲張出血需提前告知）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'gi')"><span class="consult-item-text">目前 IV 路徑（幾條、幾號針）、已給予的輸液 / 藥物（PPI、Octreotide 等）</span></label>
+
+      <div class="consult-section-title">其他情境</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'gi')"><span class="consult-item-text">肝功能數值型態（肝細胞性 / 膽汁鬱積性）及可能病因</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'gi')"><span class="consult-item-text">吞嚥困難：固體或液體皆有困難、體重減輕情形</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'gi')"><span class="consult-item-text">最後進食時間（影響是否能安排緊急內視鏡）</span></label>
+
+      <div class="consult-note">💡 GI 出血會診，對方一定會先問血壓心率和 Hb，這兩項沒有的話先去追，不要空手打電話。</div>
+      <div class="consult-reset"><button onclick="resetGroup('gi')">清空勾選</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 心臟內科 ══════════ -->
+<div class="consult-modal-overlay" id="modal-cv">
+  <div class="consult-modal">
+    <div class="consult-modal-head">
+      <div class="consult-modal-head-icon c-cv"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23.3,19.3c0,0-1.7,0-2.8-0.8c-2.1-1.4-2.2-3.6-0.6-5.4s5.1-2.6,5.1-2.6V7l-1.2,0.4C18,9.1,12.8,12.7,9,17.6l0,0"/><path d="M21.1,12.5c1.2,1.3,2.1,3,2.4,5.1C24.1,21,28.3,29,19.2,29C14.3,29,6,24.6,6,17.6c0-4.4,3.1-7.9,7.9-7.9c1.2,0,2.4,0.2,3.5,0.5"/></svg></div>
+      <div class="consult-modal-head-text">
+        <h2>心臟內科會診</h2>
+        <div class="consult-modal-head-sub">胸痛、心律不整、ECG 異常、心衰竭</div>
+      </div>
+      <button class="consult-modal-close" onclick="closeConsult('cv')">✕</button>
+    </div>
+    <div class="consult-modal-body" data-group="cv">
+
+      <div class="consult-section-title">胸痛 / 疑似 ACS</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'cv')"><span class="consult-item-text"><strong>症狀發作時間、性質</strong>（悶痛 / 撕裂感 / 放射位置）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'cv')"><span class="consult-item-text"><strong>12 導程 ECG 有沒有做</strong>（做了要講有沒有 ST 變化）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'cv')"><span class="consult-item-text">Troponin 數值 + 趨勢</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'cv')"><span class="consult-item-text">生命徵象、是否已給 Aspirin / NTG</span></label>
+
+      <div class="consult-section-title">心律不整</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'cv')"><span class="consult-item-text">目前心率、規律與否；ECG 描述的心律（若無法判讀，先傳圖）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'cv')"><span class="consult-item-text">血流動力學是否穩定（血壓、意識狀態）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'cv')"><span class="consult-item-text">電解質（尤其 K⁺、Mg²⁺）；相關用藥史</span></label>
+
+      <div class="consult-section-title">心衰竭 / 一般</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'cv')"><span class="consult-item-text">過去心臟病史（CAD、HF、瓣膜病、EF 若已知）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'cv')"><span class="consult-item-text">目前用藥（含抗凝血藥、心臟用藥）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'cv')"><span class="consult-item-text">體液狀態（水腫、呼吸困難程度、體重變化）</span></label>
+
+      <div class="consult-note">💡 疑似 ACS 一定要先做好 ECG 再打電話，這是被問的第一件事；血流動力學不穩定的心律不整要先講「不穩定」三個字，讓對方知道優先順序。</div>
+      <div class="consult-reset"><button onclick="resetGroup('cv')">清空勾選</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 神經內科 ══════════ -->
+<div class="consult-modal-overlay" id="modal-neu">
+  <div class="consult-modal">
+    <div class="consult-modal-head">
+      <div class="consult-modal-head-icon c-neu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24A2.5 2.5 0 0 1 9.5 2"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24A2.5 2.5 0 0 0 14.5 2"/></svg></div>
+      <div class="consult-modal-head-text">
+        <h2>神經內科會診</h2>
+        <div class="consult-modal-head-sub">中風、癲癇、意識改變、肢體無力</div>
+      </div>
+      <button class="consult-modal-close" onclick="closeConsult('neu')">✕</button>
+    </div>
+    <div class="consult-modal-body" data-group="neu">
+
+      <div class="consult-section-title">疑似中風（最急）</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text"><strong>「最後正常時間」（Last known normal）</strong>——這是決定 tPA / 取栓時窗的關鍵，一定要問到</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text">症狀描述（單側無力、臉歪、口齒不清等），有沒有進展中</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text">血糖（先排除低血糖模擬中風）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text">抗凝血藥使用情形；血壓數值</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text">CT 有沒有排、有沒有做</span></label>
+
+      <div class="consult-section-title">癲癇</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text">發作型態描述（全身或局部、意識是否喪失、持續多久）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text">目前是否仍在發作中；已給予的藥物（BZD 等）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text">癲癇病史、目前抗癲癇藥物及是否規則服用</span></label>
+
+      <div class="consult-section-title">意識改變 / 無力</div>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text">GCS、瞳孔；有無局灶性神經缺損</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text">發作前情境（有無外傷、發燒、藥物或酒精相關）</span></label>
+      <label class="consult-item"><input type="checkbox" onchange="toggleItem(this,'neu')"><span class="consult-item-text">基礎電解質、腎功能、肝功能（排除代謝性原因）</span></label>
+
+      <div class="consult-note">💡 疑似中風的會診，「最後正常時間」問不到就先去問家屬 / 目擊者，這比任何檢查數值都優先，電話一開始就要講。</div>
+      <div class="consult-reset"><button onclick="resetGroup('neu')">清空勾選</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const groups = ['ns','oph','ent','prs','gi','cv','neu'];
+  const state = {};
+  groups.forEach(g => state[g] = new Set());
+
+  function openConsult(id) {
+    document.getElementById('modal-' + id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeConsult(id) {
+    document.getElementById('modal-' + id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.consult-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeConsult(overlay.id.replace('modal-',''));
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.consult-modal-overlay.open').forEach(m => closeConsult(m.id.replace('modal-','')));
+    }
+  });
+
+  function toggleItem(checkbox, group) {
+    const item = checkbox.closest('.consult-item');
+    const body = document.querySelector(`.consult-modal-body[data-group="${group}"]`);
+    const allBoxes = body.querySelectorAll('input[type="checkbox"]');
+    const idx = Array.from(allBoxes).indexOf(checkbox);
+    if (checkbox.checked) {
+      item.classList.add('checked');
+      state[group].add(idx);
+    } else {
+      item.classList.remove('checked');
+      state[group].delete(idx);
+    }
+    updateProgress(group);
+  }
+
+  function updateProgress(group) {
+    const body = document.querySelector(`.consult-modal-body[data-group="${group}"]`);
+    const total = body.querySelectorAll('input[type="checkbox"]').length;
+    const done = state[group].size;
+    const pct = total ? (done / total * 100) : 0;
+    document.getElementById('progress-' + group).style.width = pct + '%';
+    document.getElementById('progress-text-' + group).textContent = `${done}/${total}`;
+  }
+
+  function resetGroup(group) {
+    const body = document.querySelector(`.consult-modal-body[data-group="${group}"]`);
+    body.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+      cb.closest('.consult-item').classList.remove('checked');
+    });
+    state[group].clear();
+    updateProgress(group);
+  }
+
+  // 初始化每張卡片的進度顯示
+  groups.forEach(g => updateProgress(g));
+</script>
+<script src="./notion-notes.js"></script>
+</body>
+</html>
