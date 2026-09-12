@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>輸液速查 | 醫院生存 note</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="shared.css"/>
+  <style>
+    body { padding-top: var(--nav-h); }
+    .simple-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      background: rgba(13,31,60,0.97);
+      backdrop-filter: blur(10px);
+      height: var(--nav-h); padding: 0 5%;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .entry-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 5% 100px;
+    }
+    .entry-hero { margin-bottom: 32px; }
+    .entry-hero h1 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 900; color: var(--navy); margin-bottom: 8px;
+    }
+    .entry-hero p {
+      font-size: 0.88rem; color: var(--muted); max-width: 620px; line-height: 1.7;
+    }
+
+    /* 成分總表 */
+    .fluid-table-wrap {
+      overflow-x: auto;
+      margin-bottom: 40px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+    }
+    .fluid-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.8rem; background: var(--white);
+      min-width: 760px;
+    }
+    .fluid-table th {
+      background: var(--navy); color: #fff;
+      padding: 11px 14px; text-align: left;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .fluid-table td {
+      padding: 10px 14px; border-bottom: 1px solid var(--border);
+      color: var(--navy); white-space: nowrap;
+    }
+    .fluid-table tr:last-child td { border-bottom: none; }
+    .fluid-table tr:hover td { background: var(--light); }
+    .fluid-table td.dash { color: var(--muted); text-align: center; }
+    .fluid-table td.fname { font-weight: 700; }
+    .tonicity-tag {
+      display: inline-block; font-size: 0.62rem; font-weight: 700;
+      padding: 2px 7px; border-radius: 10px; margin-left: 6px;
+    }
+    .tonicity-iso  { background: rgba(69,123,157,0.12); color: #457B9D; }
+    .tonicity-hypo { background: rgba(107,170,117,0.14); color: #4a8a54; }
+    .tonicity-hyper{ background: rgba(230,57,70,0.12);  color: #c62834; }
+
+    .section-title {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      margin: 0 0 14px;
+      padding-bottom: 10px; border-bottom: 2px solid var(--border);
+    }
+
+    .fluid-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 720px) { .fluid-grid { grid-template-columns: 1fr; } }
+
+    .fluid-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .fluid-card.full { grid-column: 1 / -1; }
+    .fluid-card-head {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .fluid-card-title { font-size: 0.92rem; font-weight: 800; color: var(--navy); }
+    .fluid-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .fluid-list li {
+      font-size: 0.82rem; color: #5a6a7a; line-height: 1.6;
+      display: flex; gap: 8px; align-items: flex-start;
+    }
+    .fluid-list li::before { content: '·'; color: var(--muted); font-size: 1.1rem; line-height: 1.2; flex-shrink: 0; }
+    .fluid-list li strong { color: var(--navy); }
+    .fluid-list .caution {
+      margin-top: 4px; padding: 8px 10px;
+      background: #fff5f5; border-left: 3px solid var(--red);
+      border-radius: 0 6px 6px 0; font-size: 0.78rem; color: #7a2020; line-height: 1.55;
+    }
+    .fluid-list .caution::before { content: none; }
+  </style>
+</head>
+<body>
+
+<nav class="simple-nav">
+  <a href="index.html" class="nav-back">← 首頁</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">輸液速查</span>
+</nav>
+
+<div class="entry-wrap">
+  <div class="entry-hero">
+    <h1>輸液速查</h1>
+    <p>常用輸液的成分組成 + 臨床選擇重點。滲透壓標籤：<span class="tonicity-tag tonicity-iso">等張</span> 接近血漿滲透壓（約 275-295 mOsm/L）；<span class="tonicity-tag tonicity-hypo">低張</span> 低於血漿；<span class="tonicity-tag tonicity-hyper">高張</span> 高於血漿。</p>
+  </div>
+
+  <!-- ══ 成分總表 ══ -->
+  <div class="fluid-table-wrap">
+    <table class="fluid-table">
+      <thead>
+        <tr>
+          <th>輸液</th>
+          <th>葡萄糖（g/L）</th>
+          <th>鈉 Na⁺（mmol/L）</th>
+          <th>氯 Cl⁻（mmol/L）</th>
+          <th>鉀 K⁺（mmol/L）</th>
+          <th>鈣 Ca²⁺（mmol/L）</th>
+          <th>乳酸（mmol/L）</th>
+          <th>約略滲透壓（mOsm/L）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="fname">D5W</td><td>50</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>252</td></tr>
+        <tr><td class="fname">D10W</td><td>100</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>505</td></tr>
+        <tr><td class="fname">D20W</td><td>200</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>1010</td></tr>
+        <tr><td class="fname">D50W</td><td>500</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>2525</td></tr>
+        <tr><td class="fname">0.45% NaCl（1/2 NS）</td><td class="dash">—</td><td>77</td><td>77</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>154</td></tr>
+        <tr><td class="fname">0.9% NaCl（NS）</td><td class="dash">—</td><td>154</td><td>154</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>308</td></tr>
+        <tr><td class="fname">D5NS</td><td>50</td><td>154</td><td>154</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>560</td></tr>
+        <tr><td class="fname">D5/0.5% NS</td><td>50</td><td>77</td><td>77</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>432</td></tr>
+        <tr><td class="fname">D5/0.2% NS</td><td>50</td><td>34</td><td>34</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>321</td></tr>
+        <tr><td class="fname">Ringer's Lactate（LR）</td><td class="dash">—</td><td>130</td><td>109</td><td>4</td><td>3</td><td>28</td><td>272</td></tr>
+        <tr><td class="fname">Albumin</td><td class="dash">—</td><td>145</td><td>145</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td>依濃度而定（5% ≈ 等張；25% ≈ 高張）</td></tr>
+        <tr><td class="fname">新鮮冷凍血漿（FFP）</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+        <tr><td class="fname">儲存血漿</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ 葡萄糖液 ══ -->
+  <div class="section-title">葡萄糖液（Dextrose Solutions）</div>
+  <div class="fluid-grid">
+    <div class="fluid-card">
+      <div class="fluid-card-head">
+        <span class="fluid-card-title">D5W（5% Dextrose in Water）</span>
+        <span class="tonicity-tag tonicity-iso">體外等張，體內等同自由水</span>
+      </div>
+      <ul class="fluid-list">
+        <li>葡萄糖代謝掉之後，實際上等於輸入<strong>純自由水</strong>，會平均分布到全身體液（細胞內 + 細胞外），血管內滯留量極少</li>
+        <li><strong>用途：</strong>矯正高鈉血症（自由水缺乏）、藥物稀釋載體、口服攝取不足時提供基礎熱量</li>
+        <li><strong>不適合：</strong>單獨用於容積復甦（幾乎不會停留在血管內，擴容效果差）</li>
+        <li>糖尿病或高血糖患者使用時需監測血糖，避免加重高血糖</li>
+      </ul>
+    </div>
+    <div class="fluid-card">
+      <div class="fluid-card-head">
+        <span class="fluid-card-title">D10W / D20W</span>
+        <span class="tonicity-tag tonicity-hyper">高張</span>
+      </div>
+      <ul class="fluid-list">
+        <li>用於需要較高熱量供應但液體限制的病人（如低血糖反覆發作、TPN 輔助）</li>
+        <li>D10W 常用於新生兒 / 嬰兒低血糖處置（劑量依體重調整）</li>
+        <li>滲透壓較高，週邊靜脈長期輸注有靜脈炎風險，濃度越高越建議中央靜脈給予</li>
+      </ul>
+    </div>
+    <div class="fluid-card full">
+      <div class="fluid-card-head">
+        <span class="fluid-card-title">D50W（50% Dextrose）</span>
+        <span class="tonicity-tag tonicity-hyper">極高張</span>
+      </div>
+      <ul class="fluid-list">
+        <li><strong>主要用途：</strong>低血糖緊急處置（成人常用 1 amp = 25g glucose in 50mL，IV push）</li>
+        <li>滲透壓高達 2525 mOsm/L，遠超過血漿滲透壓將近 9 倍</li>
+        <li class="caution">週邊靜脈直接推注有外滲造成組織壞死、靜脈炎風險；理想上經大靜脈或確認回血良好的路徑給予，給藥後用生理食鹽水沖管</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ 生理食鹽水類 ══ -->
+  <div class="section-title">生理食鹽水類（Saline Solutions）</div>
+  <div class="fluid-grid">
+    <div class="fluid-card">
+      <div class="fluid-card-head">
+        <span class="fluid-card-title">0.9% NaCl（生理食鹽水，NS）</span>
+        <span class="tonicity-tag tonicity-iso">等張</span>
+      </div>
+      <ul class="fluid-list">
+        <li>滲透壓 308 mOsm/L，接近血漿，是最常用的容積復甦晶體液之一</li>
+        <li><strong>用途：</strong>容積復甦、低血鈉矯正、大部分藥物 / 血品稀釋（唯一可與血品同路輸注的晶體液）</li>
+        <li>高鈣血症治療首選（促進鈉尿 → 帶出鈣）</li>
+        <li class="caution">Cl⁻ 濃度 154 mmol/L 明顯高於生理值（約 100-106），大量輸注（尤其 &gt;2-3L）容易造成<strong>高氯性代謝性酸中毒</strong>，並可能影響腎臟灌流</li>
+      </ul>
+    </div>
+    <div class="fluid-card">
+      <div class="fluid-card-head">
+        <span class="fluid-card-title">0.45% NaCl（1/2 NS，半張食鹽水）</span>
+        <span class="tonicity-tag tonicity-hypo">低張</span>
+      </div>
+      <ul class="fluid-list">
+        <li>可視為「一半自由水 + 一半等張鹽水」，同時提供水分和少量鈉</li>
+        <li><strong>用途：</strong>維持性輸液（常合併 KCl 使用）、高鈉血症的緩慢矯正</li>
+        <li class="caution">快速大量輸注有腦水腫風險，尤其兒童、既有低鈉血症或神經系統疾病患者，需監測 Na 矯正速度（避免每日矯正過快）</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ 葡萄糖 + 食鹽水混合液 ══ -->
+  <div class="section-title">葡萄糖 + 食鹽水混合液</div>
+  <div class="fluid-grid">
+    <div class="fluid-card full">
+      <div class="fluid-card-head">
+        <span class="fluid-card-title">D5NS / D5/0.5% NS / D5/0.2% NS</span>
+        <span class="tonicity-tag tonicity-hyper">體外多為高張（葡萄糖代謝後實際張力下降）</span>
+      </div>
+      <ul class="fluid-list">
+        <li>依所含 NaCl 濃度不同，提供不同比例的「自由水 + 鈉」，常用於<strong>維持性輸液</strong>，依病人電解質狀況微調鹽水濃度</li>
+        <li><strong>D5NS：</strong>鈉含量等同 NS，適合同時需要熱量和較多鈉補充的情境</li>
+        <li><strong>D5/0.5% NS、D5/0.2% NS：</strong>鈉含量遞減，較常用於兒科維持輸液或限鈉但仍需熱量的病人</li>
+        <li>葡萄糖代謝完之後，體內實際滲透壓會低於標示值（因為葡萄糖部分等同自由水），評估病人張力狀態時不能只看標籤上的滲透壓數字</li>
+        <li>高血糖 / 糖尿病病人使用含糖輸液需監測血糖，必要時調整胰島素</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ 平衡晶體液 ══ -->
+  <div class="section-title">平衡晶體液（Balanced Crystalloid）</div>
+  <div class="fluid-grid">
+    <div class="fluid-card full">
+      <div class="fluid-card-head">
+        <span class="fluid-card-title">Ringer's Lactate（LR，乳酸林格氏液）</span>
+        <span class="tonicity-tag tonicity-iso">等張</span>
+      </div>
+      <ul class="fluid-list">
+        <li>電解質組成較接近血漿（含 K⁺、Ca²⁺，並以乳酸作為 buffer），Cl⁻ 濃度（109）也較 NS 低，較不易造成高氯性酸中毒</li>
+        <li><strong>用途：</strong>大量容積復甦首選之一（膿毒症、創傷、胰臟炎等指引多建議優先於 NS）；燒燙傷補液（Parkland formula 建議使用 LR）</li>
+        <li>乳酸經肝臟代謝為 HCO₃⁻，理論上有助於緩解代謝性酸中毒</li>
+        <li class="caution">含 Ca²⁺ → <strong>不可與血品（尤其含 citrate 抗凝的血品）同一路輸注</strong>，Ca²⁺ 可能中和 citrate 抗凝作用，造成管路內血液凝集</li>
+        <li class="caution">嚴重肝功能不良者乳酸代謝能力下降，理論上乳酸清除變差；高血鉀患者使用時需留意（LR 含少量 K⁺，但實務上少量鉀對多數高血鉀患者影響有限，仍建議依臨床情境評估）</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ 膠體液 / 血液製品 ══ -->
+  <div class="section-title">膠體液 / 血液製品</div>
+  <div class="fluid-grid">
+    <div class="fluid-card">
+      <div class="fluid-card-head">
+        <span class="fluid-card-title">Albumin（白蛋白）</span>
+      </div>
+      <ul class="fluid-list">
+        <li><strong>5% Albumin：</strong>約等張，用於一般容積擴張（膠體滲透壓接近血漿）</li>
+        <li><strong>25% Albumin：</strong>高張，透過滲透壓差把組織間液拉回血管內，常用於低白蛋白血症合併水腫、大量放腹水後預防循環功能障礙</li>
+        <li><strong>常見適應症：</strong>SBP（自發性細菌性腹膜炎）治療輔助（診斷當天 + 第 3 天給予）；大量腹水穿刺（每移除 &gt;5L 給予）；肝腎症候群治療輔助</li>
+        <li>價格較晶體液昂貴許多，一般容積復甦不作為首選，除非有肝硬化相關的特定適應症</li>
+      </ul>
+    </div>
+    <div class="fluid-card">
+      <div class="fluid-card-head">
+        <span class="fluid-card-title">新鮮冷凍血漿（FFP）</span>
+      </div>
+      <ul class="fluid-list">
+        <li>含幾乎所有凝血因子，用於<strong>凝血功能障礙合併出血或侵入性處置前矯正</strong>（如 INR 明顯升高）</li>
+        <li>不作為單純容積擴張使用（風險效益比差，且有輸血相關併發症風險）</li>
+        <li>需 ABO 血型相容；退冰後需在時效內輸注完畢</li>
+        <li>大量輸血時常搭配 pRBC、Platelet 以固定比例（如 1:1:1）給予，避免稀釋性凝血病</li>
+      </ul>
+    </div>
+    <div class="fluid-card full">
+      <div class="fluid-card-head">
+        <span class="fluid-card-title">儲存血漿（Stored Plasma）</span>
+      </div>
+      <ul class="fluid-list">
+        <li>部分不穩定的凝血因子（如 Factor V、Factor VIII）在儲存過程中活性會下降，止血效果不如新鮮冷凍血漿</li>
+        <li>使用時機較侷限，多用於對不穩定凝血因子需求較低的情境；急性大出血需要完整凝血因子矯正時仍以 FFP 為優先</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<script src="./notion-notes.js"></script>
+</body>
+</html>
