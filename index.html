@@ -1695,6 +1695,20 @@ function makeDxList(items, urgent = false) {
     </div>
   `;
 }
+function makeOtherList(items) {
+  if (!items || !items.length) return '';
+
+  return `
+    <div class="sym-other-list">
+      ${items.map(i => `
+        <div class="sym-other-item">
+          <span class="sym-other-name">${i.name}</span>
+          ${i.sub ? `<span class="sym-other-sub"> — ${i.sub}</span>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
 function openSym(id) {
   const d = SYM_DATA[id];
   if (!d) return;
