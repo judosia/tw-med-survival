@@ -271,36 +271,17 @@
   <div class="section-eyebrow">症狀快查</div>
   <h2 class="section-title">常見主訴 → DDx + 初步處置</h2>
   <p class="section-desc">值班可用。</p>
-  <div class="symptom-tags">
-    <button class="symptom-tag" onclick="openSym('chest-pain')"><span class="dot dot-red"></span>胸痛</button>
-    <button class="symptom-tag" onclick="openSym('dyspnea')"><span class="dot dot-red"></span>呼吸困難</button>
-    <button class="symptom-tag" onclick="openSym('abdominal-pain')"><span class="dot dot-amber"></span>腹痛</button>
-    <button class="symptom-tag" onclick="openSym('vomit')"><span class="dot dot-amber"></span>嘔吐</button>
-    <button class="symptom-tag" onclick="openSym('headache')"><span class="dot dot-red"></span>頭痛</button>
-    <button class="symptom-tag" onclick="openSym('ams')"><span class="dot dot-red"></span>意識改變</button>
-    <button class="symptom-tag" onclick="openSym('fever')"><span class="dot dot-amber"></span>發燒</button>
-    <button class="symptom-tag" onclick="openSym('syncope')"><span class="dot dot-amber"></span>暈厥</button>
-    <button class="symptom-tag" onclick="openSym('palpitation')"><span class="dot dot-blue"></span>心悸</button>
-    <button class="symptom-tag" onclick="openSym('back-pain')"><span class="dot dot-blue"></span>背痛</button>
-    <button class="symptom-tag" onclick="openSym('edema')"><span class="dot dot-blue"></span>水腫</button>
-    <button class="symptom-tag" onclick="openSym('jaundice')"><span class="dot dot-amber"></span>黃疸</button>
-    <button class="symptom-tag" onclick="openSym('gi-bleed')"><span class="dot dot-red"></span>血便</button>
-    <button class="symptom-tag" onclick="openSym('oliguria')"><span class="dot dot-red"></span>少尿</button>
-    <button class="symptom-tag" onclick="openSym('neck-stiff')"><span class="dot dot-red"></span>頸部僵硬</button>
-    <button class="symptom-tag" onclick="openSym('hypotension')"><span class="dot dot-red"></span>低血壓</button>
-    <button class="symptom-tag" onclick="openSym('glucose')"><span class="dot dot-amber"></span>血糖異常</button>
-  </div>
+  
 </section>
 
 <section id="oncall" style="background:var(--navy); padding:90px 8%;">
-  <div class="section-eyebrow" style="color:rgba(255,255,255,0.4);">值班小撇步</div>
-  <h2 class="section-title" style="color:var(--white);">值班時最需要知道的事</h2>
-  <p class="section-desc" style="color:rgba(255,255,255,0.5);">精選最實用的值班生存原則，其他的交給各科頁面。</p>
+  <h2 class="section-title" style="color:var(--white);">值班時常用主訴</h2>
+  <p class="section-desc" style="color:rgba(255,255,255,0.5);">最需要知道的...</p>
   <div class="oncall-grid">
     <div class="oncall-card">
       <div class="oncall-tag oncall-tag-red">緊急判斷</div>
       <h3>深夜接到叫喚：先問兩件事</h3>
-      <p>「意識清楚嗎？生命徵象穩定嗎？」——這兩個問題決定你接下來五分鐘要做什麼。穩定 → 電話先處理；不穩定 → 立刻跑去。</p>
+      <p>「意識清楚嗎？Vital sign？」——這兩個問題決定你接下來五分鐘要做什麼。穩定 → 電話先處理；不穩定 → 立刻跑去。</p>
     </div>
     <div class="oncall-card">
       <div class="oncall-tag oncall-tag-amber">叫主治</div>
@@ -317,6 +298,28 @@
       <h3>Code Blue 第一步：叫人</h3>
       <p>發現無反應，先啟動急救系統再開始 CPR。一個人做 CPR 是無效的急救，叫人才是對的。</p>
     </div>
+    <div class="symptom-tags">
+    <button class="symptom-tag" onclick="openSym('pain')"><span class="dot dot-red"></span>痛</button>
+    <button class="symptom-tag" onclick="openSym('vomit')"><span class="dot dot-red"></span>嘔吐</button>
+    <button class="symptom-tag" onclick="openSym('hypotension')"><span class="dot dot-red"></span>低血壓</button>
+    <button class="symptom-tag" onclick="openSym('glucose')"><span class="dot dot-amber"></span>血糖異常</button>
+    <button class="symptom-tag" onclick="openSym('chest-pain')"><span class="dot dot-red"></span>胸痛</button>
+    <button class="symptom-tag" onclick="openSym('dyspnea')"><span class="dot dot-red"></span>呼吸困難</button>
+    <button class="symptom-tag" onclick="openSym('abdominal-pain')"><span class="dot dot-amber"></span>腹痛</button>
+    <button class="symptom-tag" onclick="openSym('vomit')"><span class="dot dot-amber"></span>嘔吐</button>
+    <button class="symptom-tag" onclick="openSym('headache')"><span class="dot dot-red"></span>頭痛</button>
+    <button class="symptom-tag" onclick="openSym('ams')"><span class="dot dot-red"></span>意識改變</button>
+    <button class="symptom-tag" onclick="openSym('fever')"><span class="dot dot-amber"></span>發燒</button>
+    <button class="symptom-tag" onclick="openSym('syncope')"><span class="dot dot-amber"></span>暈厥</button>
+    <button class="symptom-tag" onclick="openSym('palpitation')"><span class="dot dot-blue"></span>心悸</button>
+    <button class="symptom-tag" onclick="openSym('back-pain')"><span class="dot dot-blue"></span>背痛</button>
+    <button class="symptom-tag" onclick="openSym('edema')"><span class="dot dot-blue"></span>水腫</button>
+    <button class="symptom-tag" onclick="openSym('jaundice')"><span class="dot dot-amber"></span>黃疸</button>
+    <button class="symptom-tag" onclick="openSym('gi-bleed')"><span class="dot dot-red"></span>血便</button>
+    <button class="symptom-tag" onclick="openSym('oliguria')"><span class="dot dot-red"></span>少尿</button>
+    <button class="symptom-tag" onclick="openSym('neck-stiff')"><span class="dot dot-red"></span>頸部僵硬</button>
+   
+  </div>
     
   </div>
 </section>
