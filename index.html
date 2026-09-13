@@ -232,10 +232,29 @@
       margin-top: 10px;}
     .sym-block-danger .sym-section-label {
     color: var(--red);}
-
     .sym-block-now .sym-section-label {
     color: #c97800;
     }
+    .sym-other-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;}
+    .sym-other-item {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: #5a6a7a;
+      padding-left: 14px;
+      position: relative;}
+    .sym-other-item::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--muted);}
+    .sym-other-name {
+      font-weight: 700;
+      color: var(--navy);}
+    .sym-other-sub {
+      color: var(--muted);}
   /* ONCALL BLOCK */
   .oncall-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
   .oncall-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:20px; }
@@ -687,7 +706,7 @@ const SYM_DATA = {
       'Strong opioids: Morphine 2-5mg IV q4h PRN (0.1 mg/kg、Fentanyl patch、Hydromorphone 0.2-0.5 mg IV q4h PRN、PCA',
       'Consider adjuvant medications (e.g., gabapentin, pregabalin',
     ],
-    other:[
+    AE:[
       'Acetaminophen:輕微肝毒性,肝硬化仍可用但須減量;急性肝衰竭避免。注意複方感冒藥重複劑量。',
       'NSAID:GI 出血、AKI、心血管風險、體液滯留。eGFR < 30、心衰竭、上消化道出血病史、抗凝血中應避免;',
       'Ketorolac 建議 ≤ 5 天且不用於心臟手術後。',
@@ -1700,7 +1719,7 @@ function openSym(id) {
     html += `
       <div class="sym-section-block sym-block-now">
         <div class="sym-section-label">
-          ⚡ NOW｜現在先做
+          ⚡ FIRST STEPS｜快速處置
         </div>
 
         <div class="sym-action-box">
@@ -1714,7 +1733,7 @@ function openSym(id) {
     html += `
       <div class="sym-section-block">
         <div class="sym-section-label">
-          👀 床邊快速確認
+          👀 快速評估
         </div>
 
         <div class="sym-action-box">
@@ -1728,7 +1747,7 @@ function openSym(id) {
     html += `
       <div class="sym-section-block">
         <div class="sym-section-label">
-          🧪 第一輪檢查
+          🧪 WORKUP | 初步檢查
         </div>
 
         <div class="sym-action-box">
@@ -1742,7 +1761,7 @@ function openSym(id) {
     html += `
       <div class="sym-section-block">
         <div class="sym-section-label">
-          ⚠ 不能漏掉
+          ⚠ MUST NOT MISS｜不能漏掉
         </div>
 
         ${makeDxList(d.urgent, true)}
@@ -1751,18 +1770,18 @@ function openSym(id) {
   }
   /* 其他 DDx：預設收合 */
   if (d.other && d.other.length) {
-    html += `
-      <details class="sym-more">
-        <summary>
-          其他可能的 DDx
-        </summary>
+  html += `
+    <details class="sym-more">
+      <summary>
+        其他注意
+      </summary>
 
-        <div class="sym-more-body">
-          ${makeDxList(d.other)}
-        </div>
-      </details>
-    `;
-  }
+      <div class="sym-more-body">
+        ${makeOtherList(d.other)}
+      </div>
+    </details>
+  `;
+}
   document.getElementById('sym-modal-body').innerHTML = html;
   document
     .getElementById('sym-modal-overlay')
