@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ACLS 快速處置｜醫院生存 note</title>
+
+  <!-- 如果你的 shared.css 路徑不同，記得修改 -->
+  <link rel="stylesheet" href="../shared.css">
+
+  <style>
+    :root {
+      --navy: #183153;
+      --blue: #3b6ea8;
+      --red: #d94b55;
+      --orange: #d88a31;
+      --green: #408a67;
+      --yellow: #f5b942;
+      --light: #f6f8fb;
+      --white: #ffffff;
+      --border: #dde3ea;
+      --muted: #778391;
+      --text: #344454;
+    }
+
+    body {
+      background: #f7f9fc;
+      color: var(--text);
+    }
+
+    /* ===== PAGE ===== */
+
+    .acls-page {
+      width: min(1000px, 92%);
+      margin: 0 auto;
+      padding: 45px 0 80px;
+    }
+
+    .acls-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .acls-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+
+    /* ===== QUICK NAV ===== */
+
+    .acls-quick-nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+
+    .acls-nav-btn {
+      text-decoration: none;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      color: var(--navy);
+      font-weight: 800;
+      font-size: 0.9rem;
+      transition: 0.15s;
+    }
+
+    .acls-nav-btn:hover {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+
+
+    /* ===== SECTION ===== */
+
+    .acls-section {
+      margin-bottom: 42px;
+      scroll-margin-top: 90px;
+    }
+
+    .acls-section-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+
+    .acls-section-sub {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 18px;
+    }
+
+
+    /* ===== CARDS ===== */
+
+    .acls-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+    }
+
+    .acls-card-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .acls-card ul,
+    .acls-card ol {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .acls-card li {
+      font-size: 0.86rem;
+      line-height: 1.7;
+      margin-bottom: 3px;
+    }
+
+
+    /* ===== HIGHLIGHT CARDS ===== */
+
+    .danger-card {
+      background: #fff7f7;
+      border-left: 5px solid var(--red);
+    }
+
+    .warning-card {
+      background: #fffaf1;
+      border-left: 5px solid var(--orange);
+    }
+
+    .action-card {
+      background: #f4f8ff;
+      border-left: 5px solid var(--blue);
+    }
+
+    .success-card {
+      background: #f3faf6;
+      border-left: 5px solid var(--green);
+    }
+
+
+    /* ===== BADGES ===== */
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      margin-right: 5px;
+    }
+
+    .badge-red {
+      background: #ffe4e6;
+      color: var(--red);
+    }
+
+    .badge-blue {
+      background: #e8f0fb;
+      color: var(--blue);
+    }
+
+    .badge-orange {
+      background: #fff0da;
+      color: #af6a16;
+    }
+
+    .badge-green {
+      background: #e1f3e8;
+      color: var(--green);
+    }
+
+
+    /* ===== FLOW ===== */
+
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .flow-step {
+      padding: 11px 14px;
+      border-radius: 8px;
+      background: var(--light);
+      border: 1px solid var(--border);
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .flow-arrow {
+      text-align: center;
+      color: var(--muted);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .flow-step.critical {
+      background: #fff5f5;
+      border-color: rgba(217, 75, 85, 0.35);
+      color: #8d3038;
+      font-weight: 700;
+    }
+
+
+    /* ===== TABLE ===== */
+
+    .acls-table-wrap {
+      overflow-x: auto;
+    }
+
+    .acls-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .acls-table th {
+      text-align: left;
+      background: var(--light);
+      color: var(--navy);
+      font-weight: 800;
+    }
+
+    .acls-table th,
+    .acls-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+
+    /* ===== GRID ===== */
+
+    .acls-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+
+    /* ===== NOTE ===== */
+
+    .acls-note {
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+
+    /* ===== MOBILE ===== */
+
+    @media (max-width: 700px) {
+
+      .acls-page {
+        width: 92%;
+        padding-top: 28px;
+      }
+
+      .acls-title {
+        font-size: 1.6rem;
+      }
+
+      .acls-quick-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .acls-grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+    }
+  </style>
+</head>
+
+
+<body>
+
+<main class="acls-page">
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <h1 class="acls-title">ACLS Quick Reference</h1>
+
+  <div class="acls-subtitle">
+    Cardiac Arrest · Bradycardia · Tachycardia · Post-ROSC · Reversible Causes
+  </div>
+
+
+  <!-- =========================
+       QUICK NAV
+  ========================== -->
+
+  <div class="acls-quick-nav">
+
+    <a href="#cardiac-arrest" class="acls-nav-btn">
+      🫀 Cardiac Arrest
+    </a>
+
+    <a href="#bradycardia" class="acls-nav-btn">
+      🐢 Bradycardia
+    </a>
+
+    <a href="#tachycardia" class="acls-nav-btn">
+      ⚡ Tachycardia
+    </a>
+
+    <a href="#rosc" class="acls-nav-btn">
+      ❤️ Post-ROSC
+    </a>
+
+    <a href="#5h5t" class="acls-nav-btn">
+      🔎 5H / 5T
+    </a>
+
+    <a href="#drugs" class="acls-nav-btn">
+      💉 Drugs
+    </a>
+
+  </div>
+
+
+
+  <!-- ============================================================
+       CARDIAC ARREST
+  ============================================================= -->
+
+  <section class="acls-section" id="cardiac-arrest">
+
+    <div class="acls-section-title">
+      🫀 Cardiac Arrest
+    </div>
+
+    <div class="acls-section-sub">
+      無反應 + 無正常呼吸 + 無脈搏 → CPR + Monitor / Defibrillator
+    </div>
+
+
+    <!-- 初始處置 -->
+
+    <div class="acls-card action-card">
+
+      <div class="acls-card-title">
+        FIRST STEPS｜第一步
+      </div>
+
+      <ol>
+        <li>確認無反應、無正常呼吸，快速確認 pulse ≤ 10 秒。</li>
+        <li>立即開始高品質 CPR。</li>
+        <li>給氧、接上 monitor / defibrillator。</li>
+        <li>取得 IV / IO access。</li>
+        <li>每 2 分鐘 rhythm check。</li>
+        <li>同時持續尋找並處理 reversible causes。</li>
+      </ol>
+
+    </div>
+
+
+    <!-- CPR -->
+
+    <div class="acls-card">
+
+      <div class="acls-card-title">
+        High-quality CPR
+      </div>
+
+      <ul>
+        <li>Rate：<strong>100–120 /min</strong></li>
+        <li>Depth：成人約 <strong>5–6 cm</strong></li>
+        <li>Allow complete chest recoil</li>
+        <li>盡量減少中斷，rhythm / pulse check ≤ 10 秒</li>
+        <li>若無 advanced airway：30 : 2</li>
+        <li>若已有 advanced airway：continuous compression + 1 breath every 6 sec</li>
+        <li>換 compressor 約 every 2 min</li>
+      </ul>
+
+    </div>
+
+
+
+    <!-- SHOCKABLE -->
+
+    <div class="acls-card danger-card">
+
+      <div class="acls-card-title">
+        <span class="badge badge-red">SHOCKABLE</span>
+        VF / Pulseless VT
+      </div>
+
+      <div class="flow">
+
+        <div class="flow-step critical">
+          VF / pVT
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          ⚡ Shock
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          CPR 2 min + IV / IO
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          Rhythm check → still VF / pVT
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          ⚡ Shock
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          CPR 2 min + <strong>Epinephrine 1 mg IV/IO q3–5 min</strong>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          ⚡ Shock
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          CPR 2 min + <strong>Amiodarone / Lidocaine</strong>
+          + treat reversible causes
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- NON SHOCKABLE -->
+
+    <div class="acls-card warning-card">
+
+      <div class="acls-card-title">
+        <span class="badge badge-orange">NON-SHOCKABLE</span>
+        PEA / Asystole
+      </div>
+
+      <div class="flow">
+
+        <div class="flow-step critical">
+          PEA / Asystole
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          CPR 2 min + IV / IO
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          <strong>Epinephrine 1 mg IV/IO ASAP</strong>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          Rhythm check every 2 min
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          Epinephrine q3–5 min
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          🔎 找 5H / 5T
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="acls-card">
+      <div class="acls-card-title">
+        Defibrillation
+      </div>
+
+      <ul>
+        <li>Biphasic：依機器建議能量；不知道時可使用 device recommended/max available energy。</li>
+        <li>後續 shock 可考慮相同或更高能量。</li>
+        <li>Shock 後<strong>不要先摸 pulse</strong>，立即恢復 CPR 2 分鐘。</li>
+      </ul>
+    </div>
+
+  </section>
+
+
+
+
+  <!-- ============================================================
+       BRADYCARDIA
+  ============================================================= -->
+
+  <section class="acls-section" id="bradycardia">
+
+    <div class="acls-section-title">
+      🐢 Bradycardia with Pulse
+    </div>
+
+    <div class="acls-section-sub">
+      通常 HR &lt; 50/min，重點是判斷是否造成 symptomatic / poor perfusion
+    </div>
+
+
+    <div class="acls-card danger-card">
+
+      <div class="acls-card-title">
+        🚨 是否有 Cardiopulmonary Compromise？
+      </div>
+
+      <ul>
+        <li>Hypotension</li>
+        <li>Acute altered mental status</li>
+        <li>Signs of shock</li>
+        <li>Ischemic chest discomfort</li>
+        <li>Acute heart failure</li>
+      </ul>
+
+    </div>
+
+
+    <div class="acls-card action-card">
+
+      <div class="acls-card-title">
+        Symptomatic Bradycardia
+      </div>
+
+      <div class="flow">
+
+        <div class="flow-step">
+          ABC + monitor + IV + 12-lead ECG
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          <strong>Atropine 1 mg IV</strong>
+        </div>
+
+        <div class="flow-step">
+          Repeat q3–5 min<br>
+          Maximum total dose 3 mg
+        </div>
+
+        <div class="flow-arrow">↓ 若無效</div>
+
+        <div class="flow-step critical">
+          Transcutaneous pacing
+        </div>
+
+        <div class="flow-step">
+          或 Dopamine infusion
+        </div>
+
+        <div class="flow-step">
+          或 Epinephrine infusion
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          考慮 expert consultation / transvenous pacing
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="acls-card warning-card">
+
+      <div class="acls-card-title">
+        ⚠ Atropine 可能效果有限
+      </div>
+
+      <ul>
+        <li>Mobitz II</li>
+        <li>High-grade AV block</li>
+        <li>Complete heart block，尤其 wide QRS / infranodal block</li>
+      </ul>
+
+      <p class="acls-note">
+        若病人不穩定且高度懷疑 infranodal block，不要因等待 atropine 效果而延誤 pacing。
+      </p>
+
+    </div>
+
+  </section>
+
+
+
+
+  <!-- ============================================================
+       TACHYCARDIA
+  ============================================================= -->
+
+  <section class="acls-section" id="tachycardia">
+
+    <div class="acls-section-title">
+      ⚡ Tachycardia with Pulse
+    </div>
+
+    <div class="acls-section-sub">
+      通常 HR ≥ 150/min 才較可能是 tachyarrhythmia 本身造成症狀，但仍需依臨床判斷
+    </div>
+
+
+    <div class="acls-card">
+
+      <div class="acls-card-title">
+        FIRST STEPS
+      </div>
+
+      <ol>
+        <li>ABC + oxygen if hypoxemic。</li>
+        <li>Cardiac monitor + BP + SpO₂。</li>
+        <li>IV access。</li>
+        <li>取得 12-lead ECG，但不要因此延誤 unstable patient 的 cardioversion。</li>
+      </ol>
+
+    </div>
+
+
+    <div class="acls-card danger-card">
+
+      <div class="acls-card-title">
+        🚨 UNSTABLE？
+      </div>
+
+      <ul>
+        <li>Hypotension</li>
+        <li>Acute altered mental status</li>
+        <li>Signs of shock</li>
+        <li>Ischemic chest discomfort</li>
+        <li>Acute heart failure</li>
+      </ul>
+
+      <br>
+
+      <strong>
+        YES → Synchronized Cardioversion
+      </strong>
+
+    </div>
+
+
+    <div class="acls-card action-card">
+
+      <div class="acls-card-title">
+        Stable → 看 QRS
+      </div>
+
+      <div class="acls-grid-2">
+
+        <div class="acls-card">
+
+          <div class="acls-card-title">
+            Narrow QRS
+          </div>
+
+          <ul>
+            <li>Regular → vagal maneuver</li>
+            <li>Regular narrow tachycardia → consider Adenosine</li>
+            <li>Irregular → 常見 AF / AFL / MAT</li>
+          </ul>
+
+        </div>
+
+
+        <div class="acls-card">
+
+          <div class="acls-card-title">
+            Wide QRS ≥ 0.12 sec
+          </div>
+
+          <ul>
+            <li>考慮 VT until proven otherwise</li>
+            <li>Regular monomorphic → Adenosine 可作為特定情境考量</li>
+            <li>可考慮 antiarrhythmic infusion</li>
+            <li>Expert consultation</li>
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="acls-card warning-card">
+
+      <div class="acls-card-title">
+        ⚠ Irregular Wide-complex Tachycardia
+      </div>
+
+      <p>
+        特別注意 <strong>pre-excited AF / WPW</strong>。
+      </p>
+
+      <p class="acls-note">
+        不應把所有 irregular wide-complex tachycardia 都當作一般 AF 直接給 isolated AV nodal blocking agents。
+      </p>
+
+    </div>
+
+
+    <div class="acls-card">
+
+      <div class="acls-card-title">
+        Adenosine
+      </div>
+
+      <ul>
+        <li>First dose：<strong>6 mg rapid IV push</strong></li>
+        <li>Second dose：<strong>12 mg</strong> if needed</li>
+        <li>之後立即 saline flush</li>
+        <li>主要適用於 regular narrow-complex tachycardia</li>
+        <li>Regular monomorphic wide-complex tachycardia 中可在適當情境考慮</li>
+      </ul>
+
+    </div>
+
+  </section>
+
+
+
+
+  <!-- ============================================================
+       POST ROSC
+  ============================================================= -->
+
+  <section class="acls-section" id="rosc">
+
+    <div class="acls-section-title">
+      ❤️ Post-ROSC Care
+    </div>
+
+    <div class="acls-section-sub">
+      Return of Spontaneous Circulation 後，目標是避免 secondary injury 並找出 arrest 原因
+    </div>
+
+
+    <div class="acls-card success-card">
+
+      <div class="acls-card-title">
+        FIRST STEPS
+      </div>
+
+      <ol>
+        <li>確認 airway / ventilation / oxygenation。</li>
+        <li>避免 hypoxemia，也避免不必要 hyperoxia。</li>
+        <li>持續 BP / ECG / SpO₂ monitoring。</li>
+        <li>治療 hypotension、維持 adequate perfusion。</li>
+        <li>取得 12-lead ECG。</li>
+        <li>找出 cardiac arrest 原因。</li>
+        <li>無法遵從指令者依院內 post-cardiac-arrest temperature-control protocol。</li>
+      </ol>
+
+    </div>
+
+
+    <div class="acls-card">
+
+      <div class="acls-card-title">
+        Post-ROSC Checklist
+      </div>
+
+      <ul>
+        <li>Airway / ventilation</li>
+        <li>Blood pressure / perfusion</li>
+        <li>12-lead ECG</li>
+        <li>ACS / coronary occlusion assessment</li>
+        <li>Electrolytes / ABG or VBG / glucose</li>
+        <li>Neurologic status</li>
+        <li>Seizure assessment</li>
+        <li>Temperature control</li>
+        <li>Identify 5H / 5T</li>
+      </ul>
+
+    </div>
+
+  </section>
+
+
+
+
+  <!-- ============================================================
+       5H 5T
+  ============================================================= -->
+
+  <section class="acls-section" id="5h5t">
+
+    <div class="acls-section-title">
+      🔎 Reversible Causes｜5H / 5T
+    </div>
+
+    <div class="acls-grid-2">
+
+      <div class="acls-card">
+
+        <div class="acls-card-title">
+          5H
+        </div>
+
+        <ul>
+          <li><strong>Hypovolemia</strong></li>
+          <li><strong>Hypoxia</strong></li>
+          <li><strong>Hydrogen ion</strong> — acidosis</li>
+          <li><strong>Hypo-/Hyperkalemia</strong> / metabolic disorders</li>
+          <li><strong>Hypothermia</strong></li>
+        </ul>
+
+      </div>
+
+
+      <div class="acls-card">
+
+        <div class="acls-card-title">
+          5T
+        </div>
+
+        <ul>
+          <li><strong>Tension pneumothorax</strong></li>
+          <li><strong>Cardiac tamponade</strong></li>
+          <li><strong>Toxins</strong></li>
+          <li><strong>Thrombosis — pulmonary</strong></li>
+          <li><strong>Thrombosis — coronary</strong></li>
+        </ul>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+
+  <!-- ============================================================
+       DRUGS
+  ============================================================= -->
+
+  <section class="acls-section" id="drugs">
+
+    <div class="acls-section-title">
+      💉 ACLS Drug Quick Reference
+    </div>
+
+    <div class="acls-table-wrap">
+
+      <table class="acls-table">
+
+        <thead>
+          <tr>
+            <th>Drug</th>
+            <th>Situation</th>
+            <th>Typical ACLS Dose</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td><strong>Epinephrine</strong></td>
+            <td>Cardiac arrest</td>
+            <td>
+              1 mg IV/IO<br>
+              q3–5 min
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Amiodarone</strong></td>
+            <td>Refractory VF / pVT</td>
+            <td>
+              First：300 mg IV/IO bolus<br>
+              Second：150 mg
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Atropine</strong></td>
+            <td>Symptomatic bradycardia</td>
+            <td>
+              1 mg IV<br>
+              q3–5 min<br>
+              Max 3 mg
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Adenosine</strong></td>
+            <td>Regular narrow-complex tachycardia</td>
+            <td>
+              6 mg rapid IV push<br>
+              → 12 mg if needed
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Lidocaine</strong></td>
+            <td>Alternative for refractory VF / pVT</td>
+            <td>
+              1–1.5 mg/kg IV/IO initial
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ============================================================
+       FINAL NOTE
+  ============================================================= -->
+
+  <div class="acls-card warning-card">
+
+    <div class="acls-card-title">
+      ⚠ 使用提醒
+    </div>
+
+    <p class="acls-note">
+      本頁定位為醫療人員值班快速複習工具，並不能取代完整 ACLS algorithm、
+      院內急救流程或即時臨床判斷。電擊能量、藥物配置、infusion preparation、
+      post-ROSC temperature management 等細節應依院內 protocol 與實際設備處理。
+    </p>
+
+  </div>
+
+
+</main>
+
+</body>
+</html>
