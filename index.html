@@ -266,11 +266,11 @@
   </div>
 </section>
 
-<!-- SYMPTOM SECTION -->
+<!-- SYMPTOM SECTION ONCALL BLOCK -->
 <section class="symptom-section" id="symptoms">
   <div class="section-eyebrow">症狀快查</div>
   <h2 class="section-title">常見主訴 → DDx + 初步處置</h2>
-  <p class="section-desc">點擊症狀標籤，快速查看鑑別診斷和第一步處置，連結直達對應科別頁面。</p>
+  <p class="section-desc">值班可用。</p>
   <div class="symptom-tags">
     <button class="symptom-tag" onclick="openSym('chest-pain')"><span class="dot dot-red"></span>胸痛</button>
     <button class="symptom-tag" onclick="openSym('dyspnea')"><span class="dot dot-red"></span>呼吸困難</button>
@@ -289,6 +289,35 @@
     <button class="symptom-tag" onclick="openSym('neck-stiff')"><span class="dot dot-red"></span>頸部僵硬</button>
     <button class="symptom-tag" onclick="openSym('hypotension')"><span class="dot dot-red"></span>低血壓</button>
     <button class="symptom-tag" onclick="openSym('glucose')"><span class="dot dot-amber"></span>血糖異常</button>
+  </div>
+</section>
+
+<section id="oncall" style="background:var(--navy); padding:90px 8%;">
+  <div class="section-eyebrow" style="color:rgba(255,255,255,0.4);">值班小撇步</div>
+  <h2 class="section-title" style="color:var(--white);">值班時最需要知道的事</h2>
+  <p class="section-desc" style="color:rgba(255,255,255,0.5);">精選最實用的值班生存原則，其他的交給各科頁面。</p>
+  <div class="oncall-grid">
+    <div class="oncall-card">
+      <div class="oncall-tag oncall-tag-red">緊急判斷</div>
+      <h3>深夜接到叫喚：先問兩件事</h3>
+      <p>「意識清楚嗎？生命徵象穩定嗎？」——這兩個問題決定你接下來五分鐘要做什麼。穩定 → 電話先處理；不穩定 → 立刻跑去。</p>
+    </div>
+    <div class="oncall-card">
+      <div class="oncall-tag oncall-tag-amber">叫主治</div>
+      <h3>何時該叫醒主治？就現在</h3>
+      <p>生命徵象嚴重異常、處置超出你能力範圍、你覺得不對勁——這三種情況打電話不是打擾，是你的責任。不打才是真的麻煩。</p>
+    </div>
+    <div class="oncall-card">
+      <div class="oncall-tag oncall-tag-blue">交班</div>
+      <h3>交班讓接手的人能睡著</h3>
+      <p>哪個穩定、哪個在觀察、哪個隨時可能出事——三分鐘說清楚。你希望怎麼被交班，就怎麼交班別人。</p>
+    </div>
+    <div class="oncall-card">
+      <div class="oncall-tag oncall-tag-red">Code Blue</div>
+      <h3>Code Blue 第一步：叫人</h3>
+      <p>發現無反應，先啟動急救系統再開始 CPR。一個人做 CPR 是無效的急救，叫人才是對的。</p>
+    </div>
+    
   </div>
 </section>
 
@@ -325,6 +354,7 @@
 
   </div>
 </section>
+
 
 <!-- SPECIALTY SECTION -->
 <section id="specialty" style="background:var(--light); padding:90px 8%;">
@@ -374,44 +404,7 @@
   </div>
 </section>
 
-<!-- ONCALL BLOCK -->
-<section id="oncall" style="background:var(--navy); padding:90px 8%;">
-  <div class="section-eyebrow" style="color:rgba(255,255,255,0.4);">值班小撇步</div>
-  <h2 class="section-title" style="color:var(--white);">值班時最需要知道的事</h2>
-  <p class="section-desc" style="color:rgba(255,255,255,0.5);">精選最實用的值班生存原則，其他的交給各科頁面。</p>
-  <div class="oncall-grid">
-    <div class="oncall-card">
-      <div class="oncall-tag oncall-tag-red">緊急判斷</div>
-      <h3>深夜接到叫喚：先問兩件事</h3>
-      <p>「意識清楚嗎？生命徵象穩定嗎？」——這兩個問題決定你接下來五分鐘要做什麼。穩定 → 電話先處理；不穩定 → 立刻跑去。</p>
-    </div>
-    <div class="oncall-card">
-      <div class="oncall-tag oncall-tag-amber">叫主治</div>
-      <h3>何時該叫醒主治？就現在</h3>
-      <p>生命徵象嚴重異常、處置超出你能力範圍、你覺得不對勁——這三種情況打電話不是打擾，是你的責任。不打才是真的麻煩。</p>
-    </div>
-    <div class="oncall-card">
-      <div class="oncall-tag oncall-tag-blue">交班</div>
-      <h3>交班讓接手的人能睡著</h3>
-      <p>哪個穩定、哪個在觀察、哪個隨時可能出事——三分鐘說清楚。你希望怎麼被交班，就怎麼交班別人。</p>
-    </div>
-    <div class="oncall-card">
-      <div class="oncall-tag oncall-tag-green">體力</div>
-      <h3>有機會躺就躺，哪怕 15 分鐘</h3>
-      <p>值班室的床是讓你不要站著撐完 36 小時用的。15 分鐘打盹讓你接下來兩小時比沒睡清醒。不用有罪惡感。</p>
-    </div>
-    <div class="oncall-card">
-      <div class="oncall-tag oncall-tag-red">Code Blue</div>
-      <h3>Code Blue 第一步：叫人</h3>
-      <p>發現無反應，先啟動急救系統再開始 CPR。一個人做 CPR 是無效的急救，叫人才是對的。</p>
-    </div>
-    <div class="oncall-card">
-      <div class="oncall-tag oncall-tag-amber">critical value</div>
-      <h3>Critical value 出現先打電話</h3>
-      <p>K⁺ &lt;2.5 或 &gt;6.5、Na⁺ &lt;120 或 &gt;160、血糖 &lt;50 或 &gt;500、Hb &lt;7——出現時第一件事是通知主治，不是查書。</p>
-    </div>
-  </div>
-</section>
+
 
 <!-- RESOURCES -->
 <section id="resources" style="background:#f0f4f8; padding:80px 8%;">
