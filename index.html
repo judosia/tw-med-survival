@@ -171,39 +171,96 @@
     .sym-action-box ul { list-style:none; display:flex; flex-direction:column; gap:6px; }
     .sym-action-box li { font-size:0.84rem; color:#3a4a5a; display:flex; align-items:flex-start; gap:8px; }
     .sym-action-box li::before { content:"→"; color:var(--blue); font-weight:700; flex-shrink:0; }
+    .sym-section-block {
+  margin-bottom: 18px;
+}
 
-    /* ONCALL BLOCK */
-    .oncall-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
-    .oncall-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:20px; }
-    .oncall-card h3 { color:var(--white); font-size:0.9rem; font-weight:700; margin-bottom:8px; }
-    .oncall-card p { color:rgba(255,255,255,0.6); font-size:0.82rem; line-height:1.6; }
-    .oncall-tag { display:inline-block; font-size:0.65rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-bottom:8px; }
-    .oncall-tag-red { background:rgba(230,57,70,0.2); color:#ff6b78; }
-    .oncall-tag-amber { background:rgba(244,162,97,0.2); color:var(--amber); }
-    .oncall-tag-green { background:rgba(107,170,117,0.2); color:#8fcf97; }
-    .oncall-tag-blue { background:rgba(69,123,157,0.2); color:#7eb5d4; }
+    /* 立即升級 */
+    .sym-block-danger .sym-action-box {
+      background: #fff5f5;
+      border-left: 4px solid var(--red);}
+    /* 現在先做 */
+    .sym-block-now .sym-action-box {
+      background: #fff9ee;
+      border-left: 4px solid #f4a261;}
+    /* NOW 用編號列表 */
+    .sym-action-box ol {
+      margin: 0;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;}
+    .sym-action-box ol li {
+      font-size: 0.84rem;
+      color: #3a4a5a;
+      padding-left: 2px;}
+    /* 避免 ol 又被原本 li::before 加箭頭 */
+    .sym-action-box ol li::before {
+      content: none;}
+    /* 其他 DDx 收合區 */
+    .sym-more {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1.5px solid var(--border);}
+    .sym-more summary {
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--navy);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;}
+    /* 隱藏瀏覽器預設的小三角 */
+    .sym-more summary::-webkit-details-marker {
+      display: none;}
+    /* 自己加箭頭 */
+    .sym-more summary::after {
+      content: '＋';
+      color: var(--muted);
+      font-size: 1rem;}
+    .sym-more[open] summary::after {
+      content: '－';}
+    .sym-more-body {
+      margin-top: 10px;}
+    .sym-block-danger .sym-section-label {
+    color: var(--red);}
 
-    /* RESOURCES */
-    .resources-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
-    .resource-link { display:flex; align-items:center; gap:14px; background:var(--white); border:1.5px solid var(--border); border-radius:8px; padding:18px 20px; text-decoration:none; transition:border-color 0.2s,box-shadow 0.2s; }
-    .resource-link:hover { border-color:var(--blue); box-shadow:0 4px 16px rgba(69,123,157,0.1); }
-    .resource-emoji { font-size:1.4rem; flex-shrink:0; }
-    .resource-text h4 { font-size:0.9rem; font-weight:700; color:var(--navy); margin-bottom:2px; }
-    .resource-text p { font-size:0.75rem; color:var(--muted); }
-
-    footer { background:#060f1f; color:rgba(255,255,255,0.4); text-align:center; padding:36px 8%; font-size:0.8rem; }
-    footer a { color:rgba(255,255,255,0.5); text-decoration:none; }
-    footer a:hover { color:rgba(255,255,255,0.8); }
-
-    @media(max-width:700px) {
-      .nav-links { display:none; }
-      .hamburger { display:flex; }
-      section { padding:64px 5%; }
-      .hero { padding:100px 5% 60px; }
-      .hero-stats { gap:28px; }
-      .hero-search-wrap { max-width:100%; }
+    .sym-block-now .sym-section-label {
+    color: #c97800;
     }
-    @media(prefers-reduced-motion:reduce) { .ekg-svg { animation:none; } }
+  /* ONCALL BLOCK */
+  .oncall-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
+  .oncall-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:20px; }
+  .oncall-card h3 { color:var(--white); font-size:0.9rem; font-weight:700; margin-bottom:8px; }
+  .oncall-card p { color:rgba(255,255,255,0.6); font-size:0.82rem; line-height:1.6; }
+  .oncall-tag { display:inline-block; font-size:0.65rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-bottom:8px; }
+  .oncall-tag-red { background:rgba(230,57,70,0.2); color:#ff6b78; }
+  .oncall-tag-amber { background:rgba(244,162,97,0.2); color:var(--amber); }
+  .oncall-tag-green { background:rgba(107,170,117,0.2); color:#8fcf97; }
+  .oncall-tag-blue { background:rgba(69,123,157,0.2); color:#7eb5d4; }
+
+  /* RESOURCES */
+  .resources-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+  .resource-link { display:flex; align-items:center; gap:14px; background:var(--white); border:1.5px solid var(--border); border-radius:8px; padding:18px 20px; text-decoration:none; transition:border-color 0.2s,box-shadow 0.2s; }
+  .resource-link:hover { border-color:var(--blue); box-shadow:0 4px 16px rgba(69,123,157,0.1); }
+  .resource-emoji { font-size:1.4rem; flex-shrink:0; }
+  .resource-text h4 { font-size:0.9rem; font-weight:700; color:var(--navy); margin-bottom:2px; }
+  .resource-text p { font-size:0.75rem; color:var(--muted); }
+
+  footer { background:#060f1f; color:rgba(255,255,255,0.4); text-align:center; padding:36px 8%; font-size:0.8rem; }
+  footer a { color:rgba(255,255,255,0.5); text-decoration:none; }
+  footer a:hover { color:rgba(255,255,255,0.8); }
+
+  @media(max-width:700px) {
+    .nav-links { display:none; }
+    .hamburger { display:flex; }
+    section { padding:64px 5%; }
+    .hero { padding:100px 5% 60px; }
+    .hero-stats { gap:28px; }
+    .hero-search-wrap { max-width:100%; }
+  }
+  @media(prefers-reduced-motion:reduce) { .ekg-svg { animation:none; } }
   </style>
 </head>
 <body>
@@ -598,318 +655,1092 @@ document.addEventListener('click', e => {
 
 // ── Symptom Modal Data ──
 const SYM_DATA = {
+  /* =========================
+     胸痛
+  ========================= */
   'chest-pain': {
     title: '🔴 胸痛 Chest Pain',
+    
+    unstable: [
+      'SBP <90 mmHg、休克徵象或末梢灌流不良',
+      'SpO₂ 下降、明顯 respiratory distress',
+      '意識改變或 syncope',
+      '持續胸痛合併 ischemic ECG change',
+      '新發嚴重 arrhythmia'
+    ],
+
+    now: [
+      '先確認 ABC + Vital signs + SpO₂',
+      '12-lead ECG，目標 10 分鐘內完成',
+      '接 cardiac monitor，建立 IV access',
+      '抽 Troponin；症狀持續時考慮 serial ECG / serial troponin',
+      '血流動力學不穩定 → 立即通知 senior / 啟動急救系統，不要等完整檢查'
+    ],
+
+    assess: [
+      'OPQRST：何時開始？突發或漸進？壓迫、撕裂、刺痛？是否放射？',
+      '有無 dyspnea、diaphoresis、nausea、syncope',
+      '雙側 BP、pulse symmetry',
+      'Heart：murmur、JVP、心音',
+      'Lung：單側呼吸音降低、crackles',
+      '下肢單側腫脹 / DVT signs'
+    ],
+
+    orders: [
+      'ECG + Troponin',
+      'CBC、Cr、electrolytes',
+      'CXR',
+      'ABG/VBG：低血氧、呼吸窘迫或酸鹼問題時',
+      'CTA / D-dimer 等依 PE 或 aortic dissection 的 pretest probability 決定'
+    ],
+
     urgent: [
-      { name:'急性冠心症（ACS）', sub:'STEMI / NSTEMI / 不穩定心絞痛', url:'im/cardio.html#ami' },
-      { name:'主動脈剝離', sub:'突發撕裂感、前後背放射、兩側血壓差', url:'surg/cardiac-surg.html#cardiac-aorta' },
-      { name:'肺栓塞（PE）', sub:'呼吸困難 + 低血氧 + D-dimer↑', url:'im/pulm.html#pe' },
-      { name:'張力性氣胸', sub:'氣管偏移、呼吸音消失、血壓↓', url:'er/chest-trauma.html#chest-trauma' },
-      { name:'心包填塞', sub:'Beck triad：低血壓 + 頸靜脈怒張 + 心音遠', url:'im/cardio.html#ad' },
+      { name:'急性冠心症 ACS', sub:'壓迫性胸痛、冒冷汗、ischemic ECG / Troponin', url:'im/cardio.html#ami' },
+      { name:'Aortic dissection', sub:'突發撕裂痛、背部放射、pulse / BP difference', url:'surg/cardiac-surg.html#cardiac-aorta' },
+      { name:'Pulmonary embolism', sub:'突發 dyspnea、tachycardia、hypoxemia', url:'im/pulm.html#pe' },
+      { name:'Tension pneumothorax', sub:'低血壓 + 單側呼吸音消失；不穩定時不可等影像', url:'er/chest-trauma.html#chest-trauma' },
+      { name:'Cardiac tamponade', sub:'低血壓、JVD、POCUS 心包積液', url:'im/cardio.html#ad' }
     ],
+
     other: [
-      { name:'穩定型心絞痛', sub:'用力誘發、休息緩解', url:'im/cardio.html#ami' },
-      { name:'GERD / 食道痙攣', sub:'燒心、與飲食相關', url:'im/gi.html#esophageal-gastric' },
-      { name:'肌肉骨骼（胸壁）', sub:'局部壓痛、呼吸時加重', url:'' },
-      { name:'肺炎 / 胸膜炎', sub:'發燒、咳嗽、呼吸時加重', url:'im/pulm.html#pneumonia' },
-    ],
-    actions: ['立刻 12-lead ECG（10 分鐘內）', 'Troponin + CXR + ABG', '建立 IV + 心電圖監測', '疼痛評估：特性 / 放射 / 誘因 / 緩解']
+      { name:'GERD / 食道疾病', sub:'灼熱、與飲食或平躺相關', url:'im/gi.html#esophageal-gastric' },
+      { name:'Musculoskeletal chest pain', sub:'局部壓痛、姿勢或動作相關', url:'' },
+      { name:'Pneumonia / pleuritis', sub:'發燒、咳嗽、pleuritic pain', url:'im/pulm.html#pneumonia' }
+    ]
   },
+
+
+  /* =========================
+     呼吸困難
+  ========================= */
   'dyspnea': {
     title: '🔴 呼吸困難 Dyspnea',
+
+    unstable: [
+      'SpO₂ 明顯下降或快速惡化',
+      'RR 很快、使用 accessory muscles、無法完整說話',
+      '意識改變、CO₂ narcosis',
+      '低血壓 / shock',
+      'silent chest、stridor 或 impending respiratory failure'
+    ],
+
+    now: [
+      'ABC + Vital signs + SpO₂，立即坐起',
+      '低血氧時先給氧，目標依病人狀況調整；COPD 需留意 CO₂ retention',
+      '接 monitor + 建立 IV access',
+      '快速聽肺：wheeze？crackles？單側無呼吸音？',
+      '不穩定時同步準備 BVM / NIV / intubation 並通知 senior'
+    ],
+
+    assess: [
+      '突發還是漸進？',
+      'orthopnea / PND / leg edema',
+      'fever / cough / sputum',
+      'wheeze、COPD / asthma history',
+      'pleuritic pain、DVT risk、近期手術或臥床',
+      '單側 breath sound、JVP、crackles'
+    ],
+
+    orders: [
+      'CXR',
+      'ECG',
+      'ABG/VBG：呼吸窘迫、COPD、酸鹼或 ventilatory failure 疑慮',
+      'CBC、electrolytes、Cr',
+      'BNP / NT-proBNP：懷疑 HF 時',
+      'D-dimer / CTA：依 PE risk assessment 決定',
+      'POCUS：lung B-lines、pleural sliding、cardiac function、effusion'
+    ],
+
     urgent: [
-      { name:'急性心衰竭 / 肺水腫', sub:'端坐呼吸、濕囉音、BNP↑', url:'im/cardio.html#hf' },
-      { name:'肺栓塞（PE）', sub:'突發、低血氧、心跳過速', url:'im/pulm.html#pe' },
-      { name:'氣胸', sub:'單側呼吸音↓、叩診過清', url:'er/trauma.html#chest-trauma' },
-      { name:'嚴重氣喘 / COPD 急性惡化', sub:'喘鳴、呼氣困難、使用輔助呼吸肌', url:'im/pulm.html#asthma' },
-      { name:'上呼吸道阻塞', sub:'喘鳴（Stridor）、吞嚥困難', url:'er/general.html#abcde' },
+      { name:'Acute pulmonary edema / HF', sub:'orthopnea、crackles、B-lines、volume overload', url:'im/cardio.html#hf' },
+      { name:'PE', sub:'突發 dyspnea、tachycardia、低血氧', url:'im/pulm.html#pe' },
+      { name:'Pneumothorax', sub:'單側呼吸音↓；張力型合併低血壓', url:'er/trauma.html#chest-trauma' },
+      { name:'Severe asthma / COPD exacerbation', sub:'wheeze、呼氣延長、accessory muscle use', url:'im/pulm.html#asthma' },
+      { name:'Upper airway obstruction', sub:'stridor、吞嚥困難、聲音改變', url:'er/general.html#abcde' }
     ],
+
     other: [
-      { name:'肺炎', sub:'發燒、咳嗽、局部叩診濁音', url:'im/pulm.html#pneumonia' },
-      { name:'貧血', sub:'Hb↓、心跳過速、蒼白', url:'im/hema.html' },
-      { name:'代謝性酸中毒', sub:'Kussmaul 呼吸、DM / 腎衰竭', url:'im/nephro.html#aki' },
-      { name:'焦慮 / 過度換氣', sub:'肢端麻木、手足抽搐、排除器質性', url:'' },
-    ],
-    actions: ['SpO₂ + ABG + CXR', '4L O₂鼻導管先給（低血氧時）', '評估呼吸速率 / 輔助呼吸肌 / 三腳架坐姿', 'ECG + BNP + D-dimer（依臨床懷疑）']
+      { name:'Pneumonia', sub:'發燒、咳嗽、CXR infiltration', url:'im/pulm.html#pneumonia' },
+      { name:'Anemia', sub:'Hb↓、tachycardia、pallor', url:'im/hema.html' },
+      { name:'Metabolic acidosis', sub:'Kussmaul breathing', url:'im/nephro.html#aki' },
+      { name:'Anxiety / hyperventilation', sub:'器質性原因排除後再考慮', url:'' }
+    ]
   },
+
+
+  /* =========================
+     腹痛
+  ========================= */
   'abdominal-pain': {
     title: '🟡 腹痛 Abdominal Pain',
+
+    unstable: [
+      'hypotension / shock',
+      '板狀腹、rebound tenderness、generalized peritonitis',
+      '持續劇痛合併 altered consciousness',
+      'GI bleeding 合併 instability',
+      '疑 ruptured AAA / perforation / bowel ischemia'
+    ],
+
+    now: [
+      'Vital signs + ABC',
+      'NPO',
+      '建立 IV access',
+      '給予適當 analgesia / antiemetic，不必因怕遮掩症狀而完全不止痛',
+      '不穩定、peritonitis 或明顯 surgical abdomen → 早期通知外科'
+    ],
+
+    assess: [
+      '疼痛位置、移動、突然或漸進',
+      '最後排便 / 排氣時間',
+      '嘔吐：bilious？bloody？',
+      '腹部 distension',
+      '腹膜刺激徵象',
+      '過去腹部手術史',
+      '育齡女性：LMP、懷孕可能'
+    ],
+
+    orders: [
+      'CBC、CMP / LFT、Lipase',
+      'Lactate：shock / bowel ischemia suspicion',
+      'Urinalysis',
+      'β-hCG：具懷孕可能者',
+      'CT abdomen / pelvis 或 ultrasound 依病況選擇'
+    ],
+
     urgent: [
-      { name:'腸繫膜缺血（AMI）', sub:'疼痛與體徵不成比例、心房顫動病史', url:'im/gi.html#intestinal-ischemia' },
-      { name:'主動脈瘤破裂（AAA）', sub:'突發腰腹痛 + 血壓↓ + 腹部搏動性腫塊', url:'surg/cardiac-surg.html#cardiac-aorta' },
-      { name:'腸穿孔 / 瀰漫性腹膜炎', sub:'板狀腹、反彈痛、CXR 見游離氣體', url:'surg/gs.html' },
-      { name:'急性闌尾炎', sub:'McBurney 壓痛、Rovsing sign', url:'surg/gs.html' },
+      { name:'Mesenteric ischemia', sub:'pain out of proportion、AF、lactate 可能升高', url:'im/gi.html#intestinal-ischemia' },
+      { name:'Ruptured AAA', sub:'突發腹 / 背痛 + hypotension', url:'surg/cardiac-surg.html#cardiac-aorta' },
+      { name:'GI perforation / peritonitis', sub:'板狀腹、rebound、free air', url:'surg/gs.html' },
+      { name:'Bowel obstruction / strangulation', sub:'distension、vomiting、no flatus；缺血時疼痛加劇', url:'surg/gs.html' },
+      { name:'Ectopic pregnancy / ovarian torsion', sub:'下腹痛、育齡女性', url:'obgyn/obgyn.html' }
     ],
+
     other: [
-      { name:'急性胰臟炎', sub:'上腹放射背部、Lipase↑、酒精 / 膽石', url:'im/gi.html#pancreatitis' },
-      { name:'膽囊炎 / 膽管炎', sub:'Murphy sign、發燒、Charcot triad', url:'im/gi.html#biliary' },
-      { name:'消化性潰瘍', sub:'上腹痛、與飲食相關', url:'im/gi.html#esophageal-gastric' },
-      { name:'腸阻塞', sub:'脹氣、無排便排氣、CXR 見氣液面', url:'surg/gs.html' },
-      { name:'婦科急症（異位妊娠）', sub:'育齡女性 + 下腹痛 → 一定要驗孕', url:'obgyn/obgyn.html' },
-    ],
-    actions: ['NPO + IV access', 'CBC + CMP + Lipase + Lactate + hCG（女性）', '腹部 X 光 / CT（依臨床懷疑）', '外科 / 婦科會診時機：腹膜炎徵象、血流動力學不穩']
+      { name:'Pancreatitis', sub:'上腹痛放射背部、Lipase↑', url:'im/gi.html#pancreatitis' },
+      { name:'Cholecystitis / cholangitis', sub:'RUQ pain、Murphy / Charcot', url:'im/gi.html#biliary' },
+      { name:'Appendicitis', sub:'periumbilical → RLQ、McBurney tenderness', url:'surg/gs.html#appendicitis' },
+      { name:'Peptic ulcer disease', sub:'epigastric pain', url:'im/gi.html#esophageal-gastric' }
+    ]
   },
+
+
+  /* =========================
+     嘔吐
+  ========================= */
   'vomit': {
-    title: '🟡 嘔吐 Vomit',
+    title: '🟡 嘔吐 Vomiting',
+
+    unstable: [
+      'hypotension / dehydration / shock',
+      'altered consciousness 或 aspiration risk',
+      'severe abdominal distension / peritoneal signs',
+      'hematemesis',
+      '新發 neurologic deficit 或 severe headache'
+    ],
+
+    now: [
+      'Vital signs + Glucose',
+      'NPO（原因未明或疑 obstruction 時）',
+      '建立 IV，評估 dehydration 與 electrolyte loss',
+      '必要時給 antiemetic',
+      '疑 obstruction + persistent vomiting / marked distension → 考慮 NG decompression'
+    ],
+
+    assess: [
+      'vomitus：食物、bilious、coffee-ground、fresh blood',
+      '最後排便 / 排氣',
+      '腹脹、腹痛、腹膜刺激徵象',
+      'headache / AMS / neurologic symptoms',
+      '近期化療、麻醉、opioid 或其他新藥',
+      '懷孕可能'
+    ],
+
+    orders: [
+      'CBC、Na、K、Cr、glucose',
+      'LFT / Lipase 視症狀',
+      'β-hCG',
+      'ECG：QT prolongation risk 或準備使用 QT-prolonging antiemetic 時',
+      'Abdominal imaging：疑 obstruction / perforation 時'
+    ],
+
     urgent: [
-      { name:'腸阻塞', sub:'腹脹、無排氣', url:'im/gi.html#intestinal-ischemia' },
-      { name:'顱內壓升高', sub:'噴射性嘔吐 + 頭痛 + 意識改變', url:'surg/neuro-surg#tbi' },
-      { name:'心肌梗塞(下壁 MI常以噁心表現)', sub:'板狀腹、反彈痛、CXR 見游離氣體', url:'im/cardio.html#ami' },
-      { name:'糖尿病酮酸中毒', sub:'McBurney 壓痛、Rovsing sign', url:'im/endo.html#dka' },
+      { name:'Bowel obstruction', sub:'腹脹 + no flatus / stool + vomiting', url:'surg/gs.html' },
+      { name:'Raised ICP', sub:'headache、projectile vomiting、AMS', url:'surg/neuro-surg#tbi' },
+      { name:'ACS / inferior MI', sub:'老人或糖尿病患者可能以 nausea/vomiting 表現', url:'im/cardio.html#ami' },
+      { name:'DKA / HHS', sub:'hyperglycemia、dehydration、acidosis', url:'im/endo.html#dka' }
     ],
+
     other: [
-      { name:'高血鈣', sub:'上腹放射背部、Lipase↑、酒精 / 膽石', url:'im/nephro.html#calcium' },
-      { name:'藥物副作用', sub:'化療藥:Cisplatin、Opioid、抗生素:Macrolide、Metformin、Digoxin 中毒:噁心+厭食+看東西發黃是經典描述、麻醉術後(PONV)', url:'im/gi.html#biliary' },
-    ],
-    actions: ['新發生的嘔吐要先想以上urgent', '單純給止吐藥可能掩蓋病情', '值班好用：Ondansetron(Zofran): QTc prolong、便秘', 'Metoclopramide(Primperan): EPS，老人、腎功能不良者慎用']
+      { name:'Medication / chemotherapy / PONV', sub:'常見住院原因', url:'' },
+      { name:'Hypercalcemia', sub:'nausea、constipation、AMS', url:'im/nephro.html#calcium' },
+      { name:'Gastroenteritis', sub:'vomiting + diarrhea', url:'' }
+    ]
   },
+
+
+  /* =========================
+     頭痛
+  ========================= */
   'headache': {
     title: '🔴 頭痛 Headache',
+
+    unstable: [
+      'altered consciousness',
+      'new focal neurologic deficit',
+      'seizure',
+      'meningeal signs + sepsis',
+      'thunderclap headache'
+    ],
+
+    now: [
+      'Vital signs + neurologic exam + GCS',
+      'Glucose',
+      '確認是否 thunderclap / new neuro deficit / fever',
+      '有 red flag → 先安排 urgent neuroimaging / senior review',
+      '穩定且無 red flag 才進入 primary headache pathway'
+    ],
+
+    assess: [
+      '突然達高峰？',
+      '第一次或人生最嚴重？',
+      'fever / neck stiffness',
+      'focal deficit / seizure',
+      'anticoagulant use / trauma',
+      'pregnancy / postpartum',
+      'age >50 新發 headache',
+      'papilledema symptoms / visual change'
+    ],
+
+    orders: [
+      'Non-contrast CT brain：SAH / bleed / mass effect suspicion',
+      'CBC、CRP / ESR：感染或 GCA suspicion',
+      'LP：依 SAH / meningitis 情境，且先判斷是否需 CT',
+      'BP、glucose'
+    ],
+
     urgent: [
-      { name:'蜘蛛網膜下腔出血（SAH）', sub:'「一生中最嚴重的頭痛」、突發、頸部僵硬', url:'im/neuro.html#stroke' },
-      { name:'腦膜炎 / 腦炎', sub:'發燒 + 頸部僵硬 + 意識改變', url:'im/infect.html#neuro-infxn' },
-      { name:'顱內壓升高', sub:'體位性、視乳突水腫、早晨嘔吐', url:'im/neuro.html#mental-status' },
-      { name:'顳動脈炎（GCA）', sub:'年齡 >50、顳部壓痛、ESR↑、視力喪失風險', url:'im/rheum.html' },
+      { name:'SAH', sub:'thunderclap headache、neck stiffness', url:'im/neuro.html#stroke' },
+      { name:'Meningitis / encephalitis', sub:'fever、neck stiffness、AMS', url:'im/infect.html#neuro-infxn' },
+      { name:'Intracranial hemorrhage / mass', sub:'focal deficit、vomiting、papilledema', url:'im/neuro.html#mental-status' },
+      { name:'GCA', sub:'>50 歲新發頭痛、jaw claudication、視力症狀', url:'im/rheum.html' }
     ],
+
     other: [
-      { name:'偏頭痛', sub:'單側搏動性、畏光畏聲、前兆', url:'im/neuro.html#headache' },
-      { name:'叢集性頭痛', sub:'眼周劇痛、自律神經症狀、週期性', url:'im/neuro.html#headache' },
-      { name:'緊張型頭痛', sub:'雙側壓迫感、無搏動性', url:'im/neuro.html#headache' },
-      { name:'藥物過度使用頭痛', sub:'止痛藥使用 >10-15 天/月', url:'im/neuro.html#headache' },
-    ],
-    actions: ['Red flags：Thunder clap / 發燒 / 神經學缺損 / 乳突水腫 → CT + LP', '顳動脈炎懷疑 → 立刻 Prednisolone（不等切片）', 'ESR / CRP（>50 歲新發頭痛）', '血壓（高血壓緊急症）']
+      { name:'Migraine', sub:'單側搏動、photophobia / nausea', url:'im/neuro.html#headache' },
+      { name:'Tension headache', sub:'雙側壓迫感', url:'im/neuro.html#headache' },
+      { name:'Cluster headache', sub:'眼周劇痛 + autonomic symptoms', url:'im/neuro.html#headache' }
+    ]
   },
+
+
+  /* =========================
+     意識改變
+  ========================= */
   'ams': {
     title: '🔴 意識改變 AMS',
+
+    unstable: [
+      'GCS 快速下降',
+      'airway protection 不足',
+      'seizure / status epilepticus',
+      'focal neurologic deficit',
+      'severe hypoxemia / shock'
+    ],
+
+    now: [
+      'ABC + SpO₂ + monitor',
+      '立刻 fingerstick glucose',
+      '評估 GCS / pupils / focal deficit',
+      '建立 IV access',
+      '低血糖、opioid toxicity、seizure 等可立即逆轉原因先處理',
+      'airway 不安全 → 立即通知 senior 並準備 airway management'
+    ],
+
+    assess: [
+      'baseline mental status？何時開始？',
+      '藥物 / opioid / sedative',
+      'fever / infection',
+      'fall / trauma',
+      'focal neurologic deficit',
+      'urinary retention / constipation / pain 等 delirium trigger'
+    ],
+
+    orders: [
+      'Glucose',
+      'CBC、Na、K、Ca、Cr、LFT',
+      'ABG/VBG：hypercapnia / acid-base suspicion',
+      'CT brain：focal deficit、trauma、severe headache、原因不明急性 AMS',
+      'Cultures / CXR / UA：依感染可能',
+      'EEG：懷疑 NCSE'
+    ],
+
     urgent: [
-      { name:'低血糖', sub:'最快排除！立刻 fingerstick glucose', url:'im/endo.html' },
-      { name:'腦中風', sub:'局部神經學缺損、FAST', url:'im/neuro.html#stroke' },
-      { name:'腦膜炎 / 腦炎', sub:'發燒 + 頸部僵硬', url:'im/infect.html#neuro-infxn' },
-      { name:'顱內出血', sub:'突發、血壓極高、CT 確認', url:'im/neuro.html#stroke' },
-      { name:'非痙攣性癲癇持續狀態（NCSE）', sub:'無明顯抽搐但意識模糊 → EEG', url:'im/neuro.html#seizure' },
+      { name:'Hypoglycemia', sub:'第一個要排除的可逆原因', url:'im/endo.html' },
+      { name:'Stroke / intracranial hemorrhage', sub:'focal deficit、acute onset', url:'im/neuro.html#stroke' },
+      { name:'Meningitis / encephalitis', sub:'fever + neck stiffness / seizure', url:'im/infect.html#neuro-infxn' },
+      { name:'NCSE', sub:'持續意識異常但無明顯抽搐', url:'im/neuro.html#seizure' }
     ],
+
     other: [
-      { name:'譫妄（Delirium）', sub:'急性波動性、老年人、找誘因（感染 / 藥物 / 代謝）', url:'er/general.html#ams-er' },
-      { name:'代謝性腦病變', sub:'Na / Glucose / 氨 / CO₂ / 肝衰竭 / 尿毒症', url:'im/nephro.html#aki' },
-      { name:'藥物 / 中毒', sub:'Opioid（縮瞳）、Benzo、酒精', url:'er/toxicology.html' },
-      { name:'Wernicke 腦病變', sub:'酒精 / 營養不良 → Thiamine 先給再葡萄糖', url:'er/toxicology.html' },
-    ],
-    actions: ['立刻 Glucose fingerstick', 'AEIOU TIPS 鑑別框架', 'ABC + GCS 評估', 'CT 腦部（局部神經學缺損 / 外傷 / 嚴重頭痛）', 'Labs：Na / Glucose / NH3 / TSH / 藥物濃度']
+      { name:'Delirium', sub:'急性波動性；感染、藥物、代謝、環境皆可能', url:'er/general.html#ams-er' },
+      { name:'Metabolic encephalopathy', sub:'Na / Ca / CO₂ / hepatic / uremic', url:'im/nephro.html#aki' },
+      { name:'Drug / intoxication', sub:'opioid、benzodiazepine、alcohol 等', url:'er/toxicology.html' }
+    ]
   },
+
+
+  /* =========================
+     發燒
+  ========================= */
   'fever': {
     title: '🟡 發燒 Fever',
+
+    unstable: [
+      'hypotension / poor perfusion',
+      'altered consciousness',
+      'respiratory distress',
+      'neutropenia',
+      'meningismus',
+      'rapidly progressive skin / soft tissue infection'
+    ],
+
+    now: [
+      'Vital signs + SpO₂',
+      '先判斷是否 sepsis / shock，不要只開退燒藥',
+      '建立 IV access（不穩定或可能需要 IV treatment 時）',
+      '找感染 source：lung、urine、abdomen、skin、line / wound',
+      '疑 severe infection → cultures 後儘快給適當 empiric antibiotics；不要為了等 culture 明顯延誤治療'
+    ],
+
+    assess: [
+      '住院第幾天？術後第幾天？',
+      'line / Foley / drain',
+      'cough / sputum / dyspnea',
+      'urinary symptoms',
+      'abdominal pain / diarrhea',
+      'skin wound / pressure sore',
+      'neutropenia / immunosuppression'
+    ],
+
+    orders: [
+      'CBC + differential',
+      'CMP / Cr',
+      'Lactate：疑 shock / hypoperfusion 時',
+      'Blood culture ×2：疑 bacteremia / sepsis 時',
+      'UA / urine culture',
+      'CXR：呼吸道症狀或 source 不明',
+      '其他影像依 source'
+    ],
+
     urgent: [
-      { name:'敗血症（Sepsis）', sub:'感染 + qSOFA ≥2 → 1 小時抗生素', url:'im/infect.html#sepsis' },
-      { name:'腦膜炎', sub:'頸部僵硬 + 頭痛 + 畏光', url:'im/infect.html#neuro-infxn' },
-      { name:'壞死性筋膜炎', sub:'皮膚不成比例的劇痛、進展快速', url:'surg/gs.html' },
-      { name:'中性白血球減少性發燒', sub:'化療後 ANC <500 → 緊急抗生素', url:'im/onco.html' },
+      { name:'Sepsis / septic shock', sub:'infection + organ dysfunction / hypoperfusion', url:'im/infect.html#sepsis' },
+      { name:'Neutropenic fever', sub:'ANC <500 或預期快速下降', url:'im/onco.html' },
+      { name:'Meningitis', sub:'fever + headache + neck stiffness / AMS', url:'im/infect.html#neuro-infxn' },
+      { name:'Necrotizing soft tissue infection', sub:'pain out of proportion、rapid progression', url:'surg/gs.html' }
     ],
+
     other: [
-      { name:'泌尿道感染 / 腎盂腎炎', sub:'頻尿 / 排尿痛 / 腰痛 / CVA tenderness', url:'im/infect.html' },
-      { name:'肺炎', sub:'咳嗽 / 痰 / 呼吸困難 / CXR 浸潤', url:'im/pulm.html#pneumonia' },
-      { name:'蜂窩組織炎', sub:'皮膚紅腫熱痛、邊界不清', url:'im/infect.html' },
-      { name:'藥物熱', sub:'排除其他原因、停藥後退燒', url:'im/infect.html' },
-    ],
-    actions: ['Blood culture × 2 套（抗生素前）', 'CBC + CMP + Lactate + CRP / PCT', 'Urine culture + UA', '找感染源：CXR + 皮膚 + 傷口 + 導管', 'Sepsis → Hour-1 bundle']
+      { name:'UTI / pyelonephritis', sub:'dysuria、CVA tenderness', url:'im/infect.html' },
+      { name:'Pneumonia', sub:'cough、sputum、infiltration', url:'im/pulm.html#pneumonia' },
+      { name:'Cellulitis', sub:'erythema / warmth / tenderness', url:'im/infect.html' },
+      { name:'Drug fever', sub:'diagnosis of exclusion', url:'im/infect.html' }
+    ]
   },
+
+
+  /* =========================
+     暈厥
+  ========================= */
   'syncope': {
     title: '🟡 暈厥 Syncope',
+
+    unstable: [
+      '目前仍 hypotension',
+      'persistent AMS',
+      'chest pain / dyspnea',
+      'severe arrhythmia',
+      'exertional syncope with cardiac disease',
+      'major trauma secondary to syncope'
+    ],
+
+    now: [
+      '先確認 ABC + Vital signs',
+      '12-lead ECG',
+      'Glucose fingerstick',
+      '接 monitor（高風險或疑 arrhythmia）',
+      '確認是否真的為 syncope：短暫 LOC + spontaneous recovery'
+    ],
+
+    assess: [
+      '發作前有無 prodrome',
+      '用力時發生？',
+      'palpitation / chest pain',
+      'family history sudden death',
+      '發作後是否 prolonged confusion（考慮 seizure）',
+      '出血、dehydration、藥物'
+    ],
+
+    orders: [
+      'ECG',
+      'Orthostatic BP：適合時',
+      'CBC：疑 anemia / bleeding',
+      'Electrolytes / glucose',
+      'Troponin / echo 等依 cardiac suspicion'
+    ],
+
     urgent: [
-      { name:'心律不整（VT / 完全性 AVB）', sub:'ECG 立刻！尤其有心臟病史', url:'im/cardio.html#arrhythmia' },
-      { name:'主動脈狹窄', sub:'用力時暈厥 + 心雜音', url:'im/cardio.html#ad' },
-      { name:'肺栓塞', sub:'暈厥 + 呼吸困難 + 低血氧', url:'im/pulm.html#pe' },
-      { name:'主動脈剝離', sub:'劇烈胸痛 + 暈厥', url:'surg/cardiac-surg.html#cardiac-aorta' },
+      { name:'Arrhythmia', sub:'VT、high-grade AV block 等', url:'im/cardio.html#arrhythmia' },
+      { name:'Structural heart disease', sub:'AS / HCM，尤其 exertional syncope', url:'im/cardio.html#ad' },
+      { name:'PE', sub:'syncope + dyspnea / hypoxemia', url:'im/pulm.html#pe' },
+      { name:'Aortic dissection', sub:'severe chest/back pain + syncope', url:'surg/cardiac-surg.html#cardiac-aorta' }
     ],
+
     other: [
-      { name:'血管迷走性暈厥（最常見）', sub:'誘因（疼痛 / 站立 / 情緒）、前驅症狀、快速恢復', url:'' },
-      { name:'直立性低血壓', sub:'站起時血壓↓ >20/10 mmHg', url:'im/cardio.html' },
-      { name:'情境性暈厥', sub:'咳嗽 / 排尿 / 排便後', url:'' },
-      { name:'低血糖', sub:'Glucose fingerstick 立刻確認', url:'im/endo.html' },
-    ],
-    actions: ['立刻 ECG', 'Glucose fingerstick', '臥立血壓（直立性低血壓）', '心臟結構性病變評估（心超）', 'San Francisco Syncope Rule：高風險 → 住院監測']
+      { name:'Vasovagal syncope', sub:'trigger + prodrome + rapid recovery', url:'' },
+      { name:'Orthostatic hypotension', sub:'standing-related symptoms', url:'im/cardio.html' },
+      { name:'Hypoglycemia', sub:'確認 glucose', url:'im/endo.html' }
+    ]
   },
+
+
+  /* =========================
+     心悸
+  ========================= */
   'palpitation': {
     title: '🔵 心悸 Palpitation',
+
+    unstable: [
+      'hypotension / shock',
+      'chest pain / ischemia',
+      'acute pulmonary edema',
+      'altered consciousness / syncope',
+      'sustained wide-complex tachycardia'
+    ],
+
+    now: [
+      'Vital signs + SpO₂',
+      '立刻 ECG；若發作中最有價值',
+      '接 cardiac monitor',
+      '判斷：stable or unstable？regular or irregular？narrow or wide QRS？',
+      'unstable tachyarrhythmia → 依 ACLS 進行 synchronized cardioversion'
+    ],
+
+    assess: [
+      '突然開始 / 突然停止？',
+      '規則或不規則？',
+      'chest pain / dyspnea / syncope',
+      '咖啡因、酒精、刺激性藥物',
+      'thyroid symptoms'
+    ],
+
+    orders: [
+      'ECG',
+      'K / Mg / Ca',
+      'CBC',
+      'TSH / free T4：適當情境',
+      'Troponin：ischemia suspicion',
+      'Holter / event monitor：間歇性且穩定'
+    ],
+
     urgent: [
-      { name:'室性心搏過速（VT）', sub:'血流動力學不穩定 → 立刻電擊', url:'im/cardio.html#arrhythmia' },
-      { name:'WPW 合併 AF', sub:'不規則寬 QRS → 不可用 AV node blockers', url:'im/cardio.html#arrhythmia' },
-      { name:'尖端扭轉（Torsades）', sub:'長 QT + 多形性 VT', url:'im/cardio.html#arrhythmia' },
+      { name:'VT', sub:'wide-complex tachycardia；不穩定 → synchronized cardioversion', url:'im/cardio.html#arrhythmia' },
+      { name:'WPW + AF', sub:'irregular wide-complex tachycardia；避免單純 AV nodal blocker', url:'im/cardio.html#arrhythmia' },
+      { name:'Torsades', sub:'polymorphic VT + prolonged QT', url:'im/cardio.html#arrhythmia' }
     ],
+
     other: [
-      { name:'心房顫動（AF）', sub:'不規則心律 + 無 P 波', url:'im/cardio.html#arrhythmia' },
-      { name:'SVT（陣發性室上心搏過速）', sub:'突發突止、規則、迷走刺激可終止', url:'im/cardio.html#arrhythmia' },
-      { name:'PVC（早期心室收縮）', sub:'間歇性不規則、「心跳停頓」感', url:'im/cardio.html#arrhythmia' },
-      { name:'甲狀腺亢進', sub:'TSH↓ + 心跳過速 + 手抖', url:'im/endo.html' },
-      { name:'焦慮 / 貧血 / 咖啡因', sub:'排除器質性後考慮', url:'' },
-    ],
-    actions: ['立刻 12-lead ECG（最重要）', '血壓 + SpO₂', 'TSH / T4（甲狀腺）', 'CBC（貧血）', 'Holter monitor（間歇性症狀）']
+      { name:'AF', sub:'irregularly irregular', url:'im/cardio.html#arrhythmia' },
+      { name:'SVT', sub:'regular narrow tachycardia，sudden onset', url:'im/cardio.html#arrhythmia' },
+      { name:'PVC', sub:'ectopic beat / skipped beat sensation', url:'im/cardio.html#arrhythmia' }
+    ]
   },
+
+
+  /* =========================
+     背痛
+  ========================= */
   'back-pain': {
     title: '🔵 背痛 Back Pain',
+
+    unstable: [
+      'new motor weakness',
+      'saddle anesthesia',
+      'urinary retention / new incontinence',
+      'fever + neurologic deficit',
+      'shock + sudden back / abdominal pain'
+    ],
+
+    now: [
+      'Vital signs',
+      '先問 red flags',
+      '完整 lower-extremity neurologic exam',
+      '確認 bladder / bowel function',
+      '有 cauda equina / epidural abscess suspicion → urgent MRI + consultation'
+    ],
+
+    assess: [
+      'trauma',
+      'cancer history / weight loss',
+      'fever / IVDU / immunosuppression',
+      'night pain',
+      'radiculopathy',
+      'saddle anesthesia / urinary retention'
+    ],
+
+    orders: [
+      'MRI：neurologic deficit / cauda equina / infection / malignancy suspicion',
+      'X-ray：特定 trauma / fracture risk',
+      'CBC / CRP / ESR：infection suspicion',
+      'UA：renal source suspicion'
+    ],
+
     urgent: [
-      { name:'馬尾症候群', sub:'雙側神經根症狀 + 大小便失禁 + 鞍區麻木 → 緊急 MRI', url:'surg/ortho.html#ortho-spine' },
-      { name:'主動脈剝離 / 動脈瘤', sub:'突發撕裂感、腹部搏動性腫塊', url:'surg/cardiac-surg.html#cardiac-aorta' },
-      { name:'脊椎硬膜外膿瘍', sub:'發燒 + 背痛 + 神經學缺損', url:'im/infect.html' },
-      { name:'脊椎轉移性腫瘤', sub:'癌症病史 + 夜間背痛 + 體重下降', url:'im/onco.html' },
+      { name:'Cauda equina syndrome', sub:'saddle anesthesia、retention、bilateral deficits', url:'surg/ortho.html#ortho-spine' },
+      { name:'Spinal epidural abscess', sub:'fever + back pain ± neurologic deficit', url:'im/infect.html' },
+      { name:'Aortic pathology', sub:'sudden tearing back pain / shock', url:'surg/cardiac-surg.html#cardiac-aorta' },
+      { name:'Malignancy / cord compression', sub:'cancer history + night pain + deficit', url:'im/onco.html' }
     ],
+
     other: [
-      { name:'非特異性下背痛（最常見）', sub:'90%；活動後加重、無神經學缺損', url:'others/rehab.html#rehab-msk' },
-      { name:'神經根病變', sub:'放射至下肢、SLR test（+）', url:'others/rehab.html#rehab-msk' },
-      { name:'腎盂腎炎', sub:'CVA 壓痛 + 發燒 + 泌尿道症狀', url:'im/infect.html' },
-      { name:'椎管狹窄', sub:'神經性跛行、彎腰緩解、老年人', url:'others/rehab.html#rehab-msk' },
-    ],
-    actions: ['Red flags 篩查（發燒 / 體重下降 / 癌症史 / 大小便失禁）', '神經學檢查（肌力 / 反射 / 感覺）', 'X 光（外傷 / 骨質疏鬆）', 'MRI（神經學缺損 / 懷疑馬尾）', 'UA（排除腎臟來源）']
+      { name:'Mechanical low back pain', sub:'movement-related、no neurologic deficit', url:'others/rehab.html#rehab-msk' },
+      { name:'Radiculopathy', sub:'leg radiation / SLR+', url:'others/rehab.html#rehab-msk' },
+      { name:'Pyelonephritis / renal pain', sub:'CVA tenderness、fever / urinary symptoms', url:'im/infect.html' }
+    ]
   },
+
+
+  /* =========================
+     水腫
+  ========================= */
   'edema': {
     title: '🔵 水腫 Edema',
+
+    unstable: [
+      'edema + acute dyspnea / hypoxemia',
+      'unilateral leg swelling + chest pain / dyspnea',
+      'rapidly progressive anasarca + oliguria',
+      'facial / tongue swelling with airway symptoms'
+    ],
+
+    now: [
+      '先看 unilateral vs bilateral',
+      'Vital signs + SpO₂',
+      '評估 volume status：JVP、lung crackles、weight、I/O',
+      '有 dyspnea → 優先處理 pulmonary edema / PE',
+      '不要只因為 edema 就 reflexively 給 diuretic；先判斷 intravascular volume'
+    ],
+
+    assess: [
+      '單側或雙側',
+      'pitting / non-pitting',
+      'orthopnea / PND',
+      'urine output / foamy urine',
+      'liver disease / ascites',
+      'CCB、NSAIDs、steroids 等藥物'
+    ],
+
+    orders: [
+      'Cr / electrolytes',
+      'Albumin / LFT',
+      'UA / urine protein',
+      'BNP / NT-proBNP：HF suspicion',
+      'CXR / lung POCUS',
+      'DVT ultrasound：unilateral swelling'
+    ],
+
     urgent: [
-      { name:'急性心衰竭', sub:'雙側下肢水腫 + 端坐呼吸 + BNP↑', url:'im/cardio.html#hf' },
-      { name:'深層靜脈血栓（DVT）', sub:'單側下肢腫脹壓痛 → 超音波', url:'surg/cardiac-surg.html#cardiac-vein' },
-      { name:'腎病症候群', sub:'大量蛋白尿 + 低白蛋白 + 全身水腫', url:'im/nephro.html#ckd' },
+      { name:'Acute HF / pulmonary edema', sub:'bilateral edema + dyspnea', url:'im/cardio.html#hf' },
+      { name:'DVT / PE', sub:'unilateral edema ± dyspnea', url:'surg/cardiac-surg.html#cardiac-vein' },
+      { name:'AKI / nephrotic syndrome', sub:'oliguria、proteinuria、anasarca', url:'im/nephro.html#ckd' }
     ],
+
     other: [
-      { name:'肝硬化 / 低白蛋白血症', sub:'腹水 + 蜘蛛痣 + 黃疸', url:'im/gi.html#cirrhosis' },
-      { name:'慢性靜脈功能不全', sub:'雙側、下午加重、靜脈曲張', url:'surg/cardiac-surg.html#cardiac-vein' },
-      { name:'藥物（CCB / NSAIDs）', sub:'對稱性、無壓痛', url:'' },
-      { name:'甲狀腺功能低下', sub:'黏液水腫、非凹陷性', url:'im/endo.html' },
-    ],
-    actions: ['凹陷性 vs 非凹陷性鑑別', 'BNP / NT-proBNP', '白蛋白 + 肝腎功能 + UA（蛋白尿）', '超音波（DVT / 腹水 / 心功能）', '單側 → DVT 優先排除']
+      { name:'Cirrhosis / hypoalbuminemia', sub:'ascites + low albumin', url:'im/gi.html#cirrhosis' },
+      { name:'Chronic venous insufficiency', sub:'dependent edema、varicosity', url:'surg/cardiac-surg.html#cardiac-vein' },
+      { name:'Medication-related', sub:'CCB、NSAIDs 等', url:'' }
+    ]
   },
+
+
+  /* =========================
+     黃疸
+  ========================= */
   'jaundice': {
     title: '🟡 黃疸 Jaundice',
+
+    unstable: [
+      'fever + jaundice + hypotension / AMS',
+      'acute liver failure signs',
+      'significant bleeding / coagulopathy',
+      'severe abdominal pain + sepsis'
+    ],
+
+    now: [
+      'Vital signs + mental status',
+      '先確認是否 cholangitis / acute liver failure',
+      'NPO + IV access：疑 biliary sepsis 時',
+      '感染性膽道阻塞 → antibiotics + urgent biliary drainage pathway'
+    ],
+
+    assess: [
+      'painful vs painless jaundice',
+      'fever / RUQ pain',
+      'stool / urine color',
+      'medication / herb / alcohol',
+      'recent transfusion',
+      'chronic liver disease'
+    ],
+
+    orders: [
+      'Total / direct bilirubin',
+      'AST / ALT / ALP / GGT',
+      'INR',
+      'CBC',
+      'Abdominal ultrasound：先看 biliary dilatation',
+      'MRCP / CT / ERCP 依 obstruction suspicion'
+    ],
+
     urgent: [
-      { name:'膽管炎（Charcot triad / Reynolds pentad）', sub:'發燒 + 黃疸 + 右上腹痛 → 緊急 ERCP', url:'im/gi.html#biliary' },
-      { name:'急性肝衰竭', sub:'INR >1.5 + 肝性腦病變 + 黃疸', url:'im/gi.html#alf' },
-      { name:'溶血危象', sub:'Hb 急速↓ + 間接膽紅素↑ + 血紅素尿', url:'im/hema.html' },
+      { name:'Acute cholangitis', sub:'fever + jaundice + RUQ pain；severe case may have shock / AMS', url:'im/gi.html#biliary' },
+      { name:'Acute liver failure', sub:'coagulopathy + encephalopathy', url:'im/gi.html#alf' },
+      { name:'Hemolysis', sub:'Hb↓ + indirect bilirubin↑', url:'im/hema.html' }
     ],
+
     other: [
-      { name:'肝炎（病毒性 / 藥物性 / 酒精性）', sub:'ALT / AST ↑↑', url:'im/gi.html#hepatitis' },
-      { name:'肝硬化', sub:'慢性進展、合併腹水', url:'im/gi.html#cirrhosis' },
-      { name:'胰臟癌 / 膽管癌', sub:'無痛性黃疸 + 體重下降 + CA19-9↑', url:'im/gi.html#pancreatitis' },
-      { name:'Gilbert syndrome', sub:'輕度間接膽紅素↑、壓力 / 禁食誘發、良性', url:'im/gi.html#liver-tests' },
-    ],
-    actions: ['直接 vs 間接膽紅素鑑別', 'LFT + INR + CBC', '腹部超音波（膽道擴張 / 肝臟結構）', 'Hepatitis serology（A / B / C）', '膽管炎 → NPO + 抗生素 + 緊急 ERCP']
+      { name:'Hepatitis / DILI', sub:'hepatocellular pattern', url:'im/gi.html#hepatitis' },
+      { name:'Pancreatic / biliary malignancy', sub:'painless obstructive jaundice', url:'im/gi.html#pancreatitis' },
+      { name:'Gilbert syndrome', sub:'isolated mild unconjugated hyperbilirubinemia', url:'im/gi.html#liver-tests' }
+    ]
   },
+
+
+  /* =========================
+     GI bleed
+  ========================= */
   'gi-bleed': {
-    title: '🔴 血便 GI Bleeding',
+    title: '🔴 GI Bleeding',
+
+    unstable: [
+      'hypotension / shock',
+      'ongoing large-volume hematemesis / hematochezia',
+      'altered consciousness / aspiration risk',
+      'rapid Hb fall with active bleeding',
+      'severe comorbidity + ongoing bleed'
+    ],
+
+    now: [
+      'ABC + Vital signs',
+      'NPO',
+      '兩條 large-bore IV',
+      'CBC、type & screen / crossmatch',
+      '啟動適當 resuscitation；大量出血時及早聯絡 GI / surgery / transfusion team',
+      '上消化道來源可能時安排 early endoscopy'
+    ],
+
+    assess: [
+      'hematemesis / coffee-ground / melena / hematochezia',
+      'anticoagulant / antiplatelet / NSAID',
+      'cirrhosis / varices history',
+      'orthostatic symptoms / syncope',
+      'last Hb、baseline Hb'
+    ],
+
+    orders: [
+      'CBC',
+      'PT / INR / aPTT',
+      'BUN / Cr / electrolytes',
+      'LFT',
+      'Type & screen / crossmatch',
+      'GBS：UGIB risk stratification'
+    ],
+
     urgent: [
-      { name:'靜脈曲張出血', sub:'肝硬化患者 → Octreotide + 預防性抗生素 + 緊急 EGD', url:'im/gi.html#gi-bleed' },
-      { name:'大量上消化道出血（UGIB）', sub:'黑便 + 血壓↓ + 心跳↑', url:'im/gi.html#gi-bleed' },
-      { name:'下消化道大量出血', sub:'鮮紅色血便 + 血流動力學不穩', url:'im/gi.html#gi-bleed' },
+      { name:'Massive UGIB', sub:'hemodynamic instability / ongoing hematemesis', url:'im/gi.html#gi-bleed' },
+      { name:'Variceal bleeding', sub:'cirrhosis / portal hypertension', url:'im/gi.html#gi-bleed' },
+      { name:'Severe LGIB', sub:'ongoing hematochezia + instability', url:'im/gi.html#gi-bleed' }
     ],
+
     other: [
-      { name:'消化性潰瘍出血', sub:'Forrest Ia/IIa → 內視鏡止血', url:'im/gi.html#gi-bleed' },
-      { name:'憩室出血', sub:'無痛性大量血便、多自止', url:'im/gi.html#colon' },
-      { name:'大腸癌', sub:'慢性隱血 + 排便習慣改變 + 貧血', url:'im/gi.html#colon' },
-      { name:'痔瘡', sub:'排便後鮮血、與糞便分離、肛門不適', url:'' },
-    ],
-    actions: ['兩條大號 IV + 輸液', '輸血目標 Hb >7（穩定）/ >8（心血管）', 'Glasgow-Blatchford Score（GBS）', 'UGIB：Pantoprazole 80 mg IV + EGD <24h', '靜脈曲張 → Octreotide + Ceftriaxone + EVL']
+      { name:'Peptic ulcer bleeding', sub:'常見 UGIB cause', url:'im/gi.html#gi-bleed' },
+      { name:'Diverticular bleeding', sub:'painless hematochezia', url:'im/gi.html#colon' },
+      { name:'Hemorrhoid', sub:'少量鮮血、通常 hemodynamically stable', url:'' }
+    ]
   },
+
+
+  /* =========================
+     少尿
+  ========================= */
   'oliguria': {
     title: '🔴 少尿 Oliguria',
+
+    unstable: [
+      'hypotension / shock',
+      'anuria',
+      'hyperkalemia / arrhythmia',
+      'pulmonary edema / severe dyspnea',
+      'rapidly rising Cr with systemic illness'
+    ],
+
+    now: [
+      '先確認是不是真的少尿：I/O 是否正確？多久？',
+      '有 Foley → 先檢查 kink / obstruction / bag position',
+      '無 Foley 且懷疑 retention → bladder scan',
+      'Vital signs + volume status',
+      '確認 baseline Cr 與近期 nephrotoxic exposure'
+    ],
+
+    assess: [
+      'dry or wet？',
+      'BP / perfusion',
+      'recent surgery / bleeding / sepsis',
+      'contrast / NSAID / ACEi / ARB / aminoglycoside',
+      'suprapubic fullness',
+      'weight / edema / lung crackles'
+    ],
+
+    orders: [
+      'BUN / Cr / electrolytes',
+      'UA + sediment',
+      'Bladder scan',
+      'Renal ultrasound：postrenal suspicion',
+      'ECG：hyperkalemia',
+      'FENa / FEUrea：僅作輔助，不應單獨決定病因'
+    ],
+
     urgent: [
-      { name:'急性腎損傷（AKI）', sub:'Cr 上升 + 少尿（<0.5 mL/kg/h）', url:'im/nephro.html#aki' },
-      { name:'尿路阻塞（腎後）', sub:'膀胱叩診濁音、超音波氫腎 → 導尿 / 腎瘻管', url:'surg/uro.html' },
-      { name:'休克（腎前）', sub:'血壓↓ + 心跳↑ + 末梢灌流差', url:'er/general.html#shock' },
+      { name:'Shock / prerenal hypoperfusion', sub:'hypotension、poor perfusion', url:'er/general.html#shock' },
+      { name:'Urinary obstruction', sub:'retention / hydronephrosis', url:'surg/uro.html' },
+      { name:'Intrinsic AKI', sub:'Cr rise + abnormal UA / systemic trigger', url:'im/nephro.html#aki' }
     ],
+
     other: [
-      { name:'藥物性腎損傷', sub:'NSAIDs / ACEi / 造影劑 / Aminoglycoside', url:'im/nephro.html#aki' },
-      { name:'腎絲球腎炎', sub:'血尿 + 蛋白尿 + 高血壓', url:'im/nephro.html#aki' },
-      { name:'橫紋肌溶解', sub:'CK↑↑ + 茶色尿 + 肌肉症狀', url:'im/nephro.html#aki' },
-    ],
-    actions: ['Foley catheter（排除尿滯留）', 'BUN / Cr + 電解質 + UA', 'FENa（腎前 <1% / 腎因 >2%）', '大量補液（腎前性）', '停腎毒性藥物', '超音波（排除阻塞）']
+      { name:'Drug-related AKI', sub:'NSAIDs、RAAS blockers、contrast 等', url:'im/nephro.html#aki' },
+      { name:'Cardiorenal / congestion', sub:'edema、JVP↑、pulmonary congestion', url:'im/cardio.html#hf' },
+      { name:'Rhabdomyolysis', sub:'CK↑、dark urine', url:'im/nephro.html#aki' }
+    ]
   },
+
+
+  /* =========================
+     頸部僵硬
+  ========================= */
   'neck-stiff': {
     title: '🔴 頸部僵硬 Neck Stiffness',
+
+    unstable: [
+      'altered consciousness',
+      'seizure',
+      'shock / sepsis',
+      'focal neurologic deficit',
+      'rapid deterioration'
+    ],
+
+    now: [
+      'ABC + Vital signs + GCS',
+      'Glucose',
+      '建立 IV access',
+      '若高度懷疑 bacterial meningitis：抽 blood cultures 後立即給 empiric antibiotics，不應為等待 CT / LP 而明顯延誤',
+      '若 encephalitis 可能 → 同時考慮 empiric acyclovir'
+    ],
+
+    assess: [
+      'fever',
+      'thunderclap headache',
+      'photophobia',
+      'seizure',
+      'focal neurologic deficit',
+      'immunocompromised'
+    ],
+
+    orders: [
+      'Blood culture ×2',
+      'CBC、electrolytes',
+      'CT brain：有特定 raised ICP / mass lesion risk 時在 LP 前先做',
+      'LP：opening pressure、cell count、protein、glucose、culture / PCR'
+    ],
+
     urgent: [
-      { name:'細菌性腦膜炎', sub:'發燒 + 頸部僵硬 + 頭痛 + 意識改變 → 立刻抗生素', url:'im/infect.html#neuro-infxn' },
-      { name:'蜘蛛網膜下腔出血（SAH）', sub:'Thunder clap headache + 頸部僵硬', url:'im/neuro.html#stroke' },
-      { name:'腦炎（HSV）', sub:'發燒 + 意識改變 + 癲癇 → Acyclovir', url:'im/infect.html#neuro-infxn' },
+      { name:'Bacterial meningitis', sub:'fever + headache + neck stiffness ± AMS', url:'im/infect.html#neuro-infxn' },
+      { name:'SAH', sub:'thunderclap headache + meningismus', url:'im/neuro.html#stroke' },
+      { name:'HSV encephalitis', sub:'fever + AMS + seizure / focal signs', url:'im/infect.html#neuro-infxn' }
     ],
+
     other: [
-      { name:'病毒性腦膜炎', sub:'較輕、無細菌感染跡象', url:'im/infect.html#neuro-infxn' },
-      { name:'頸椎病變 / 肌肉緊張', sub:'無發燒、局部壓痛', url:'surg/ortho.html#ortho-spine' },
-      { name:'Kernig / Brudzinski sign', sub:'（+）高度懷疑腦膜刺激', url:'im/infect.html#neuro-infxn' },
-    ],
-    actions: ['立刻血液培養 × 2 套', '立刻廣效抗生素（Ceftriaxone + Dexamethasone）', 'CT 腦部（有局部神經學缺損 → LP 前先 CT）', 'LP（腦壓 / 細胞 / 蛋白 / 糖 / 培養）', '不要為了等 CT 而延誤抗生素']
+      { name:'Viral meningitis', sub:'通常較輕，但仍需依 CSF 判斷', url:'im/infect.html#neuro-infxn' },
+      { name:'Musculoskeletal / cervical disease', sub:'無 systemic / neurologic red flags', url:'surg/ortho.html#ortho-spine' }
+    ]
   },
+
+
+  /* =========================
+     低血壓
+  ========================= */
   'hypotension': {
     title: '🔴 低血壓 Hypotension',
+
+    unstable: [
+      'MAP <65 mmHg 合併 hypoperfusion',
+      'altered consciousness',
+      'cold / mottled extremities',
+      'oliguria',
+      'lactate elevation / rapidly deteriorating vital signs'
+    ],
+
+    now: [
+      '先重測 BP：確認 cuff、另一側手臂，必要時 manual BP',
+      'ABC + SpO₂ + mental status + peripheral perfusion',
+      '接 monitor，建立 2 條 IV',
+      '快速找 shock phenotype：hypovolemic / distributive / cardiogenic / obstructive',
+      '是否適合 fluid challenge 要看臨床情境；不是所有低血壓都固定灌 500 mL',
+      '持續 shock → 立即通知 senior / RRT，並準備 vasopressor / definitive treatment'
+    ],
+
+    assess: [
+      '有沒有 bleeding？',
+      'fever / infection？',
+      'rash / wheeze / allergen？',
+      'chest pain / dyspnea？',
+      'JVP、lung crackles',
+      'recent surgery / drain output',
+      'medications：antihypertensive / sedative / opioid'
+    ],
+
+    orders: [
+      'CBC、electrolytes、Cr',
+      'Lactate',
+      'ECG',
+      'Blood culture：sepsis suspicion',
+      'POCUS：cardiac function、pericardial effusion、lung、IVC、free fluid',
+      'CXR / CT 等依 suspected source'
+    ],
+
     urgent: [
-      { name:'敗血性休克', sub:'感染源 + MAP <65 + 升壓劑依賴', url:'im/infect.html#sepsis' },
-      { name:'過敏性休克', sub:'接觸過敏原 + 皮膚 / 呼吸 / 循環症狀 → Epinephrine', url:'er/general.html#shock' },
-      { name:'心因性休克', sub:'AMI / 心衰竭 + 低血壓 + 肺水腫', url:'im/cardio.html#hf' },
-      { name:'大量出血 / 低血容性休克', sub:'外傷 / GI 出血 + 心跳快 + 末梢冷', url:'er/general.html#shock' },
-      { name:'心包填塞 / 張力性氣胸', sub:'阻塞性休克：頸靜脈怒張 + 低血壓', url:'er/general.html#shock' },
+      { name:'Septic shock', sub:'infection + vasodilatory shock', url:'im/infect.html#sepsis' },
+      { name:'Hemorrhagic / hypovolemic shock', sub:'bleeding / volume loss', url:'er/general.html#shock' },
+      { name:'Cardiogenic shock', sub:'AMI / HF + congestion', url:'im/cardio.html#hf' },
+      { name:'Obstructive shock', sub:'PE / tamponade / tension PTX', url:'er/general.html#shock' },
+      { name:'Anaphylaxis', sub:'hypotension + airway / breathing / skin involvement', url:'er/general.html#shock' }
     ],
+
     other: [
-      { name:'肺栓塞', sub:'低血壓 + 低血氧 + 心電圖右心負荷', url:'im/pulm.html#pe' },
-      { name:'腎上腺危象', sub:'類固醇使用史 + 壓力情況 + 低鈉 / 高鉀', url:'im/endo.html' },
-      { name:'藥物 / 神經源性', sub:'脊髓損傷 / 過量降壓藥', url:'' },
-    ],
-    actions: ['立刻 IV × 2 + 輸液 500 mL bolus', '床邊 POCUS（心包積液 / 氣胸 / 下腔靜脈）', 'ECG + CXR + 血液培養', '升壓劑：Norepinephrine 首選（敗血性休克）', '過敏 → Epinephrine 0.3 mg IM 大腿外側']
+      { name:'Adrenal crisis', sub:'steroid history、hyponatremia / hyperkalemia', url:'im/endo.html' },
+      { name:'Medication effect', sub:'antihypertensive、sedative 等', url:'' }
+    ]
   },
+
+
+  /* =========================
+     血糖異常
+  ========================= */
   'glucose': {
     title: '🟡 血糖異常 Glucose Abnormality',
+
+    unstable: [
+      'altered consciousness / seizure',
+      'severe hypoglycemia',
+      'DKA / HHS with shock',
+      'severe dehydration',
+      'significant K abnormality / arrhythmia'
+    ],
+
+    now: [
+      '先重新確認 bedside glucose',
+      '低血糖：有症狀立即補 glucose，不要等完整 lab',
+      '高血糖：先判斷單純 hyperglycemia 還是 DKA / HHS',
+      'DKA / HHS → IV access + fluid + electrolytes + acid-base assessment',
+      '給 insulin 前先確認 potassium'
+    ],
+
+    assess: [
+      'DM type / insulin regimen',
+      '最後進食時間',
+      'insulin / sulfonylurea',
+      'infection / steroid / surgery',
+      'polyuria / polydipsia',
+      'nausea / abdominal pain / Kussmaul breathing'
+    ],
+
+    orders: [
+      'Serum glucose',
+      'Na / K / Cl / HCO₃ / Cr',
+      'VBG / ABG',
+      'β-hydroxybutyrate / ketone',
+      'Calculated anion gap',
+      'Serum osmolality：HHS suspicion',
+      'ECG：K abnormality'
+    ],
+
     urgent: [
-      { name:'低血糖（<50 mg/dL）', sub:'意識改變 / 冒汗 / 心跳快 → 立刻補糖', url:'im/endo.html' },
-      { name:'DKA（糖尿病酮酸中毒）', sub:'血糖↑ + AG↑ + 酮體↑ + 代謝性酸中毒', url:'im/endo.html' },
-      { name:'HHS（高血糖高滲性狀態）', sub:'血糖 >600 + 高滲透壓 + 意識改變、無顯著酮酸', url:'im/endo.html' },
+      { name:'Hypoglycemia', sub:'neuroglycopenic / autonomic symptoms', url:'im/endo.html' },
+      { name:'DKA', sub:'ketosis + metabolic acidosis', url:'im/endo.html#dka' },
+      { name:'HHS', sub:'severe hyperglycemia + hyperosmolality + dehydration', url:'im/endo.html#dka' }
     ],
+
     other: [
-      { name:'應激性高血糖', sub:'住院病人無 DM 病史、感染 / 手術後', url:'im/endo.html' },
-      { name:'類固醇引起高血糖', sub:'用藥後血糖↑、尤其餐後', url:'im/endo.html' },
-    ],
-    actions: ['低血糖：意識清 → 口服 15g 糖；意識不清 → 50% Glucose 25 mL IV', 'DKA：IV 輸液 + Insulin drip + K⁺ 補充（K⁺ >3.5 才給 Insulin）', 'HHS：緩慢補液（避免腦水腫）', '血糖目標住院：140-180 mg/dL', 'DKA 解除標準：AG 正常 + 可進食']
+      { name:'Stress hyperglycemia', sub:'infection / surgery / acute illness', url:'im/endo.html' },
+      { name:'Steroid-induced hyperglycemia', sub:'often prominent postprandial elevation', url:'im/endo.html' }
+    ]
   }
+
 };
 
 function goToPage(url) {
   if (!url) return;
   closeSym();
+
   // 短暫延遲讓 modal 關閉動畫完成
-  setTimeout(() => { window.location.href = url; }, 80);
+  setTimeout(() => {
+    window.location.href = url;
+  }, 80);
 }
 
+function makeTextList(items, ordered = false) {
+  if (!items || !items.length) return '';
+  const tag = ordered ? 'ol' : 'ul';
+  return `
+    <${tag}>
+      ${items.map(item => `<li>${item}</li>`).join('')}
+    </${tag}>
+  `;
+}
+
+function makeDxList(items, urgent = false) {
+  if (!items || !items.length) return '';
+  return `
+    <div class="sym-ddx-list">
+      ${items.map(i => {
+        const click = i.url
+          ? `onclick="event.preventDefault();goToPage('${i.url}')"`
+          : '';
+
+        return `
+          <a
+            class="sym-ddx-item ${urgent ? 'sym-urgent' : ''}"
+            href="${i.url || '#'}"
+            ${click}
+          >
+            <div>
+              <div class="sym-ddx-name">${i.name}</div>
+              <div class="sym-ddx-sub">${i.sub || ''}</div>
+            </div>
+
+            <span class="sym-ddx-arrow">
+              ${i.url ? '→' : ''}
+            </span>
+          </a>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
 function openSym(id) {
   const d = SYM_DATA[id];
   if (!d) return;
   document.getElementById('sym-modal-title').textContent = d.title;
   let html = '';
+  /* 🚨 是否需要立即升級 */
+  if (d.unstable && d.unstable.length) {
+    html += `
+      <div class="sym-section-block sym-block-danger">
+        <div class="sym-section-label">
+          🚨 需要立即升級
+        </div>
+
+        <div class="sym-action-box">
+          ${makeTextList(d.unstable)}
+        </div>
+      </div>
+    `;
+  }
+  /* ⚡ 現在先做 */
+  if (d.now && d.now.length) {
+    html += `
+      <div class="sym-section-block sym-block-now">
+        <div class="sym-section-label">
+          ⚡ NOW｜現在先做
+        </div>
+
+        <div class="sym-action-box">
+          ${makeTextList(d.now, true)}
+        </div>
+      </div>
+    `;
+  }
+  /* 👀 床邊快速確認 */
+  if (d.assess && d.assess.length) {
+    html += `
+      <div class="sym-section-block">
+        <div class="sym-section-label">
+          👀 床邊快速確認
+        </div>
+
+        <div class="sym-action-box">
+          ${makeTextList(d.assess)}
+        </div>
+      </div>
+    `;
+  }
+  /* 🧪 第一輪檢查 */
+  if (d.orders && d.orders.length) {
+    html += `
+      <div class="sym-section-block">
+        <div class="sym-section-label">
+          🧪 第一輪檢查
+        </div>
+
+        <div class="sym-action-box">
+          ${makeTextList(d.orders)}
+        </div>
+      </div>
+    `;
+  }
+  /* ⚠ 不能漏掉的 DDx */
   if (d.urgent && d.urgent.length) {
-    html += '<div class="sym-section-label">🚨 需立刻排除（危險 DDx）</div><div class="sym-ddx-list">';
-    d.urgent.forEach(i => {
-      const click = i.url ? `onclick="event.preventDefault();goToPage('${i.url}')"` : '';
-      html += `<a class="sym-ddx-item sym-urgent" href="${i.url || '#'}" ${click}>
-        <div><div class="sym-ddx-name">${i.name}</div><div class="sym-ddx-sub">${i.sub}</div></div>
-        <span class="sym-ddx-arrow">${i.url ? '→' : ''}</span></a>`;
-    });
-    html += '</div>';
+    html += `
+      <div class="sym-section-block">
+        <div class="sym-section-label">
+          ⚠ 不能漏掉
+        </div>
+
+        ${makeDxList(d.urgent, true)}
+      </div>
+    `;
   }
+  /* 其他 DDx：預設收合 */
   if (d.other && d.other.length) {
-    html += '<div class="sym-section-label">其他鑑別診斷</div><div class="sym-ddx-list">';
-    d.other.forEach(i => {
-      const click2 = i.url ? `onclick="event.preventDefault();goToPage('${i.url}')"` : '';
-      html += `<a class="sym-ddx-item" href="${i.url || '#'}" ${click2}>
-        <div><div class="sym-ddx-name">${i.name}</div><div class="sym-ddx-sub">${i.sub}</div></div>
-        <span class="sym-ddx-arrow">${i.url ? '→' : ''}</span></a>`;
-    });
-    html += '</div>';
-  }
-  if (d.actions && d.actions.length) {
-    html += '<div class="sym-section-label">初步處置 Workup</div><div class="sym-action-box"><ul>';
-    d.actions.forEach(a => { html += `<li>${a}</li>`; });
-    html += '</ul></div>';
+    html += `
+      <details class="sym-more">
+        <summary>
+          其他可能的 DDx
+        </summary>
+
+        <div class="sym-more-body">
+          ${makeDxList(d.other)}
+        </div>
+      </details>
+    `;
   }
   document.getElementById('sym-modal-body').innerHTML = html;
-  document.getElementById('sym-modal-overlay').classList.add('open');
+  document
+    .getElementById('sym-modal-overlay')
+    .classList.add('open');
+
   document.body.style.overflow = 'hidden';
 }
 function closeSym() {
-  document.getElementById('sym-modal-overlay').classList.remove('open');
+  document
+    .getElementById('sym-modal-overlay')
+    .classList.remove('open');
+
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSym(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeSym();
+  }
+});
 </script>
 <script src="./notion-notes.js"></script>
 </body>
