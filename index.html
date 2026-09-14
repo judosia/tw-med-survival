@@ -1647,8 +1647,859 @@ const SYM_DATA = {
       { name:'Stress hyperglycemia', sub:'infection / surgery / acute illness', url:'im/endo.html' },
       { name:'Steroid-induced hyperglycemia', sub:'often prominent postprandial elevation', url:'im/endo.html' }
     ]
-  }
+  },
+  /* =========================================================
+   ELECTROLYTE ABNORMALITY
+========================================================= */
 
+'electrolyte': {
+  title: '🔴 電解質異常 Electrolyte Abnormality',
+
+  unstable: [
+    '意識改變、seizure 或明顯神經學症狀',
+    'Arrhythmia / ECG change',
+    'Severe hyperkalemia 或快速上升的 K',
+    '嚴重 symptomatic hyponatremia',
+    '嚴重電解質異常合併 AKI / oliguria',
+    '生命徵象不穩定'
+  ],
+
+  now: [
+    '先確認 abnormal value 是否可信，必要時立即 repeat',
+    '確認 Vital signs、意識狀態與目前症狀',
+    'K / Ca / Mg 異常 → 取得 ECG 並 monitor',
+    '查看前一次數值與變化速度：acute vs chronic',
+    '檢視 renal function、I/O、目前輸液及相關藥物',
+    '若有致命性電解質異常 → 先處理危險狀況，不要等待完整 workup'
+  ],
+
+  assess: [
+    'Na：頭痛、噁心、confusion、seizure？',
+    'K：weakness、palpitation、ECG change？',
+    'Ca：tetany、paresthesia、QT change？',
+    'Mg：arrhythmia、QT prolongation？',
+    'Vomiting / diarrhea / poor intake / diuretics？',
+    'AKI / CKD / dialysis？',
+    '近期輸液、TPN、insulin 或其他可能影響電解質的藥物'
+  ],
+
+  orders: [
+    'Repeat Na / K / Cl / HCO₃⁻',
+    'BUN / Creatinine / Glucose',
+    'Mg / Ca ± Phosphate',
+    'ECG：尤其 K / Ca / Mg abnormality',
+    'Serum osmolality：hyponatremia 評估',
+    'Urine Na / urine osmolality：依 hyponatremia 情境',
+    'ABG / VBG：若合併 acid-base disturbance'
+  ],
+
+  urgent: [
+    {
+      name: 'Hyperkalemia',
+      sub: 'ECG change / severe K elevation → immediate treatment',
+      url: ''
+    },
+    {
+      name: 'Symptomatic Hyponatremia',
+      sub: 'Confusion / seizure / severe neurologic symptoms',
+      url: ''
+    },
+    {
+      name: 'Severe Hypokalemia',
+      sub: 'Arrhythmia / weakness / concurrent hypomagnesemia',
+      url: ''
+    },
+    {
+      name: 'Severe Ca / Mg abnormality',
+      sub: 'Tetany / seizure / QT abnormality / arrhythmia',
+      url: ''
+    }
+  ],
+
+  other: [
+    {
+      name: 'Medication-related',
+      sub: 'Diuretics、RAAS inhibitors、insulin 等',
+      url: ''
+    },
+    {
+      name: 'GI loss',
+      sub: 'Vomiting / diarrhea / NG drainage',
+      url: ''
+    },
+    {
+      name: 'Renal dysfunction',
+      sub: 'AKI / CKD / tubular loss',
+      url: ''
+    }
+  ]
+},
+
+
+/* =========================================================
+   DESATURATION
+========================================================= */
+
+'desaturation': {
+  title: '🔴 低血氧 Desaturation',
+
+  unstable: [
+    'SpO₂ 持續下降或快速惡化',
+    'Severe respiratory distress / marked work of breathing',
+    'Altered mental status',
+    'Hypotension / shock',
+    'Silent chest / stridor / impending airway obstruction',
+    '突然低血氧合併 chest pain、tachycardia 或 unilateral breath sound'
+  ],
+
+  now: [
+    '先到床邊確認病人，而不是只看 monitor 數字',
+    '確認 SpO₂ waveform / probe 是否可信',
+    'ABC + Vital signs + respiratory rate',
+    '若 hypoxemic → 給予適當 oxygen support',
+    '坐起病人並快速聽診雙側 lung sounds',
+    '確認 O₂ device、flow、管路是否脫落或阻塞',
+    '持續惡化 → senior / RRT，準備進一步 airway / ventilatory support'
+  ],
+
+  assess: [
+    '突然發生 or gradual deterioration？',
+    'Dyspnea / chest pain / cough / sputum / fever？',
+    'COPD / asthma / HF history？',
+    '近期手術、immobility、DVT / PE risk？',
+    'Crackles / wheezing / decreased breath sounds？',
+    'JVP / edema / volume overload？',
+    'Sedatives / opioids / aspiration risk？'
+  ],
+
+  orders: [
+    'CXR',
+    'ABG / VBG：respiratory distress、hypercapnia 或 acid-base concern',
+    'ECG',
+    'CBC / electrolytes / renal function',
+    'POCUS：lung / cardiac assessment if available',
+    'BNP / troponin：依 clinical suspicion',
+    'PE workup：依 pretest probability'
+  ],
+
+  urgent: [
+    {
+      name: 'Pneumothorax',
+      sub: 'Sudden desaturation + unilateral decreased breath sound',
+      url: ''
+    },
+    {
+      name: 'Pulmonary Embolism',
+      sub: 'Sudden hypoxemia / tachycardia / chest pain',
+      url: ''
+    },
+    {
+      name: 'Acute Pulmonary Edema',
+      sub: 'Crackles / orthopnea / congestion',
+      url: ''
+    },
+    {
+      name: 'Airway Obstruction',
+      sub: 'Stridor / silent airway / rapidly worsening hypoxemia',
+      url: ''
+    }
+  ],
+
+  other: [
+    {
+      name: 'Pneumonia / Aspiration',
+      sub: 'Fever、cough、new infiltration',
+      url: ''
+    },
+    {
+      name: 'COPD / Asthma exacerbation',
+      sub: 'Wheezing、airflow limitation',
+      url: ''
+    },
+    {
+      name: 'Atelectasis',
+      sub: 'Especially postoperative / immobilized patient',
+      url: ''
+    }
+  ]
+},
+
+
+/* =========================================================
+   TACHYCARDIA
+========================================================= */
+
+'tachycardia': {
+  title: '🔴 心搏過速 Tachycardia',
+
+  unstable: [
+    'Hypotension / shock',
+    'Altered mental status',
+    'Ischemic chest discomfort',
+    'Acute heart failure / pulmonary edema',
+    'Syncope',
+    'Sustained wide-complex tachycardia'
+  ],
+
+  now: [
+    '確認 Vital signs，先判斷 stable vs unstable',
+    'Cardiac monitor + SpO₂',
+    '取得 12-lead ECG',
+    '建立 IV access',
+    '判斷 rhythm：regular vs irregular、narrow vs wide',
+    'Unstable tachyarrhythmia → 依 ACLS pathway 處理',
+    '同時尋找 tachycardia 背後原因，不要只治療 heart rate'
+  ],
+
+  assess: [
+    'Pain / fever / anxiety？',
+    'Hypovolemia / bleeding？',
+    'Hypoxia？',
+    'Palpitation / chest pain / dyspnea / syncope？',
+    'Medication / stimulant / caffeine？',
+    'Baseline rhythm / AF history？',
+    'Recent surgery / infection / PE risk？'
+  ],
+
+  orders: [
+    '12-lead ECG',
+    'CBC',
+    'Na / K / Mg / Ca / Creatinine',
+    'Glucose',
+    'Troponin：if ischemia suspected',
+    'TSH / free T4：依情境',
+    'CXR / infection or PE workup：依 clinical suspicion'
+  ],
+
+  urgent: [
+    {
+      name: 'Unstable Tachyarrhythmia',
+      sub: 'Hypotension / shock / ischemia / acute HF',
+      url: 'acls.html#tachycardia'
+    },
+    {
+      name: 'Ventricular Tachycardia',
+      sub: 'Wide-complex tachycardia → VT until proven otherwise',
+      url: 'tools/acls.html#tachycardia'
+    },
+    {
+      name: 'Pulmonary Embolism',
+      sub: 'Tachycardia + hypoxemia / chest pain / risk factors',
+      url: ''
+    },
+    {
+      name: 'Hemorrhage / Shock',
+      sub: 'Tachycardia may be an early sign of hypoperfusion',
+      url: ''
+    }
+  ],
+
+  other: [
+    {
+      name: 'Sinus tachycardia',
+      sub: 'Pain / fever / dehydration / anxiety',
+      url: ''
+    },
+    {
+      name: 'Atrial fibrillation / flutter',
+      sub: 'Irregular or atrial tachyarrhythmia',
+      url: ''
+    },
+    {
+      name: 'SVT',
+      sub: 'Often regular narrow-complex tachycardia',
+      url: ''
+    }
+  ]
+},
+
+
+/* =========================================================
+   BRADYCARDIA
+========================================================= */
+
+'bradycardia': {
+  title: '🔴 心搏過慢 Bradycardia',
+
+  unstable: [
+    'Hypotension',
+    'Altered mental status',
+    'Signs of shock',
+    'Ischemic chest discomfort',
+    'Acute heart failure',
+    'High-grade AV block with poor perfusion'
+  ],
+
+  now: [
+    '確認 pulse、Vital signs 與病人症狀',
+    'Cardiac monitor + SpO₂',
+    '取得 12-lead ECG',
+    '建立 IV access',
+    '判斷是否 symptomatic / cardiopulmonary compromise',
+    '不穩定 symptomatic bradycardia → 依 ACLS pathway 處理',
+    '同時尋找 reversible causes'
+  ],
+
+  assess: [
+    'Baseline HR？athlete？sleeping？',
+    'Dizziness / syncope / chest pain / dyspnea？',
+    'Beta-blocker / CCB / digoxin / antiarrhythmic use？',
+    'Electrolyte abnormality？尤其 hyperkalemia',
+    'ACS / inferior MI？',
+    'Hypoxia / hypothermia？'
+  ],
+
+  orders: [
+    '12-lead ECG',
+    'K / Mg / Ca / Creatinine',
+    'Glucose',
+    'Troponin：if ACS suspected',
+    'Medication review',
+    'TSH：依 clinical context'
+  ],
+
+  urgent: [
+    {
+      name: 'Symptomatic Bradycardia',
+      sub: 'Poor perfusion / hypotension / AMS / ischemia / acute HF',
+      url: 'acls.html#bradycardia'
+    },
+    {
+      name: 'High-grade AV Block',
+      sub: 'Mobitz II / advanced AV block / complete heart block',
+      url: 'acls.html#bradycardia'
+    },
+    {
+      name: 'Hyperkalemia',
+      sub: 'Bradycardia / conduction abnormality with elevated K',
+      url: ''
+    },
+    {
+      name: 'Acute Coronary Syndrome',
+      sub: 'Especially inferior ischemia with conduction disturbance',
+      url: ''
+    }
+  ],
+
+  other: [
+    {
+      name: 'Medication effect',
+      sub: 'β-blocker / CCB / digoxin / antiarrhythmics',
+      url: ''
+    },
+    {
+      name: 'Sinus bradycardia',
+      sub: 'Sleep / athlete / vagal response',
+      url: ''
+    },
+    {
+      name: 'Hypothyroidism',
+      sub: 'Consider if clinically compatible',
+      url: ''
+    }
+  ]
+},
+
+
+/* =========================================================
+   URINARY RETENTION
+========================================================= */
+
+'urinary-retention': {
+  title: '尿滯留 Urinary Retention',
+
+  unstable: [
+    'Anuria 合併 AKI / hyperkalemia',
+    'Sepsis / fever with suspected obstructed urinary tract',
+    'Severe suprapubic pain / marked bladder distension',
+    'Gross hematuria + clot retention',
+    'New neurologic deficit / saddle anesthesia / bowel dysfunction'
+  ],
+
+  now: [
+    '先確認是真的「沒有尿」還是 urine output 未紀錄',
+    '確認是否已有 Foley，檢查 kink / obstruction / bag position',
+    'Palpate / percuss suprapubic area',
+    'Bladder scan',
+    '確認最後一次 voiding 與目前 urine output',
+    '明顯 retention → 依臨床情境與院內流程進行 bladder decompression'
+  ],
+
+  assess: [
+    'Suprapubic discomfort / urge to void？',
+    'BPH / prostate history？',
+    'Recent surgery / anesthesia？',
+    'Opioid / anticholinergic medication？',
+    'Constipation？',
+    'Hematuria / clot？',
+    'Weakness / saddle anesthesia / bowel dysfunction？'
+  ],
+
+  orders: [
+    'Bladder scan / post-void residual',
+    'Urinalysis ± urine culture',
+    'BUN / Creatinine / electrolytes',
+    'Renal ultrasound：if obstruction / hydronephrosis suspected',
+    'Neurologic workup / MRI：if cauda equina suspected'
+  ],
+
+  urgent: [
+    {
+      name: 'Obstructive AKI',
+      sub: 'Retention / obstruction with rising creatinine',
+      url: ''
+    },
+    {
+      name: 'Cauda Equina Syndrome',
+      sub: 'Retention + saddle anesthesia / weakness / bowel dysfunction',
+      url: ''
+    },
+    {
+      name: 'Clot Retention',
+      sub: 'Gross hematuria with inability to drain urine',
+      url: ''
+    }
+  ],
+
+  other: [
+    {
+      name: 'BPH',
+      sub: 'Common cause in older men',
+      url: ''
+    },
+    {
+      name: 'Postoperative urinary retention',
+      sub: 'Anesthesia / pain / opioids / immobility',
+      url: ''
+    },
+    {
+      name: 'Medication-related',
+      sub: 'Anticholinergic / opioid etc.',
+      url: ''
+    }
+  ]
+},
+
+
+/* =========================================================
+   DIARRHEA
+========================================================= */
+
+'diarrhea': {
+  title: '腹瀉 Diarrhea',
+
+  unstable: [
+    'Hypotension / shock / severe dehydration',
+    'Altered mental status',
+    'Severe abdominal pain or peritoneal signs',
+    'Bloody diarrhea with hemodynamic instability',
+    'Severe electrolyte disturbance / AKI',
+    'Toxic megacolon concern'
+  ],
+
+  now: [
+    '確認 Vital signs 與 volume status',
+    '確認次數、量、watery vs bloody',
+    '檢視 I/O 與 dehydration',
+    '近期 antibiotic / hospitalization → 考慮 C. difficile',
+    '評估是否需要 IV fluid / electrolyte correction',
+    '有 red flag 時不要只開 antidiarrheal'
+  ],
+
+  assess: [
+    'Acute vs chronic？',
+    'Watery / bloody / mucus？',
+    'Fever / abdominal pain / vomiting？',
+    'Recent antibiotics？',
+    'Travel / sick contact / suspicious food？',
+    'Tube feeding / laxatives / medications？',
+    'Immunocompromised？'
+  ],
+
+  orders: [
+    'CBC',
+    'Na / K / Creatinine',
+    'Stool testing：依 severity / duration / risk factors',
+    'C. difficile testing：適當 clinical setting',
+    'Blood culture：if septic',
+    'CT abdomen：if severe pain / colitis complication suspected'
+  ],
+
+  urgent: [
+    {
+      name: 'Severe Infectious Colitis',
+      sub: 'Fever / bloody diarrhea / systemic toxicity',
+      url: ''
+    },
+    {
+      name: 'C. difficile Infection',
+      sub: 'Recent antibiotics / hospitalization',
+      url: ''
+    },
+    {
+      name: 'Toxic Megacolon',
+      sub: 'Systemic toxicity + marked colonic dilation',
+      url: ''
+    },
+    {
+      name: 'Mesenteric Ischemia',
+      sub: 'Severe pain / bloody stool / high-risk patient',
+      url: ''
+    }
+  ],
+
+  other: [
+    {
+      name: 'Medication-related diarrhea',
+      sub: 'Laxatives / antibiotics / metformin / tube feeding etc.',
+      url: ''
+    },
+    {
+      name: 'Gastroenteritis',
+      sub: 'Acute infectious diarrhea',
+      url: ''
+    },
+    {
+      name: 'Overflow diarrhea',
+      sub: 'Consider fecal impaction especially in elderly patients',
+      url: ''
+    }
+  ]
+},
+
+
+/* =========================================================
+   ABDOMINAL DISTENSION / CONSTIPATION
+========================================================= */
+
+'abdominal-distension': {
+  title: '腹脹 / 無排便 Abdominal Distension',
+
+  unstable: [
+    'Severe abdominal pain + peritoneal signs',
+    'Persistent vomiting / aspiration risk',
+    'Hypotension / shock',
+    'Marked distension with respiratory compromise',
+    'Fever / sepsis with acute abdomen',
+    'Concern for strangulation / perforation / ischemia'
+  ],
+
+  now: [
+    '確認 Vital signs',
+    '問最後一次 stool 與 flatus',
+    '確認 vomiting / nausea',
+    '腹部視診、聽診、觸診，評估 tenderness / guarding / rebound',
+    'Recent surgery → 確認 POD 與術式',
+    '若疑似 obstruction / ileus → NPO，評估 decompression 與 imaging'
+  ],
+
+  assess: [
+    'Last bowel movement / flatus？',
+    'Vomiting？bilious / feculent？',
+    'Recent abdominal surgery？',
+    'Opioid use？',
+    'Prior bowel obstruction / hernia？',
+    'Abdominal distension progression？',
+    'Bowel sounds / hernia / rectal stool burden when appropriate'
+  ],
+
+  orders: [
+    'CBC / electrolytes / Creatinine',
+    'Lactate：if ischemia / shock suspected',
+    'Abdominal X-ray：依情境',
+    'CT abdomen：if mechanical obstruction / complication suspected',
+    'Electrolytes：K / Mg abnormalities may worsen ileus'
+  ],
+
+  urgent: [
+    {
+      name: 'Bowel Obstruction',
+      sub: 'Distension + vomiting + obstipation',
+      url: ''
+    },
+    {
+      name: 'Strangulation / Ischemia',
+      sub: 'Severe pain / peritonitis / lactate elevation / systemic toxicity',
+      url: ''
+    },
+    {
+      name: 'Perforation',
+      sub: 'Peritoneal signs / free air / sepsis',
+      url: ''
+    }
+  ],
+
+  other: [
+    {
+      name: 'Postoperative Ileus',
+      sub: 'Recent surgery + delayed GI motility',
+      url: ''
+    },
+    {
+      name: 'Constipation / Fecal Impaction',
+      sub: 'Especially immobile / elderly / opioid-treated patients',
+      url: ''
+    },
+    {
+      name: 'Medication-related',
+      sub: 'Opioids / anticholinergics etc.',
+      url: ''
+    }
+  ]
+},
+
+
+/* =========================================================
+   HEMOGLOBIN DROP / BLEEDING
+========================================================= */
+
+'hb-drop': {
+  title: 'Hb下降 / 疑似出血',
+
+  unstable: [
+    'Hypotension / shock',
+    'Tachycardia with poor perfusion',
+    'Active large-volume bleeding',
+    'Altered mental status / syncope',
+    'Rapidly increasing bloody drain output',
+    'Postoperative patient with worsening abdominal distension / pain + Hb drop'
+  ],
+
+  now: [
+    '先看病人與 Vital signs，不要只看 Hb 數字',
+    '確認是否有 active bleeding',
+    '查看 Hb trend，不只比較單一兩次數值',
+    '確認 surgery / procedure、EBL、drain output、I/O',
+    '建立適當 IV access',
+    '若 clinically significant bleeding → type & screen / crossmatch，及早通知 senior / surgical team'
+  ],
+
+  assess: [
+    'Melena / hematemesis / hematochezia？',
+    'Hematuria？',
+    'Wound / drain / chest tube output？',
+    'Abdominal / flank / thigh swelling？',
+    'Anticoagulant / antiplatelet use？',
+    'Recent surgery / procedure？',
+    '大量 IV fluid 是否可能造成 hemodilution？'
+  ],
+
+  orders: [
+    'Repeat CBC / Hb',
+    'PT / aPTT / INR',
+    'Type & screen / crossmatch：if significant bleeding possible',
+    'BUN / Creatinine',
+    'Lactate：if shock / hypoperfusion',
+    'Imaging：依 suspected bleeding source'
+  ],
+
+  urgent: [
+    {
+      name: 'Hemorrhagic Shock',
+      sub: 'Bleeding + hypotension / poor perfusion',
+      url: ''
+    },
+    {
+      name: 'Postoperative Hemorrhage',
+      sub: 'Hb drop + drain output / distension / hemodynamic change',
+      url: ''
+    },
+    {
+      name: 'GI Bleeding',
+      sub: 'Melena / hematemesis / hematochezia',
+      url: ''
+    },
+    {
+      name: 'Occult Internal Bleeding',
+      sub: 'Retroperitoneal / intra-abdominal / soft tissue bleeding',
+      url: ''
+    }
+  ],
+
+  other: [
+    {
+      name: 'Hemodilution',
+      sub: 'Large-volume fluid administration',
+      url: ''
+    },
+    {
+      name: 'Phlebotomy / chronic anemia',
+      sub: 'Consider when decline is gradual without bleeding signs',
+      url: ''
+    },
+    {
+      name: 'Hemolysis',
+      sub: 'Consider with compatible laboratory / clinical findings',
+      url: ''
+    }
+  ]
+},
+
+
+/* =========================================================
+   DIZZINESS
+========================================================= */
+
+'dizziness': {
+  title: '😵頭暈 Dizziness',
+
+  unstable: [
+    'New focal neurologic deficit',
+    'Unable to stand / severe truncal ataxia',
+    'Syncope / altered mental status',
+    'Hypotension / shock',
+    'Chest pain / significant arrhythmia',
+    'Sudden severe headache or other acute neurologic red flags'
+  ],
+
+  now: [
+    '確認 Vital signs',
+    'Fingerstick glucose',
+    '先釐清病人說的「暈」：vertigo / presyncope / disequilibrium / nonspecific',
+    '快速 neurologic exam',
+    '確認是否有 nystagmus / gait instability',
+    '若 presyncope → 同步評估 cardiovascular / volume causes'
+  ],
+
+  assess: [
+    'Spinning sensation or about to faint？',
+    'Sudden vs gradual onset？',
+    'Position-triggered？',
+    'Hearing loss / tinnitus？',
+    'Diplopia / dysarthria / weakness / numbness？',
+    'Chest pain / palpitation？',
+    'Vomiting / poor intake / bleeding？'
+  ],
+
+  orders: [
+    'Glucose',
+    'ECG：especially presyncope / cardiac symptoms',
+    'CBC / electrolytes：依 clinical context',
+    'Orthostatic BP：when appropriate',
+    'Neuroimaging：if central cause / stroke suspected'
+  ],
+
+  urgent: [
+    {
+      name: 'Posterior Circulation Stroke',
+      sub: 'Focal deficit / severe gait or truncal instability / central signs',
+      url: ''
+    },
+    {
+      name: 'Arrhythmia / Cardiac Cause',
+      sub: 'Presyncope + palpitation / abnormal ECG',
+      url: ''
+    },
+    {
+      name: 'Hemorrhage / Hypovolemia',
+      sub: 'Presyncope + hypotension / bleeding evidence',
+      url: ''
+    }
+  ],
+
+  other: [
+    {
+      name: 'BPPV',
+      sub: 'Brief positional vertigo',
+      url: ''
+    },
+    {
+      name: 'Vestibular neuritis',
+      sub: 'Acute persistent vestibular syndrome',
+      url: ''
+    },
+    {
+      name: 'Medication / dehydration',
+      sub: 'Review drugs and volume status',
+      url: ''
+    }
+  ]
+},
+
+
+/* =========================================================
+   UNILATERAL LEG SWELLING / PAIN
+========================================================= */
+
+'unilateral-leg-swelling': {
+  title: '單側下肢腫痛',
+
+  unstable: [
+    '合併 sudden dyspnea / chest pain / hypoxemia → concern for PE',
+    'Cold / pale limb or absent pulse',
+    'Severe pain out of proportion',
+    'Rapidly progressive swelling with systemic toxicity',
+    'Hypotension / shock'
+  ],
+
+  now: [
+    '確認 Vital signs 與 SpO₂',
+    '比較雙側下肢 swelling / color / temperature',
+    '確認 distal pulse / capillary refill',
+    '評估 DVT risk factors',
+    '確認 cellulitis / trauma / wound',
+    '若合併 chest pain / dyspnea → 優先評估 PE'
+  ],
+
+  assess: [
+    'Acute vs chronic？',
+    'Pain / erythema / warmth？',
+    'Recent surgery / immobilization？',
+    'Cancer / prior DVT / PE？',
+    'Trauma？',
+    'Fever / wound？',
+    'Pulse / sensation / motor function？'
+  ],
+
+  orders: [
+    'Compression ultrasound：if DVT suspected',
+    'CBC / CRP：if infection suspected',
+    'CK：if muscle injury / compartment syndrome suspected',
+    'PE workup：if respiratory symptoms',
+    'Vascular imaging：if acute limb ischemia suspected'
+  ],
+
+  urgent: [
+    {
+      name: 'Deep Vein Thrombosis',
+      sub: 'Unilateral swelling + risk factors',
+      url: ''
+    },
+    {
+      name: 'Pulmonary Embolism',
+      sub: 'Leg swelling + chest pain / dyspnea / hypoxemia',
+      url: ''
+    },
+    {
+      name: 'Acute Limb Ischemia',
+      sub: 'Pain / pallor / pulselessness / paresthesia / paralysis / poikilothermia',
+      url: ''
+    },
+    {
+      name: 'Compartment Syndrome',
+      sub: 'Severe pain / pain with passive stretch / neurovascular concern',
+      url: ''
+    }
+  ],
+
+  other: [
+    {
+      name: 'Cellulitis',
+      sub: 'Erythema / warmth / tenderness ± fever',
+      url: ''
+    },
+    {
+      name: 'Trauma / hematoma',
+      sub: 'Especially anticoagulated or postoperative patients',
+      url: ''
+    },
+    {
+      name: 'Venous insufficiency',
+      sub: 'Usually chronic; compare with baseline',
+      url: ''
+    }
+  ]
+}
 };
 
 function goToPage(url) {
