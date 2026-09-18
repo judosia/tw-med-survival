@@ -401,6 +401,9 @@
           <button class="symptom-tag" onclick="openSym('dizziness')"><span class="dot dot-blue"></span>頭暈</button>
           <button class="symptom-tag" onclick="openSym('pain')"><span class="dot dot-red"></span>痛</button>
           <button class="symptom-tag" onclick="openSym('hb-drop')"><span class="dot dot-amber"></span>Hb下降 / 疑似出血</button>
+          <button class="symptom-tag" onclick="openSym('insomnia')"><span class="dot dot-blue"></span>失眠</button>
+          <button class="symptom-tag" onclick="openSym('agitation')"><span class="dot dot-red"></span>躁動</button>
+          <button class="symptom-tag" onclick="openSym('rash')"><span class="dot dot-amber"></span>皮疹</button>
         </div>
       </div>
       <div class="symptom-category">
@@ -409,6 +412,7 @@
         </div>
         <div class="symptom-tags">
           <button class="symptom-tag" onclick="openSym('hypotension')"><span class="dot dot-red"></span>低血壓</button>
+          <button class="symptom-tag" onclick="openSym('hypertension')"><span class="dot dot-amber"></span>高血壓</button>
           <button class="symptom-tag" onclick="openSym('glucose')"><span class="dot dot-amber"></span>血糖異常</button>
           <button class="symptom-tag" onclick="openSym('chest-pain')"><span class="dot dot-red"></span>胸痛</button>
           <button class="symptom-tag" onclick="openSym('palpitation')"><span class="dot dot-blue"></span>心悸</button>
@@ -434,6 +438,8 @@
         <div class="symptom-tags">
           <button class="symptom-tag" onclick="openSym('headache')"><span class="dot dot-red"></span>頭痛</button>
           <button class="symptom-tag" onclick="openSym('ams')"><span class="dot dot-red"></span>意識改變</button>
+          <button class="symptom-tag" onclick="openSym('delirium')"><span class="dot dot-red"></span>譫妄</button>
+          <button class="symptom-tag" onclick="openSym('seizure')"><span class="dot dot-red"></span>癲癇</button>
           <button class="symptom-tag" onclick="openSym('neck-stiff')"><span class="dot dot-red"></span>頸部僵硬</button>
         </div>
       </div>
@@ -448,6 +454,9 @@
           <button class="symptom-tag" onclick="openSym('gi-bleed')"><span class="dot dot-red"></span>血便</button>
           <button class="symptom-tag" onclick="openSym('diarrhea')"><span class="dot dot-amber"></span>腹瀉</button>
           <button class="symptom-tag" onclick="openSym('abdominal-distension')"><span class="dot dot-amber"></span>腹脹 / 無排便</button>
+          <button class="symptom-tag" onclick="openSym('constipation')"><span class="dot dot-blue"></span>便祕</button>
+          <button class="symptom-tag" onclick="openSym('hiccup')"><span class="dot dot-blue"></span>打嗝</button>
+          <button class="symptom-tag" onclick="openSym('epigastric-pain')"><span class="dot dot-amber"></span>上腹痛 / 胃痛</button>
         </div>
         </div>
       <div class="symptom-category">
@@ -459,6 +468,11 @@
           <button class="symptom-tag" onclick="openSym('oliguria')"><span class="dot dot-red"></span>少尿</button>
           <button class="symptom-tag" onclick="openSym('electrolyte')"><span class="dot dot-red"></span>電解質異常</button>
           <button class="symptom-tag" onclick="openSym('urinary-retention')"><span class="dot dot-blue"></span>尿滯留</button>
+          <button class="symptom-tag" onclick="openSym('polyuria')"><span class="dot dot-blue"></span>多尿</button>
+          <button class="symptom-tag" onclick="openSym('hyponatremia')"><span class="dot dot-red"></span>低血鈉</button>
+          <button class="symptom-tag" onclick="openSym('hypernatremia')"><span class="dot dot-amber"></span>高血鈉</button>
+          <button class="symptom-tag" onclick="openSym('hypokalemia')"><span class="dot dot-red"></span>低血鉀</button>
+          <button class="symptom-tag" onclick="openSym('hyperkalemia')"><span class="dot dot-red"></span>高血鉀</button>
         </div>
       </div>
     </div>
@@ -1683,6 +1697,57 @@ const SYM_DATA = {
     ]
   },
 
+  'hypertension': {
+  title: '🟡 高血壓 Hypertension',
+
+  now: [
+    '重新正確量一次 BP：確認 cuff size、姿勢、剛活動或情緒因素',
+    '先問有沒有胸痛、呼吸困難、神經學缺損、視力改變、劇烈頭痛、少尿',
+    '沒有 acute target-organ damage → 不要急著用 IV antihypertensive',
+    '找可逆原因：疼痛、尿滯留、焦慮、失眠、缺氧、便祕、戒斷、漏吃原本降壓藥',
+    '有 target-organ damage → 當 hypertensive emergency 處理並通知 senior'
+  ],
+
+  unstable: [
+    'BP ≥180/120 + acute target-organ damage',
+    'Chest pain / ACS',
+    'Acute pulmonary edema',
+    'New neurologic deficit / encephalopathy',
+    'Aortic dissection concern',
+    'AKI / oliguria',
+    'Eclampsia'
+  ],
+
+  assess: [
+    'Baseline BP 與目前 antihypertensive medication',
+    '疼痛 / anxiety / insomnia？',
+    'Urinary retention？',
+    'Chest pain / dyspnea？',
+    'Neurologic symptoms？',
+    '是否漏服原本藥物？'
+  ],
+
+  orders: [
+    'ECG：胸痛 / cardiovascular concern',
+    'Cr / electrolytes / UA：renal involvement',
+    'Troponin：ACS concern',
+    'CXR：dyspnea / pulmonary edema',
+    'Brain imaging：new neurologic deficit / encephalopathy'
+  ],
+
+  urgent: [
+    { name:'Hypertensive Emergency', sub:'Severe BP + acute target-organ damage', url:'' },
+    { name:'Aortic Dissection', sub:'Chest/back pain → rapid BP/HR control', url:'' },
+    { name:'ACS / Acute HF', sub:'Chest pain / pulmonary edema', url:'' },
+    { name:'ICH / Stroke', sub:'New neurologic deficit / consciousness change', url:'' }
+  ],
+
+  other: [
+    { name:'Pain / anxiety', sub:'住院病人常見 transient BP elevation', url:'' },
+    { name:'Urinary retention', sub:'常被忽略的 reversible cause', url:'' },
+    { name:'Missed medication', sub:'確認原本 antihypertensive 是否漏服', url:'' }
+  ]
+},
 
   /* =========================
      血糖異常
@@ -1823,6 +1888,106 @@ const SYM_DATA = {
   ]
 },
 
+'hyperkalemia': {
+  title: '🔴 高血鉀 Hyperkalemia',
+
+  now: [
+    '立即 ECG + cardiac monitor',
+    '確認檢體有無 hemolysis；若結果不合理可重抽，但不要因此延誤真正 severe hyperkalemia 的處理',
+    '有 ECG change → 先穩定 cardiac membrane',
+    '接著將 K shift into cells：依院內 protocol 使用 insulin/glucose ± inhaled β2 agonist',
+    '同時停止 K supplement 與可能升 K 的藥物',
+    '評估 K removal：renal excretion / potassium binder / dialysis',
+    '治療後追蹤 K；使用 insulin 後務必密切追蹤 glucose'
+  ],
+
+  unstable: [
+    'ECG change',
+    'Wide QRS / loss of P wave / sine-wave pattern',
+    'Significant bradyarrhythmia / ventricular arrhythmia',
+    'Severe hyperkalemia + AKI / anuria',
+    '治療後 K 仍持續升高或無法下降'
+  ],
+
+  assess: [
+    'AKI / CKD / dialysis？',
+    'U/O / anuria？',
+    'ACEI / ARB / MRA / NSAID / TMP 等藥物？',
+    'K-containing IVF / supplement？',
+    'Acidosis / rhabdomyolysis / tumor lysis？',
+    '檢體是否 hemolyzed？'
+  ],
+
+  orders: [
+    'Repeat K if pseudohyperkalemia possible',
+    'ECG',
+    'BUN / Cr / glucose',
+    'Na / HCO₃⁻ / Ca / Mg',
+    'ABG / VBG：if acid-base disturbance suspected',
+    'CK：if rhabdomyolysis suspected'
+  ],
+
+  urgent: [
+    { name:'Hyperkalemic Arrhythmia', sub:'ECG change → immediately stabilize myocardium', url:'' },
+    { name:'AKI / Anuria', sub:'無法有效排鉀，可能需 dialysis', url:'' },
+    { name:'Tumor Lysis / Rhabdomyolysis', sub:'持續釋放 intracellular potassium', url:'' }
+  ],
+
+  other: [
+    { name:'Medication-related', sub:'RAAS blockade / MRA / NSAID / TMP etc.', url:'' },
+    { name:'Pseudohyperkalemia', sub:'Hemolysis / difficult blood draw', url:'' }
+  ]
+},
+
+'hypokalemia': {
+  title: '🔴 低血鉀 Hypokalemia',
+
+  now: [
+    '確認 K 數值與下降 trend',
+    'K 明顯偏低或有症狀 → ECG / cardiac monitor',
+    '開始補 K：PO vs IV 依嚴重度、症狀與能否進食決定',
+    '同步驗 Mg；補 K 補不起來時優先想到 hypomagnesemia',
+    '停止或處理持續 loss：vomiting / diarrhea / diuretics / high-output drainage',
+    '依嚴重程度與補充速度安排 repeat K'
+  ],
+
+  unstable: [
+    'Arrhythmia / significant ECG change',
+    'Severe muscle weakness / paralysis',
+    'K <2.5 mmol/L',
+    '合併 hypomagnesemia',
+    '持續大量 GI / renal loss',
+    'Digoxin use + hypokalemia'
+  ],
+
+  assess: [
+    'Vomiting / diarrhea / NG or stoma output？',
+    'Diuretic use？',
+    'Insulin / β2 agonist？',
+    'Renal function / U/O？',
+    'Mg level？',
+    'Acid-base status？'
+  ],
+
+  orders: [
+    'Repeat K',
+    'Mg',
+    'Cr / Na / HCO₃⁻',
+    'ECG',
+    'ABG / VBG：if acid-base disturbance suspected'
+  ],
+
+  urgent: [
+    { name:'Hypokalemic Arrhythmia', sub:'Severe K depletion may precipitate ventricular arrhythmia', url:'' },
+    { name:'Ongoing GI Loss', sub:'Vomiting / diarrhea / high-output stoma', url:'' },
+    { name:'Hypomagnesemia', sub:'不補 Mg → K 常補不起來', url:'' }
+  ],
+
+  other: [
+    { name:'Diuretics', sub:'Common renal potassium loss', url:'' },
+    { name:'Intracellular shift', sub:'Insulin / β2 agonist / alkalosis', url:'' }
+  ]
+},
 
 /* =========================================================
    DESATURATION
@@ -2589,6 +2754,111 @@ const SYM_DATA = {
   ]
 }
 };
+'seizure': {
+  title: '🔴 癲癇 Seizure',
+
+  now: [
+    'ABC：保護 airway、給氧、monitor、建立 IV',
+    '立刻 fingerstick glucose',
+    '記錄 seizure 開始時間',
+    '持續 ≥5 min 或反覆發作未恢復意識 → 當 status epilepticus 處理',
+    '依院內 protocol 給足量 first-line benzodiazepine',
+    '仍持續 seizure → 準備 second-line antiseizure medication 並通知 senior',
+    '抽搐停止但意識未恢復 → 考慮 non-convulsive status / structural lesion'
+  ],
+
+  unstable: [
+    'Seizure ≥5 minutes',
+    'Repeated seizure without recovery',
+    'Hypoxemia / airway compromise',
+    'Persistent altered consciousness',
+    'New focal neurologic deficit',
+    'Pregnancy / eclampsia concern',
+    'Severe hypoglycemia / hyponatremia'
+  ],
+
+  assess: [
+    'New onset vs known epilepsy？',
+    'Medication compliance？',
+    'Alcohol / BZD withdrawal？',
+    'Fever / CNS infection？',
+    'Trauma？',
+    'Metabolic trigger：glucose / Na / Ca / Mg / uremia'
+  ],
+
+  orders: [
+    'Glucose immediately',
+    'CBC / Cr / AST / ALT',
+    'Na / K / Ca / Mg',
+    'ABG / VBG',
+    'Brain CT：new-onset / trauma / focal deficit / persistent AMS',
+    'EEG：persistent altered consciousness / concern for NCSE'
+  ],
+
+  urgent: [
+    { name:'Status Epilepticus', sub:'≥5 min or recurrent without recovery', url:'' },
+    { name:'Hypoglycemia', sub:'Immediately reversible cause', url:'' },
+    { name:'Symptomatic Hyponatremia', sub:'Seizure may require urgent hypertonic saline', url:'' },
+    { name:'ICH / Stroke / CNS Infection', sub:'Look for structural or infectious trigger', url:'' }
+  ],
+
+  other: [
+    { name:'Medication / withdrawal', sub:'Missed AED / alcohol / BZD withdrawal', url:'' },
+    { name:'Metabolic seizure', sub:'Na / Ca / Mg / glucose / uremia', url:'' }
+  ]
+},
+'delirium': {
+  title: '🔴 譫妄 Delirium',
+
+  now: [
+    '先確認 ABC、Vital signs、SpO₂',
+    '立即 fingerstick glucose',
+    '先找 reversible cause，不要第一步就開鎮靜藥',
+    '檢查 pain、urinary retention、constipation、hypoxia、infection',
+    'Review medication：BZD / opioid / anticholinergic / steroid 等',
+    '環境介入：reorientation、日夜節律、眼鏡/助聽器、家屬陪伴',
+    '只有 agitation 已危及病人或醫療安全時，再考慮 symptom-control medication'
+  ],
+
+  unstable: [
+    'Acute neurologic deficit',
+    'Marked consciousness deterioration',
+    'Hypoxemia',
+    'Hypoglycemia',
+    'Sepsis / shock',
+    'Severe agitation threatening airway / lines / patient safety'
+  ],
+
+  assess: [
+    'Acute and fluctuating course？',
+    'Hyperactive vs hypoactive？',
+    'Baseline cognition？',
+    'New medication？',
+    'Alcohol / BZD withdrawal？',
+    'Pain / urinary retention / constipation？'
+  ],
+
+  orders: [
+    'Glucose',
+    'CBC / electrolytes / Ca / Mg / Cr',
+    'UA / infection workup as indicated',
+    'ABG / VBG：if respiratory or metabolic concern',
+    'Bladder scan',
+    'ECG：if antipsychotic considered / QT concern',
+    'Brain CT：if focal deficit / trauma / unexplained significant AMS'
+  ],
+
+  urgent: [
+    { name:'Hypoactive Delirium', sub:'安靜不代表安全，仍需積極找原因', url:'' },
+    { name:'Withdrawal', sub:'Alcohol/BZD withdrawal 的治療與一般 delirium 不同', url:'' },
+    { name:'Stroke / ICH', sub:'Focal neurologic deficit or abrupt deterioration', url:'' }
+  ],
+
+  other: [
+    { name:'Medication-induced', sub:'BZD / opioid / anticholinergic etc.', url:'' },
+    { name:'Hospital-associated delirium', sub:'Sleep disruption / immobility / unfamiliar environment', url:'' }
+  ]
+},
 
 function goToPage(url) {
   if (!url) return;
