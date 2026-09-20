@@ -71,91 +71,84 @@
     }
 
 
-    /* ===== ACLS ACTION SYSTEM ===== */
+    /* ===== QUICK NAV ===== */
 
-.acls-action {
-  min-height: 52px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid transparent;
+    .acls-quick-nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 34px;
+    }
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+    .acls-nav-btn {
+      text-decoration: none;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      color: var(--navy);
+      font-weight: 800;
+      font-size: 0.9rem;
+      transition: 0.15s;
+    }
 
-  font-size: .86rem;
-}
-
-.acls-action strong {
-  font-weight: 900;
-}
-
-.acls-action span,
-.acls-action small {
-  font-size: .76rem;
-  opacity: .78;
-}
-
-
-/* CPR */
-
-.action-cpr {
-  background: #f1f3f5;
-  border-color: #d7dce1;
-  color: #495057;
-}
+    .acls-nav-btn:hover {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
 
 
-/* EPINEPHRINE */
+    /* ===== SECTION ===== */
 
-.action-epi {
-  background: #fff2df;
-  border-color: #f0c27b;
-  color: #9a5b00;
-}
+    .acls-section {
+      margin-bottom: 42px;
+      scroll-margin-top: 90px;
+    }
+
+    .acls-section-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+
+    .acls-section-sub {
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 18px;
+    }
 
 
-/* AMIODARONE */
+    /* ===== CARDS ===== */
 
-.action-amio {
-  background: #fff0f5;
-  border-color: #edb6ca;
-  color: #a23d65;
-}
+    .acls-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+    }
 
+    .acls-card-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
 
-/* SHOCK */
+    .acls-card ul,
+    .acls-card ol {
+      margin: 0;
+      padding-left: 22px;
+    }
 
-.action-shock {
-  background: #fff3a8;
-  border: 2px solid #e8b72e;
-  color: #6f5200;
-
-  box-shadow:
-    0 3px 0 #d9a91e,
-    0 6px 14px rgba(232,183,46,.16);
-
-  cursor: pointer;
-  transition:
-    transform .15s ease,
-    box-shadow .15s ease;
-}
-
-.action-shock:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 5px 0 #d9a91e,
-    0 9px 20px rgba(232,183,46,.25);
-}
-
-.action-shock:active {
-  transform: translateY(2px);
-
-  box-shadow:
-    0 1px 0 #d9a91e;
-}
+    .acls-card li {
+      font-size: 0.86rem;
+      line-height: 1.7;
+      margin-bottom: 3px;
+    }
 
 
     /* ===== HIGHLIGHT CARDS ===== */
@@ -312,7 +305,18 @@
       }
 
     }
-  </style>
+  
+/* ===== HYBRID ACLS FLOW ===== */
+.pulse-gate{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:12px}.gate-label{text-align:center;font-weight:900;color:var(--navy);font-size:.82rem;letter-spacing:.08em;margin-bottom:12px}.gate-grid,.path-grid,.cause-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.gate-card{padding:18px;border-radius:12px;text-decoration:none;display:flex;flex-direction:column;gap:4px;border:1.5px solid var(--border);transition:.15s}.gate-card strong{font-size:1rem}.gate-card span{font-size:.76rem;color:var(--muted)}.gate-card.dead{background:#fff7f7;color:#9d3440}.gate-card.alive{background:#f3faf6;color:#317556}.gate-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(24,49,83,.08)}
+.mini-nav{display:flex;justify-content:center;gap:8px;margin:0 0 34px}.mini-nav a{text-decoration:none;color:var(--navy);background:#fff;border:1px solid var(--border);border-radius:999px;padding:7px 13px;font-size:.75rem;font-weight:800}.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.pill{font-size:.68rem;font-weight:900;padding:5px 9px;border-radius:999px}.pill.danger{background:#ffe8ea;color:#b33c48}.pill.success{background:#e4f5eb;color:#317556}
+.path-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px;min-width:0}.path-title{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:12px}.path-title strong{display:block;color:var(--navy);font-size:1.08rem}.path-title small{display:block;color:var(--muted);font-size:.68rem;font-weight:800;margin-top:3px}.ekg-slot{width:118px;height:44px;border:1px dashed #b9c2cc;border-radius:7px;background:#fafbfc;color:#98a3ae;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.62rem;font-weight:800;flex-shrink:0}.ekg-slot span{font-size:.52rem}.ekg-slot.tiny{width:72px;height:28px;float:right;margin-left:8px}
+.stack{display:flex;flex-direction:column}.arrow{text-align:center;color:#8b96a2;font-size:.69rem;font-weight:800;padding:4px 0}.action,.decision{border-radius:9px;padding:10px 12px;border:1px solid transparent;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.8rem}.action b,.decision b{font-weight:900}.action span,.decision span{font-size:.7rem;text-align:right;opacity:.82}.action.cpr{background:#f0f2f4;border-color:#d7dce1;color:#4e5964}.action.epi,.drug-card.epi{background:#fff0dc;border-color:#efc27e;color:#965a05}.action.amio,.drug-card.amio{background:#fff0f5;border-color:#edb8ca;color:#9d4163}.action.atropine,.drug-card.atropine{background:#eef4ff;border-color:#bfd0ee;color:#3d6595}.action.infusion{background:#eef8f4;border-color:#bfded1;color:#36745c}.action.pacing{background:#f2effc;border-color:#cfc5eb;color:#66549b}.action.shock{background:#fff2a8;border:2px solid #e0b22d;color:#6b5000;box-shadow:0 3px 0 #d0a320,0 6px 14px rgba(224,178,45,.15);cursor:pointer;transition:.15s}.action.shock:hover{transform:translateY(-2px);box-shadow:0 5px 0 #d0a320,0 9px 20px rgba(224,178,45,.22)}.action.shock:active{transform:translateY(2px);box-shadow:0 1px 0 #d0a320}.decision{background:#f8fafc;border-color:#ccd5df;color:var(--navy);flex-direction:column;align-items:flex-start}.decision span{text-align:left}.combo{display:grid;grid-template-columns:.7fr 1.3fr;gap:7px}.loop-note{margin-top:10px;padding:8px 10px;border-radius:8px;background:#f8fafc;color:#75808c;font-size:.68rem;line-height:1.5;border:1px dashed #d5dce3}
+.split-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.split-actions .action{flex-direction:column;align-items:flex-start}.split-actions .action span{text-align:left}.branch-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.branch-label{text-align:center;font-size:.65rem;font-weight:900;padding:5px;border-radius:6px;margin-bottom:5px}.branch-label.bad{background:#ffe8ea;color:#a93d48}.branch-label.good{background:#e7f5ec;color:#35775a}.stable-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.mini-card{background:#fafbfc;border:1px solid var(--border);border-radius:9px;padding:10px;font-size:.72rem;line-height:1.5;overflow:hidden}.mini-card>b{color:var(--navy);font-size:.78rem}.mini-card p{margin:6px 0 0}.drug-blue{font-weight:800;color:#3d6595}.drug-pink{font-weight:800;color:#9d4163}
+.compact{margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 12px}.compact summary{cursor:pointer;font-size:.78rem;font-weight:800;color:var(--navy)}.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}.detail-grid span{background:#f5f7f9;border-radius:6px;padding:7px;font-size:.68rem}.info-grid,.drug-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.info-card,.drug-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:5px}.info-card b,.drug-card b{font-size:.78rem;color:var(--navy)}.info-card span,.drug-card span{font-size:.68rem;line-height:1.5;color:var(--muted)}.drug-card.epi b,.drug-card.amio b,.drug-card.atropine b{color:inherit}.drug-card.adenosine{background:#eef4ff;border-color:#bfd0ee}.cause-card{background:#fff;border:1px solid var(--border);border-radius:11px;padding:13px;display:flex;flex-direction:column;gap:6px}.cause-card b{color:var(--navy);font-size:.9rem}.cause-card span{font-size:.73rem;padding:5px 7px;background:#f7f9fb;border-radius:6px}.footer-note{font-size:.7rem;color:var(--muted);line-height:1.6;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px}
+@media(max-width:760px){.gate-grid,.path-grid,.cause-grid{grid-template-columns:1fr}.path-grid{gap:12px}.info-grid,.drug-grid{grid-template-columns:1fr 1fr}.split-actions{grid-template-columns:1fr}.detail-grid{grid-template-columns:1fr 1fr}.branch-grid,.stable-grid{grid-template-columns:1fr}.path-title{align-items:flex-start}.ekg-slot{width:96px}.mini-nav{flex-wrap:wrap}.combo{grid-template-columns:1fr}.action{align-items:flex-start}.action span{text-align:right}}
+@media(max-width:430px){.info-grid,.drug-grid,.detail-grid{grid-template-columns:1fr}.path-card{padding:13px}.action,.decision{padding:9px 10px}.action{flex-direction:column;align-items:flex-start}.action span{text-align:left}.ekg-slot{width:82px;height:40px}}
+
+</style>
 </head>
 
 <body>
@@ -324,56 +328,82 @@
 </nav>
 
 <main class="acls-page">
+  <h1 class="acls-title">ACLS Quick Reference</h1>
+  <div class="acls-subtitle">先問：有沒有 Pulse？｜格子堆疊 + 短箭頭快速處置</div>
 
-  <div class="acls-action action-shock">
-  <span class="action-icon">⚡</span>
-  <div>
-    <strong>SHOCK</strong>
-    <small>Biphasic 200 J</small>
-  </div>
-</div>
-
-<div class="flow-arrow">↓</div>
-
-<div class="acls-action action-cpr">
-  <strong>CPR</strong>
-  <span>2 min</span>
-</div>
-
-<div class="flow-arrow">↓</div>
-
-<div class="acls-action action-epi">
-  <strong>Epinephrine</strong>
-  <span>1 mg IV/IO · q3–5 min</span>
-</div>
-
-<div class="flow-arrow">↓</div>
-
-<div class="acls-action action-amio">
-  <strong>Amiodarone</strong>
-  <span>300 mg → 150 mg</span>
-</div>
-
-
-  <!-- ============================================================
-       FINAL NOTE
-  ============================================================= -->
-
-  <div class="acls-card warning-card">
-
-    <div class="acls-card-title">
-      ⚠ 使用提醒
+  <div class="pulse-gate">
+    <div class="gate-label">PULSE ≤ 10 sec</div>
+    <div class="gate-grid">
+      <a href="#dead" class="gate-card dead"><strong>💀 無脈搏｜死人流程</strong><span>Cardiac Arrest</span></a>
+      <a href="#alive" class="gate-card alive"><strong>❤️ 有脈搏｜活人流程</strong><span>Bradycardia / Tachycardia</span></a>
     </div>
-
-    <p class="acls-note">
-      本頁定位為醫療人員值班快速複習工具，並不能取代完整 ACLS algorithm、
-      院內急救流程或即時臨床判斷。電擊能量、藥物配置、infusion preparation、
-      post-ROSC temperature management 等細節應依院內 protocol 與實際設備處理。
-    </p>
-
   </div>
 
+  <nav class="mini-nav">
+    <a href="#rosc">Post-ROSC</a><a href="#5h5t">5H / 5T</a><a href="#drugs">Drugs</a>
+  </nav>
 
+  <section class="acls-section" id="dead">
+    <div class="section-head"><div><div class="acls-section-title">💀 無脈搏｜Cardiac Arrest</div><div class="acls-section-sub">立即 CPR、接 monitor / defibrillator、IV/IO；每 2 min rhythm check</div></div><span class="pill danger">NO PULSE</span></div>
+    <div class="path-grid">
+      <article class="path-card">
+        <div class="path-title"><div><strong>VF / pVT</strong><small>SHOCKABLE</small></div><div class="ekg-slot">EKG<br><span>VF / pVT</span></div></div>
+        <div class="stack">
+          <div class="action shock"><b>⚡ SHOCK</b><span>Biphasic：依 device 建議</span></div><div class="arrow">↓</div>
+          <div class="action cpr"><b>CPR</b><span>2 min + IV / IO</span></div><div class="arrow">↓ rhythm check → still VF/pVT</div>
+          <div class="action shock"><b>⚡ SHOCK</b></div><div class="arrow">↓</div>
+          <div class="combo"><div class="action cpr"><b>CPR</b><span>2 min</span></div><div class="action epi"><b>Epinephrine</b><span>1 mg IV/IO · q3–5 min</span></div></div><div class="arrow">↓ rhythm check → still VF/pVT</div>
+          <div class="action shock"><b>⚡ SHOCK</b></div><div class="arrow">↓</div>
+          <div class="combo"><div class="action cpr"><b>CPR</b><span>2 min</span></div><div class="action amio"><b>Amiodarone</b><span>300 mg → 150 mg</span></div></div>
+          <div class="loop-note">↻ 持續 CPR · Epi q3–5 min · rhythm check q2 min · 找 reversible causes</div>
+        </div>
+      </article>
+
+      <article class="path-card">
+        <div class="path-title"><div><strong>PEA / Asystole</strong><small>NON-SHOCKABLE</small></div><div class="ekg-slot">EKG<br><span>PEA / ASYS</span></div></div>
+        <div class="stack">
+          <div class="action cpr"><b>CPR</b><span>2 min + IV / IO</span></div><div class="arrow">↓</div>
+          <div class="action epi"><b>Epinephrine ASAP</b><span>1 mg IV/IO · q3–5 min</span></div><div class="arrow">↓</div>
+          <div class="decision"><b>Rhythm check every 2 min</b><span>Shockable? → 轉 VF/pVT 流程</span></div><div class="arrow">↓ 若仍 non-shockable</div>
+          <div class="action cpr"><b>CPR</b><span>2 min</span></div>
+          <div class="loop-note">↻ CPR + Epi + 持續尋找 / 處理 5H / 5T</div>
+        </div>
+      </article>
+    </div>
+    <details class="compact"><summary>High-quality CPR 快速提醒</summary><div class="detail-grid"><span>100–120/min</span><span>Depth 5–6 cm</span><span>30:2（無 advanced airway）</span><span>Advanced airway：1 breath / 6 sec</span><span>完全回彈、減少中斷</span><span>Compressor q2 min 換人</span></div></details>
+  </section>
+
+  <section class="acls-section" id="alive">
+    <div class="section-head"><div><div class="acls-section-title">❤️ 有脈搏｜Brady / Tachy</div><div class="acls-section-sub">先判斷 rate，再判斷是否造成 cardiopulmonary compromise</div></div><span class="pill success">PULSE</span></div>
+    <div class="path-grid">
+      <article class="path-card">
+        <div class="path-title"><div><strong>Bradycardia</strong><small>通常 HR &lt; 50/min</small></div><div class="ekg-slot">EKG<br><span>BRADY</span></div></div>
+        <div class="decision"><b>有 symptomatic / poor perfusion？</b><span>Hypotension · AMS · shock · ischemic chest discomfort · acute HF</span></div><div class="arrow">↓ YES</div>
+        <div class="action atropine"><b>Atropine</b><span>1 mg IV · q3–5 min · max 3 mg</span></div><div class="arrow">↓ 若無效</div>
+        <div class="split-actions"><div class="action pacing"><b>TCP</b><span>Transcutaneous pacing</span></div><div class="action infusion"><b>Epinephrine infusion</b><span>2–10 μg/min</span></div><div class="action infusion"><b>Dopamine</b><span>5–20 μg/kg/min</span></div></div>
+        <div class="loop-note">Mobitz II / high-grade / complete AV block：不要因等待 atropine 而延誤 pacing</div>
+      </article>
+
+      <article class="path-card">
+        <div class="path-title"><div><strong>Tachycardia</strong><small>通常 HR ≥ 150/min</small></div><div class="ekg-slot">EKG<br><span>TACHY</span></div></div>
+        <div class="decision"><b>UNSTABLE？</b><span>Hypotension · AMS · shock · ischemic chest discomfort · acute HF</span></div>
+        <div class="branch-grid"><div><div class="branch-label bad">YES</div><div class="action shock"><b>⚡ SYNC CARDIOVERSION</b><span>若可行，先 sedation；勿延誤</span></div></div><div><div class="branch-label good">NO → STABLE</div><div class="decision"><b>看 QRS</b><span>Narrow &lt;0.12 s / Wide ≥0.12 s</span></div></div></div>
+        <div class="stable-grid">
+          <div class="mini-card"><b>Narrow QRS</b><div class="ekg-slot tiny">EKG</div><p>Regular → Vagal maneuver → <span class="drug-blue">Adenosine 6 mg → 12 mg</span></p><p>Irregular → 常見 AF / AFL / MAT</p></div>
+          <div class="mini-card"><b>Wide QRS ≥0.12 s</b><div class="ekg-slot tiny">EKG</div><p>考慮 VT until proven otherwise</p><p>Regular monomorphic：特定情境可考慮 Adenosine</p><p><span class="drug-pink">Antiarrhythmic infusion</span> + expert consultation</p></div>
+        </div>
+        <div class="loop-note">⚠ Irregular wide-complex：注意 pre-excited AF / WPW，勿一概直接給 isolated AV nodal blocker</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="acls-section" id="rosc"><div class="acls-section-title">❤️ Post-ROSC</div><div class="info-grid"><div class="info-card"><b>Airway / Breathing</b><span>確認 ventilation / oxygenation；避免 hypoxemia 與不必要 hyperoxia</span></div><div class="info-card"><b>Circulation</b><span>BP / ECG / SpO₂ monitoring；治療 hypotension、維持 perfusion</span></div><div class="info-card"><b>12-lead ECG</b><span>評估 ACS / coronary occlusion</span></div><div class="info-card"><b>Neurologic care</b><span>無法遵從指令者依院內 temperature-control protocol</span></div></div></section>
+
+  <section class="acls-section" id="5h5t"><div class="acls-section-title">🔎 Reversible Causes｜5H / 5T</div><div class="cause-grid"><div class="cause-card"><b>5H</b><span>Hypovolemia</span><span>Hypoxia</span><span>Hydrogen ion — acidosis</span><span>Hypo-/Hyperkalemia / metabolic</span><span>Hypothermia</span></div><div class="cause-card"><b>5T</b><span>Tension pneumothorax</span><span>Cardiac tamponade</span><span>Toxins</span><span>Thrombosis — pulmonary</span><span>Thrombosis — coronary</span></div></div></section>
+
+  <section class="acls-section" id="drugs"><div class="acls-section-title">💉 ACLS Drug Quick Reference</div><div class="drug-grid"><div class="drug-card epi"><b>Epinephrine</b><span>Arrest：1 mg IV/IO q3–5 min</span></div><div class="drug-card amio"><b>Amiodarone</b><span>VF/pVT：300 mg → 150 mg</span></div><div class="drug-card atropine"><b>Atropine</b><span>Brady：1 mg q3–5 min · max 3 mg</span></div><div class="drug-card adenosine"><b>Adenosine</b><span>6 mg rapid IV push → 12 mg</span></div></div></section>
+
+  <div class="footer-note">⚠ 本頁為醫療人員快速複習工具；實際電擊能量、藥物配置與 post-ROSC care 請依院內 protocol、設備及即時臨床情況。</div>
 </main>
 
 </body>
