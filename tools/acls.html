@@ -11,47 +11,12 @@
     .simple-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 300;
       background: rgba(13,31,60,0.97);
-      color: white;
       backdrop-filter: blur(10px);
       height: var(--nav-h); padding: 0 5%;
       display: flex; align-items: center; gap: 12px;
       border-bottom: 1px solid rgba(255,255,255,0.07);
     }
-    /* ===== SIMPLE NAV ===== */
-
-    .simple-nav .nav-back {
-      display: inline-flex;
-      align-items: center;
-
-      color: #ffffff;
-      text-decoration: none;
-
-      font-size: 0.88rem;
-      font-weight: 700;
-
-      opacity: 0.9;
-      transition: opacity 0.15s ease;
-    }
-
-    .simple-nav .nav-back:hover {
-      opacity: 0.65;
-    }
-
-    .simple-nav .nav-sep {
-      display: inline-block;
-
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 0.85rem;
-    }
-
-    .simple-nav .nav-current {
-      display: inline-block;
-
-      color: rgba(255, 255, 255, 0.7);
-
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
+    
     .entry-wrap {
       max-width: 1200px;
       margin: 0 auto;
@@ -81,13 +46,8 @@
     }
 
     body {
-      padding-top: var(--acls-nav-h);
       background: #f7f9fc;
       color: var(--text);
-    }
-
-    .simple-nav {
-      height: var(--acls-nav-h);
     }
 
     /* ===== PAGE ===== */
@@ -380,9 +340,9 @@
     </div>
   </div>
 
-  <nav class="mini-nav">
+  <div class="mini-nav">
     <a href="#rosc">Post-ROSC</a><a href="#5h5t">5H / 5T</a><a href="#drugs">Drugs</a>
-  </nav>
+  </div>
 
   <section class="acls-section" id="dead">
     <div class="section-head"><div><div class="acls-section-title">💀 無脈搏｜Cardiac Arrest</div><div class="acls-section-sub">立即 CPR、接 monitor / defibrillator、IV/IO；每 2 min rhythm check</div></div><span class="pill danger">NO PULSE</span></div>
