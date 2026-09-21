@@ -845,7 +845,13 @@
         <div class="path-title"><div><strong>Tachycardia</strong><small>通常 HR ≥ 150/min</small></div>
         <div class="ekg-preview">
 
-        <!-- Narrow complex tachycardia -->
+      </div>
+      </div>
+        <div class="decision"><b>UNSTABLE？</b><span>Hypotension · AMS · shock · ischemic chest discomfort · acute HF</span></div>
+        <div class="branch-grid"><div><div class="branch-label bad">YES</div><div class="action shock"><b>⚡ SYNC CARDIOVERSION</b><span>若可行，先 sedation；勿延誤</span></div></div><div><div class="branch-label good">NO → STABLE</div><div class="decision"><b>看 QRS</b><span>Narrow &lt;0.12 s / Wide ≥0.12 s</span></div></div></div>
+        <div class="stable-grid">
+          <div class="mini-card"><b>Narrow QRS</b>
+              <!-- Narrow complex tachycardia -->
         <div class="ecg-mini">
           <div class="ecg-label">NARROW TACHY</div>
 
@@ -908,96 +914,89 @@
           </svg>
 
         </div>
+            <p>Regular → Vagal maneuver → <span class="drug-blue">Adenosine 6 mg → 12 mg</span></p><p>Irregular → 常見 AF / AFL / MAT</p></div>
+          <div class="mini-card"><b>Wide QRS ≥0.12 s</b>
+            <!-- Wide complex tachycardia -->
+            <div class="ecg-mini">
+              <div class="ecg-label">WIDE TACHY</div>
 
+              <svg viewBox="0 0 180 60"
+                  xmlns="http://www.w3.org/2000/svg"
+                  preserveAspectRatio="xMidYMid meet">
 
-        <!-- Wide complex tachycardia -->
-        <div class="ecg-mini">
-          <div class="ecg-label">WIDE TACHY</div>
+                <defs>
+                  <pattern id="wt-small-grid"
+                          width="5" height="5"
+                          patternUnits="userSpaceOnUse">
+                    <path d="M5 0 L0 0 0 5"
+                          fill="none"
+                          stroke="#f3cfd3"
+                          stroke-width="0.45"/>
+                  </pattern>
 
-          <svg viewBox="0 0 180 60"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="xMidYMid meet">
+                  <pattern id="wt-large-grid"
+                          width="25" height="25"
+                          patternUnits="userSpaceOnUse">
+                    <rect width="25" height="25"
+                          fill="url(#wt-small-grid)"/>
+                    <path d="M25 0 L0 0 0 25"
+                          fill="none"
+                          stroke="#e7aeb5"
+                          stroke-width="0.8"/>
+                  </pattern>
+                </defs>
 
-            <defs>
-              <pattern id="wt-small-grid"
-                      width="5" height="5"
-                      patternUnits="userSpaceOnUse">
-                <path d="M5 0 L0 0 0 5"
-                      fill="none"
-                      stroke="#f3cfd3"
-                      stroke-width="0.45"/>
-              </pattern>
+                <rect width="180" height="60" fill="#fffdfd"/>
+                <rect width="180" height="60" fill="url(#wt-large-grid)"/>
 
-              <pattern id="wt-large-grid"
-                      width="25" height="25"
-                      patternUnits="userSpaceOnUse">
-                <rect width="25" height="25"
-                      fill="url(#wt-small-grid)"/>
-                <path d="M25 0 L0 0 0 25"
-                      fill="none"
-                      stroke="#e7aeb5"
-                      stroke-width="0.8"/>
-              </pattern>
-            </defs>
+                <path
+                  d="
+                  M0 34
+                  L7 34
+                  C10 34,12 29,14 21
+                  L18 8
+                  L23 13
+                  L29 46
+                  L35 49
+                  L42 36
+                  L47 34
 
-            <rect width="180" height="60" fill="#fffdfd"/>
-            <rect width="180" height="60" fill="url(#wt-large-grid)"/>
+                  L51 34
+                  C54 34,56 29,58 21
+                  L62 8
+                  L67 13
+                  L73 46
+                  L79 49
+                  L86 36
+                  L91 34
 
-            <path
-              d="
-              M0 34
-              L7 34
-              C10 34,12 29,14 21
-              L18 8
-              L23 13
-              L29 46
-              L35 49
-              L42 36
-              L47 34
+                  L95 34
+                  C98 34,100 29,102 21
+                  L106 8
+                  L111 13
+                  L117 46
+                  L123 49
+                  L130 36
+                  L135 34
 
-              L51 34
-              C54 34,56 29,58 21
-              L62 8
-              L67 13
-              L73 46
-              L79 49
-              L86 36
-              L91 34
+                  L139 34
+                  C142 34,144 29,146 21
+                  L150 8
+                  L155 13
+                  L161 46
+                  L167 49
+                  L174 36
+                  L180 34
+                  "
+                  fill="none"
+                  stroke="#172b45"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"/>
+              </svg>
 
-              L95 34
-              C98 34,100 29,102 21
-              L106 8
-              L111 13
-              L117 46
-              L123 49
-              L130 36
-              L135 34
-
-              L139 34
-              C142 34,144 29,146 21
-              L150 8
-              L155 13
-              L161 46
-              L167 49
-              L174 36
-              L180 34
-              "
-              fill="none"
-              stroke="#172b45"
-              stroke-width="1.9"
-              stroke-linecap="round"
-              stroke-linejoin="round"/>
-          </svg>
-
-        </div>
-
-      </div>
-      </div>
-        <div class="decision"><b>UNSTABLE？</b><span>Hypotension · AMS · shock · ischemic chest discomfort · acute HF</span></div>
-        <div class="branch-grid"><div><div class="branch-label bad">YES</div><div class="action shock"><b>⚡ SYNC CARDIOVERSION</b><span>若可行，先 sedation；勿延誤</span></div></div><div><div class="branch-label good">NO → STABLE</div><div class="decision"><b>看 QRS</b><span>Narrow &lt;0.12 s / Wide ≥0.12 s</span></div></div></div>
-        <div class="stable-grid">
-          <div class="mini-card"><b>Narrow QRS</b><div class="ekg-slot tiny">EKG</div><p>Regular → Vagal maneuver → <span class="drug-blue">Adenosine 6 mg → 12 mg</span></p><p>Irregular → 常見 AF / AFL / MAT</p></div>
-          <div class="mini-card"><b>Wide QRS ≥0.12 s</b><div class="ekg-slot tiny">EKG</div><p>考慮 VT until proven otherwise</p><p>Regular monomorphic：特定情境可考慮 Adenosine</p><p><span class="drug-pink">Antiarrhythmic infusion</span> + expert consultation</p></div>
+            </div>
+            <p>考慮 VT until proven otherwise</p><p>Regular monomorphic：特定情境可考慮 Adenosine</p><p><span class="drug-pink">Antiarrhythmic infusion</span> + expert consultation</p></div>
         </div>
         <div class="loop-note">⚠ Irregular wide-complex：注意 pre-excited AF / WPW，勿一概直接給 isolated AV nodal blocker</div>
       </article>
