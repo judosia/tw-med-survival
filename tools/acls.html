@@ -330,6 +330,22 @@
 
       pointer-events: none;
     }
+    .ecg-img-box {
+      width: 180px;
+      aspect-ratio: 3 / 1;
+      overflow: hidden;
+      border-radius: 6px;
+    }
+
+    .ecg-img-box img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: contain;   /* 關鍵：保持原始比例 */
+      object-position: center;
+
+      background: #fff;
+    }
 
     @media (max-width: 760px) {
       .ekg-preview {
@@ -341,6 +357,25 @@
       .ekg-preview {
         width: 125px;
       }
+    }
+    .ecg-caption {
+      position: absolute;
+      right: 4px;
+      bottom: 3px;
+
+      padding: 1px 4px;
+      border-radius: 3px;
+
+      background: rgba(255,255,255,.88);
+
+      color: #9d3440;
+      font-size: .46rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .ekg-preview.single {
+      justify-content: center;
     }
 
     /* ===== MOBILE ===== */
@@ -573,7 +608,137 @@
       </article>
 
       <article class="path-card">
-        <div class="path-title"><div><strong>PEA / Asystole</strong><small>NON-SHOCKABLE</small></div><div class="ekg-slot">EKG<br><span>PEA / ASYS</span></div></div>
+        <div class="path-title"><div><strong>PEA / Asystole</strong><small>NON-SHOCKABLE</small></div>
+        <div class="ekg-preview">
+
+  <!-- PEA -->
+  <div class="ecg-mini">
+    <div class="ecg-label">PEA</div>
+
+    <svg viewBox="0 0 180 60"
+         xmlns="http://www.w3.org/2000/svg"
+         preserveAspectRatio="xMidYMid meet">
+
+      <defs>
+        <pattern id="pea-small-grid"
+                 width="5" height="5"
+                 patternUnits="userSpaceOnUse">
+          <path d="M 5 0 L 0 0 0 5"
+                fill="none"
+                stroke="#f3cfd3"
+                stroke-width="0.45"/>
+        </pattern>
+
+        <pattern id="pea-large-grid"
+                 width="25" height="25"
+                 patternUnits="userSpaceOnUse">
+          <rect width="25" height="25"
+                fill="url(#pea-small-grid)"/>
+          <path d="M 25 0 L 0 0 0 25"
+                fill="none"
+                stroke="#e7aeb5"
+                stroke-width="0.8"/>
+        </pattern>
+      </defs>
+
+      <rect width="180" height="60" fill="#fffdfd"/>
+      <rect width="180" height="60" fill="url(#pea-large-grid)"/>
+
+      <!-- Organized electrical rhythm -->
+      <path
+        d="
+        M0 34
+        L12 34
+        C15 34,17 31,20 31
+        C23 31,25 34,28 34
+        L34 34
+        L37 31
+        L40 40
+        L44 14
+        L48 43
+        L52 34
+        L60 34
+        C65 34,67 39,72 39
+        C77 39,80 34,84 34
+
+        L96 34
+        C99 34,101 31,104 31
+        C107 31,109 34,112 34
+        L118 34
+        L121 31
+        L124 40
+        L128 14
+        L132 43
+        L136 34
+        L144 34
+        C149 34,151 39,156 39
+        C161 39,164 34,168 34
+        L180 34
+        "
+        fill="none"
+        stroke="#172b45"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+    </svg>
+
+    <div class="ecg-caption">organized rhythm · NO PULSE</div>
+  </div>
+
+
+  <!-- Asystole -->
+  <div class="ecg-mini">
+    <div class="ecg-label">ASYSTOLE</div>
+
+    <svg viewBox="0 0 180 60"
+         xmlns="http://www.w3.org/2000/svg"
+         preserveAspectRatio="xMidYMid meet">
+
+      <defs>
+        <pattern id="asy-small-grid"
+                 width="5" height="5"
+                 patternUnits="userSpaceOnUse">
+          <path d="M 5 0 L 0 0 0 5"
+                fill="none"
+                stroke="#f3cfd3"
+                stroke-width="0.45"/>
+        </pattern>
+
+        <pattern id="asy-large-grid"
+                 width="25" height="25"
+                 patternUnits="userSpaceOnUse">
+          <rect width="25" height="25"
+                fill="url(#asy-small-grid)"/>
+          <path d="M 25 0 L 0 0 0 25"
+                fill="none"
+                stroke="#e7aeb5"
+                stroke-width="0.8"/>
+        </pattern>
+      </defs>
+
+      <rect width="180" height="60" fill="#fffdfd"/>
+      <rect width="180" height="60" fill="url(#asy-large-grid)"/>
+
+      <!-- Near-flat baseline -->
+      <path
+        d="
+        M0 31
+        C15 31,20 30.7,35 31
+        C50 31.3,60 31,75 31
+        C90 31,100 30.8,115 31
+        C130 31.2,145 31,160 31
+        C168 31,174 31.1,180 31
+        "
+        fill="none"
+        stroke="#172b45"
+        stroke-width="1.6"
+        stroke-linecap="round"/>
+    </svg>
+
+  </div>
+
+</div>
+      </div>
         <div class="stack">
           <div class="action cpr"><b>CPR</b><span>2 min + IV / IO</span></div><div class="arrow">↓</div>
           <div class="action epi"><b>Epinephrine ASAP</b><span>1 mg IV/IO · q3–5 min</span></div><div class="arrow">↓</div>
@@ -590,7 +755,86 @@
     <div class="section-head"><div><div class="acls-section-title">❤️ 有脈搏｜Brady / Tachy</div><div class="acls-section-sub">先判斷 rate，再判斷是否造成 cardiopulmonary compromise</div></div><span class="pill success">PULSE</span></div>
     <div class="path-grid">
       <article class="path-card">
-        <div class="path-title"><div><strong>Bradycardia</strong><small>通常 HR &lt; 50/min</small></div><div class="ekg-slot">EKG<br><span>BRADY</span></div></div>
+        <div class="path-title"><div><strong>Bradycardia</strong><small>通常 HR &lt; 50/min</small></div>
+        <div class="ekg-preview single">
+        <div class="ecg-mini">
+          <div class="ecg-label">SINUS BRADY</div>
+
+          <svg viewBox="0 0 180 60"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="xMidYMid meet">
+
+            <defs>
+              <pattern id="brady-small-grid"
+                      width="5" height="5"
+                      patternUnits="userSpaceOnUse">
+                <path d="M 5 0 L 0 0 0 5"
+                      fill="none"
+                      stroke="#f3cfd3"
+                      stroke-width="0.45"/>
+              </pattern>
+
+              <pattern id="brady-large-grid"
+                      width="25" height="25"
+                      patternUnits="userSpaceOnUse">
+                <rect width="25" height="25"
+                      fill="url(#brady-small-grid)"/>
+                <path d="M 25 0 L 0 0 0 25"
+                      fill="none"
+                      stroke="#e7aeb5"
+                      stroke-width="0.8"/>
+              </pattern>
+            </defs>
+
+            <rect width="180" height="60" fill="#fffdfd"/>
+            <rect width="180" height="60" fill="url(#brady-large-grid)"/>
+
+            <path
+              d="
+              M0 34
+              L12 34
+
+              C15 34,17 30,20 30
+              C23 30,25 34,28 34
+
+              L36 34
+              L40 31
+              L43 40
+              L47 12
+              L51 42
+              L55 34
+
+              L65 34
+              C70 34,73 39,78 39
+              C83 39,87 34,92 34
+
+              L112 34
+
+              C115 34,117 30,120 30
+              C123 30,125 34,128 34
+
+              L136 34
+              L140 31
+              L143 40
+              L147 12
+              L151 42
+              L155 34
+
+              L165 34
+              C170 34,173 39,178 39
+              L180 38
+              "
+              fill="none"
+              stroke="#172b45"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+          </svg>
+
+        </div>
+
+      </div>
+      </div>
         <div class="decision"><b>有 symptomatic / poor perfusion？</b><span>Hypotension · AMS · shock · ischemic chest discomfort · acute HF</span></div><div class="arrow">↓ YES</div>
         <div class="action atropine"><b>Atropine</b><span>1 mg IV · q3–5 min · max 3 mg</span></div><div class="arrow">↓ 若無效</div>
         <div class="split-actions"><div class="action pacing"><b>TCP</b><span>Transcutaneous pacing</span></div><div class="action infusion"><b>Epinephrine infusion</b><span>2–10 μg/min</span></div><div class="action infusion"><b>Dopamine</b><span>5–20 μg/kg/min</span></div></div>
@@ -598,7 +842,157 @@
       </article>
 
       <article class="path-card">
-        <div class="path-title"><div><strong>Tachycardia</strong><small>通常 HR ≥ 150/min</small></div><div class="ekg-slot">EKG<br><span>TACHY</span></div></div>
+        <div class="path-title"><div><strong>Tachycardia</strong><small>通常 HR ≥ 150/min</small></div>
+        <div class="ekg-preview">
+
+        <!-- Narrow complex tachycardia -->
+        <div class="ecg-mini">
+          <div class="ecg-label">NARROW TACHY</div>
+
+          <svg viewBox="0 0 180 60"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="xMidYMid meet">
+
+            <defs>
+              <pattern id="nt-small-grid"
+                      width="5" height="5"
+                      patternUnits="userSpaceOnUse">
+                <path d="M5 0 L0 0 0 5"
+                      fill="none"
+                      stroke="#f3cfd3"
+                      stroke-width="0.45"/>
+              </pattern>
+
+              <pattern id="nt-large-grid"
+                      width="25" height="25"
+                      patternUnits="userSpaceOnUse">
+                <rect width="25" height="25"
+                      fill="url(#nt-small-grid)"/>
+                <path d="M25 0 L0 0 0 25"
+                      fill="none"
+                      stroke="#e7aeb5"
+                      stroke-width="0.8"/>
+              </pattern>
+            </defs>
+
+            <rect width="180" height="60" fill="#fffdfd"/>
+            <rect width="180" height="60" fill="url(#nt-large-grid)"/>
+
+            <path
+              d="
+              M0 34 L10 34
+              L13 31 L16 40 L19 13 L22 42 L25 34
+              C29 34,31 38,35 38 C39 38,41 34,44 34
+
+              L48 34
+              L51 31 L54 40 L57 13 L60 42 L63 34
+              C67 34,69 38,73 38 C77 38,79 34,82 34
+
+              L86 34
+              L89 31 L92 40 L95 13 L98 42 L101 34
+              C105 34,107 38,111 38 C115 38,117 34,120 34
+
+              L124 34
+              L127 31 L130 40 L133 13 L136 42 L139 34
+              C143 34,145 38,149 38 C153 38,155 34,158 34
+
+              L162 34
+              L165 31 L168 40 L171 13 L174 42 L177 34
+              L180 34
+              "
+              fill="none"
+              stroke="#172b45"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+          </svg>
+
+        </div>
+
+
+        <!-- Wide complex tachycardia -->
+        <div class="ecg-mini">
+          <div class="ecg-label">WIDE TACHY</div>
+
+          <svg viewBox="0 0 180 60"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="xMidYMid meet">
+
+            <defs>
+              <pattern id="wt-small-grid"
+                      width="5" height="5"
+                      patternUnits="userSpaceOnUse">
+                <path d="M5 0 L0 0 0 5"
+                      fill="none"
+                      stroke="#f3cfd3"
+                      stroke-width="0.45"/>
+              </pattern>
+
+              <pattern id="wt-large-grid"
+                      width="25" height="25"
+                      patternUnits="userSpaceOnUse">
+                <rect width="25" height="25"
+                      fill="url(#wt-small-grid)"/>
+                <path d="M25 0 L0 0 0 25"
+                      fill="none"
+                      stroke="#e7aeb5"
+                      stroke-width="0.8"/>
+              </pattern>
+            </defs>
+
+            <rect width="180" height="60" fill="#fffdfd"/>
+            <rect width="180" height="60" fill="url(#wt-large-grid)"/>
+
+            <path
+              d="
+              M0 34
+              L7 34
+              C10 34,12 29,14 21
+              L18 8
+              L23 13
+              L29 46
+              L35 49
+              L42 36
+              L47 34
+
+              L51 34
+              C54 34,56 29,58 21
+              L62 8
+              L67 13
+              L73 46
+              L79 49
+              L86 36
+              L91 34
+
+              L95 34
+              C98 34,100 29,102 21
+              L106 8
+              L111 13
+              L117 46
+              L123 49
+              L130 36
+              L135 34
+
+              L139 34
+              C142 34,144 29,146 21
+              L150 8
+              L155 13
+              L161 46
+              L167 49
+              L174 36
+              L180 34
+              "
+              fill="none"
+              stroke="#172b45"
+              stroke-width="1.9"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+          </svg>
+
+        </div>
+
+      </div>
+      </div>
         <div class="decision"><b>UNSTABLE？</b><span>Hypotension · AMS · shock · ischemic chest discomfort · acute HF</span></div>
         <div class="branch-grid"><div><div class="branch-label bad">YES</div><div class="action shock"><b>⚡ SYNC CARDIOVERSION</b><span>若可行，先 sedation；勿延誤</span></div></div><div><div class="branch-label good">NO → STABLE</div><div class="decision"><b>看 QRS</b><span>Narrow &lt;0.12 s / Wide ≥0.12 s</span></div></div></div>
         <div class="stable-grid">
