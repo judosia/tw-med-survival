@@ -464,12 +464,12 @@
         <div class="symptom-tags">
           <button class="symptom-tag" onclick="openSym('fever')"><span class="dot dot-amber"></span>發燒</button>
           <button class="symptom-tag" onclick="openSym('syncope')"><span class="dot dot-amber"></span>暈厥</button>
-          <button class="symptom-tag" onclick="openSym('dizziness')"><span class="dot dot-blue"></span>頭暈</button>
-          <button class="symptom-tag" onclick="openSym('pain')"><span class="dot dot-red"></span>痛</button>
-          <button class="symptom-tag" onclick="openSym('hb-drop')"><span class="dot dot-amber"></span>Hb下降 / 疑似出血</button>
+          <button class="symptom-tag" onclick="openSym('dizziness')"><span class="dot dot-amber"></span>頭暈</button>
+          <button class="symptom-tag" onclick="openSym('pain')"><span class="dot dot-amber"></span>痛</button>
+          <button class="symptom-tag" onclick="openSym('hb-drop')"><span class="dot dot-red"></span>Hb下降 / 疑似出血</button>
           <button class="symptom-tag" onclick="openSym('insomnia')"><span class="dot dot-blue"></span>失眠</button>
           <button class="symptom-tag" onclick="openSym('agitation')"><span class="dot dot-red"></span>躁動</button>
-          <button class="symptom-tag" onclick="openSym('rash')"><span class="dot dot-amber"></span>皮疹</button>
+          <button class="symptom-tag" onclick="openSym('rash')"><span class="dot dot-blue"></span>皮疹</button>
         </div>
       </div>
       <div class="symptom-category">
@@ -949,11 +949,12 @@ const SYM_DATA = {
     title: '🔴 呼吸困難 Dyspnea',
 
     unstable: [
-      'SpO₂ 明顯下降或快速惡化',
-      'RR 很快、使用 accessory muscles、無法完整說話',
-      '意識改變、CO₂ narcosis',
-      '低血壓 / shock',
-      'silent chest、stridor 或 impending respiratory failure'
+      'Airway threatened：stridor、無法保護 airway、大量分泌物',
+      'Severe respiratory distress：無法完整說話、明顯 accessory muscle use、silent chest',
+      'Refractory / rapidly worsening hypoxemia',
+      'Ventilatory failure：意識惡化、疑 CO₂ narcosis',
+      'Hemodynamic instability：hypotension / shock',
+      '疲乏、呼吸逐漸變弱 → impending respiratory failure'
     ],
 
     now: [
@@ -965,12 +966,13 @@ const SYM_DATA = {
     ],
 
     assess: [
+      '3: 有沒有 Desaturation(SpO2↓)?有沒有 Wheezing?有沒有 Stridor?',
       '突發還是漸進？',
-      'orthopnea / PND / leg edema',
-      'fever / cough / sputum',
-      'wheeze、COPD / asthma history',
-      'pleuritic pain、DVT risk、近期手術或臥床',
-      '單側 breath sound、JVP、crackles'
+      'HF: orthopnea / PND / leg edema、JVP、crackles',
+      'Infection: fever / cough / sputum',
+      'Obstructive: wheeze、COPD / asthma history',
+      'PE: pleuritic pain、DVT risk、近期手術或臥床',
+      'PTX: 單側 breath sound ↓'
     ],
 
     orders: [
@@ -2997,7 +2999,7 @@ function openSym(id) {
     html += `
       <div class="sym-section-block sym-block-danger">
         <div class="sym-section-label">
-          🚨 需要立即升級
+          🚨 Red flags
         </div>
 
         <div class="sym-action-box">
@@ -3011,7 +3013,7 @@ function openSym(id) {
     html += `
       <div class="sym-section-block sym-block-now">
         <div class="sym-section-label">
-          ⚡ FIRST STEPS｜快速處置
+          ⚡ Do sth now快速處置
         </div>
 
         <div class="sym-action-box">
@@ -3025,7 +3027,7 @@ function openSym(id) {
     html += `
       <div class="sym-section-block">
         <div class="sym-section-label">
-          👀 快速評估
+          👀 Assessment/DDx
         </div>
 
         <div class="sym-action-box">
