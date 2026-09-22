@@ -199,15 +199,29 @@
 <div class="main-wrap">
 
   <!-- 流程說明 -->
-  <div class="info-box">
-    <h3>📋 提交流程</h3>
-    <ul class="info-steps">
-      <li><div class="step-circle">1</div><span>填寫下方表單，說明你想新增或修改的內容</span></li>
-      <li><div class="step-circle">2</div><span>提交後會自動進入審核佇列，通常 1-3 天內處理</span></li>
-      <li><div class="step-circle">3</div><span>審核通過後內容上線，你的名字會列在貢獻者名單</span></li>
-      <li><div class="step-circle">4</div><span>若有疑問，審核者會用你的 email 聯絡你</span></li>
-    </ul>
+  <div class="process-box">
+  <h3>📋 提交流程</h3>
+
+  <div class="process-step">
+    <span>1</span>
+    填寫下方表單，說明你想新增或修改的內容
   </div>
+
+  <div class="process-step">
+    <span>2</span>
+    提交後會自動建立審核項目
+  </div>
+
+  <div class="process-step">
+    <span>3</span>
+    我們會確認內容、Reference 與臨床適用性
+  </div>
+
+  <div class="process-step">
+    <span>4</span>
+    審核完成後更新上線；若同意，可列入貢獻者名單
+  </div>
+</div>
 
   <!-- 提交類型選擇 -->
   <div class="type-toggle">
@@ -243,27 +257,28 @@
     <div class="form-divider"></div>
     <div class="form-section-label">知識點位置</div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">科別 <span class="req">*</span></label>
-        <select class="form-select" name="dept" required>
-          <option value="">選擇科別</option>
-          <option>內科</option>
-          <option>外科</option>
-          <option>急診</option>
-          <option>兒科</option>
-          <option>婦產科</option>
-          <option>神經科</option>
-          <option>骨科</option>
-          <option>其他</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">次專科</label>
-        <input class="form-input" type="text" name="subspecialty" placeholder="例：心臟科、一般外科"/>
-        <span class="form-hint">不確定可以留空</span>
-      </div>
-    </div>
+    <div class="form-group">
+    <label class="form-label">
+      想補充到哪裡？ <span class="req">*</span>
+    </label>
+
+    <select class="form-select" name="section" required>
+      <option value="">選擇內容區域</option>
+
+      <option value="symptom">🩺 症狀快查</option>
+      <option value="acls">❤️ ACLS</option>
+      <option value="fluid">💧 Fluid 輸液</option>
+      <option value="tools">🧰 快速工具</option>
+
+      <option value="medicine">內科</option>
+      <option value="surgery">外科</option>
+      <option value="emergency">急診</option>
+      <option value="pediatrics">兒科</option>
+      <option value="obgyn">婦產科</option>
+
+      <option value="other">其他</option>
+    </select>
+  </div>
 
     <div class="form-group">
       <label class="form-label">主題 / 段落名稱 <span class="req">*</span></label>
@@ -283,6 +298,21 @@
       <textarea class="form-textarea" name="definition" placeholder="用你自己的話說明這個知識點，像是跟同學解釋一樣。可以包含重點步驟、注意事項、記憶口訣等。" required></textarea>
       <span class="form-hint">不需要完美，清楚就好。我們審核時可能會稍微調整格式。</span>
     </div>
+
+    <div class="form-group">
+    <label class="form-label">Reference / 資料來源</label>
+
+    <textarea
+      class="form-textarea"
+      name="reference"
+      style="min-height:90px"
+      placeholder="Guideline、paper、UpToDate、教科書或其他可查證來源；若為臨床經驗可註明"
+    ></textarea>
+
+    <span class="form-hint">
+      涉及藥物劑量、治療流程或 guideline 建議時，請盡量附上來源。
+    </span>
+  </div>
 
     <div id="result-new" class="result-box"></div>
 
@@ -308,41 +338,66 @@
     </div>
 
     <div class="form-divider"></div>
-    <div class="form-section-label">修改位置</div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">科別 <span class="req">*</span></label>
-        <select class="form-select" name="dept" required>
-          <option value="">選擇科別</option>
-          <option>內科</option>
-          <option>外科</option>
-          <option>急診</option>
-          <option>兒科</option>
-          <option>婦產科</option>
-          <option>神經科</option>
-          <option>骨科</option>
-          <option>其他（含首頁）</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">主題 / 段落 <span class="req">*</span></label>
-        <input class="form-input" type="text" name="topic" placeholder="例：常見主訴處理" required/>
-      </div>
-    </div>
-
-    <div class="form-divider"></div>
-    <div class="form-section-label">修改內容</div>
-
+    
     <div class="form-group">
-      <label class="form-label">你的建議 <span class="req">*</span></label>
-      <textarea class="form-textarea" name="suggestion" placeholder="說明你建議怎麼修改，或者直接貼上你覺得更好的版本" required></textarea>
-    </div>
+    <label class="form-label">
+      頁面網址
+    </label>
 
-    <div class="form-group">
-      <label class="form-label">修改原因 <span class="req">*</span></label>
-      <textarea class="form-textarea" name="reason" placeholder="例：根據最新指引、原本的劑量有誤、臨床實務上不是這樣操作…" style="min-height:80px" required></textarea>
-    </div>
+    <input
+      class="form-input"
+      type="url"
+      name="pageUrl"
+      placeholder="https://judosia.github.io/..."
+    >
+
+    <span class="form-hint">
+      直接貼上發現問題的頁面，可以讓我們更快找到內容。
+    </span>
+  </div>
+
+
+  <div class="form-group">
+    <label class="form-label">
+      主題 / 段落 <span class="req">*</span>
+    </label>
+
+    <input
+      class="form-input"
+      type="text"
+      name="topic"
+      placeholder="例如：ACLS → Wide QRS tachycardia"
+      required
+    >
+  </div>
+
+
+  <div class="form-group">
+    <label class="form-label">
+      問題或修改建議 <span class="req">*</span>
+    </label>
+
+    <textarea
+      class="form-textarea"
+      name="suggestion"
+      placeholder="目前內容哪裡有問題？建議修改成什麼？"
+      required
+    ></textarea>
+  </div>
+
+
+  <div class="form-group">
+    <label class="form-label">
+      Reference / 修改依據
+    </label>
+
+    <textarea
+      class="form-textarea"
+      name="reference"
+      style="min-height:90px"
+      placeholder="例如：2025 AHA Guideline、期刊 DOI / URL、UpToDate..."
+    ></textarea>
+  </div>
 
     <div id="result-edit" class="result-box"></div>
 
