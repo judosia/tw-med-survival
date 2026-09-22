@@ -290,6 +290,62 @@
       gap: 7px;
       margin: 0;
     }
+    /* =========================
+      SYMPTOM GRID — MOBILE
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      /* General / CV / Chest... 改成一個分類一整列 */
+      .symptom-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .symptom-category {
+        padding: 14px;
+      }
+
+      .symptom-category-title {
+        margin-bottom: 10px;
+        padding-bottom: 7px;
+      }
+
+      /* 每個分類裡面的症狀：改成兩欄 */
+      .symptom-category .symptom-tags {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      /* 每顆症狀按鈕 */
+      .symptom-category .symptom-tag {
+        width: 100%;
+        min-width: 0;
+        min-height: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+
+        padding: 9px 11px;
+
+        /* 防止中文字變成一字一行 */
+        word-break: keep-all;
+        overflow-wrap: normal;
+        white-space: normal;
+
+        text-align: left;
+        line-height: 1.35;
+      }
+
+      /* dot 不要被文字擠扁 */
+      .symptom-category .symptom-tag .dot {
+        flex: 0 0 auto;
+      }
+    }
   /* ONCALL BLOCK */
   .oncall-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
   .oncall-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:20px; }
@@ -300,7 +356,17 @@
   .oncall-tag-amber { background:rgba(244,162,97,0.2); color:var(--amber); }
   .oncall-tag-green { background:rgba(107,170,117,0.2); color:#8fcf97; }
   .oncall-tag-blue { background:rgba(69,123,157,0.2); color:#7eb5d4; }
+  
+  #oncall {
+    background: var(--navy);
+    padding: 40px 8%;
+  }
 
+  @media (max-width: 700px) {
+    #oncall {
+      padding: 32px 5%;
+    }
+  }
   /* RESOURCES */
   .resources-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
   .resource-link { display:flex; align-items:center; gap:14px; background:var(--white); border:1.5px solid var(--border); border-radius:8px; padding:18px 20px; text-decoration:none; transition:border-color 0.2s,box-shadow 0.2s; }
@@ -352,9 +418,9 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-eyebrow">For Anyone</div>
-  <h1>Go on and<br/><span class="accent">Save</span> someone</h1>
-  <p class="hero-sub-en">The unofficial survival guide to hospital life</p>
-  <p class="hero-desc">這裡有一些小知識，希望能夠幫助到任何需要的人們。</p>
+  <h1>Go and<br/><span class="accent">Save</span> someone</h1>
+  <p class="hero-sub-en">The unofficial survival guide</p>
+  <p class="hero-desc">希望這裡能夠幫助到任何需要的人們。</p>
   <div class="hero-cta">
     <a href="#symptoms" class="btn-primary">症狀快查 →</a>
     <a href="specialty.html" class="btn-ghost">分科知識</a>
@@ -366,7 +432,7 @@
     <input type="text" id="hero-search" placeholder="搜尋疾病、科別、藥物、評分⋯（如：胸痛、Troponin、CHADS2）" autocomplete="off"/>
     <button class="hero-search-clear" id="hero-search-clear">✕</button>
     <div class="hero-search-hint">
-      常用：<span onclick="doSearch('胸痛')">胸痛</span><span onclick="doSearch('心肌梗塞')">心肌梗塞</span><span onclick="doSearch('肺炎')">肺炎</span><span onclick="doSearch('腦中風')">腦中風</span><span onclick="doSearch('敗血症')">敗血症</span><span onclick="doSearch('腎功能')">腎功能</span>
+      常用：<span onclick="doSearch('胸痛')">胸痛</span><span onclick="doSearch('MI')">MI</span><span onclick="doSearch('肺炎')">肺炎</span><span onclick="doSearch('腦中風')">腦中風</span><span onclick="doSearch('sepsis')">sepsis</span><span onclick="doSearch('腎功能')">腎功能</span>
     </div>
   </div>
 
@@ -385,7 +451,7 @@
 </section>
 
 <!-- SYMPTOM SECTION ONCALL BLOCK -->
-<section id="oncall" style="background:var(--navy); padding: 40px 8%;">
+<section id="oncall">
   <h2 class="section-title" style="color:var(--white);">值班時常用主訴</h2>
   <p class="section-desc" style="color:rgba(255,255,255,0.5);">最需要知道的...</p>
   
@@ -499,7 +565,6 @@
       <p>發現無反應，先啟動急救系統再開始 CPR。一個人做 CPR 是無效的急救，叫人才是對的。</p>
     </div>
   </div>
-  </section>
 </section>
 
   <!-- ══ 快速工具 ══ -->
